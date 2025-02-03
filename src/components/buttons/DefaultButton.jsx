@@ -4,10 +4,8 @@ function DefaultButton({ children, onClick, type }) {
   return (
     <button
       className={`w-full p-3 rounded-lg ${
-        type === undefined
-          ? 'text-white bg-ddblue-400'
-          : type === 'gray'
-          ? 'text-black bg-gray-150'
+        type === 'gray'
+          ? 'text-gray-700 bg-gray-100'
           : type === 'red'
           ? 'text-white bg-ddred-500'
           : 'text-white bg-ddblue-400'

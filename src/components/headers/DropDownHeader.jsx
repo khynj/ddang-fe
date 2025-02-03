@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import IconButton from '../buttons/IconButton'
-import { useState } from 'react'
 import Modal from '../modals/Modal'
 import DefaultButton from '../buttons/DefaultButton'
+import useModal from '../../hooks/useModal'
 
 function DropDownHeader({ back, feature, routes, title }) {
   const router = useNavigate()
-  const [showMenu, setShowMenu] = useState(false)
+  const { isOpen, open, close, value } = useModal(title)
   return (
     <header
       className={`
@@ -29,10 +29,7 @@ function DropDownHeader({ back, feature, routes, title }) {
         )}
       </div>
 
-      <div
-        className='relative flex items-center min-w-12 gap-1'
-        onClick={() => setShowMenu(!showMenu)}
-      >
+      <div className='relative flex items-center min-w-12 gap-1' onClick={open}>
         <p className='font-bold text-lg'>{title}</p>
         <IconButton
           icon={{
@@ -42,25 +39,28 @@ function DropDownHeader({ back, feature, routes, title }) {
             wght: 600,
           }}
         />
-        {showMenu && (
-          <Modal close={() => setShowMenu(false)}>
-            <div className='flex flex-col w-full gap-4 font-bold pt-4'>
-              {routes.map(route => (
-                <Link
-                  key={route.to}
-                  to={route.to}
-                  className='flex text-gray-950'
-                >
-                  <DefaultButton type={route.name == title ? 'gray' : ''}>
-                    {route.name}
-                  </DefaultButton>
-                </Link>
-              ))}
-            </div>
-          </Modal>
+      </div>
+      <div className='min-w-12 flex items-center justify-end'>
+        {feature && (
+          <IconButton icon={feature.icon} onClick={feature.onClick} />
         )}
       </div>
-      <div className='min-w-12'>{feature && <span>{feature}</span>}</div>
+      {isOpen && (
+        <Modal close={close}>
+          {routes.map(({ name, to }) => (
+            <DefaultButton
+              key={name}
+              type={name == title ? '' : 'gray'}
+              onClick={() => {
+                close()
+                router(to)
+              }}
+            >
+              {name}
+            </DefaultButton>
+          ))}
+        </Modal>
+      )}
     </header>
   )
 }
@@ -69,6 +69,6 @@ DropDownHeader.propTypes = {
   back: PropTypes.bool,
   title: PropTypes.string.isRequired,
   routes: PropTypes.array,
-  feature: PropTypes.element,
+  feature: PropTypes.object,
 }
 export default DropDownHeader

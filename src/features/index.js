@@ -1,19 +1,15 @@
-import { initFCM } from './notification/services/initFCM'
-import MyPage from './user/pages/MyPage'
-import WelcomePage from './user/pages/WelcomePage'
-import HomePage from './product/pages/HomePage'
-import ProductDetailPage from './product/pages/ProductDetailPage'
-import ProductRegisterPage from './product/pages/ProductRegisterPage'
-import BiddingListPage from './product/pages/BiddingListPage'
-import SearchPage from './product/pages/ProductSearchPage'
-
-export {
-  initFCM,
-  HomePage,
-  ProductDetailPage,
-  ProductRegisterPage,
-  BiddingListPage,
-  SearchPage,
-  MyPage,
-  WelcomePage,
-}
+export { default as WelcomePage } from './user/pages/WelcomePage'
+export { default as MyPage } from './user/pages/MyPage'
+export { default as HomePage } from './product/pages/HomePage'
+export { default as ProductDetailPage } from './product/pages/ProductDetailPage'
+export { default as ProductRegisterPage } from './product/pages/ProductRegisterPage'
+export { default as SearchPage } from './product/pages/SearchPage'
+export { default as SignupPage } from './user/pages/SignupPage'
+export { default as LoginPage } from './user/pages/LoginPage'
+export { default as ProductListPage } from './product/pages/ProductListPage'
+export { default as EditProfilePage } from './user/pages/EditProfilePage'
+export { default as ChargePage } from './payment/pages/ChargePage'
+export { default as PaymentHistory } from './payment/pages/PaymentHistory'
+export { default as NotificationPage } from './notification/pages/NotificationPage'
+export { default as ChatroomListPage } from './chat/pages/ChatroomListPage'
+export { initFCM } from './notification/services/initFCM'
