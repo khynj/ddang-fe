@@ -7,7 +7,7 @@ function DefaultButton({ children, onClick, type }) {
         type === undefined
           ? 'text-white bg-ddblue-400'
           : type === 'gray'
-          ? 'text-black bg-gray-200'
+          ? 'text-black bg-gray-150'
           : type === 'red'
           ? 'text-white bg-ddred-500'
           : 'text-white bg-ddblue-400'

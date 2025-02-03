@@ -10,7 +10,7 @@ function Navbar() {
     { to: '/explore', iconName: 'home', text: '홈', end: true },
     { to: '/explore/search', iconName: 'manage_search', text: '물건찾기' },
     { to: '/popup/product/register', iconName: 'add', text: '등록' },
-    { to: '/bidding-list', iconName: 'gavel', text: '입찰현황' },
+    { to: '/bidding-list', iconName: 'gavel', text: '경매현황' },
     { to: '/mypage', iconName: 'person', text: '마이' },
   ]
   return (

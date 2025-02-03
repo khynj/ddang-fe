@@ -4,8 +4,10 @@ function FilterChipBool({ text, value, onChange }) {
   return (
     <button
       onClick={onChange}
-      className={`flex w-fit items-center px-2.5 mr-2 text-sm bg-gray-100 ${
-        value ? 'font-bold text-ddblue-400' : 'text-gray-950'
+      className={`flex w-fit items-center px-2.5 mr-2 text-sm ${
+        value
+          ? 'font-bold text-white bg-ddblue-400'
+          : 'bg-gray-100 text-gray-950'
       } rounded-lg`}
     >
       {text}

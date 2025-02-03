@@ -30,14 +30,21 @@ function DropDownHeader({ back, feature, routes, title }) {
       </div>
 
       <div
-        className='relative flex items-center min-w-12'
+        className='relative flex items-center min-w-12 gap-1'
         onClick={() => setShowMenu(!showMenu)}
       >
         <p className='font-bold text-lg'>{title}</p>
-        <IconButton icon={{ name: 'arrow_drop_down', size: 20 }} />
+        <IconButton
+          icon={{
+            name: 'autorenew',
+            size: 20,
+            className: 'text-blue-400 rounded-full',
+            wght: 600,
+          }}
+        />
         {showMenu && (
           <Modal close={() => setShowMenu(false)}>
-            <div className='flex flex-col w-full gap-2 font-bold pt-2'>
+            <div className='flex flex-col w-full gap-4 font-bold pt-4'>
               {routes.map(route => (
                 <Link
                   key={route.to}
