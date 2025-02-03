@@ -20,6 +20,8 @@ import ChargePage from './features/payment/pages/ChargePage'
 import PaymentHistory from './features/payment/pages/PaymentHistory'
 import DropDownLayout from './layouts/DropDownLayout'
 import SellingListPage from './features/product/pages/SellingListPage'
+import PurchaseHistory from './features/payment/pages/PurchaseHistory'
+import SalesHistory from './features/payment/pages/SalesHistory'
 
 function App() {
   initFCM()
@@ -94,6 +96,8 @@ function App() {
           <Route path='payment-history' element={<PaymentHistory />} />
           <Route path='edit-profile' element={<EditProfilePage />} />
           <Route path='charge' element={<ChargePage />} />
+          <Route path='purchase-history' element={<PurchaseHistory />} />
+          <Route path='sales-history' element={<SalesHistory />} />
         </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
