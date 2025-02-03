@@ -24,7 +24,7 @@ function TabBar({ routes }) {
 }
 
 TabBar.propTypes = {
-  routes: PropTypes.array,
+  routes: PropTypes.array.isRequired,
 }
 
 export default TabBar

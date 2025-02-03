@@ -1,16 +1,21 @@
+import { Outlet } from 'react-router-dom'
+import TabBar from '../../../components/navbar/TabBar'
 import usePageName from '../../../hooks/usePageName'
-import ProductItemHorizontal from '../../product/components/ProductItemHorizontal'
-import products from '../../product/data/products'
 
 function Favorites() {
-  usePageName('관심목록')
+  usePageName('찜 목록')
 
   return (
-    <div>
-      {products.map((product, index) => (
-        <ProductItemHorizontal key={index} product={product} />
-      ))}
-    </div>
+    <>
+      <TabBar
+        routes={[
+          { to: 'pre', name: '개찰 전' },
+          { to: 'ongoing', name: '개찰 후' },
+          { to: 'after', name: '판매완료' },
+        ]}
+      />
+      <Outlet />
+    </>
   )
 }
 

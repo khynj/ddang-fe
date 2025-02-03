@@ -8,7 +8,7 @@ function FilterChipBool({ text, value, onChange }) {
         value
           ? 'font-bold text-white bg-ddblue-400'
           : 'bg-gray-100 text-gray-950'
-      } rounded-lg`}
+      } rounded-lg whitespace-nowrap`}
     >
       {text}
     </button>
