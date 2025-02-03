@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom'
-import SearchHeader from '../components/headers/SearchHeader'
+import ExploreHeader from '../components/headers/ExploreHeader'
 import Navbar from '../components/navbar/Navbar'
 function ExploreLayout() {
   return (
     <>
-      <SearchHeader />
+      <ExploreHeader />
       <Outlet />
       <div className='py-12'></div>
       <Navbar />
