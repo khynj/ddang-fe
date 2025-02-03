@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import IconButton from '../buttons/IconButton'
 
-function SearchHeader() {
+function ExploreHeader() {
   const route = useNavigate()
   const search = e => {
     e.preventDefault()
@@ -27,7 +27,7 @@ function SearchHeader() {
           size: 28,
           className: 'text-gray-600',
         }}
-        onClick={() => route('/')}
+        onClick={() => route('/popup/notifications')}
       />
       <IconButton
         icon={{
@@ -35,9 +35,10 @@ function SearchHeader() {
           size: 28,
           className: 'text-gray-600',
         }}
+        onClick={() => route('/popup/chatrooms')}
       />
     </header>
   )
 }
 
-export default SearchHeader
+export default ExploreHeader
