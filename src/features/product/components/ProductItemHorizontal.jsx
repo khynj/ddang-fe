@@ -5,7 +5,7 @@ import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { Link } from 'react-router-dom'
 
-function ProductListItem({ product }) {
+function ProductItemHorizontal({ product }) {
   const title = trimText(product.title, 14)
   const price = Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
   const instantHammerPrice = Intl.NumberFormat('ko-KR').format(
@@ -65,8 +65,8 @@ function ProductListItem({ product }) {
   )
 }
 
-ProductListItem.propTypes = {
+ProductItemHorizontal.propTypes = {
   product: PropTypes.object.isRequired,
 }
 
-export default ProductListItem
+export default ProductItemHorizontal
