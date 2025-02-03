@@ -1,16 +1,17 @@
 import TabBar from '@/components/navbar/TabBar'
 import { Outlet } from 'react-router-dom'
-import usePageName from '../../../hooks/usePageName'
+import usePageName from '@/hooks/usePageName'
+import PropTypes from 'prop-types'
 
-function BiddingListPage() {
-  usePageName('입찰현황')
+function MyAuctionLayout({ name }) {
+  usePageName(`${name}현황`)
   return (
     <div className='flex flex-col'>
       <TabBar
         routes={[
           {
             index: true,
-            name: '입찰중인 상품',
+            name: `${name}중인 상품`,
             to: '',
             end: true,
           },
@@ -25,4 +26,8 @@ function BiddingListPage() {
   )
 }
 
-export default BiddingListPage
+MyAuctionLayout.propTypes = {
+  name: PropTypes.string,
+}
+
+export default MyAuctionLayout
