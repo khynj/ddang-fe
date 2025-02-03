@@ -4,7 +4,7 @@ function ProfileImage({ src, size }) {
   return (
     // image wrapper
     <div
-      className={`aspect-square
+      className={`flex aspect-square flex-shrink-0
          rounded-full bg-gray-200 overflow-hidden`}
       style={{ width: `${size}px` }}
     >
