@@ -22,6 +22,7 @@ import DropDownLayout from './layouts/DropDownLayout'
 import SellingListPage from './features/product/pages/SellingListPage'
 import PurchaseHistory from './features/payment/pages/PurchaseHistory'
 import SalesHistory from './features/payment/pages/SalesHistory'
+import Favorites from './features/user/pages/Favorites'
 
 function App() {
   initFCM()
@@ -98,6 +99,7 @@ function App() {
           <Route path='charge' element={<ChargePage />} />
           <Route path='purchase-history' element={<PurchaseHistory />} />
           <Route path='sales-history' element={<SalesHistory />} />
+          <Route path='favorites' element={<Favorites />} />
         </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
