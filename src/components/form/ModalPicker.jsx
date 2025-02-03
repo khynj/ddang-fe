@@ -6,7 +6,7 @@ import InputValue from './InputValue'
 import PickerWrapper from './PickerWrapper'
 
 function ModalPicker({ label, required }) {
-  const { isOpen, open, close, value, setValue } = useModal()
+  const { isOpen, open, close, value } = useModal()
   return (
     <>
       <div className='flex flex-col gap-2 py-3'>
@@ -22,7 +22,7 @@ function ModalPicker({ label, required }) {
         </PickerWrapper>
       </div>
       {isOpen && (
-        <Modal close={close} setValue={setValue}>
+        <Modal close={close}>
           <h1>Modal</h1>
         </Modal>
       )}
