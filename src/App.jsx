@@ -20,6 +20,8 @@ import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
 import NotFoundPage from './pages/NotFoundPage'
 import DropDownLayout from './layouts/DropDownLayout'
+import PurchaseHistory from './features/payment/pages/PurchaseHistory'
+import SalesHistory from './features/payment/pages/SalesHistory'
 import MyAuctionLayout from './layouts/MyAuctionLayout'
 import DebateListPage from './features/chat/pages/DebateListPage'
 import ChatroomPage from './features/chat/pages/ChatroomPage'
@@ -126,6 +128,8 @@ function App() {
           <Route path='payment-history' element={<PaymentHistory />} />
           <Route path='edit-profile' element={<EditProfilePage />} />
           <Route path='charge' element={<ChargePage />} />
+          <Route path='purchase-history' element={<PurchaseHistory />} />
+          <Route path='sales-history' element={<SalesHistory />} />
         </Route>
       </Routes>
     </div>
