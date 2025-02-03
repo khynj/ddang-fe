@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types'
 import Label from './Label'
 
-function TextInput({ label, required, type = 'text' }) {
+function TextInput({ label, required, type = 'text', max = '100000000' }) {
   return (
     <div className='flex flex-col gap-2 py-3'>
       {label && <Label text={label} required={required} />}
       <input
         type={type}
         className='flex border-1 border-gray-300 rounded-md p-3'
+        max={max}
       />
     </div>
   )
@@ -17,6 +18,7 @@ TextInput.propTypes = {
   label: PropTypes.string,
   required: PropTypes.bool,
   type: PropTypes.string,
+  max: PropTypes.string,
 }
 
 export default TextInput
