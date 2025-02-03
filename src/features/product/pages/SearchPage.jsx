@@ -1,5 +1,5 @@
 import MaterialIcon from '@/components/icons/MaterialIcon'
-import SearchHistory from './SearchHistory'
+import SearchHistory from '../components/SearchHistory'
 import categories from '../data/categories'
 import bag from '@/assets/images/categories/bag.jpeg'
 
