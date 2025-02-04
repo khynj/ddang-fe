@@ -1,7 +1,7 @@
 export default [
   {
     auctionId: 12,
-    title: '갤탭 S9 s급',
+    title: '갤탭 S9 s급 asdfa sdfa sdfasdasdass',
     productName: '갤럭시 탭 S9 256GB Cellular',
     minimumBid: 200000,
     currentBidPrice: 362000,

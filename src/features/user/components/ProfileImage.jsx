@@ -4,11 +4,11 @@ function ProfileImage({ src, size }) {
   return (
     // image wrapper
     <div
-      className={`flex aspect-square flex-shrink-0
+      className={`flex items-center justify-center aspect-square
          rounded-full bg-gray-200 overflow-hidden`}
       style={{ width: `${size}px` }}
     >
-      <img src={src} className={`object-cover w-full`} />
+      <img src={src} className={`object-cover w-full h-full`} />
     </div>
   )
 }

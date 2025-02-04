@@ -34,11 +34,13 @@ import Subscriptions from './features/user/pages/Subscriptions'
 import Notices from './features/user/pages/Notices'
 import ReviewHistory from './features/user/pages/ReviewHistory'
 import ChangePassword from './features/user/pages/ChangePassword'
+import { useEffect } from 'react'
 
 function App() {
-  initFCM()
   const route = useNavigate()
-
+  useEffect(() => {
+    initFCM()
+  }, [])
   return (
     <div
       id='app'

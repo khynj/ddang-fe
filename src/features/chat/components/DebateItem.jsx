@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types'
-import ProfileImage from '../../user/components/ProfileImage'
-import { trimText } from '../../../utils/trimText'
 import relativeTime from '../../../utils/relativeTime'
 import { Link } from 'react-router-dom'
 
 function DebateItem({ chatroom }) {
-  const lastMessage = trimText(chatroom.lastMessage, 14)
   const lastSetTime = relativeTime(chatroom.lastSetTime)
   return (
     <Link
@@ -25,7 +22,9 @@ function DebateItem({ chatroom }) {
           <div className='text-gray-500 text-sm'>{lastSetTime}</div>
         </div>
         <div className='flex justify-between items-center'>
-          <div className='whitespace-nowrap tracking-tight'>{lastMessage}</div>
+          <div className='max-w-64 tracking-tight truncate'>
+            {chatroom.lastMessage}
+          </div>
           <div className='bg-ddred-500 text-white rounded-full px-1.5 text-sm'>
             {chatroom.messgaesLeft}
           </div>

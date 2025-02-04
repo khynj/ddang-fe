@@ -7,7 +7,7 @@ function ChatroomListPage() {
   return (
     <div>
       {chatrooms.map(chatroom => (
-        <ChatroomItem key={chatroom.id} chatroom={chatroom} />
+        <ChatroomItem key={chatroom.chattingRoomId} chatroom={chatroom} />
       ))}
     </div>
   )

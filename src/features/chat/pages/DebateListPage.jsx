@@ -7,7 +7,7 @@ function DebateListPage() {
   return (
     <div>
       {chatrooms.map(chatroom => (
-        <DebateItem key={chatroom.id} chatroom={chatroom} />
+        <DebateItem key={chatroom.chattingRoomId} chatroom={chatroom} />
       ))}
     </div>
   )
