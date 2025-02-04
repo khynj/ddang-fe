@@ -1,7 +1,7 @@
 export default [
   {
     auctionId: 12,
-    title: '갤탭 S9 s급 asdfa sdfa sdfasdasdass',
+    title: '갤탭 S9 액정이 조금 깨지긴 했는데 정말 사용감 없구요',
     productName: '갤럭시 탭 S9 256GB Cellular',
     minimumBid: 200000,
     currentBidPrice: 362000,
@@ -17,7 +17,8 @@ export default [
   },
   {
     auctionId: 13,
-    title: '갤럭시 S24 울트라라',
+    title:
+      '갤럭시 S24 울트라 성시경님이 사용하던 제품입니다. 사진이 굉장히 잘 나와요',
     productName: '갤럭시 S24 울트라 512GB',
     minimumBid: 1200000,
     currentBidPrice: 1362000,

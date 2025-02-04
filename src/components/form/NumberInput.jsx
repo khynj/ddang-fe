@@ -3,38 +3,40 @@ import Label from './Label'
 import { useState } from 'react'
 import InputError from './InputError'
 
-function TextArea({ label, required, value, setValue, validate }) {
+function NumberInput({ label, required, value, setValue, validate }) {
   const [error, setError] = useState('')
   const onChange = e => {
+    const value = Number(e.target.value)
     if (validate) {
-      setError(validate(e.target.value))
+      setError(validate(value))
     }
-    setValue(e.target.value)
+    setValue(value)
   }
   return (
-    <div className='flex flex-col gap-1 py-3'>
+    <div className='flex flex-col gap-2 py-3'>
       {label && (
         <Label text={label} required={required}>
           <InputError>{error}</InputError>
         </Label>
       )}
-      <textarea
+      <input
+        type='number'
         value={value}
         onChange={onChange}
-        className={`flex border-1 border-gray-300 rounded-md p-1.5 ${
-          error && 'invalid'
+        className={`flex border-1 border-gray-300 rounded-md p-3 ${
+          error ? 'invalid' : ''
         }`}
       />
     </div>
   )
 }
 
-TextArea.propTypes = {
+NumberInput.propTypes = {
   label: PropTypes.string,
   required: PropTypes.bool,
-  value: PropTypes.string,
-  setValue: PropTypes.func,
   validate: PropTypes.func,
+  value: PropTypes.any,
+  setValue: PropTypes.func,
 }
 
-export default TextArea
+export default NumberInput

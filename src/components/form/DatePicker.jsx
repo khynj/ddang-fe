@@ -4,33 +4,46 @@ import Label from './Label'
 import MaterialIcon from '../icons/MaterialIcon'
 import InputValue from './InputValue'
 import PickerWrapper from './PickerWrapper'
+import InputError from './InputError'
 
-function DatePicker({ label, required }) {
+function DatePicker({ label, required, value, setValue, validate }) {
   const dateInput = useRef(null)
-  const [date, setDate] = useState()
   const koreanLocalDate = useMemo(() => {
-    return date
-      ? new Date(date).toLocaleString('ko-KR', {
+    return value
+      ? new Date(value).toLocaleString('ko-KR', {
           dateStyle: 'medium',
           timeStyle: 'short',
         })
       : ''
-  }, [date])
+  }, [value])
+  const [error, setError] = useState('')
+  const onChange = e => {
+    if (validate) {
+      setError(validate(e.target.value))
+    }
+    setValue(e.target.value)
+  }
 
   return (
     <div className='flex flex-col gap-2 py-3'>
-      {label && <Label text={label} required={required} />}
+      {label && (
+        <Label text={label} required={required}>
+          {error && <InputError>{error}</InputError>}
+        </Label>
+      )}
       <PickerWrapper onClick={() => dateInput.current.showPicker()}>
         <InputValue value={koreanLocalDate} label={label} />
-        <input
-          ref={dateInput}
-          value={date}
-          onChange={e => setDate(e.target.value)}
-          type='datetime-local'
-          className='fixed bottom-0 opacity-0 pointer-events-none'
-        />
         <MaterialIcon name='calendar_month' />
       </PickerWrapper>
+      <input
+        ref={dateInput}
+        value={value}
+        onChange={onChange}
+        type='datetime-local'
+        className={`${
+          error && 'invalid'
+        } fixed bottom-0 opacity-0 pointer-events-none`}
+      />
     </div>
   )
 }
@@ -38,6 +51,9 @@ function DatePicker({ label, required }) {
 DatePicker.propTypes = {
   label: PropTypes.string,
   required: PropTypes.bool,
+  value: PropTypes.any,
+  setValue: PropTypes.func,
+  validate: PropTypes.func,
 }
 
 export default DatePicker

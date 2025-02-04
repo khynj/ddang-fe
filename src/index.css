@@ -60,17 +60,31 @@ textarea {
   transition: border-color 0.2s;
 }
 
+label {
+  transition: color 0.2s;
+}
+
+label:has(~ input:focus),
+label:has(~ textarea:focus) {
+  color: var(--color-ddblue-400);
+}
 
 input:focus,
 textarea:focus {
   border-color: var(--color-ddblue-400);
 }
 
-label {
-  transition: color 0.2s;
+div.input-wrapper:has(~ input.invalid) {
+  border-color: var(--color-ddred-500);
 }
 
-label:has(+ input:focus),
-label:has(+ textarea:focus) {
-  color: var(--color-ddblue-400);
+label:has(~ input.invalid),
+label:has(~ textarea.invalid) {
+  color: var(--color-ddred-500);
+}
+
+input.invalid,
+textarea.invalid {
+  border-color: var(--color-ddred-500);
+  color: var(--color-ddred-500);
 }

@@ -1,7 +1,7 @@
 // useModal
 import { useState } from 'react'
 
-export default function useModal(initialValue = null) {
+export default function useModal(initialValue = 'abc') {
   const [isOpen, setIsOpen] = useState(false)
   const [value, setValue] = useState(initialValue)
 

@@ -2,12 +2,10 @@ import PropTypes from 'prop-types'
 import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { wonitzie } from '@/utils/wonitize'
-import { trimText } from '@/utils/trimText'
 import { Link } from 'react-router-dom'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice)
-  const title = trimText(product.title, 7)
   const isTop = product.currentBidPrice === product.myBidPrice
   const didBid = product.myBidPrice > 0
   return (
@@ -24,7 +22,9 @@ function ProductItemSmall({ product }) {
         className='w-full aspect-square rounded-xl object-cover bg-white'
         style={{ filter: 'brightness(0.96)' }}
       />
-      <span className='text-gray-800 mt-1 mb-0.5 w-fit'>{title}</span>
+      <span className='text-gray-800 mt-1 mb-0.5 truncate'>
+        {product.title}
+      </span>
       {isTop ? (
         <div
           className='w-fit h-fit px-1.5 flex flex-row items-center

@@ -4,17 +4,26 @@ import Modal from '../modals/Modal'
 import MaterialIcon from '../icons/MaterialIcon'
 import InputValue from './InputValue'
 import PickerWrapper from './PickerWrapper'
+import { useState } from 'react'
+import Label from './Label'
+import InputError from './InputError'
 
-function ModalPicker({ label, required }) {
-  const { isOpen, open, close, value } = useModal()
+function ModalPicker({ label, required, value, setValue, validate, children }) {
+  const { isOpen, open, close } = useModal(value)
+  const [error, setError] = useState('')
+  useState(() => {
+    if (validate) {
+      setError(validate(value))
+    }
+    setValue(value)
+  }, [value])
   return (
     <>
       <div className='flex flex-col gap-2 py-3'>
         {label && (
-          <label className='font-bold text-gray-800 text-sm'>
-            {label}
-            {required && '*'}
-          </label>
+          <Label text={label} required={required}>
+            {error && <InputError>{error}</InputError>}
+          </Label>
         )}
         <PickerWrapper onClick={open}>
           <InputValue value={value} label={label} />
@@ -23,7 +32,7 @@ function ModalPicker({ label, required }) {
       </div>
       {isOpen && (
         <Modal close={close}>
-          <h1>Modal</h1>
+          <h1>{children}</h1>
         </Modal>
       )}
     </>
@@ -33,6 +42,10 @@ function ModalPicker({ label, required }) {
 ModalPicker.propTypes = {
   label: PropTypes.string,
   required: PropTypes.bool,
+  value: PropTypes.any,
+  setValue: PropTypes.func,
+  validate: PropTypes.func,
+  children: PropTypes.node,
 }
 
 export default ModalPicker
