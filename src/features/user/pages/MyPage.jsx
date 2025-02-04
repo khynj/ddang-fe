@@ -23,7 +23,7 @@ function MyPage() {
 
       {/* 땅땅머니 섹션 */}
       <section
-        className='relative p-4 bg-white border-b border-gray-200 mt-0'
+        className='relative p-4 px-5 bg-white border-b border-gray-200 mt-0'
         style={{
           background:
             'linear-gradient(295deg, #BDF1FF 2.08%, #E8EEFF 48.59%, #E091FF 48.6%, #F2CCFF 94.74%)',
@@ -35,9 +35,7 @@ function MyPage() {
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-1'>
             <img src={moneyBag2} alt='moneyBag2' className='w-6 h-6' />
-            <span className='text-lg  font-bold text-lg text-gray-950'>
-              땅땅머니
-            </span>
+            <span className='font-bold text-lg text-gray-950'>땅땅머니</span>
           </div>
           <div>
             <Link
@@ -52,11 +50,11 @@ function MyPage() {
           </div>
         </div>
         <div className='mt-2'>
-          <div className='flex justify-between  font-bold text-gray-950 mt-4'>
+          <div className='flex justify-between font-bold text-gray-950 mt-4'>
             <span className='text-sm'>잔액</span>
             <span>270,000원</span>
           </div>
-          <div className='flex justify-between  font-bold text-gray-950 mt-4'>
+          <div className='flex justify-between font-bold text-gray-950 mt-4'>
             <span className='text-sm'>입찰가능금액</span>
             <span>70,000원</span>
           </div>
@@ -64,14 +62,11 @@ function MyPage() {
       </section>
 
       {/* 메뉴 섹션 */}
-      <section className='bg-white divide-y divide-gray-200'>
-        <nav className='flex flex-col'>
+      <section className='py-1'>
+        <nav className='flex flex-col gap-2'>
           {menus &&
             menus.map(menuCategory => (
-              <div
-                key={menuCategory[0].to}
-                className='border-b border-gray-200'
-              >
+              <div key={menuCategory[0].to}>
                 {menuCategory.map(menu => (
                   <MyPageMenu
                     key={menu.to}
@@ -79,6 +74,7 @@ function MyPage() {
                     icon={{ name: menu.icon }}
                   />
                 ))}
+                <hr className='border-gray-200' />
               </div>
             ))}
         </nav>

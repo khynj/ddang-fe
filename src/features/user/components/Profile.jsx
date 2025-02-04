@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom'
 import ProfileImage from './ProfileImage'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import TrustScoreBar from './TrustScoreBar'
+import StepTrustBar from './StepTrustBar'
 
 function Profile({ profileSrc, name, trustScore, id }) {
   const userId = 1 // 로그인한 사용자의 id
 
   return (
-    <div className='p-4 bg-white'>
+    <div className='p-6 bg-white'>
       {/* 프로필 이미지 및 이름 섹션 */}
       <div className='flex items-center'>
         <ProfileImage src={profileSrc} size={64} />
@@ -23,7 +24,12 @@ function Profile({ profileSrc, name, trustScore, id }) {
                   cursor: 'pointer',
                 }}
               >
-                <MaterialIcon name='edit' filled className='text-gray-400'>
+                <MaterialIcon
+                  name='edit'
+                  filled
+                  className='text-gray-400'
+                  size={20}
+                >
                   edit
                 </MaterialIcon>
               </button>
@@ -39,16 +45,14 @@ function Profile({ profileSrc, name, trustScore, id }) {
       </div>
 
       {/* 신뢰도 섹션 */}
-      <div className='mt-6'>
+      <div className='mt-5'>
         <div className='flex items-center justify-between'>
           <p className='text-ddblue-400 font-bold text-[14px]'>신뢰도</p>
           <span className='text-sm font-bold'>{trustScore}%</span>
         </div>
-        <div className='mt-4'>
-          {/* 5단계 중 현재 3단계 */}
-          <TrustScoreBar trustScore={12} />
-          {/* <StepTrustBar steps={5} currentStep={2} /> */}
-        </div>
+        {/* 5단계 중 현재 3단계 */}
+        <TrustScoreBar trustScore={62} />
+        {/* <StepTrustBar steps={5} currentStep={2} /> */}
       </div>
     </div>
   )

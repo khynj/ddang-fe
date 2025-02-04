@@ -10,7 +10,7 @@ function StepTrustBar({ steps }) {
   }
 
   return (
-    <div className='relative w-full flex flex-col items-center'>
+    <div className='relative w-full flex flex-col items-center mt-3'>
       {/* 배경 막대 */}
       <div className='w-full bg-gray-200 h-2 rounded-full'></div>
 
