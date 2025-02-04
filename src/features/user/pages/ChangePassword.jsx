@@ -1,6 +1,6 @@
-import DefaultButton from '../../../components/buttons/DefaultButton'
-import StickyContainer from '../../../components/StickyContainer'
-import usePageName from '../../../hooks/usePageName'
+import DefaultButton from '@/components/buttons/DefaultButton'
+import StickyContainer from '@/components/StickyContainer'
+import usePageName from '@/hooks/usePageName'
 import TextInput from '@/components/form/TextInput'
 
 function ChangePassword() {

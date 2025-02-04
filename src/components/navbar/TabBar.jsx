@@ -15,6 +15,7 @@ function TabBar({ routes }) {
           to={route.to}
           className={getClassName}
           end={route.end}
+          replace
         >
           {route.name}
         </NavLink>

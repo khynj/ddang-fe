@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import Navbar from '../components/navbar/Navbar'
 
-function DefaultLayout({ back }) {
+function DefaultLayout({ back, feature }) {
   const [title, setTitle] = useState('...')
   return (
     <>
-      <DefaultHeader back={back} title={title} />
+      <DefaultHeader back={back} title={title} feature={feature} />
       <Outlet context={{ setTitle }} />
       {back || <div className='py-8'></div>}
       {back || <Navbar />}
@@ -18,6 +18,7 @@ function DefaultLayout({ back }) {
 
 DefaultLayout.propTypes = {
   back: PropTypes.bool,
+  feature: PropTypes.object,
 }
 
 export default DefaultLayout

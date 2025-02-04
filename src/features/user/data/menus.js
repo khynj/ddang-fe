@@ -3,9 +3,9 @@ export default [
     { to: 'payment-history', icon: 'credit_card', title: '결제내역' },
     { to: 'purchase-history', icon: 'sticky_note_2', title: '구매내역' },
     { to: 'sale-history', icon: 'sticky_note_2', title: '판매내역' },
-    { to: 'favorites', icon: 'favorite', title: '관심목록' },
+    { to: 'favorites/pre', icon: 'favorite', title: '찜 목록' },
     { to: 'subscriptions', icon: 'sort', title: '모아보기' },
-    { to: 'review-history', icon: 'for_you', title: '리뷰내역' },
+    { to: 'review-history/received', icon: 'for_you', title: '리뷰내역' },
     { to: 'my-locations', icon: 'location_on', title: '내 장소' },
   ],
   [

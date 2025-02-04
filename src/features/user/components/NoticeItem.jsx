@@ -10,14 +10,10 @@ const NoticeItem = ({ title, date, content }) => {
   }
 
   return (
-    <div
-      className='border-b border-gray-200'
-      style={{ borderRadius: '0', overflow: 'hidden' }}
-    >
+    <div className='border-b border-gray-200' style={{ overflow: 'hidden' }}>
       <div
         className='flex justify-between items-center w-full p-6 bg-white cursor-pointer'
         onClick={toggleContent}
-        style={{ borderRadius: '0' }}
       >
         <div className='flex items-center'>
           <MaterialIcon
@@ -33,10 +29,7 @@ const NoticeItem = ({ title, date, content }) => {
       </div>
 
       {isOpen && (
-        <div
-          className='w-full px-8 py-4 bg-white text-sm text-gray-900'
-          style={{ borderRadius: '0' }}
-        >
+        <div className='w-full px-8 py-4 bg-white text-sm text-gray-900'>
           <p className='text-gray-700 whitespace-pre-line'>{content}</p>
         </div>
       )}

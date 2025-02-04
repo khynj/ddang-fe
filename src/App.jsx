@@ -15,7 +15,7 @@ import {
   NotificationPage,
   ChatroomListPage,
 } from './features'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
 import NotFoundPage from './pages/NotFoundPage'
@@ -37,6 +37,7 @@ import ChangePassword from './features/user/pages/ChangePassword'
 
 function App() {
   initFCM()
+  const route = useNavigate()
 
   return (
     <div
@@ -152,15 +153,37 @@ function App() {
             <Route path='after' element={<ProductListPage />} />
             <Route path='ongoing' element={<ProductListPage />} />
           </Route>
-          <Route path='app-setting' element={<AppSetting />}>
-            <Route path='change-password' element={<ChangePassword />} />
-          </Route>
+          <Route path='app-setting' element={<AppSetting />} />
+          <Route
+            path='app-setting/change-password'
+            element={<ChangePassword />}
+          />
           <Route path='customer-service' element={<CustomerService />} />
           <Route path='policies' element={<TermsAndPolicies />} />
-          <Route path='my-locations' element={<MyLocations />} />
           <Route path='subscriptions' element={<Subscriptions />} />
           <Route path='notices' element={<Notices />} />
-          <Route path='review-history' element={<ReviewHistory />} />
+          <Route path='review-history' element={<ReviewHistory />}>
+            <Route path='received' element={<ProductListPage />} />
+            <Route path='written' element={<ProductListPage />} />
+          </Route>
+        </Route>
+        <Route
+          path='/mypage'
+          element={
+            <DefaultLayout
+              back
+              feature={{
+                icon: {
+                  name: 'add',
+                  className: 'text-gray-600',
+                },
+                onClick: () => route('/mypage/my-locations/register'),
+              }}
+            />
+          }
+        >
+          <Route path='my-locations' element={<MyLocations />} />
+          {/* <Route path='my-locations/register' element={< />} /> */}
         </Route>
       </Routes>
     </div>
