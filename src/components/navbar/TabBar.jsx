@@ -15,6 +15,7 @@ function TabBar({ routes }) {
           to={route.to}
           className={getClassName}
           end={route.end}
+          replace
         >
           {route.name}
         </NavLink>
@@ -24,7 +25,7 @@ function TabBar({ routes }) {
 }
 
 TabBar.propTypes = {
-  routes: PropTypes.array,
+  routes: PropTypes.array.isRequired,
 }
 
 export default TabBar

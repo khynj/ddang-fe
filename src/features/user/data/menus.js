@@ -2,10 +2,10 @@ export default [
   [
     { to: 'payment-history', icon: 'credit_card', title: '결제내역' },
     { to: 'purchase-history', icon: 'sticky_note_2', title: '구매내역' },
-    { to: 'sales-history', icon: 'sticky_note_2', title: '판매내역' },
-    { to: 'favorites', icon: 'favorite', title: '관심목록' },
-    { to: 'gathered-items', icon: 'sort', title: '모아보기' },
-    { to: 'review-history', icon: 'for_you', title: '리뷰내역' },
+    { to: 'sale-history', icon: 'sticky_note_2', title: '판매내역' },
+    { to: 'favorites/pre', icon: 'favorite', title: '찜 목록' },
+    { to: 'subscriptions', icon: 'sort', title: '모아보기' },
+    { to: 'review-history/received', icon: 'for_you', title: '리뷰내역' },
     { to: 'my-locations', icon: 'location_on', title: '내 장소' },
   ],
   [
@@ -14,10 +14,10 @@ export default [
   ],
   [
     {
-      to: 'terms-and-policies',
+      to: 'policies',
       icon: 'sticky_note_2',
       title: '약관 및 정책',
     },
-    { to: 'app-settings', icon: 'settings', title: '앱 설정' },
+    { to: 'app-setting', icon: 'settings', title: '앱 설정' },
   ],
 ]

@@ -15,7 +15,7 @@ function FilterBar({ children }) {
         onClick={open}
       >
         <MaterialIcon name='sort' size={18} />
-        <div>{value}</div>
+        <div className='whitespace-nowrap'>{value}</div>
       </div>
       {isOpen && (
         <Modal close={close}>

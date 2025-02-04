@@ -28,13 +28,17 @@ function DefaultHeader({ back, feature, title }) {
       <div className='min-w-12'>
         <p className='font-bold text-lg'>{title}</p>
       </div>
-      <div className='min-w-12'>{feature && <span>{feature}</span>}</div>
+      <div className='min-w-12 flex items-center justify-end'>
+        {feature && (
+          <IconButton icon={feature.icon} onClick={feature.onClick} />
+        )}
+      </div>
     </header>
   )
 }
 DefaultHeader.propTypes = {
   back: PropTypes.bool,
   title: PropTypes.string.isRequired,
-  feature: PropTypes.element,
+  feature: PropTypes.object,
 }
 export default DefaultHeader
