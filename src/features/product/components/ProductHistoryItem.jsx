@@ -11,7 +11,13 @@ function ProductHistoryItem({ product }) {
   const instantHammerPrice = product.instantHammerPrice
     ? Intl.NumberFormat('ko-KR').format(product.instantHammerPrice)
     : null
-  const day = product.endTime ? relativeTime(product.endTime) : ''
+  const day =
+    product.hammeredTime && product.hammeredTime < product.endTime
+      ? relativeTime(product.hammeredTime)
+      : product.endTime
+      ? relativeTime(product.endTime)
+      : ''
+
   return (
     <Link
       className={`grid grid-cols-9 p-4 gap-3 border-b border-gray-200 ${

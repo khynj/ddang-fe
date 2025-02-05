@@ -1,6 +1,6 @@
 import usePageName from '../../../hooks/usePageName'
 import ProductHistoryItem from '../components/ProductHistoryItem'
-import purchase from '../../payment/data/purchase'
+import purchase from '../data/purchase'
 
 function PurchaseHistory() {
   usePageName('구매내역')
