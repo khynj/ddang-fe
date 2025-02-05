@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 
-function TabBar({ routes }) {
+function TabBar({ routes, className }) {
   const getClassName = ({ isActive }) => `
-  text-center px-2 py-1 font-bold ${
+  text-center px-2 py-1 font-bold ${className} ${
     isActive ? 'border-b-2 border-gray-950' : 'border-0'
   }
     `
   return (
-    <div className='flex gap-4 px-4 py-2'>
+    <div className={'flex gap-4 px-4 py-2 ${className}'}>
       {routes.map((route, index) => (
         <NavLink
           key={index}
@@ -26,6 +26,7 @@ function TabBar({ routes }) {
 
 TabBar.propTypes = {
   routes: PropTypes.array.isRequired,
+  className: PropTypes.string,
 }
 
 export default TabBar

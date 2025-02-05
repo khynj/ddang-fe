@@ -8,10 +8,11 @@ function Favorites() {
   return (
     <>
       <TabBar
+        className='text-xs'
         routes={[
-          { to: 'pre', name: '개찰 전' },
-          { to: 'ongoing', name: '개찰 후' },
-          { to: 'after', name: '판매완료' },
+          { to: 'pre', name: '개찰 전 상품' },
+          { to: 'ongoing', name: '입찰 중인 상품' },
+          { to: 'after', name: '판매 완료 상품' },
         ]}
       />
       <Outlet />

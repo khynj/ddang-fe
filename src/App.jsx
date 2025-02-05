@@ -21,7 +21,7 @@ import DefaultLayout from './layouts/DefaultLayout'
 import NotFoundPage from './pages/NotFoundPage'
 import DropDownLayout from './layouts/DropDownLayout'
 import PurchaseHistory from './features/payment/pages/PurchaseHistory'
-import SalesHistory from './features/payment/pages/SaleHistory'
+import SaleHistory from './features/payment/pages/SaleHistory'
 import Favorites from './features/user/pages/Favorites'
 import MyAuctionLayout from './layouts/MyAuctionLayout'
 import DebateListPage from './features/chat/pages/DebateListPage'
@@ -149,7 +149,7 @@ function App() {
           <Route path='edit-profile' element={<EditProfilePage />} />
           <Route path='charge' element={<ChargePage />} />
           <Route path='purchase-history' element={<PurchaseHistory />} />
-          <Route path='sale-history' element={<SalesHistory />} />
+          <Route path='sale-history' element={<SaleHistory />} />
           <Route path='favorites' element={<Favorites />}>
             <Route path='pre' element={<ProductListPage />} />
             <Route path='after' element={<ProductListPage />} />

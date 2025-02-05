@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-function ProductImageWithoutAHeart({ purchase }) {
+function ProductImageWithoutAHeart_purchase({ purchase }) {
   return (
     <div
       className='size-20 aspect-square flex shrink-0 items-center
@@ -15,8 +15,8 @@ function ProductImageWithoutAHeart({ purchase }) {
   )
 }
 
-ProductImageWithoutAHeart.propTypes = {
+ProductImageWithoutAHeart_purchase.propTypes = {
   purchase: PropTypes.object.isRequired,
 }
 
-export default ProductImageWithoutAHeart
+export default ProductImageWithoutAHeart_purchase

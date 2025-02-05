@@ -1,17 +1,17 @@
 import usePageName from '../../../hooks/usePageName'
-import ProductItemHorizontal from '../../product/components/ProductItemHorizontal'
-import products from '../../product/data/products'
+import SaleItem from '../components/SaleItem'
+import sale from '../data/sale'
 
-function SalesHistory() {
+function SaleHistory() {
   usePageName('구매내역')
 
   return (
     <div>
-      {products.map((product, index) => (
-        <ProductItemHorizontal key={index} product={product} />
+      {sale.map((product, index) => (
+        <SaleItem key={index} sale={product} />
       ))}
     </div>
   )
 }
 
-export default SalesHistory
+export default SaleHistory
