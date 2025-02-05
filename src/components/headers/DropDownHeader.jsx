@@ -53,7 +53,9 @@ function DropDownHeader({ back, feature, routes, title }) {
               type={name == title ? '' : 'gray'}
               onClick={() => {
                 close()
-                router(to)
+                router(to, {
+                  replace: true,
+                })
               }}
             >
               {name}
