@@ -33,7 +33,7 @@ function DatePicker({ label, required, value, setValue, validate }) {
       )}
       <PickerWrapper onClick={() => dateInput.current.showPicker()}>
         <InputValue value={koreanLocalDate} label={label} />
-        <MaterialIcon name='calendar_month' />
+        <MaterialIcon name='calendar_month' className='text-gray-600' />
       </PickerWrapper>
       <input
         ref={dateInput}

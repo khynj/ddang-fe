@@ -1,15 +1,22 @@
 import PropTypes from 'prop-types'
 import useModal from '../../hooks/useModal'
-import Modal from '../modals/Modal'
+import Modal from './Modal'
 import MaterialIcon from '../icons/MaterialIcon'
-import InputValue from './InputValue'
-import PickerWrapper from './PickerWrapper'
+import InputValue from '../form/InputValue'
+import PickerWrapper from '../form/PickerWrapper'
 import { useState } from 'react'
-import Label from './Label'
-import InputError from './InputError'
-import DefaultButton from '../buttons/DefaultButton'
+import Label from '../form/Label'
+import InputError from '../form/InputError'
+import ModalItem from './ModalItem'
 
-function ModalPicker({ label, required, value, setValue, validate, options }) {
+function DealLocationPicker({
+  label,
+  required,
+  value,
+  setValue,
+  validate,
+  options,
+}) {
   const { isOpen, open, close } = useModal(value)
   const [error, setError] = useState('')
   const onClose = v => {
@@ -29,19 +36,19 @@ function ModalPicker({ label, required, value, setValue, validate, options }) {
         )}
         <PickerWrapper onClick={open}>
           <InputValue value={value} label={label} />
-          <MaterialIcon name='chevron_right' />
+          <MaterialIcon name='chevron_right' className='text-gray-600' />
         </PickerWrapper>
       </div>
       {isOpen && (
         <Modal close={() => onClose(value)}>
           {options.map(option => (
-            <DefaultButton
+            <div
+              className='w-full'
               key={option.id}
-              type={'gray'}
               onClick={() => onClose(option.value)}
             >
-              {option.value}
-            </DefaultButton>
+              <ModalItem type={'gray'}>{option.value}</ModalItem>
+            </div>
           ))}
         </Modal>
       )}
@@ -49,7 +56,7 @@ function ModalPicker({ label, required, value, setValue, validate, options }) {
   )
 }
 
-ModalPicker.propTypes = {
+DealLocationPicker.propTypes = {
   label: PropTypes.string,
   required: PropTypes.bool,
   value: PropTypes.any,
@@ -59,4 +66,4 @@ ModalPicker.propTypes = {
   options: PropTypes.array,
 }
 
-export default ModalPicker
+export default DealLocationPicker

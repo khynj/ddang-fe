@@ -4,11 +4,12 @@ import TextInput from '@/components/form/TextInput'
 import TextArea from '@/components/form/TextArea'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import DatePicker from '@/components/form/DatePicker'
-import ModalPicker from '@/components/form/ModalPicker'
 import { validate } from '@/utils/validate'
 import NumberInput from '@/components/form/NumberInput'
 import ImagePicker from '../components/ImagePicker'
-import categories from '../data/categories'
+import CategoryPicker from '@/components/modals/CategoryPicker'
+import DealTypePicker from '@/components/modals/DealtypePicker'
+import DealLocationPicker from '@/components/modals/DealLocationPicker'
 
 function ProductRegisterPage() {
   usePageName('상품등록')
@@ -89,16 +90,12 @@ function ProductRegisterPage() {
         setValue={setProductName}
         validate={validation.productName}
       />
-      <ModalPicker
+      <CategoryPicker
         label='카테고리'
         required
         value={category}
         setValue={setCategory}
         validate={validation.category}
-        options={categories.map(category => ({
-          id: category.id,
-          value: category.name,
-        }))}
       />
       <NumberInput
         label='최소입찰가'
@@ -134,14 +131,14 @@ function ProductRegisterPage() {
         setValue={setDescription}
         validate={validation.description}
       />
-      <ModalPicker
+      <DealTypePicker
         label='거래 유형'
         required
         value={tradeType}
         setValue={setTradeType}
         validate={validation.tradeType}
       />
-      <ModalPicker
+      <DealLocationPicker
         label='거래희망장소'
         required
         value={tradePlace}
