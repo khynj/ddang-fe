@@ -14,26 +14,26 @@ import {
   PaymentHistory,
   NotificationPage,
   ChatroomListPage,
+  PurchaseHistory,
+  SaleHistory,
+  Favorites,
+  DebateListPage,
+  ChatroomPage,
+  AppSetting,
+  CustomerService,
+  TermsAndPolicies,
+  MyLocations,
+  Subscriptions,
+  Notices,
+  ReviewHistory,
+  ChangePassword,
 } from './features'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
 import NotFoundPage from './pages/NotFoundPage'
 import DropDownLayout from './layouts/DropDownLayout'
-import PurchaseHistory from './features/payment/pages/PurchaseHistory'
-import SalesHistory from './features/payment/pages/SaleHistory'
-import Favorites from './features/user/pages/Favorites'
 import MyAuctionLayout from './layouts/MyAuctionLayout'
-import DebateListPage from './features/chat/pages/DebateListPage'
-import ChatroomPage from './features/chat/pages/ChatroomPage'
-import AppSetting from './features/user/pages/AppSetting'
-import CustomerService from './features/user/pages/CustomerService'
-import TermsAndPolicies from './features/user/pages/TermsAndPolicies'
-import MyLocations from './features/user/pages/MyLocations'
-import Subscriptions from './features/user/pages/Subscriptions'
-import Notices from './features/user/pages/Notices'
-import ReviewHistory from './features/user/pages/ReviewHistory'
-import ChangePassword from './features/user/pages/ChangePassword'
 import { useEffect } from 'react'
 
 function App() {
@@ -67,7 +67,18 @@ function App() {
           <Route index element={<Navigate to='bidding-list' />} />
           <Route
             path='bidding-list'
-            element={<MyAuctionLayout name={'입찰'} />}
+            element={
+              <MyAuctionLayout
+                name='입찰현황'
+                tabs={[
+                  { name: '입찰중인 상품', to: '', end: true },
+                  {
+                    name: '낙찰된 상품',
+                    to: 'sold',
+                  },
+                ]}
+              />
+            }
           >
             <Route
               index
@@ -90,7 +101,19 @@ function App() {
           </Route>
           <Route
             path='selling-list'
-            element={<MyAuctionLayout name={'판매'} />}
+            element={
+              <MyAuctionLayout
+                name='판매현황'
+                tabs={[
+                  { name: '판매중인 상품', to: '', end: true },
+                  { name: '판매 예정 상품', to: 'pre', end: true },
+                  {
+                    name: '낙찰된 상품',
+                    to: 'sold',
+                  },
+                ]}
+              />
+            }
           >
             <Route
               index
@@ -107,6 +130,17 @@ function App() {
                 <ProductListPage
                   filters
                   filter={product => product.endTime < new Date().toISOString()}
+                />
+              }
+            />
+            <Route
+              path='pre'
+              element={
+                <ProductListPage
+                  filters
+                  filter={product =>
+                    product.startTime < new Date().toISOString()
+                  }
                 />
               }
             />
@@ -149,7 +183,7 @@ function App() {
           <Route path='edit-profile' element={<EditProfilePage />} />
           <Route path='charge' element={<ChargePage />} />
           <Route path='purchase-history' element={<PurchaseHistory />} />
-          <Route path='sale-history' element={<SalesHistory />} />
+          <Route path='sale-history' element={<SaleHistory />} />
           <Route path='favorites' element={<Favorites />}>
             <Route path='pre' element={<ProductListPage />} />
             <Route path='after' element={<ProductListPage />} />

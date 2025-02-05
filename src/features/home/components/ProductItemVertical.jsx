@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { dday } from '@/utils/Dday'
-import ProductImage from './ProductImage'
+import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router-dom'
 function ProductItemVertical({ product }) {
   const price = new Intl.NumberFormat('ko-KR').format(product.currentBidPrice)

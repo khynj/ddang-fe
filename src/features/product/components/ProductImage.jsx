@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types'
 import FavoriteButton from '@/components/icons/FavoriteButton'
 
-function ProductImage({ product, heartSize = 32 }) {
+function ProductImage({ product, heartSize = 32, heart }) {
   return (
     <div
-      className='h-full w-full aspect-square flex items-center
+      className='w-full aspect-square flex shrink-0 items-center justify-center
         brightness-97 bg-white rounded-xl overflow-hidden'
     >
-      <div className='absolute top-[4%] left-[4%]'>
-        <FavoriteButton liked={product.isFavorite} size={heartSize} />
-      </div>
+      {heart && (
+        <div className='absolute top-[4%] left-[4%]'>
+          <FavoriteButton liked={product.isFavorite} size={heartSize} />
+        </div>
+      )}
       <img
         src={product.photo}
         alt={product.title}
@@ -22,6 +24,7 @@ function ProductImage({ product, heartSize = 32 }) {
 ProductImage.propTypes = {
   product: PropTypes.object.isRequired,
   heartSize: PropTypes.number,
+  heart: PropTypes.bool,
 }
 
 export default ProductImage

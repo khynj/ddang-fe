@@ -1,6 +1,6 @@
 import HomeListHeader from './HomeListHeader'
-import ProductItemSmall from './ProductItemSmall'
-import products from '../data/products'
+import ProductItemSmall from '../../product/components/ProductItemSmall'
+import products from '../../product/data/products'
 
 function HomeBiddingList() {
   return (
