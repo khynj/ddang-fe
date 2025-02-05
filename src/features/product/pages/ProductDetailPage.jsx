@@ -12,7 +12,7 @@ import IconButton from '@/components/buttons/IconButton.jsx'
 import FavoriteButton from '@/components/icons/FavoriteButton.jsx'
 import DefaultButton from '@/components/buttons/DefaultButton.jsx'
 import { dday } from '@/utils/Dday.js'
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function ProductDetailPage({ product = example }) {
   usePageName('제품상세')
@@ -101,9 +101,12 @@ function ProductDetailPage({ product = example }) {
           />
         </div>
         <hr className='border-gray-200' />
-        <div>
+        <Link
+          to={`/profile/${product.seller.id}`}
+          className='flex flex-col gap-2'
+        >
           <ProfileSmall user={product.seller} />
-        </div>
+        </Link>
         <hr className='border-gray-200' />
         <div className='flex flex-col gap-3'>
           <h1 className='font-bold'>{product.auction.productName} 관련 매물</h1>
