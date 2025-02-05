@@ -7,16 +7,18 @@ import PickerWrapper from './PickerWrapper'
 import { useState } from 'react'
 import Label from './Label'
 import InputError from './InputError'
+import DefaultButton from '../buttons/DefaultButton'
 
-function ModalPicker({ label, required, value, setValue, validate, children }) {
+function ModalPicker({ label, required, value, setValue, validate, options }) {
   const { isOpen, open, close } = useModal(value)
   const [error, setError] = useState('')
-  useState(() => {
+  const onClose = v => {
     if (validate) {
-      setError(validate(value))
+      setError(validate(v))
     }
-    setValue(value)
-  }, [value])
+    setValue(v)
+    close()
+  }
   return (
     <>
       <div className='flex flex-col gap-2 py-3'>
@@ -31,8 +33,16 @@ function ModalPicker({ label, required, value, setValue, validate, children }) {
         </PickerWrapper>
       </div>
       {isOpen && (
-        <Modal close={close}>
-          <h1>{children}</h1>
+        <Modal close={() => onClose(value)}>
+          {options.map(option => (
+            <DefaultButton
+              key={option.id}
+              type={'gray'}
+              onClick={() => onClose(option.value)}
+            >
+              {option.value}
+            </DefaultButton>
+          ))}
         </Modal>
       )}
     </>
@@ -46,6 +56,7 @@ ModalPicker.propTypes = {
   setValue: PropTypes.func,
   validate: PropTypes.func,
   children: PropTypes.node,
+  options: PropTypes.array,
 }
 
 export default ModalPicker

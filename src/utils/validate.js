@@ -1,13 +1,32 @@
 const validate = {
   maxValue: (v, maximum) =>
+    v && v && v > maximum && `${maximum} 까지만 가능해요`,
+  minValue: (v, minimum) =>
+    v && v < minimum && `${minimum} 이상으로 입력해주세요.`,
+  maxDate: (v, maximum) =>
     v &&
     v &&
     v > maximum &&
-    `${Intl.NumberFormat('ko-KR').format(maximum)}까지만 가능해요`,
-  minValue: (v, minimum) =>
+    `${maximum.toLocaleString('ko-KR', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    })} 까지만 가능해요`,
+  minDate: (v, minimum) =>
     v &&
     v < minimum &&
-    `${Intl.NumberFormat('ko-KR').format(minimum)} 이상으로 입력해주세요.`,
+    `${minimum.toLocaleString('ko-KR', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    })} 이후로 입력해주세요.`,
+  maxCost: (v, maximum) =>
+    v &&
+    v &&
+    v > maximum &&
+    `${Intl.NumberFormat('ko-KR').format(maximum)}원 까지만 가능해요`,
+  minCost: (v, minimum) =>
+    v &&
+    v < minimum &&
+    `${Intl.NumberFormat('ko-KR').format(minimum)}원 이상으로 입력해주세요.`,
   required: v => !v && '필수 입력사항이에요.',
   maxLength: (v, maximum) =>
     v &&

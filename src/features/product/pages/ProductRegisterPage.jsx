@@ -95,13 +95,11 @@ function ProductRegisterPage() {
         value={category}
         setValue={setCategory}
         validate={validation.category}
-      >
-        {categories.map(category => (
-          <ModalPicker.Option key={category.id} value={category}>
-            {category.name}
-          </ModalPicker.Option>
-        ))}
-      </ModalPicker>
+        options={categories.map(category => ({
+          id: category.id,
+          value: category.name,
+        }))}
+      />
       <NumberInput
         label='최소입찰가'
         required
