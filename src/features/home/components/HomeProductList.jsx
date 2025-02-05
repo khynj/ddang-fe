@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import HomeListHeader from './HomeListHeader'
 import ProductItemVertical from './ProductItemVertical'
-import products from '../data/products'
+import products from '../../product/data/products'
 
 function HomeProductList({ type }) {
   return (

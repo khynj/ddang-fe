@@ -1,7 +1,7 @@
 import HomeBiddingList from '../components/HomeBiddingList'
 import HomeMainSlider from '../components/HomeMainSlider'
 import HomeProductList from '../components/HomeProductList'
-import types from '../data/homeProductTypes'
+import types from '../../product/data/homeProductTypes'
 import WelcomeBanner from '../../user/components/WelcomeBanner'
 
 function HomePage() {

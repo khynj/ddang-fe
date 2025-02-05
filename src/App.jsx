@@ -14,26 +14,26 @@ import {
   PaymentHistory,
   NotificationPage,
   ChatroomListPage,
+  PurchaseHistory,
+  SaleHistory,
+  Favorites,
+  DebateListPage,
+  ChatroomPage,
+  AppSetting,
+  CustomerService,
+  TermsAndPolicies,
+  MyLocations,
+  Subscriptions,
+  Notices,
+  ReviewHistory,
+  ChangePassword,
 } from './features'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
 import NotFoundPage from './pages/NotFoundPage'
 import DropDownLayout from './layouts/DropDownLayout'
-import PurchaseHistory from './features/payment/pages/PurchaseHistory'
-import SaleHistory from './features/payment/pages/SaleHistory'
-import Favorites from './features/user/pages/Favorites'
 import MyAuctionLayout from './layouts/MyAuctionLayout'
-import DebateListPage from './features/chat/pages/DebateListPage'
-import ChatroomPage from './features/chat/pages/ChatroomPage'
-import AppSetting from './features/user/pages/AppSetting'
-import CustomerService from './features/user/pages/CustomerService'
-import TermsAndPolicies from './features/user/pages/TermsAndPolicies'
-import MyLocations from './features/user/pages/MyLocations'
-import Subscriptions from './features/user/pages/Subscriptions'
-import Notices from './features/user/pages/Notices'
-import ReviewHistory from './features/user/pages/ReviewHistory'
-import ChangePassword from './features/user/pages/ChangePassword'
 import { useEffect } from 'react'
 
 function App() {

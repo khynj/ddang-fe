@@ -1,6 +1,6 @@
 import usePageName from '../../../hooks/usePageName'
-import PurchaseItem from '../components/PurchaseItem'
-import purchase from '../data/purchase'
+import ProductHistoryItem from '../components/ProductHistoryItem'
+import purchase from '../../payment/data/purchase'
 
 function PurchaseHistory() {
   usePageName('구매내역')
@@ -8,7 +8,7 @@ function PurchaseHistory() {
   return (
     <div>
       {purchase.map((product, index) => (
-        <PurchaseItem key={index} purchase={product} />
+        <ProductHistoryItem key={index} product={product} />
       ))}
     </div>
   )
