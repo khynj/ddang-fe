@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types'
-import { trimText } from '@/utils/trimText'
 import { Link } from 'react-router-dom'
 import ProductImageWithoutAHeart from './ProductImageWithoutAHeart'
 import relativeTime from '@/utils/relativeTime'
 
 function PurchaseItem({ purchase }) {
-  const title = trimText(purchase.title, 14)
   const price = Intl.NumberFormat('ko-KR').format(purchase.hammeredPrice)
   const minimumBid = Intl.NumberFormat('ko-KR').format(purchase.minimumBid)
   const instantHammerPrice = Intl.NumberFormat('ko-KR').format(
@@ -24,7 +22,9 @@ function PurchaseItem({ purchase }) {
       </div>
       <div className='flex flex-col justify-between w-full py-0.5'>
         <div className='flex justify-between'>
-          <p className='font-bold text-gray-500 tracking-tight'>{title}</p>
+          <p className='font-bold text-gray-500 tracking-tight truncate'>
+            {purchase.title}
+          </p>
           <p className='text-sm text-gray-700'>{day}</p>
         </div>
 
