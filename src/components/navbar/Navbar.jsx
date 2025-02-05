@@ -18,7 +18,13 @@ function Navbar() {
       className={`max-w-lg flex grow flex-row justify-around items-center bg-white ${style.navbar}`}
     >
       {navs.map((nav, index) => (
-        <NavLink key={index} className={getClassName} to={nav.to} end={nav.end}>
+        <NavLink
+          key={index}
+          className={getClassName}
+          to={nav.to}
+          end={nav.end}
+          replace
+        >
           <NavButton iconName={nav.iconName}>{nav.text}</NavButton>
         </NavLink>
       ))}

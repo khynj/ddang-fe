@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 function DefaultButton({ children, onClick, type }) {
   return (
     <button
-      className={`w-full p-3 rounded-lg ${
+      className={`w-full p-3 rounded-xl ${
         type === 'gray'
           ? 'text-gray-700 bg-gray-100'
           : type === 'red'

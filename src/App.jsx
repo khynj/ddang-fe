@@ -1,3 +1,4 @@
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import {
   initFCM,
   MyPage,
@@ -28,12 +29,11 @@ import {
   ReviewHistory,
   ChangePassword,
 } from './features'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
-import NotFoundPage from './pages/NotFoundPage'
 import DropDownLayout from './layouts/DropDownLayout'
 import MyAuctionLayout from './layouts/MyAuctionLayout'
+import NotFoundPage from './pages/NotFoundPage'
 import { useEffect } from 'react'
 
 function App() {
@@ -64,7 +64,7 @@ function App() {
             />
           }
         >
-          <Route index element={<Navigate to='bidding-list' />} />
+          <Route index element={<Navigate to='bidding-list' replace />} />
           <Route
             path='bidding-list'
             element={
