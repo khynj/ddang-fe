@@ -45,15 +45,15 @@ function ProductRegisterPage() {
       validate.maxLength(productName, 30) || validate.required(productName),
     category: category => validate.required(category),
     minBidPrice: minBidPrice =>
-      validate.minValue(minBidPrice, 0) ||
-      validate.maxValue(minBidPrice, 10000000) ||
+      validate.minPrice(minBidPrice, 0) ||
+      validate.maxPrice(minBidPrice, 10000000) ||
       validate.required(minBidPrice),
     instantHammerPrice: instantHammerPrice =>
-      validate.minValue(instantHammerPrice, minBidPrice) ||
-      validate.maxValue(minBidPrice, 10000000),
+      validate.minPrice(instantHammerPrice, minBidPrice) ||
+      validate.maxPrice(minBidPrice, 10000000),
     openDate: openDate => validate.required(openDate),
     closeDate: closeDate =>
-      validate.required(closeDate) || validate.minValue(closeDate, openDate),
+      validate.required(closeDate) || validate.minDate(closeDate, openDate),
     description: description =>
       validate.maxLength(description, 200) || validate.required(description),
     tradeType: tradeType => validate.required(tradeType),
