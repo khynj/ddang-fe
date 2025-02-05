@@ -17,7 +17,7 @@ function ProductItemHorizontal({ product }) {
       to={`/popup/product/${product.auctionId}`}
     >
       <div className='col-span-2'>
-        <ProductImage product={product} heartSize={26} />
+        <ProductImage product={product} heartSize={26} heart />
       </div>
       <div className='col-span-4 flex flex-col w-full py-0.5 justify-between'>
         <div className='flex justify-between'>

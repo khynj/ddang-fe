@@ -4,7 +4,7 @@ import FavoriteButton from '@/components/icons/FavoriteButton'
 function ProductImage({ product, heartSize = 32, heart }) {
   return (
     <div
-      className='w-full aspect-square flex shrink-0 items-center justify-center
+      className='w-full aspect-square flex items-center justify-center
         brightness-97 bg-white rounded-xl overflow-hidden'
     >
       {heart && (
