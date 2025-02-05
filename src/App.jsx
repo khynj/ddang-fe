@@ -67,7 +67,18 @@ function App() {
           <Route index element={<Navigate to='bidding-list' />} />
           <Route
             path='bidding-list'
-            element={<MyAuctionLayout name={'입찰'} />}
+            element={
+              <MyAuctionLayout
+                name='입찰현황'
+                tabs={[
+                  { name: '입찰중인 상품', to: '', end: true },
+                  {
+                    name: '낙찰된 상품',
+                    to: 'sold',
+                  },
+                ]}
+              />
+            }
           >
             <Route
               index
@@ -90,7 +101,19 @@ function App() {
           </Route>
           <Route
             path='selling-list'
-            element={<MyAuctionLayout name={'판매'} />}
+            element={
+              <MyAuctionLayout
+                name='판매현황'
+                tabs={[
+                  { name: '판매중인 상품', to: '', end: true },
+                  { name: '판매 예정 상품', to: 'pre', end: true },
+                  {
+                    name: '낙찰된 상품',
+                    to: 'sold',
+                  },
+                ]}
+              />
+            }
           >
             <Route
               index
@@ -107,6 +130,17 @@ function App() {
                 <ProductListPage
                   filters
                   filter={product => product.endTime < new Date().toISOString()}
+                />
+              }
+            />
+            <Route
+              path='pre'
+              element={
+                <ProductListPage
+                  filters
+                  filter={product =>
+                    product.startTime < new Date().toISOString()
+                  }
                 />
               }
             />

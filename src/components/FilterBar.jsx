@@ -8,7 +8,7 @@ function FilterBar({ children }) {
   const { isOpen, open, close, value } = useModal('최신순')
   const options = ['최신순', '인기순', '마감임박']
   return (
-    <div className='flex px-4 pt-3 pb-2 justify-between items-center'>
+    <div className='flex px-4 py-2 justify-between items-center'>
       <div className='flex gap-1 h-8'>{children}</div>
       <div
         className='font-bold text-sm flex gap-1 items-center text-gray-950'
