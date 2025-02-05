@@ -16,8 +16,8 @@ function CustomerService() {
           지연님, 무엇을 도와드릴까요?
         </p>
         <img
-          src='/images/mole.png'
-          alt='귀여운 두더지'
+          src='https://github.com/user-attachments/assets/62656ab6-607a-49ab-875e-6402f765cd5a'
+          alt='두둥이'
           className='mx-auto mt-4 w-24 h-24'
         />
       </div>

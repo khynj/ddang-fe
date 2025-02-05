@@ -11,13 +11,6 @@ export default [
   [
     { to: 'notices', icon: 'event_note', title: '공지사항' },
     { to: 'customer-service', icon: 'support_agent', title: '고객센터' },
-  ],
-  [
-    {
-      to: 'policies',
-      icon: 'sticky_note_2',
-      title: '약관 및 정책',
-    },
-    { to: 'app-setting', icon: 'settings', title: '앱 설정' },
+    { to: 'app-setting', icon: 'settings', title: '앱 설정' }
   ],
 ]
