@@ -1,0 +1,36 @@
+name: Sync Front-End to GitLab repoA
+
+on:
+  push:
+    branches:
+      - master # Trigger when master branch is updated
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repoB
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "wndgur76@naver.com"
+
+      - name: Clone GitLab repoA
+        run: |
+          git clone https://oauth2:${{ secrets.GITLAB_PAT }}@lab.ssafy.com/s12-webmobile2-sub1/S12P11A705.git repoA
+          cd repoA
+          git config user.email "dkandjsl@gmail.com"
+          git config user.name "GitHub Actions"
+
+      - name: Copy repoB to repoA/Front-End
+        run: |
+          rm -rf repoA/Front-End  # Remove old Front-End folder if exists
+          mkdir -p repoA/Front-End
+          cp -r . repoA/Front-End  # Copy everything to Front-End/
+          cd repoA
+          git add Front-End/
+          git commit -m "Sync Front-End from repoB [$(date)]" || echo "No changes to commit"
+          git push origin master
