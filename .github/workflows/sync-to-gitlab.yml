@@ -20,10 +20,19 @@ jobs:
 
       - name: Clone GitLab repoA
         run: |
-          git clone --branch develop https://oauth2:${{ secrets.GITLAB_PAT }}@lab.ssafy.com/s12-webmobile2-sub1/S12P11A705.git repoA
+          git clone https://oauth2:${{ secrets.GITLAB_PAT }}@lab.ssafy.com/s12-webmobile2-sub1/S12P11A705.git repoA
           cd repoA
           git config user.email "dkandjsl@gmail.com"
           git config user.name "GitHub Actions"
+
+      - name: Create or Switch to 'FE' branch
+        run: |
+          cd repoA
+          if git rev-parse --verify FE; then
+            git checkout FE  # Switch to existing FE branch
+          else
+            git checkout -b FE  # Create new FE branch
+          fi
 
       - name: Copy repoB to repoA/Front-End
         run: |
@@ -33,4 +42,4 @@ jobs:
           cd repoA
           git add Front-End/
           git commit -m "Sync Front-End from repoB [$(date)]" || echo "No changes to commit"
-          git push origin develop  # Push to develop branch
+          git push origin FE  # Push to FE branch
