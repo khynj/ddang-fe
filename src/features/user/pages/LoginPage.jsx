@@ -11,17 +11,21 @@ function LoginPage() {
   usePageName('로그인')
   const route = useNavigate()
   return (
-    <div className='flex flex-col p-4 mt-2'>
-      <TextInput label='이메일' required type='email' />
-      <TextInput label='비밀번호' required type='password' />
-      <div className='mt-8 mb-3'>
-        <DefaultButton onClick={() => route('/explore')}>로그인</DefaultButton>
-      </div>
-      <div className='px-1 p-2 flex flex-row justify-between text-gray-500 text-sm'>
-        <div className='flex flex-row gap-4'>
-          <Link to='/popup/signup'>비밀번호 찾기</Link>
+    <div className='mt-2'>
+      <div className=' p-4'>
+        <TextInput label='이메일' required type='email' />
+        <TextInput label='비밀번호' required type='password' />
+        <div className='mt-8 mb-3'>
+          <DefaultButton onClick={() => route('/explore')}>
+            로그인
+          </DefaultButton>
         </div>
-        <Link to='/popup/signup'>회원가입</Link>
+        <div className='px-1 p-2 flex flex-row justify-between text-gray-500 text-sm'>
+          <div className='flex flex-row gap-4'>
+            <Link to='/popup/signup'>비밀번호 찾기</Link>
+          </div>
+          <Link to='/popup/signup'>회원가입</Link>
+        </div>
       </div>
       <StickyContainer plain>
         <div className='flex flex-col gap-4'>

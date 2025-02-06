@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import FavoriteButton from '@/components/icons/FavoriteButton'
 
-function ProductImage({ product, heartSize = 32, heart }) {
+function ProductImage({ product, heartSize = 32, heart, small }) {
   return (
     <div
-      className='w-full aspect-square flex items-center justify-center
-        brightness-97 bg-white rounded-xl overflow-hidden'
+      className={`relative w-full aspect-square flex items-center justify-center
+        brightness-97 bg-white rounded-${small ? 'lg' : 'xl'} overflow-hidden`}
     >
       {heart && (
         <div className='absolute top-[4%] left-[4%]'>
@@ -25,6 +25,7 @@ ProductImage.propTypes = {
   product: PropTypes.object.isRequired,
   heartSize: PropTypes.number,
   heart: PropTypes.bool,
+  small: PropTypes.bool,
 }
 
 export default ProductImage

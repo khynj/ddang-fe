@@ -26,9 +26,10 @@ import {
   MyLocationsPage,
   SubscriptionsPage,
   NoticesPage,
-  ReviewHistoryPage,
   ChangePasswordPage,
   ProfilePage,
+  MyLocationsRegisterPage,
+  ReviewHistoryPage
 } from './features'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
@@ -37,7 +38,7 @@ import MyAuctionLayout from './layouts/MyAuctionLayout'
 import NotFoundPage from './pages/NotFoundPage'
 import { useEffect } from 'react'
 import ROUTES from './data/ROUTES'
-import { MyLocationsRegisterPage } from './features/index'
+import ReviewHistoryLayout from './layouts/ReviewHistoryLayout'
 
 function App() {
   const route = useNavigate()
@@ -57,6 +58,10 @@ function App() {
           <Route
             path={ROUTES.PRODUCT_LIST}
             element={<ProductListPage filters />}
+          />
+          <Route
+            path={ROUTES.PRODUCT_LIST_BY_USER}
+            element={<ProductListPage />}
           />
         </Route>
         <Route
@@ -231,9 +236,14 @@ function App() {
           <Route path={ROUTES.POLICIES} element={<TermsAndPoliciesPage />} />
           <Route path={ROUTES.SUBSCRIPTIONS} element={<SubscriptionsPage />} />
           <Route path={ROUTES.NOTICES} element={<NoticesPage />} />
-          <Route path={ROUTES.REVIEW_HISTORY} element={<ReviewHistoryPage />}>
-            <Route path={'received'} element={<ProductListPage />} />
-            <Route path={'written'} element={<ProductListPage />} />
+          <Route
+            path={ROUTES.USER_REVIEW_HISTORY}
+            element={<ReviewHistoryPage />}
+          />
+          <Route path={ROUTES.REVIEW_HISTORY} element={<ReviewHistoryLayout />}>
+            <Route index element={<Navigate to={'received'} replace />} />
+            <Route path={'received'} element={<ReviewHistoryPage received />} />
+            <Route path={'written'} element={<ReviewHistoryPage />} />
           </Route>
         </Route>
         <Route

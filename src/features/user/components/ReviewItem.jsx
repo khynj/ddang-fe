@@ -4,7 +4,7 @@ import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, received }) => {
   const hammeredPrice = Intl.NumberFormat('ko-KR').format(
     review.product.hammeredPrice,
   )
@@ -13,38 +13,40 @@ const ReviewItem = ({ review }) => {
   return (
     <div className='flex flex-col gap-2 p-4 bg-white text-sm border-b border-gray-200'>
       {/* User Info */}
-      <div className='flex justify-between items-center '>
-        <div className='flex items-center gap-2'>
-          <ProfileImage src={review.review.profileImage} size={32} />
-          <p className='text-gray-700'>{review.review.nickname}</p>
+      <div className='flex justify-between'>
+        <div className='flex flex-col gap-2'>
+          {received && (
+            <div className='flex items-center gap-2 px-1'>
+              <ProfileImage src={review.review.profileImage} size={32} />
+              <p className='text-gray-700'>{review.review.nickname}</p>
+            </div>
+          )}
+          <Link
+            className='flex grid grid-cols-6 gap-2'
+            to={`/popup/product/${review.product.productId}`}
+          >
+            <div className='col-span-1 py-1'>
+              <ProductImage product={review.product} small />
+            </div>
+            <div className='col-span-5 flex flex-col py-1'>
+              <p className='text-gray-950 truncate flex-grow'>
+                {review.product.title}
+              </p>
+              <p className='font-semibold text-gray-950 mt-1'>
+                {hammeredPrice}원
+              </p>
+            </div>
+          </Link>
         </div>
-        <p className='text-xs text-gray-900'>2024. 01. 29</p>
-      </div>
-
-      {/* Product Info */}
-      <Link
-        className='flex grid grid-cols-7 gap-2'
-        to={ROUTES.PRODUCT_DETAIL.replace(':id', review.product.productId)}
-      >
-        <div className='col-span-1 py-1'>
-          <ProductImage product={review.product} />
-        </div>
-        <div className='col-span-6 flex flex-col justify-end'>
-          <div className='flex justify-between items-center w-full'>
-            <p className='text-gray-950 truncate flex-grow'>
-              {review.product.title}
-            </p>
-            <span
-              className={`text-xs font-semibold flex-shrink-0 ml-2 ${
+        <div className='flex flex-col shrink-0 gap-2.5 mt-1'>
+          <p className='text-xs text-gray-900'>2024. 01. 29</p>
+          <span className={`text-xs font-semibold flex-shrink-0 ml-2 ${
                 role === '판매상품' ? 'text-ddblue-500' : 'text-gray-700'
-              }`}
-            >
-              {role}
-            </span>
-          </div>
-          <p className='font-semibold text-gray-950 mt-1'>{hammeredPrice}원</p>
+              }`}>
+            {role}
+          </span>
         </div>
-      </Link>
+      </div>
 
       <p className='text-sm font-semibold text-gray-900'>
         {scoreToText(review.review.score)}
@@ -73,6 +75,7 @@ function scoreToText(score) {
 
 ReviewItem.propTypes = {
   review: PropTypes.object,
+  received: PropTypes.bool,
 }
 
 export default ReviewItem
