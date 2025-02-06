@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import ProfileImage from './ProfileImage'
 import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
+import ROUTES from '@/data/ROUTES'
 
 const ReviewItem = ({ review, received }) => {
   const hammeredPrice = Intl.NumberFormat('ko-KR').format(
@@ -39,7 +40,9 @@ const ReviewItem = ({ review, received }) => {
         </div>
         <div className='flex flex-col shrink-0 gap-2.5 mt-1'>
           <p className='text-xs text-gray-900'>2024. 01. 29</p>
-          <span className='text-xs text-ddblue-500 font-semibold flex-shrink-0 ml-2'>
+          <span className={`text-xs font-semibold flex-shrink-0 ml-2 ${
+                role === '판매상품' ? 'text-ddblue-500' : 'text-gray-700'
+              }`}>
             {role}
           </span>
         </div>
