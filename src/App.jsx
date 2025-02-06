@@ -29,7 +29,7 @@ import {
   ChangePasswordPage,
   ProfilePage,
   MyLocationsRegisterPage,
-  ReviewHistoryPage
+  ReviewHistoryPage,
 } from './features'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
