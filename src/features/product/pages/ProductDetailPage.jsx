@@ -14,7 +14,7 @@ import DefaultButton from '@/components/buttons/DefaultButton.jsx'
 import { dday } from '@/utils/Dday.js'
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
-import ROUTES from '../../../data/routes.js'
+import ROUTES from '@/data/ROUTES.js'
 
 function ProductDetailPage({ product = example }) {
   usePageName('제품상세')

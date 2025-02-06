@@ -1,7 +1,7 @@
 import HomeListHeader from './HomeListHeader'
 import ProductItemSmall from '../../product/components/ProductItemSmall'
 import products from '../../product/data/products'
-import ROUTES from '../../../data/routes'
+import ROUTES from '@/data/ROUTES'
 
 function HomeBiddingList() {
   return (

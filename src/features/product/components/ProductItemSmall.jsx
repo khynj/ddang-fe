@@ -3,7 +3,7 @@ import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { wonitzie } from '@/utils/wonitize'
 import { Link } from 'react-router-dom'
-import ROUTES from '../../../data/routes'
+import ROUTES from '@/data/ROUTES'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice)
