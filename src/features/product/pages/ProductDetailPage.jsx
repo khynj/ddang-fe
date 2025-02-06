@@ -12,7 +12,9 @@ import IconButton from '@/components/buttons/IconButton.jsx'
 import FavoriteButton from '@/components/icons/FavoriteButton.jsx'
 import DefaultButton from '@/components/buttons/DefaultButton.jsx'
 import { dday } from '@/utils/Dday.js'
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import ROUTES from '@/data/ROUTES.js'
 
 function ProductDetailPage({ product = example }) {
   usePageName('제품상세')
@@ -27,7 +29,9 @@ function ProductDetailPage({ product = example }) {
     product.auction.currentBidPrice,
   )
 
-  // load product by id
+  useEffect(() => {
+    // load product by id
+  }, [])
 
   return (
     <div className='flex flex-col gap-2 pb-72'>
@@ -101,9 +105,12 @@ function ProductDetailPage({ product = example }) {
           />
         </div>
         <hr className='border-gray-200' />
-        <div>
+        <Link
+          to={ROUTES.PROFILE.replace(':id', product.seller.memberId)}
+          className='flex flex-col gap-2'
+        >
           <ProfileSmall user={product.seller} />
-        </div>
+        </Link>
         <hr className='border-gray-200' />
         <div className='flex flex-col gap-3'>
           <h1 className='font-bold'>{product.auction.productName} 관련 매물</h1>

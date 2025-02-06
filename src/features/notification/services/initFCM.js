@@ -1,9 +1,9 @@
 import { initializeApp } from 'firebase/app'
 import { getMessaging, getToken } from 'firebase/messaging'
 
-export function initFCM() {
-  console.log('initialize FCM')
+let messaging
 
+export function initFCM() {
   const firebaseConfig = {
     apiKey: import.meta.env.VITE_FCM_PUBLIC_KEY,
     authDomain: 'heycheese-6b35b.firebaseapp.com',
@@ -16,7 +16,7 @@ export function initFCM() {
 
   const app = initializeApp(firebaseConfig)
 
-  const messaging = getMessaging(app)
+  messaging = getMessaging(app)
 
   if (!('Notification' in window)) {
     console.log('This browser does not support notifications.')
@@ -24,17 +24,25 @@ export function initFCM() {
   }
 
   if (Notification.permission === 'granted') {
-    return getToken(messaging, {
-      vapidKey: import.meta.env.VITE_VAPID_KEY,
-    })
+    saveToken()
   } else {
     Notification.requestPermission().then(permission => {
       if (permission === 'granted') {
-        console.log('Notification permission granted.')
-        return getToken(messaging, {
-          vapidKey: import.meta.env.VITE_VAPID_KEY,
-        })
+        saveToken()
       }
     })
   }
+}
+
+function saveToken() {
+  if (localStorage.getItem('fcmToken')) {
+    console.log('Token:', localStorage.getItem('fcmToken'))
+    return
+  }
+  getToken(messaging, {
+    vapidKey: import.meta.env.VITE_VAPID_KEY,
+  }).then(token => {
+    console.log('Token:', token)
+    localStorage.setItem('fcmToken', token)
+  })
 }

@@ -1,7 +1,7 @@
 import usePageName from '../../../hooks/usePageName'
 import LocationItem from '../components/LocationItem'
 
-function MyLocations() {
+function MyLocationsPage() {
   usePageName('내 장소')
 
   const locations = [
@@ -33,4 +33,4 @@ function MyLocations() {
   )
 }
 
-export default MyLocations
+export default MyLocationsPage

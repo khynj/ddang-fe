@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import IconButton from '../buttons/IconButton'
+import ROUTES from '../../data/ROUTES'
 
 function ExploreHeader() {
   const route = useNavigate()
   const search = e => {
     e.preventDefault()
-    route('/explore/search/products?search=' + e.target[0].value)
+    route(`${ROUTES.PRODUCT_LIST}?search=${e.target[0].value}`)
     e.target[0].blur()
   }
   return (
@@ -27,7 +28,7 @@ function ExploreHeader() {
           size: 28,
           className: 'text-gray-600',
         }}
-        onClick={() => route('/popup/notifications')}
+        onClick={() => route(ROUTES.NOTIFICATIONS)}
       />
       <IconButton
         icon={{
@@ -35,7 +36,7 @@ function ExploreHeader() {
           size: 28,
           className: 'text-gray-600',
         }}
-        onClick={() => route('/popup/chatrooms')}
+        onClick={() => route(ROUTES.CHAT)}
       />
     </header>
   )

@@ -1,9 +1,9 @@
 import usePageName from '../../../hooks/usePageName'
 
-function TermsAndPolicies() {
+function TermsAndPoliciesPage() {
   usePageName('약관 및 정책')
 
   return 'A'
 }
 
-export default TermsAndPolicies
+export default TermsAndPoliciesPage
