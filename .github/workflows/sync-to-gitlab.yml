@@ -29,7 +29,7 @@ jobs:
         run: |
           rm -rf repoA/Front-End  # Remove old Front-End folder if exists
           mkdir -p repoA/Front-End
-          cp -r . repoA/Front-End  # Copy everything to Front-End/
+          rsync -av --exclude=repoA --exclude=.git ./ repoA/Front-End/  # Copy everything except repoA and .git
           cd repoA
           git add Front-End/
           git commit -m "Sync Front-End from repoB [$(date)]" || echo "No changes to commit"
