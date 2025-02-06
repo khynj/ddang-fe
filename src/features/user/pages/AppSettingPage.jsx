@@ -1,6 +1,6 @@
 import usePageName from '../../../hooks/usePageName'
 import MyPageMenu from '../components/MyPageMenu'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 import useFcmToken from '../hooks/useFcmToken'
 
 function AppSettingPage() {

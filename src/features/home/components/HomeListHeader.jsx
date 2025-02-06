@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from '@/components/icons/MaterialIcon'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 function HomeListHeader({ type, to }) {
   return (

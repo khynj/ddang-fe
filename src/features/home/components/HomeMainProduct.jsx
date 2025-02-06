@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { dday } from '@/utils/Dday'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 function HomeMainProduct({ product, index, size }) {
   const price = Intl.NumberFormat('ko-KR').format(product.currentBidPrice)

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 import style from './Navbar.module.css'
 import NavButton from './NavButton'
 import ROUTES from '../../data/ROUTES'

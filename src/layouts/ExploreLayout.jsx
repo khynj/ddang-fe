@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 import ExploreHeader from '../components/headers/ExploreHeader'
 import Navbar from '../components/navbar/Navbar'
 function ExploreLayout() {

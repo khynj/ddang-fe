@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import TextInput from '@/components/form/TextInput'
 import usePageName from '@/hooks/usePageName'
