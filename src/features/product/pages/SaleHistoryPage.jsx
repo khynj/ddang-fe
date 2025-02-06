@@ -1,6 +1,6 @@
 import usePageName from '@/hooks/usePageName'
-import sale from '../../payment/data/sale'
 import ProductHistoryItem from '../components/ProductHistoryItem'
+import sale from '../data/sale'
 
 function SaleHistoryPage() {
   usePageName('구매내역')

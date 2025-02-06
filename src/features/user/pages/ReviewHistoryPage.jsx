@@ -1,6 +1,7 @@
-import { Outlet } from 'react-router-dom'
 import TabBar from '../../../components/navbar/TabBar'
 import usePageName from '../../../hooks/usePageName'
+import Review from '../components/ReviewItem'
+import REVIEWS from '../data/REVIEWS'
 
 function ReviewHistoryPage() {
   usePageName('리뷰내역')
@@ -14,7 +15,11 @@ function ReviewHistoryPage() {
           { to: 'written', name: '작성한 리뷰' },
         ]}
       />
-      <Outlet />
+      <div>
+        {REVIEWS.map((review, index) => (
+          <Review review={review} key={index} />
+        ))}
+      </div>
     </>
   )
 }
