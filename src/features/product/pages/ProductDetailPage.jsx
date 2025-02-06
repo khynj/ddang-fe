@@ -12,7 +12,7 @@ import IconButton from '@/components/buttons/IconButton.jsx'
 import FavoriteButton from '@/components/icons/FavoriteButton.jsx'
 import DefaultButton from '@/components/buttons/DefaultButton.jsx'
 import { dday } from '@/utils/Dday.js'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { useEffect } from 'react'
 import ROUTES from '@/data/ROUTES.js'
 

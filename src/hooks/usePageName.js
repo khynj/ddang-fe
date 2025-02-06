@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext } from 'react-router'
 
 export default function usePageName(title) {
   const { setTitle } = useOutletContext()

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import MyPageMenu from '../components/MyPageMenu'
 import usePageName from '@/hooks/usePageName'
 import profileImage from '@/assets/images/profileImage.png'

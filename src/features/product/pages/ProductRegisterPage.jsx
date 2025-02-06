@@ -12,7 +12,7 @@ import DealTypePicker from '@/components/modals/DealtypePicker'
 import DealLocationPicker from '@/components/modals/DealLocationPicker'
 import Modal from '../../../components/modals/Modal'
 import MaterialIcon from '../../../components/icons/MaterialIcon'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 function ProductRegisterPage() {
   usePageName('상품등록')

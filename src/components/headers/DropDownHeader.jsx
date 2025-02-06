@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import IconButton from '../buttons/IconButton'
 import Modal from '../modals/Modal'
 import DefaultButton from '../buttons/DefaultButton'

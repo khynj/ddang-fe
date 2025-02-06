@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { wonitzie } from '@/utils/wonitize'
-import { Link } from 'react-router-dom'
 import ROUTES from '@/data/ROUTES'
+import { Link } from 'react-router'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice)

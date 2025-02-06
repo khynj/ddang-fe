@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import ProfileImage from './ProfileImage'
 import ProductImage from '../../product/components/ProductImage'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 const ReviewItem = ({ review }) => {
   const hammeredPrice = Intl.NumberFormat('ko-KR').format(

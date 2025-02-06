@@ -1,5 +1,5 @@
 import TabBar from '@/components/navbar/TabBar'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 import usePageName from '@/hooks/usePageName'
 import PropTypes from 'prop-types'
 

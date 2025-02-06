@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import MaterialIcon from '../../../components/icons/MaterialIcon'
 import relativeTime from '../../../utils/relativeTime'
 /*

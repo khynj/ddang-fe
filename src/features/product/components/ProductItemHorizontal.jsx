@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import ProductImage from './ProductImage'
 import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 
 function ProductItemHorizontal({ product }) {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import relativeTime from '../../../utils/relativeTime'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 
 function DebateItem({ chatroom }) {
