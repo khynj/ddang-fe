@@ -1,7 +1,7 @@
 import TabBar from '../../../components/navbar/TabBar'
 import usePageName from '../../../hooks/usePageName'
 import Review from '../components/ReviewItem'
-import REVIEWS from '../data/REVIEWS_'
+import REVIEWS from '../data/REVIEWS'
 
 function ReviewHistory() {
   usePageName('리뷰내역')
