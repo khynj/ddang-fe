@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import ProfileImage from './ProfileImage'
 import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router-dom'
+import ROUTES from '@/data/ROUTES'
 
 const ReviewItem = ({ review }) => {
   const hammeredPrice = Intl.NumberFormat('ko-KR').format(
@@ -23,7 +24,7 @@ const ReviewItem = ({ review }) => {
       {/* Product Info */}
       <Link
         className='flex grid grid-cols-7 gap-2'
-        to={`/popup/product/${review.product.productId}`}
+        to={ROUTES.PRODUCT_DETAIL.replace(':id', review.product.productId)}
       >
         <div className='col-span-1 py-1'>
           <ProductImage product={review.product} />
@@ -33,7 +34,11 @@ const ReviewItem = ({ review }) => {
             <p className='text-gray-950 truncate flex-grow'>
               {review.product.title}
             </p>
-            <span className='text-xs text-ddblue-500 font-semibold flex-shrink-0 ml-2'>
+            <span
+              className={`text-xs font-semibold flex-shrink-0 ml-2 ${
+                role === '판매상품' ? 'text-ddblue-500' : 'text-gray-700'
+              }`}
+            >
               {role}
             </span>
           </div>

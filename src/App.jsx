@@ -37,6 +37,7 @@ import MyAuctionLayout from './layouts/MyAuctionLayout'
 import NotFoundPage from './pages/NotFoundPage'
 import { useEffect } from 'react'
 import ROUTES from './data/ROUTES'
+import { MyLocationsRegisterPage } from './features/index'
 
 function App() {
   const route = useNavigate()
@@ -196,6 +197,10 @@ function App() {
           <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+          <Route
+            path={ROUTES.MY_LOCATIONS_REGISTER}
+            element={<MyLocationsRegisterPage />}
+          />
         </Route>
         <Route path={ROUTES.MYPAGE} element={<DefaultLayout back />}>
           <Route
@@ -241,13 +246,12 @@ function App() {
                   name: 'add',
                   className: 'text-gray-600',
                 },
-                onClick: () => route('/mypage/my-locations/register'),
+                onClick: () => route(ROUTES.MY_LOCATIONS_REGISTER),
               }}
             />
           }
         >
           <Route path={ROUTES.MY_LOCATIONS} element={<MyLocationsPage />} />
-          {/* <Route path={MY_LOCATIONS_REGISTER} element={< />} /> */}
         </Route>
       </Routes>
     </div>
