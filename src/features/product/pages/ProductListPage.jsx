@@ -1,8 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FilterChipArray from '../components/FilterChipArray.jsx'
 import FilterChipBool from '../components/FilterChipBool.jsx'
 import ProductItemHorizontal from '../components/ProductItemHorizontal.jsx'
-import MaterialIcon from '@/components/icons/MaterialIcon.jsx'
 import productsData from '../data/products.js'
 import PropTypes from 'prop-types'
 import FilterBar from '../../../components/FilterBar.jsx'
@@ -12,6 +11,11 @@ function ProductListPage({ filter = _ => _, filters }) {
   const [category, setCategory] = useState('')
   const [dealType, setDealType] = useState('')
   const products = productsData.filter(filter)
+
+  useEffect(() => {
+    // get products by filters or param
+  }, [])
+
   return (
     <div className='flex flex-col'>
       <FilterBar>

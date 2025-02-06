@@ -1,27 +1,20 @@
-import TabBar from '../../../components/navbar/TabBar'
-import usePageName from '../../../hooks/usePageName'
-import Review from '../components/ReviewItem'
+import PropTypes from 'prop-types'
+import ReviewItem from '../components/ReviewItem'
 import REVIEWS from '../data/REVIEWS'
 
-function ReviewHistoryPage() {
-  usePageName('리뷰내역')
-
+function ReviewHistoryPage({ received }) {
+  // id...
   return (
     <>
-      <TabBar
-        className='text-sm'
-        routes={[
-          { to: 'received', name: '받은 리뷰' },
-          { to: 'written', name: '작성한 리뷰' },
-        ]}
-      />
-      <div>
-        {REVIEWS.map((review, index) => (
-          <Review review={review} key={index} />
-        ))}
-      </div>
+      {REVIEWS.map((review, i) => (
+        <ReviewItem key={i} review={review} received={!!received} />
+      ))}
     </>
   )
+}
+
+ReviewHistoryPage.propTypes = {
+  received: PropTypes.bool,
 }
 
 export default ReviewHistoryPage

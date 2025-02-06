@@ -26,6 +26,5 @@ export { default as TermsAndPoliciesPage } from './user/pages/TermsAndPoliciesPa
 export { default as MyLocationsPage } from './user/pages/MyLocationsPage'
 export { default as SubscriptionsPage } from './user/pages/SubscriptionsPage'
 export { default as NoticesPage } from './user/pages/NoticesPage'
-export { default as ReviewHistoryPage } from './user/pages/ReviewHistoryPage'
 export { default as ChangePasswordPage } from './user/pages/ChangePasswordPage'
 export { default as ProfilePage } from './user/pages/ProfilePage'
