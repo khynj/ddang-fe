@@ -3,6 +3,7 @@ import ProductImage from './ProductImage'
 import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { Link } from 'react-router-dom'
+import ROUTES from '@/data/ROUTES'
 
 function ProductItemHorizontal({ product }) {
   const price = Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
@@ -14,10 +15,10 @@ function ProductItemHorizontal({ product }) {
       className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200 ${
         product.myBidPrice && 'bg-gray-50'
       }`}
-      to={`/popup/product/${product.auctionId}`}
+      to={ROUTES.PRODUCT_DETAIL.replace(':id', product.auctionId)}
     >
       <div className='col-span-2'>
-        <ProductImage product={product} heartSize={26} />
+        <ProductImage product={product} heartSize={26} heart />
       </div>
       <div className='col-span-4 flex flex-col w-full py-0.5 justify-between'>
         <div className='flex justify-between'>

@@ -2,7 +2,7 @@ import usePageName from '../../../hooks/usePageName'
 import ProductHistoryItem from '../components/ProductHistoryItem'
 import purchase from '../data/purchase'
 
-function PurchaseHistory() {
+function PurchaseHistoryPage() {
   usePageName('구매내역')
 
   return (
@@ -14,4 +14,4 @@ function PurchaseHistory() {
   )
 }
 
-export default PurchaseHistory
+export default PurchaseHistoryPage

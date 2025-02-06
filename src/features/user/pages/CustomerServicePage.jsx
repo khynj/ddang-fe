@@ -2,7 +2,7 @@ import usePageName from '../../../hooks/usePageName' // 페이지 이름 설정 
 import NoticeItem from '../components/NoticeItem'
 import { customerServiceFAQs } from '../data/customerService'
 
-function CustomerService() {
+function CustomerServicePage() {
   usePageName('고객센터')
 
   return (
@@ -41,4 +41,4 @@ function CustomerService() {
   )
 }
 
-export default CustomerService
+export default CustomerServicePage

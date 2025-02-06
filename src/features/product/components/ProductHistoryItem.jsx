@@ -20,12 +20,12 @@ function ProductHistoryItem({ product }) {
 
   return (
     <Link
-      className={`grid grid-cols-9 p-4 gap-3 border-b border-gray-200 ${
+      className={`grid grid-cols-9 p-4 py-3.5 gap-3 border-b border-gray-200 ${
         product.myBidPrice && 'bg-gray-50'
       }`}
       to={`/popup/product/${product.auctionId}`}
     >
-      <div className='col-span-2 flex justify-center'>
+      <div className='col-span-2 m-auto'>
         <ProductImage product={product} />
       </div>
       <div className='col-span-5 flex flex-col justify-between w-full py-0.5'>

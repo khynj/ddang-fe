@@ -8,15 +8,10 @@ import { useState } from 'react'
 import Label from '../form/Label'
 import InputError from '../form/InputError'
 import ModalItem from './ModalItem'
+import DEAL_TYPES from '../../data/DEAL_TYPES'
+import DefaultButton from '../buttons/DefaultButton'
 
-function DealTypePicker({
-  label,
-  required,
-  value,
-  setValue,
-  validate,
-  options,
-}) {
+function DealTypePicker({ label, required, value, setValue, validate }) {
   const { isOpen, open, close } = useModal(value)
   const [error, setError] = useState('')
   const onClose = v => {
@@ -41,15 +36,19 @@ function DealTypePicker({
       </div>
       {isOpen && (
         <Modal close={() => onClose(value)}>
-          {options.map(option => (
+          <p className='text-sm text-center'>거래 유형</p>
+          {DEAL_TYPES.map(dealType => (
             <div
               className='w-full'
-              key={option.id}
-              onClick={() => onClose(option.value)}
+              key={dealType.value}
+              onClick={() => onClose(dealType.value)}
             >
-              <ModalItem type={'gray'}>{option.value}</ModalItem>
+              <ModalItem type={'gray'}>{dealType.value}</ModalItem>
             </div>
           ))}
+          <DefaultButton type={'gray'} onClick={() => onClose(value)}>
+            닫기
+          </DefaultButton>
         </Modal>
       )}
     </>
@@ -63,7 +62,6 @@ DealTypePicker.propTypes = {
   setValue: PropTypes.func,
   validate: PropTypes.func,
   children: PropTypes.node,
-  options: PropTypes.array,
 }
 
 export default DealTypePicker

@@ -7,23 +7,23 @@ const validate = {
     v &&
     v &&
     v > maximum &&
-    `${maximum.toLocaleString('ko-KR', {
+    `${new Date(maximum).toLocaleString('ko-KR', {
       dateStyle: 'medium',
       timeStyle: 'short',
     })} 까지만 가능해요`,
   minDate: (v, minimum) =>
     v &&
     v < minimum &&
-    `${minimum.toLocaleString('ko-KR', {
+    `${new Date(minimum).toLocaleString('ko-KR', {
       dateStyle: 'medium',
       timeStyle: 'short',
     })} 이후로 입력해주세요.`,
-  maxCost: (v, maximum) =>
+  maxPrice: (v, maximum) =>
     v &&
     v &&
     v > maximum &&
     `${Intl.NumberFormat('ko-KR').format(maximum)}원 까지만 가능해요`,
-  minCost: (v, minimum) =>
+  minPrice: (v, minimum) =>
     v &&
     v < minimum &&
     `${Intl.NumberFormat('ko-KR').format(minimum)}원 이상으로 입력해주세요.`,

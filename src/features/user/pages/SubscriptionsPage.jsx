@@ -9,7 +9,7 @@ import FilterChipArray from '../../product/components/FilterChipArray'
 import FilterBar from '../../../components/FilterBar'
 import FilterChipBool from '../../product/components/FilterChipBool'
 
-function Subscriptions() {
+function SubscriptionsPage() {
   usePageName('모아보기')
 
   const [selectedFilterIndex, setSelectedFilterIndex] = useState(0)
@@ -58,4 +58,4 @@ function Subscriptions() {
   )
 }
 
-export default Subscriptions
+export default SubscriptionsPage

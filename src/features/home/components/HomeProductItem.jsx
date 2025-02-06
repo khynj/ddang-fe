@@ -3,11 +3,15 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { dday } from '@/utils/Dday'
 import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router-dom'
-function ProductItemVertical({ product }) {
+import ROUTES from '@/data/ROUTES'
+function HomeProductItem({ product }) {
   const price = new Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
   return (
-    <Link className='flex flex-col' to={`/popup/product/${product.auctionId}`}>
-      <ProductImage product={product} />
+    <Link
+      className='flex flex-col'
+      to={`${ROUTES.PRODUCT_DETAIL}`.replace(':id', product.auctionId)}
+    >
+      <ProductImage product={product} heart />
       <div className='flex flex-col px-0.5 mt-1'>
         <span className='text-gray-800 text-sm truncate'>{product.title}</span>
         <span className='text-gray-950 font-bold h-fit leading-none'>
@@ -35,8 +39,8 @@ function ProductItemVertical({ product }) {
   )
 }
 
-ProductItemVertical.propTypes = {
+HomeProductItem.propTypes = {
   product: PropTypes.object,
 }
 
-export default ProductItemVertical
+export default HomeProductItem

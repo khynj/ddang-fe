@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import IconButton from '../buttons/IconButton'
 import Modal from '../modals/Modal'
 import DefaultButton from '../buttons/DefaultButton'
-import useModal from '../../hooks/useModal'
+import useModal from '@/hooks/useModal'
 
 function DropDownHeader({ back, feature, routes, title }) {
   const router = useNavigate()
-  const { isOpen, open, close, value } = useModal(title)
+  const { isOpen, open, close } = useModal(title)
   return (
     <header
       className={`
@@ -53,7 +53,9 @@ function DropDownHeader({ back, feature, routes, title }) {
               type={name == title ? '' : 'gray'}
               onClick={() => {
                 close()
-                router(to)
+                router(to, {
+                  replace: true,
+                })
               }}
             >
               {name}

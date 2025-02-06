@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import Label from './Label'
 import { useState } from 'react'
 import InputError from './InputError'
+import MaterialIcon from '../icons/MaterialIcon'
 
 function TextInput({
   label,
@@ -10,6 +11,8 @@ function TextInput({
   validate,
   value,
   setValue,
+  icon,
+  placeholder,
 }) {
   const [error, setError] = useState('')
   const onChange = e => {
@@ -20,7 +23,7 @@ function TextInput({
     setValue(value)
   }
   return (
-    <div className='flex flex-col gap-2 py-3'>
+    <div className='flex flex-col gap-2 py-3 relative justify-center'>
       {label && (
         <Label text={label} required={required}>
           <InputError>{error}</InputError>
@@ -33,7 +36,11 @@ function TextInput({
         className={`flex border-1 border-gray-300 rounded-md p-3 ${
           error ? 'invalid' : ''
         }`}
-      />
+        placeholder={placeholder}
+      ></input>
+      {icon && (
+        <MaterialIcon name={icon} className='text-gray-600 absolute right-3' />
+      )}
     </div>
   )
 }
@@ -45,6 +52,8 @@ TextInput.propTypes = {
   validate: PropTypes.func,
   value: PropTypes.any,
   setValue: PropTypes.func,
+  icon: PropTypes.string,
+  placeholder: PropTypes.string,
 }
 
 export default TextInput

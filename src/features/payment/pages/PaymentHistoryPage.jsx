@@ -10,7 +10,7 @@ import transactions from '../data/transactions.js'
 }
  */
 
-function PaymentHistory() {
+function PaymentHistoryPage() {
   usePageName('결제내역')
 
   const transactionsByDate = transactions.reduce((acc, transaction) => {
@@ -74,4 +74,4 @@ function PaymentHistory() {
   )
 }
 
-export default PaymentHistory
+export default PaymentHistoryPage

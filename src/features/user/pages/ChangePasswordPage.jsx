@@ -3,7 +3,7 @@ import StickyContainer from '@/components/StickyContainer'
 import usePageName from '@/hooks/usePageName'
 import TextInput from '@/components/form/TextInput'
 
-function ChangePassword() {
+function ChangePasswordPage() {
   usePageName('비밀번호 변경')
   return (
     <>
@@ -18,4 +18,4 @@ function ChangePassword() {
   )
 }
 
-export default ChangePassword
+export default ChangePasswordPage

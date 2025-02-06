@@ -8,6 +8,8 @@ function WelcomeBanner() {
   const welcomeRef = useRef()
   useEffect(() => {
     if (!location.state) return
+    window.history.replaceState({}, '')
+
     if (location.state.welcome) {
       setTimeout(() => {
         welcomeRef.current.style.opacity = 0
@@ -17,7 +19,7 @@ function WelcomeBanner() {
       }, 1600)
       location.state.welcome = false
     }
-  })
+  }, [location.state])
   return (
     <>
       {welcome && (

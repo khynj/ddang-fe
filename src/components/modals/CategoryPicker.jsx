@@ -4,22 +4,45 @@ import Modal from './Modal'
 import MaterialIcon from '../icons/MaterialIcon'
 import InputValue from '../form/InputValue'
 import PickerWrapper from '../form/PickerWrapper'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Label from '../form/Label'
 import InputError from '../form/InputError'
 import ModalItem from './ModalItem'
-import categories from '@/features/product/data/categories'
+import CATEGORIES from '@/features/product/data/categories'
+import DefaultButton from '../buttons/DefaultButton'
 
 function CategoryPicker({ label, required, value, setValue, validate }) {
-  const { isOpen, open, close } = useModal(value)
+  const { isOpen, open, close } = useModal('')
   const [error, setError] = useState('')
-  const onClose = v => {
-    if (validate) {
-      setError(validate(v))
+  const onClose = useCallback(
+    v => {
+      if (validate) {
+        setError(validate(v))
+      }
+      setValue(v)
+      close()
+    },
+    [validate, setValue, close],
+  )
+
+  const [firstCategory, setFirstCategory] = useState('')
+  const [secondCategory, setSecondCategory] = useState('')
+  const [categories, setCategories] = useState(CATEGORIES)
+
+  useEffect(() => {
+    if (isOpen) {
+      setFirstCategory('')
+      setSecondCategory('')
+      setCategories(CATEGORIES)
     }
-    setValue(v)
-    close()
-  }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (firstCategory && secondCategory) {
+      setValue(`${firstCategory} > ${secondCategory}`)
+    }
+  }, [firstCategory, secondCategory, setValue])
+
   return (
     <>
       <div className='flex flex-col gap-2 py-3'>
@@ -35,16 +58,27 @@ function CategoryPicker({ label, required, value, setValue, validate }) {
       </div>
       {isOpen && (
         <Modal close={() => onClose(value)}>
-          <p className='py-1 text-sm text-center'>카테고리</p>
+          <p className='text-sm text-center'>카테고리</p>
           {categories.map(category => (
             <div
               className='w-full'
               key={category.id}
-              onClick={() => onClose(category.name)}
+              onClick={() => {
+                if (category.subcategories) {
+                  setFirstCategory(category.name)
+                  setCategories(category.subcategories)
+                } else {
+                  setSecondCategory(category.name)
+                  onClose(`${firstCategory} > ${category.name}`)
+                }
+              }}
             >
               <ModalItem type={'gray'}>{category.name}</ModalItem>
             </div>
           ))}
+          <DefaultButton type={'gray'} onClick={() => onClose(value)}>
+            닫기
+          </DefaultButton>
         </Modal>
       )}
     </>

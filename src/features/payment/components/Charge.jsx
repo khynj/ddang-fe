@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Charge() {
+function ChargePage() {
   const [amount, setAmount] = useState(20) // 숫자만 저장
 
   // 입력 핸들러 (천 단위 콤마 유지)
@@ -35,4 +35,4 @@ function Charge() {
   )
 }
 
-export default Charge
+export default ChargePage

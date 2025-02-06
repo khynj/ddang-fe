@@ -2,7 +2,7 @@ import usePageName from '../../../hooks/usePageName'
 import NoticeItem from '../components/NoticeItem'
 import { notices } from '../data/notices'
 
-function Notices() {
+function NoticesPage() {
   usePageName('공지사항')
 
   return (
@@ -19,4 +19,4 @@ function Notices() {
   )
 }
 
-export default Notices
+export default NoticesPage

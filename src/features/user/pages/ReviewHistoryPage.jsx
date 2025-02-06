@@ -3,7 +3,7 @@ import usePageName from '../../../hooks/usePageName'
 import Review from '../components/ReviewItem'
 import REVIEWS from '../data/reviews'
 
-function ReviewHistory() {
+function ReviewHistoryPage() {
   usePageName('리뷰내역')
 
   return (
@@ -24,4 +24,4 @@ function ReviewHistory() {
   )
 }
 
-export default ReviewHistory
+export default ReviewHistoryPage

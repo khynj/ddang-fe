@@ -2,7 +2,7 @@ import usePageName from '@/hooks/usePageName'
 import ProductHistoryItem from '../components/ProductHistoryItem'
 import sale from '../data/sale'
 
-function SaleHistory() {
+function SaleHistoryPage() {
   usePageName('구매내역')
 
   return (
@@ -14,4 +14,4 @@ function SaleHistory() {
   )
 }
 
-export default SaleHistory
+export default SaleHistoryPage

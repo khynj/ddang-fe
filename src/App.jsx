@@ -1,3 +1,4 @@
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import {
   initFCM,
   MyPage,
@@ -11,30 +12,31 @@ import {
   ProductListPage,
   EditProfilePage,
   ChargePage,
-  PaymentHistory,
+  PaymentHistoryPage,
   NotificationPage,
   ChatroomListPage,
-  PurchaseHistory,
-  SaleHistory,
-  Favorites,
+  PurchaseHistoryPage,
+  SaleHistoryPage,
+  FavoritesPage,
   DebateListPage,
   ChatroomPage,
-  AppSetting,
-  CustomerService,
-  TermsAndPolicies,
-  MyLocations,
-  Subscriptions,
-  Notices,
-  ReviewHistory,
-  ChangePassword,
+  AppSettingPage,
+  CustomerServicePage,
+  TermsAndPoliciesPage,
+  MyLocationsPage,
+  SubscriptionsPage,
+  NoticesPage,
+  ReviewHistoryPage,
+  ChangePasswordPage,
+  ProfilePage,
 } from './features'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
-import NotFoundPage from './pages/NotFoundPage'
 import DropDownLayout from './layouts/DropDownLayout'
 import MyAuctionLayout from './layouts/MyAuctionLayout'
+import NotFoundPage from './pages/NotFoundPage'
 import { useEffect } from 'react'
+import ROUTES from './data/ROUTES'
 
 function App() {
   const route = useNavigate()
@@ -47,26 +49,29 @@ function App() {
       className={`w-full h-dvh mx-auto bg-white max-w-lg overflow-x-hidden overflow-y-scroll`}
     >
       <Routes>
-        <Route path='/' element={<WelcomePage />} />
-        <Route path='/explore' element={<ExploreLayout />}>
+        <Route path={ROUTES.WELCOME} element={<WelcomePage />} />
+        <Route path={ROUTES.HOME} element={<ExploreLayout />}>
           <Route index element={<HomePage />} />
-          <Route path='search' element={<SearchPage />} />
-          <Route path='search/products' element={<ProductListPage filters />} />
+          <Route path={ROUTES.SEARCH} element={<SearchPage />} />
+          <Route
+            path={ROUTES.PRODUCT_LIST}
+            element={<ProductListPage filters />}
+          />
         </Route>
         <Route
-          path='/my-auction'
+          path={ROUTES.MY_PRODUCTS}
           element={
             <DropDownLayout
               routes={[
-                { name: '입찰현황', to: 'bidding-list' },
-                { name: '판매현황', to: 'selling-list' },
+                { name: '입찰현황', to: ROUTES.MY_BIDS },
+                { name: '판매현황', to: ROUTES.MY_SALES },
               ]}
             />
           }
         >
-          <Route index element={<Navigate to='bidding-list' />} />
+          <Route index element={<Navigate to={ROUTES.MY_BIDS} replace />} />
           <Route
-            path='bidding-list'
+            path={ROUTES.MY_BIDS}
             element={
               <MyAuctionLayout
                 name='입찰현황'
@@ -100,7 +105,7 @@ function App() {
             />
           </Route>
           <Route
-            path='selling-list'
+            path={ROUTES.MY_SALES}
             element={
               <MyAuctionLayout
                 name='판매현황'
@@ -147,18 +152,18 @@ function App() {
           </Route>
         </Route>
         <Route path='/' element={<DefaultLayout />}>
-          <Route path='mypage' element={<MyPage />} />
+          <Route path={ROUTES.MYPAGE} element={<MyPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
 
         <Route
-          path='/popup/chatrooms'
+          path={ROUTES.CHAT}
           element={
             <DropDownLayout
               back
               routes={[
-                { name: '채팅방', to: '' },
-                { name: '토론방', to: 'debate' },
+                { name: '채팅방', to: ROUTES.CHATROOM_LIST_PRIVATE },
+                { name: '토론방', to: ROUTES.CHATROOM_LIST_GROUP },
               ]}
               feature={{
                 icon: { name: 'edit', className: 'text-gray-600' },
@@ -167,44 +172,67 @@ function App() {
             />
           }
         >
-          <Route index element={<ChatroomListPage type='chats' />} />
-          <Route path='debate' element={<DebateListPage type='debates' />} />
-        </Route>
-        <Route path='/popup' element={<DefaultLayout back />}>
-          <Route path='product/register' element={<ProductRegisterPage />} />
-          <Route path='product/:id' element={<ProductDetailPage />} />
-          <Route path='notifications' element={<NotificationPage />} />
-          <Route path='signup' element={<SignupPage />} />
-          <Route path='login' element={<LoginPage />} />
-          <Route path='chatroom/:id' element={<ChatroomPage />} />
-        </Route>
-        <Route path='/mypage' element={<DefaultLayout back />}>
-          <Route path='payment-history' element={<PaymentHistory />} />
-          <Route path='edit-profile' element={<EditProfilePage />} />
-          <Route path='charge' element={<ChargePage />} />
-          <Route path='purchase-history' element={<PurchaseHistory />} />
-          <Route path='sale-history' element={<SaleHistory />} />
-          <Route path='favorites' element={<Favorites />}>
-            <Route path='pre' element={<ProductListPage />} />
-            <Route path='after' element={<ProductListPage />} />
-            <Route path='ongoing' element={<ProductListPage />} />
-          </Route>
-          <Route path='app-setting' element={<AppSetting />} />
           <Route
-            path='app-setting/change-password'
-            element={<ChangePassword />}
+            index
+            element={<Navigate to={ROUTES.CHATROOM_LIST_PRIVATE} replace />}
           />
-          <Route path='customer-service' element={<CustomerService />} />
-          <Route path='policies' element={<TermsAndPolicies />} />
-          <Route path='subscriptions' element={<Subscriptions />} />
-          <Route path='notices' element={<Notices />} />
-          <Route path='review-history' element={<ReviewHistory />}>
-            <Route path='received' element={<ProductListPage />} />
-            <Route path='written' element={<ProductListPage />} />
+          <Route
+            path={ROUTES.CHATROOM_LIST_PRIVATE}
+            element={<ChatroomListPage type='chats' />}
+          />
+          <Route
+            path={ROUTES.CHATROOM_LIST_GROUP}
+            element={<DebateListPage type='debates' />}
+          />
+        </Route>
+        <Route path='/' element={<DefaultLayout back />}>
+          <Route path={ROUTES.CHATROOM} element={<ChatroomPage />} />
+          <Route
+            path={ROUTES.PRODUCT_REGISTER}
+            element={<ProductRegisterPage />}
+          />
+          <Route path={ROUTES.PRODUCT_DETAIL} element={<ProductDetailPage />} />
+          <Route path={ROUTES.NOTIFICATIONS} element={<NotificationPage />} />
+          <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+        </Route>
+        <Route path={ROUTES.MYPAGE} element={<DefaultLayout back />}>
+          <Route
+            path={ROUTES.PAYMENT_HISTORY}
+            element={<PaymentHistoryPage />}
+          />
+          <Route path={ROUTES.EDIT_PROFILE} element={<EditProfilePage />} />
+          <Route path={ROUTES.CHARGE} element={<ChargePage />} />
+          <Route
+            path={ROUTES.PURCHASE_HISTORY}
+            element={<PurchaseHistoryPage />}
+          />
+          <Route path={ROUTES.SALE_HISTORY} element={<SaleHistoryPage />} />
+          <Route path={ROUTES.FAVORITES} element={<FavoritesPage />}>
+            <Route path={'pre'} element={<ProductListPage />} />
+            <Route path={'after'} element={<ProductListPage />} />
+            <Route path={'ongoing'} element={<ProductListPage />} />
+          </Route>
+          <Route path={ROUTES.APP_SETTING} element={<AppSettingPage />} />
+          <Route
+            path={ROUTES.CHANGE_PASSWORD}
+            element={<ChangePasswordPage />}
+          />
+          <Route
+            path={ROUTES.CUSTOMER_SERVICE}
+            element={<CustomerServicePage />}
+          />
+          <Route path={ROUTES.POLICIES} element={<TermsAndPoliciesPage />} />
+          <Route path={ROUTES.SUBSCRIPTIONS} element={<SubscriptionsPage />} />
+          <Route path={ROUTES.NOTICES} element={<NoticesPage />} />
+          <Route path={ROUTES.REVIEW_HISTORY} element={<ReviewHistoryPage />}>
+            <Route path={'received'} element={<ProductListPage />} />
+            <Route path={'written'} element={<ProductListPage />} />
           </Route>
         </Route>
         <Route
-          path='/mypage'
+          path={ROUTES.MYPAGE}
           element={
             <DefaultLayout
               back
@@ -218,8 +246,8 @@ function App() {
             />
           }
         >
-          <Route path='my-locations' element={<MyLocations />} />
-          {/* <Route path='my-locations/register' element={< />} /> */}
+          <Route path={ROUTES.MY_LOCATIONS} element={<MyLocationsPage />} />
+          {/* <Route path={MY_LOCATIONS_REGISTER} element={< />} /> */}
         </Route>
       </Routes>
     </div>
