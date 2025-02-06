@@ -1,4 +1,4 @@
-name: Sync Front-End to GitLab repoA
+name: Sync Front-End to GitLab A705
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repoB
+      - name: Checkout github-repo
         uses: actions/checkout@v4
 
       - name: Configure Git
@@ -18,28 +18,28 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "wndgur76@naver.com"
 
-      - name: Clone GitLab repoA
+      - name: Clone GitLab A705
         run: |
-          git clone https://oauth2:${{ secrets.GITLAB_PAT }}@lab.ssafy.com/s12-webmobile2-sub1/S12P11A705.git repoA
-          cd repoA
+          git clone https://oauth2:${{ secrets.GITLAB_PAT }}@lab.ssafy.com/s12-webmobile2-sub1/S12P11A705.git A705
+          cd A705
           git config user.email "dkandjsl@gmail.com"
           git config user.name "GitHub Actions"
 
-      - name: Create or Switch to 'FE' branch
+      - name: Create or Switch to 'FE-sync' branch
         run: |
-          cd repoA
-          if git rev-parse --verify FE; then
-            git checkout FE  # Switch to existing FE branch
+          cd A705
+          if git rev-parse --verify FE-sync; then
+            git checkout FE-sync  # Switch to existing FE-sync branch
           else
-            git checkout -b FE  # Create new FE branch
+            git checkout -b FE-sync  # Create new FE-sync branch
           fi
 
-      - name: Copy repoB to repoA/Front-End
+      - name: Copy github-repo to A705/Front-End
         run: |
-          rm -rf repoA/Front-End  # Remove old Front-End folder if exists
-          mkdir -p repoA/Front-End
-          rsync -av --exclude=repoA --exclude=.git ./ repoA/Front-End/  # Copy everything except repoA and .git
-          cd repoA
+          rm -rf A705/Front-End  # Remove old Front-End folder if exists
+          mkdir -p A705/Front-End
+          rsync -av --exclude=A705 --exclude=.git ./ A705/Front-End/  # Copy everything except A705 and .git
+          cd A705
           git add Front-End/
-          git commit -m "Sync Front-End from repoB [$(date)]" || echo "No changes to commit"
-          git push origin FE  # Push to FE branch
+          git commit -m "Sync Front-End from github-repo [$(date)]" || echo "No changes to commit"
+          git push origin FE-sync  # Push to FE-sync branch
