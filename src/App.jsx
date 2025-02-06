@@ -36,7 +36,7 @@ import DropDownLayout from './layouts/DropDownLayout'
 import MyAuctionLayout from './layouts/MyAuctionLayout'
 import NotFoundPage from './pages/NotFoundPage'
 import { useEffect } from 'react'
-import ROUTES from './data/routes'
+import ROUTES from './data/ROUTES'
 
 function App() {
   const route = useNavigate()

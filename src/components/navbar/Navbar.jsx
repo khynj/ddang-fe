@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import style from './Navbar.module.css'
 import NavButton from './NavButton'
-import ROUTES from '../../data/routes'
+import ROUTES from '../../data/ROUTES'
 
 function Navbar() {
   const getClassName = ({ isActive }) => {

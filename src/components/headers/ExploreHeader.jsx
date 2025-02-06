@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import IconButton from '../buttons/IconButton'
-import ROUTES from '../../data/routes'
+import ROUTES from '../../data/ROUTES'
 
 function ExploreHeader() {
   const route = useNavigate()

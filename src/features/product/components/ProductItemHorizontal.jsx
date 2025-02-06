@@ -3,7 +3,7 @@ import ProductImage from './ProductImage'
 import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { Link } from 'react-router-dom'
-import ROUTES from '@/data/routes'
+import ROUTES from '@/data/ROUTES'
 
 function ProductItemHorizontal({ product }) {
   const price = Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
