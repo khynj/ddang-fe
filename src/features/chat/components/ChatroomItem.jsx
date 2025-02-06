@@ -2,12 +2,13 @@ import PropTypes from 'prop-types'
 import ProfileImage from '../../user/components/ProfileImage'
 import relativeTime from '@/utils/relativeTime'
 import { Link } from 'react-router-dom'
+import ROUTES from '../../../data/routes'
 
 function ChatroomItem({ chatroom }) {
   const lastSetTime = relativeTime(chatroom.lastSetTime)
   return (
     <Link
-      to={`/popup/chatroom/${chatroom.chattingRoomId}`}
+      to={ROUTES.CHATROOM.replace(':id', chatroom.chattingRoomId)}
       className='flex items-center grid grid-cols-6 p-4 gap-5 border-b border-gray-200'
     >
       <ProfileImage src={chatroom.photo} size={52} />

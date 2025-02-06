@@ -1,4 +1,4 @@
-import usePageName from '../../../hooks/usePageName'
+import usePageName from '@/hooks/usePageName'
 
 function ProfilePage() {
   usePageName('프로필')

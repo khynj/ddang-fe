@@ -3,6 +3,7 @@ import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { wonitzie } from '@/utils/wonitize'
 import { Link } from 'react-router-dom'
+import ROUTES from '../../../data/routes'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice)
@@ -10,7 +11,7 @@ function ProductItemSmall({ product }) {
   const didBid = product.myBidPrice > 0
   return (
     <Link
-      to={`/popup/product/${product.auctionId}`}
+      to={`${ROUTES.PRODUCT_DETAIL}`.replace(':id', product.auctionId)}
       className='flex flex-col flex-shrink-0 snap-center whitespace-nowrap text-sm'
       style={{
         width: 'calc(33% - var(--spacing))',

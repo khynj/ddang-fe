@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import relativeTime from '../../../utils/relativeTime'
 import { Link } from 'react-router-dom'
+import ROUTES from '../../../data/routes'
 
 function DebateItem({ chatroom }) {
   const lastSetTime = relativeTime(chatroom.lastSetTime)
   return (
     <Link
-      to={`/popup/chatroom/${chatroom.chattingRoomId}`}
+      to={ROUTES.CHATROOM.replace(':id', chatroom.chattingRoomId)}
       className='flex p-4 gap-5 border-b border-gray-200'
     >
       <div className='flex flex-shrink-0'>

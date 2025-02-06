@@ -1,6 +1,7 @@
 import HomeListHeader from './HomeListHeader'
 import ProductItemSmall from '../../product/components/ProductItemSmall'
 import products from '../../product/data/products'
+import ROUTES from '../../../data/routes'
 
 function HomeBiddingList() {
   return (
@@ -11,7 +12,7 @@ function HomeBiddingList() {
           title: ' 입찰 현황',
           icon: 'person_raised_hand',
         }}
-        to={'/my-auction'}
+        to={ROUTES.MY_PRODUCTS}
       />
       <div
         className='flex flex-row gap-2 pb-1

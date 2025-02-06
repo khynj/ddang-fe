@@ -2,7 +2,7 @@ import usePageName from '../../../hooks/usePageName'
 import MyPageMenu from '../components/MyPageMenu'
 import { Outlet } from 'react-router-dom'
 
-function AppSettings() {
+function AppSettingPage() {
   usePageName('앱 설정')
 
   return (
@@ -29,4 +29,4 @@ function AppSettings() {
   )
 }
 
-export default AppSettings
+export default AppSettingPage

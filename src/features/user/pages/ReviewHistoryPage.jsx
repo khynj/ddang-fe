@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 import TabBar from '../../../components/navbar/TabBar'
 import usePageName from '../../../hooks/usePageName'
 
-function ReviewHistory() {
+function ReviewHistoryPage() {
   usePageName('리뷰내역')
 
   return (
@@ -19,4 +19,4 @@ function ReviewHistory() {
   )
 }
 
-export default ReviewHistory
+export default ReviewHistoryPage

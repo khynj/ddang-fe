@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom'
 import TabBar from '@/components/navbar/TabBar'
 import usePageName from '@/hooks/usePageName'
 
-function Favorites() {
+function FavoritesPage() {
   usePageName('찜 목록')
 
   return (
@@ -19,4 +19,4 @@ function Favorites() {
   )
 }
 
-export default Favorites
+export default FavoritesPage

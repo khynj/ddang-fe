@@ -5,7 +5,7 @@ export default [
     content: '보스qc35가 350,000에 낙찰되었어요.',
     isRead: false,
     sentAt: '2025-02-03 12:0:00',
-    url: 'popup/product/1',
+    url: 'product/1',
     notificationType: 'HAMMER_FOR_SELLER',
   },
   {
@@ -14,7 +14,7 @@ export default [
     content: '보스qc35가 350,000에 낙찰되었어요.',
     isRead: false,
     sentAt: '2025-01-20 06:30:00',
-    url: 'popup/product/1',
+    url: 'product/1',
     notificationType: 'HAMMER_FOR_SELLER',
   },
   {
@@ -23,7 +23,7 @@ export default [
     content: '보스qc35가 350,000에 낙찰되었어요.',
     isRead: true,
     sentAt: '2024-12-19 12:30:00',
-    url: 'popup/product/1',
+    url: 'product/1',
     notificationType: 'HAMMER_FOR_SELLER',
   },
   {
@@ -32,7 +32,7 @@ export default [
     content: '보스qc35가 350,000에 상위 입찰되었어요.',
     isRead: true,
     sentAt: '2025-01-29 06:30:00',
-    url: 'popup/product/1',
+    url: 'product/1',
     notificationType: 'HAMMER_FOR_SELLER',
   },
 ]
