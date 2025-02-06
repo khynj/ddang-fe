@@ -7,6 +7,8 @@ const ReviewItem = ({ review }) => {
   const hammeredPrice = Intl.NumberFormat('ko-KR').format(
     review.product.hammeredPrice,
   )
+  const role = review.review.role === 'seller' ? '구매상품' : '판매상품'
+
   return (
     <div className='flex flex-col gap-2 p-4 bg-white text-sm border-b border-gray-200'>
       {/* User Info */}
@@ -27,7 +29,14 @@ const ReviewItem = ({ review }) => {
           <ProductImage product={review.product} />
         </div>
         <div className='col-span-6 flex flex-col justify-end'>
-          <p className='text-gray-950 truncate'>{review.product.title}</p>
+          <div className='flex justify-between items-center w-full'>
+            <p className='text-gray-950 truncate flex-grow'>
+              {review.product.title}
+            </p>
+            <span className='text-xs text-ddblue-500 font-semibold flex-shrink-0 ml-2'>
+              {role}
+            </span>
+          </div>
           <p className='font-semibold text-gray-950 mt-1'>{hammeredPrice}원</p>
         </div>
       </Link>
