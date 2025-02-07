@@ -17,26 +17,27 @@ function ChargePage() {
   }
 
   return (
-    <div className='flex flex-col space-y-6 w-full max-w-md mx-auto p-6 bg-white'>
-      <Charge amount={amount.toLocaleString()} onChange={handleChange} />
+    <>
+      <div className='flex flex-col space-y-6 w-full max-w-md mx-auto p-4 bg-white'>
+        <Charge amount={amount.toLocaleString()} onChange={handleChange} />
 
-      {/* 계좌 및 잔액 정보 */}
-      <div className='flex flex-col space-y-4 text-base text-gray-900'>
-        <div className='flex justify-between'>
-          <span>계좌</span>
-          <span className='font-bold'>{accountName}</span>
-        </div>
-        <div className='flex justify-between'>
-          <span>거래 후 잔액</span>
-          <span className='font-bold'>{afterTransactionBalance}</span>
+        {/* 계좌 및 잔액 정보 */}
+        <div className='flex flex-col space-y-4 text-base text-gray-900'>
+          <div className='flex justify-between'>
+            <span>계좌</span>
+            <span className='font-bold'>{accountName}</span>
+          </div>
+          <div className='flex justify-between'>
+            <span>거래 후 잔액</span>
+            <span className='font-bold'>{afterTransactionBalance}</span>
+          </div>
         </div>
       </div>
-
       {/* 확인 버튼 */}
       <StickyContainer plain>
         <DefaultButton type='gray'>확인</DefaultButton>
       </StickyContainer>
-    </div>
+    </>
   )
 }
 

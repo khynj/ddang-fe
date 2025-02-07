@@ -1,4 +1,4 @@
-import { useAuctionDetails } from '@/apis'
+import { useAuctionDetails } from '@/apis/auction'
 import usePageName from '@/hooks/usePageName'
 import { useNavigate, useParams } from 'react-router'
 import product from '@/features/product/data/product'

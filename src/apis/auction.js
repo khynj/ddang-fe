@@ -1,41 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import AXIOS from '@/utils/axios_'
 
-// 알림 관련 API
-export function useNotifications(page = 1, size = 10) {
-  return useQuery({
-    queryKey: ['notifications', page, size],
-    queryFn: () =>
-      AXIOS.get('/notification', { params: { page, size } }).then(
-        res => res.data,
-      ),
-  })
-}
-
-export function useUnreadNotificationStatus() {
-  return useQuery({
-    queryKey: ['unreadNotificationStatus'],
-    queryFn: () => AXIOS.get('/notification/unread').then(res => res.data),
-  })
-}
-
-// 인증 관련 API
-export function useLogin() {
-  return useMutation({
-    mutationFn: ({ email, password }) =>
-      AXIOS.post('/api/auth/login', { email, password }).then(res => res.data),
-  })
-}
-
-export function useSocialLogin() {
-  return useMutation({
-    mutationFn: providerName =>
-      AXIOS.post(`/auth/login/oauth2/authorization/${providerName}`).then(
-        res => res.data,
-      ),
-  })
-}
-
 // 경매 관련 API
 export function useCreateAuction() {
   return useMutation({
@@ -119,36 +84,5 @@ export function useConfirmPurchase() {
   return useMutation({
     mutationFn: auctionId =>
       AXIOS.post(`/auction/${auctionId}/confirm`).then(res => res.data),
-  })
-}
-
-// 채팅 관련 API
-export function useChatRooms(type = 'open') {
-  return useQuery({
-    queryKey: ['chatRooms', type],
-    queryFn: () =>
-      AXIOS.get('/chatting', { params: { type } }).then(res => res.data),
-  })
-}
-
-export function useJoinChatRoom() {
-  return useMutation({
-    mutationFn: chattingRoomId =>
-      AXIOS.post(`/chatting/${chattingRoomId}/join`).then(res => res.data),
-  })
-}
-
-export function useLeaveChatRoom() {
-  return useMutation({
-    mutationFn: chattingRoomId =>
-      AXIOS.post(`/chatting/${chattingRoomId}/leave`).then(res => res.data),
-  })
-}
-
-export function useChatHistory(chattingRoomId) {
-  return useQuery({
-    queryKey: ['chatHistory', chattingRoomId],
-    queryFn: () =>
-      AXIOS.get(`/chatting/${chattingRoomId}`).then(res => res.data),
   })
 }

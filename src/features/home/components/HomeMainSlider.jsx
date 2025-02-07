@@ -1,6 +1,6 @@
 import Slider from '@/components/Slider'
 import HomeMainProduct from './HomeMainProduct'
-import { useSearchAuctions } from '@/apis'
+import { useSearchAuctions } from '@/apis/auction'
 import { useState } from 'react'
 
 function HomeMainSlider() {

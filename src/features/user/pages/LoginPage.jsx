@@ -7,7 +7,7 @@ import kakaoIcon from '@/assets/images/oauth/kakao.png'
 import naverIcon from '@/assets/images/oauth/naver.png'
 import StickyContainer from '@/components/StickyContainer'
 import ROUTES from '@/data/ROUTES'
-import { useLogin } from '@/apis'
+import { useLogin } from '@/apis/auth'
 import { useState } from 'react'
 
 function LoginPage() {
@@ -23,6 +23,7 @@ function LoginPage() {
     })
     console.log(res)
   }
+
   return (
     <div className='mt-2'>
       <div className=' p-4'>
