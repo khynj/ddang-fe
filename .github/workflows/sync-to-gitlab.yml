@@ -34,6 +34,14 @@ jobs:
             git checkout -b FE-sync  # Create new FE-sync branch
           fi
 
+      - name: Pull latest changes from FE-sync
+        run: |
+          cd A705
+          git fetch origin FE-sync
+          git checkout FE-sync
+          git merge --ff-only origin/FE-sync || echo "No fast-forward merge possible, trying rebase..."
+          git rebase origin/FE-sync || echo "Rebase failed, continuing with push"
+
       - name: Copy github-repo to A705/Front-End
         run: |
           rm -rf A705/Front-End  # Remove old Front-End folder if exists
