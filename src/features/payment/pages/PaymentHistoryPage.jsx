@@ -45,7 +45,7 @@ function PaymentHistoryPage() {
                   className='flex flex-col gap-0 py-2 px-2'
                 >
                   <div className='flex justify-between items-center'>
-                    <div className='text-base text-gray-900 font-semibold'>
+                    <div className='text-base text-gray-900 font-bold'>
                       {transaction.title}
                     </div>
                     <div

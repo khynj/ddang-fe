@@ -1,18 +1,16 @@
 import { useState } from 'react'
-import usePageName from '../../../hooks/usePageName'
+import usePageName from '@/hooks/usePageName'
 import ProductItemHorizontal from '../../product/components/ProductItemHorizontal'
 import products from '../../product/data/products'
 import ProfileImage from '../components/ProfileImage'
 import SubscriptionsProfiles from '../data/SubscriptionsProfiles'
-import SubscriptionsFilters from '../data/SubscriptionsFilters'
 import FilterChipArray from '../../product/components/FilterChipArray'
-import FilterBar from '../../../components/FilterBar'
+import FilterBar from '@/components/FilterBar'
 import FilterChipBool from '../../product/components/FilterChipBool'
 
 function SubscriptionsPage() {
+  const [isBidding, setIsBidding] = useState(false)
   usePageName('모아보기')
-
-  const [selectedFilterIndex, setSelectedFilterIndex] = useState(0)
 
   return (
     <div>
@@ -44,7 +42,13 @@ function SubscriptionsPage() {
               values={['카테고리', '전자제품', '의류']}
               index={0}
             />
-            <FilterChipBool text='경매중' />
+            <FilterChipBool
+              text='경매중'
+              value={isBidding}
+              onChange={() => {
+                setIsBidding(!isBidding)
+              }}
+            />
           </>
         }
       </FilterBar>

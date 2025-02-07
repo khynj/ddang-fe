@@ -23,7 +23,7 @@ const ReviewItem = ({ review, received }) => {
           )}
           <Link
             className='flex grid grid-cols-6 gap-2'
-            to={`/popup/product/${review.product.productId}`}
+            to={ROUTES.PRODUCT_DETAIL.replace(':id', review.product.productId)}
           >
             <div className='col-span-1 py-1'>
               <ProductImage product={review.product} small />
@@ -32,23 +32,23 @@ const ReviewItem = ({ review, received }) => {
               <p className='text-gray-950 truncate flex-grow'>
                 {review.product.title}
               </p>
-              <p className='font-semibold text-gray-950 mt-1'>
-                {hammeredPrice}원
-              </p>
+              <p className='font-bold text-gray-950 mt-1'>{hammeredPrice}원</p>
             </div>
           </Link>
         </div>
         <div className='flex flex-col shrink-0 gap-2.5 mt-1'>
           <p className='text-xs text-gray-900'>2024. 01. 29</p>
-          <span className={`text-xs font-semibold flex-shrink-0 ml-2 ${
-                role === '판매상품' ? 'text-ddblue-500' : 'text-gray-700'
-              }`}>
+          <span
+            className={`text-xs font-bold flex-shrink-0 ml-2 ${
+              role === '판매상품' ? 'text-ddblue-500' : 'text-gray-700'
+            }`}
+          >
             {role}
           </span>
         </div>
       </div>
 
-      <p className='text-sm font-semibold text-gray-900'>
+      <p className='text-sm font-bold text-gray-900'>
         {scoreToText(review.review.score)}
       </p>
       <p className='text-sm text-gray-800 '>{review.review.review}</p>

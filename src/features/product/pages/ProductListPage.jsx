@@ -8,8 +8,6 @@ import FilterBar from '../../../components/FilterBar.jsx'
 
 function ProductListPage({ filter = _ => _, filters }) {
   const [isBidding, setIsBidding] = useState(false)
-  const [category, setCategory] = useState('')
-  const [dealType, setDealType] = useState('')
   const products = productsData.filter(filter)
 
   useEffect(() => {

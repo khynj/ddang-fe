@@ -31,6 +31,7 @@ const ROUTES = {
   PURCHASE_HISTORY: '/mypage/purchase-history',
   SALE_HISTORY: '/mypage/sale-history',
   REVIEW_HISTORY: '/mypage/review-history',
+  REVIEW_REGISTER: '/mypage/review/register/:id',
   USER_REVIEW_HISTORY: '/mypage/review-history/:id',
   CHARGE: '/mypage/charge',
   POLICIES: '/mypage/policies',

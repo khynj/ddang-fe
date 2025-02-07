@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 import ProfileImage from './ProfileImage'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import TrustScoreBar from './TrustScoreBar'
-import StepTrustBar from './StepTrustBar'
 
 function Profile({ profileSrc, name, trustScore, id }) {
   const userId = 1 // 로그인한 사용자의 id
@@ -14,7 +13,7 @@ function Profile({ profileSrc, name, trustScore, id }) {
       <div className='flex items-center'>
         <ProfileImage src={profileSrc} size={64} />
         <div className='flex flex-row justify-between items-center w-full ml-4'>
-          <p className='text-base font-semibold'>{name}</p>
+          <p className='text-base font-bold'>{name}</p>
           {userId === id ? (
             <Link to='/mypage/edit-profile'>
               <button
@@ -52,7 +51,6 @@ function Profile({ profileSrc, name, trustScore, id }) {
         </div>
         {/* 5단계 중 현재 3단계 */}
         <TrustScoreBar trustScore={62} />
-        {/* <StepTrustBar steps={5} currentStep={2} /> */}
       </div>
     </div>
   )

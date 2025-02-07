@@ -24,11 +24,11 @@ function ChargePage() {
       <div className='flex flex-col space-y-4 text-base text-gray-900'>
         <div className='flex justify-between'>
           <span>계좌</span>
-          <span className='font-semibold'>{accountName}</span>
+          <span className='font-bold'>{accountName}</span>
         </div>
         <div className='flex justify-between'>
           <span>거래 후 잔액</span>
-          <span className='font-semibold'>{afterTransactionBalance}</span>
+          <span className='font-bold'>{afterTransactionBalance}</span>
         </div>
       </div>
 

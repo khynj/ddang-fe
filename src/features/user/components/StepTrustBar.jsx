@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 
-function StepTrustBar({ steps }) {
+function StepTrustBar() {
   const [currentStep, setCurrentStep] = useState(0) // 초기 단계
 
   // 단계 클릭 핸들러
@@ -11,34 +11,30 @@ function StepTrustBar({ steps }) {
 
   return (
     <div className='relative w-full flex flex-col items-center mt-3'>
-      {/* 배경 막대 */}
-      <div className='w-full bg-gray-200 h-2 rounded-full'></div>
+      <div className='absolute w-full bg-gray-200 h-3 rounded-full flex justify-center'>
+        <div className='absolute flex justify-between items-center h-3 rounded-full z-3 w-[104%]'>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div
+              key={index}
+              onClick={() => onStepClick(index)} // 클릭 이벤트
+              className={`size-8 flex items-center justify-center z-3`}
+              style={{
+                left: `${(index / (5 - 1)) * 100}%`,
+              }}
+            >
+              <div className='bg-white size-2.5 rounded-full'></div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* 파란색 진행 상태 */}
       <div
-        className='absolute top-0 left-0 h-2 bg-ddblue-400 rounded-full'
+        className='absolute top-0 left-0 h-3 bg-ddblue-400 rounded-full z-2'
         style={{
-          width: `${(currentStep / (steps - 1)) * 100}%`,
+          width: `${(currentStep / (5 - 1)) * 100}%`,
         }}
       ></div>
-
-      {/* 단계 표시 원 */}
-      <div className='flex justify-between w-[98%] relative z-10'>
-        {Array.from({ length: steps }).map((_, index) => (
-          <div
-            key={index}
-            onClick={() => onStepClick(index)} // 클릭 이벤트
-            className={`w-2 h-2 ${
-              index <= currentStep ? 'bg-white' : 'bg-white'
-            } rounded-full cursor-pointer`}
-            style={{
-              position: 'absolute',
-              left: `${(index / (steps - 1)) * 100}%`,
-              transform: 'translate(-50%, -100%) scale(0.8)', // 중앙 정렬 및 크기 조정
-            }}
-          ></div>
-        ))}
-      </div>
     </div>
   )
 }

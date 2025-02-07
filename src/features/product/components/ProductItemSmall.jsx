@@ -29,9 +29,9 @@ function ProductItemSmall({ product }) {
       {isTop ? (
         <div
           className='w-fit h-fit px-1.5 flex flex-row items-center
-          rounded-lg bg-ddblue-400 text-white'
+          rounded-lg bg-ddblue-400 text-white gap-0.5'
         >
-          <MaterialIcon name='crown' filled size={20} />
+          <MaterialIcon name='crown' filled size={18} />
           <span className='font-bold'>{price}</span>
         </div>
       ) : (

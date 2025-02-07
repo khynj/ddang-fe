@@ -30,6 +30,8 @@ import {
   ProfilePage,
   MyLocationsRegisterPage,
   ReviewHistoryPage,
+  MyProductListPage,
+  ReviewRegisterPage,
 } from './features'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
@@ -59,10 +61,6 @@ function App() {
             path={ROUTES.PRODUCT_LIST}
             element={<ProductListPage filters />}
           />
-          <Route
-            path={ROUTES.PRODUCT_LIST_BY_USER}
-            element={<ProductListPage />}
-          />
         </Route>
         <Route
           path={ROUTES.MY_PRODUCTS}
@@ -91,24 +89,8 @@ function App() {
               />
             }
           >
-            <Route
-              index
-              element={
-                <ProductListPage
-                  filters
-                  filter={product => product.myBidPrice}
-                />
-              }
-            />
-            <Route
-              path='sold'
-              element={
-                <ProductListPage
-                  filters
-                  filter={product => product.endTime < new Date().toISOString()}
-                />
-              }
-            />
+            <Route index element={<MyProductListPage />} />
+            <Route path='sold' element={<MyProductListPage isHammered />} />
           </Route>
           <Route
             path={ROUTES.MY_SALES}
@@ -126,35 +108,12 @@ function App() {
               />
             }
           >
-            <Route
-              index
-              element={
-                <ProductListPage
-                  filters
-                  filter={product => product.myBidPrice}
-                />
-              }
-            />
+            <Route index element={<MyProductListPage isSeller />} />
             <Route
               path='sold'
-              element={
-                <ProductListPage
-                  filters
-                  filter={product => product.endTime < new Date().toISOString()}
-                />
-              }
+              element={<MyProductListPage isHammered isSeller />}
             />
-            <Route
-              path='pre'
-              element={
-                <ProductListPage
-                  filters
-                  filter={product =>
-                    product.startTime < new Date().toISOString()
-                  }
-                />
-              }
-            />
+            <Route path='pre' element={<MyProductListPage isSeller isPre />} />
           </Route>
         </Route>
         <Route path='/' element={<DefaultLayout />}>
@@ -197,6 +156,10 @@ function App() {
             path={ROUTES.PRODUCT_REGISTER}
             element={<ProductRegisterPage />}
           />
+          <Route
+            path={ROUTES.PRODUCT_LIST_BY_USER}
+            element={<ProductListPage />} //
+          />
           <Route path={ROUTES.PRODUCT_DETAIL} element={<ProductDetailPage />} />
           <Route path={ROUTES.NOTIFICATIONS} element={<NotificationPage />} />
           <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
@@ -205,6 +168,10 @@ function App() {
           <Route
             path={ROUTES.MY_LOCATIONS_REGISTER}
             element={<MyLocationsRegisterPage />}
+          />
+          <Route
+            path={ROUTES.REVIEW_REGISTER}
+            element={<ReviewRegisterPage />}
           />
         </Route>
         <Route path={ROUTES.MYPAGE} element={<DefaultLayout back />}>
@@ -220,6 +187,7 @@ function App() {
           />
           <Route path={ROUTES.SALE_HISTORY} element={<SaleHistoryPage />} />
           <Route path={ROUTES.FAVORITES} element={<FavoritesPage />}>
+            <Route index element={<Navigate to={'pre'} replace />} />
             <Route path={'pre'} element={<ProductListPage />} />
             <Route path={'after'} element={<ProductListPage />} />
             <Route path={'ongoing'} element={<ProductListPage />} />

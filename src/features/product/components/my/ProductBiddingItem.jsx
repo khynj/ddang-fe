@@ -1,20 +1,19 @@
-import PropTypes from 'prop-types'
-import ProductImage from './ProductImage'
-import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
-import { Link } from 'react-router'
+import PropTypes from 'prop-types'
+import ProductImage from '../ProductImage'
 import ROUTES from '@/data/ROUTES'
+import { Link } from 'react-router'
+import { dday } from '@/utils/Dday'
 
-function ProductItemHorizontal({ product }) {
+function ProductBiddingItem({ product }) {
   const price = Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
   const instantHammerPrice = Intl.NumberFormat('ko-KR').format(
     product.instantHammerPrice,
   )
+  const isTopBidder = product.myBidPrice === product.currentBidPrice
   return (
     <Link
-      className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200 ${
-        product.myBidPrice && 'bg-gray-50'
-      }`}
+      className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200`}
       to={ROUTES.PRODUCT_DETAIL.replace(':id', product.auctionId)}
     >
       <div className='col-span-2'>
@@ -28,19 +27,21 @@ function ProductItemHorizontal({ product }) {
         </div>
         <div className='flex justify-between'>
           <div>
-            <div className='flex items-center mt-2 mb-0.5 '>
-              {product.myBidPrice && (
-                <MaterialIcon
-                  name='gavel'
-                  filled
-                  size={22}
-                  className='text-ddblue-400'
-                />
-              )}
-              <p className='text-lg font-bold text-gray-950 leading-none'>
-                {price}원
-              </p>
-            </div>
+            {isTopBidder ? (
+              <div className='flex items-center w-fit gap-1 px-2 py-0.5 mt-2 mb-0.5 text-white bg-ddblue-400 rounded-xl'>
+                <MaterialIcon name='crown' filled size={18} />
+                <p className='font-bold leading-none'>{price}원</p>
+              </div>
+            ) : (
+              <div className='flex items-center mt-2 mb-0.5 gap-1'>
+                <div className='px-1 py-0.5 bg-gray-400 rounded-xl'>
+                  <p className='font-bold text-white text-xs'>뺏김</p>
+                </div>
+                <p className='text-gray-500 leading-none line-through'>
+                  {price}원
+                </p>
+              </div>
+            )}
             {product.instantHammerPrice && (
               <p className='text-sm text-gray-600'>
                 즉시낙찰가 {instantHammerPrice}원
@@ -69,8 +70,9 @@ function ProductItemHorizontal({ product }) {
   )
 }
 
-ProductItemHorizontal.propTypes = {
-  product: PropTypes.object.isRequired,
+ProductBiddingItem.propTypes = {
+  product: PropTypes.object,
+  isHammered: PropTypes.bool,
 }
 
-export default ProductItemHorizontal
+export default ProductBiddingItem
