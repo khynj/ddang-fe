@@ -1,0 +1,18 @@
+import PropTypes from 'prop-types'
+
+function Label({ text, required, children }) {
+  return (
+    <label className='font-bold text-gray-800 text-sm'>
+      {text}
+      {required && '*'} {children}
+    </label>
+  )
+}
+
+Label.propTypes = {
+  text: PropTypes.string,
+  required: PropTypes.bool,
+  children: PropTypes.node,
+}
+
+export default Label
