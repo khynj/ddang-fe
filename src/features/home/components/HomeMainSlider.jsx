@@ -4,13 +4,13 @@ import { useSearchAuctions } from '@/apis/auction'
 import { useState } from 'react'
 
 function HomeMainSlider() {
-  const { data } = useSearchAuctions()
+  const { data: products } = useSearchAuctions()
   useState(() => {
-    console.log(data)
-  }, [data])
+    console.log(products)
+  }, [products])
   return (
     <Slider>
-      {/* {products &&
+      {products &&
         products.map((product, index) => (
           <HomeMainProduct
             key={index}
@@ -18,7 +18,7 @@ function HomeMainSlider() {
             size={products.length}
             product={product}
           />
-        ))} */}
+        ))}
     </Slider>
   )
 }
