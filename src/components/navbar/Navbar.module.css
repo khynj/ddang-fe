@@ -1,9 +1,0 @@
-.navbar {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: inherit;
-  height: 64px;
-
-  border-top: 1px solid var(--color-gray-100);
-}
