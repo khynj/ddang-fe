@@ -7,9 +7,10 @@ import { useState } from 'react'
 import Modal from '@/components/modals/Modal'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import MaterialIcon from '@/components/icons/MaterialIcon'
+import { formatPrice } from '@/utils/formatPrice'
 
 function ProductSoldItem({ product, isSeller }) {
-  const price = Intl.NumberFormat('ko-KR').format(product.myBidPrice)
+  const price = formatPrice(product.myBidPrice)
   const endTime = relativeTime(product.endTime)
 
   const route = useNavigate()

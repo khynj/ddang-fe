@@ -3,9 +3,10 @@ import { dday } from '@/utils/Dday'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
 import ProductImage from './ProductImage'
+import { formatPrice } from '@/utils/formatPrice'
 
 function ProductItemHorizontalSmall({ product }) {
-  const price = Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
+  const price = formatPrice(product.currentBidPrice)
   return (
     <Link
       to={`${ROUTES.PRODUCT_DETAIL}`.replace(':id', product.auctionId)}

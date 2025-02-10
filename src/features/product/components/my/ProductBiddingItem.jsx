@@ -4,12 +4,11 @@ import ProductImage from '../ProductImage'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
 import { dday } from '@/utils/Dday'
+import { formatPrice } from '@/utils/formatPrice'
 
 function ProductBiddingItem({ product }) {
-  const price = Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
-  const instantHammerPrice = Intl.NumberFormat('ko-KR').format(
-    product.instantHammerPrice,
-  )
+  const price = formatPrice(product.currentBidPrice)
+  const instantHammerPrice = formatPrice(product.instantHammerPrice)
   const isTopBidder = product.myBidPrice === product.currentBidPrice
   return (
     <Link

@@ -32,6 +32,8 @@ import {
   ReviewHistoryPage,
   MyProductListPage,
   ReviewRegisterPage,
+  ChargeSuccessPage,
+  ChargeFailPage,
 } from './features'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
@@ -190,6 +192,11 @@ function App() {
                 path={ROUTES.REVIEW_REGISTER}
                 element={<ReviewRegisterPage />}
               />
+              <Route
+                path={ROUTES.CHARGE_SUCCESS}
+                element={<ChargeSuccessPage />}
+              />
+              <Route path={ROUTES.CHARGE_FAIL} element={<ChargeFailPage />} />
             </Route>
             <Route path={ROUTES.MYPAGE} element={<DefaultLayout back />}>
               <Route

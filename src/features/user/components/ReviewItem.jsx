@@ -3,11 +3,10 @@ import ProfileImage from './ProfileImage'
 import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
+import { formatPrice } from '@/utils/formatPrice'
 
 const ReviewItem = ({ review, received }) => {
-  const hammeredPrice = Intl.NumberFormat('ko-KR').format(
-    review.product.hammeredPrice,
-  )
+  const hammeredPrice = formatPrice(review.product.hammeredPrice)
   const role = review.review.role === 'seller' ? '구매상품' : '판매상품'
 
   return (

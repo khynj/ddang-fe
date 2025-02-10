@@ -15,19 +15,14 @@ import { dday } from '@/utils/Dday.js'
 import { Link } from 'react-router'
 import { useEffect } from 'react'
 import ROUTES from '@/data/ROUTES.js'
+import { formatPrice } from '@/utils/formatPrice.js'
 
 function ProductDetailPage({ product = example }) {
   usePageName('제품상세')
-  const minimumBid = Intl.NumberFormat('ko-KR').format(
-    product.auction.minimumBid,
-  )
-  const instantHammerPrice = Intl.NumberFormat('ko-KR').format(
-    product.auction.instantHammerPrice,
-  )
+  const minimumBid = formatPrice(product.auction.minimumBid)
+  const instantHammerPrice = formatPrice(product.auction.instantHammerPrice)
 
-  const currentBidPrice = Intl.NumberFormat('ko-KR').format(
-    product.auction.currentBidPrice,
-  )
+  const currentBidPrice = formatPrice(product.auction.currentBidPrice)
 
   useEffect(() => {
     // load product by id

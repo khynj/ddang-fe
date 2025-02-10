@@ -1,25 +1,63 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import usePageName from '@/hooks/usePageName'
-import Charge from '../components/Charge'
 import StickyContainer from '../../../components/StickyContainer'
 import DefaultButton from '../../../components/buttons/DefaultButton'
+import { usePayDeposit, usePayInfo } from '@/apis/pay'
+import { formatPrice } from '@/utils/formatPrice'
+import { useNavigate } from 'react-router'
 
 function ChargePage() {
   usePageName('충전')
 
-  const [amount, setAmount] = useState(200000) // 숫자로 저장
-  const afterTransactionBalance = '161,800원'
   const accountName = '카카오페이'
+  const [amount, setAmount] = useState(0) // 숫자로 저장
+  const afterTransactionBalance = () => formatPrice(amount + payInfo?.balance)
 
-  const handleChange = e => {
-    const input = e.target.value.replace(/[^0-9]/g, '') // 숫자만 허용
-    setAmount(Number(input)) // 숫자로 변환
+  const payDeposit = usePayDeposit()
+  const { data: payInfo } = usePayInfo()
+
+  useEffect(() => {
+    console.log('payInfo', payInfo)
+  }, [payInfo])
+
+  const onSubmit = () => {
+    if (amount <= 0) {
+      alert('충전 금액을 확인해주세요.')
+      return
+    }
+
+    payDeposit.mutate(
+      { amount, paymentMethod: accountName },
+      {
+        onSuccess: data => {
+          window.location = data?.next_redirect_pc_url
+        },
+        onError: err => {
+          console.log('결제 mutation err', err)
+        },
+      },
+    )
   }
 
   return (
     <>
       <div className='flex flex-col space-y-6 w-full max-w-md mx-auto p-4 bg-white'>
-        <Charge amount={amount.toLocaleString()} onChange={handleChange} />
+        <div className='flex flex-col space-y-2 w-full max-w-md mx-auto'>
+          <label
+            htmlFor='charge-amount'
+            className='text-ddblue-400 text-base font-bold'
+          >
+            충전금액
+          </label>
+          <input
+            id='charge-amount'
+            type='number'
+            inputMode='numeric' // 모바일에서 숫자 키보드 표시
+            value={amount}
+            onChange={e => setAmount(e.target.value)}
+            className='border-2 border-ddblue-400 rounded-lg px-4 py-2 text-black font-bold text-lg'
+          />
+        </div>
 
         {/* 계좌 및 잔액 정보 */}
         <div className='flex flex-col space-y-4 text-base text-gray-900'>
@@ -29,13 +67,13 @@ function ChargePage() {
           </div>
           <div className='flex justify-between'>
             <span>거래 후 잔액</span>
-            <span className='font-bold'>{afterTransactionBalance}</span>
+            <span className='font-bold'>{afterTransactionBalance()}원</span>
           </div>
         </div>
       </div>
       {/* 확인 버튼 */}
       <StickyContainer plain>
-        <DefaultButton type='gray'>확인</DefaultButton>
+        <DefaultButton onClick={onSubmit}>충전하기</DefaultButton>
       </StickyContainer>
     </>
   )

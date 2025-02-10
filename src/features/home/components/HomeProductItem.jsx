@@ -4,8 +4,9 @@ import { dday } from '@/utils/Dday'
 import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
+import { formatPrice } from '@/utils/formatPrice'
 function HomeProductItem({ product }) {
-  const price = new Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
+  const price = formatPrice(product.currentBidPrice)
   return (
     <Link
       className='flex flex-col'

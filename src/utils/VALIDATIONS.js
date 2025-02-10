@@ -1,3 +1,5 @@
+import { formatPrice } from './formatPrice'
+
 const VALIDATIONS = {
   maxValue: (v, maximum) =>
     v && v && v > maximum && `${maximum} 까지만 가능해요`,
@@ -19,23 +21,16 @@ const VALIDATIONS = {
       timeStyle: 'short',
     })} 이후로 입력해주세요.`,
   maxPrice: (v, maximum) =>
-    v &&
-    v &&
-    v > maximum &&
-    `${Intl.NumberFormat('ko-KR').format(maximum)}원 까지만 가능해요`,
+    v && v && v > maximum && `${formatPrice(maximum)}원 까지만 가능해요`,
   minPrice: (v, minimum) =>
-    v &&
-    v < minimum &&
-    `${Intl.NumberFormat('ko-KR').format(minimum)}원 이상으로 입력해주세요.`,
+    v && v < minimum && `${formatPrice(minimum)}원 이상으로 입력해주세요.`,
   required: v => !v && '필수 입력사항이에요.',
   maxLength: (v, maximum) =>
-    v &&
-    v.length > maximum &&
-    `${Intl.NumberFormat('ko-KR').format(maximum)}자 이내로 입력해주세요.`,
+    v && v.length > maximum && `${formatPrice(maximum)}자 이내로 입력해주세요.`,
   minLength: (v, minimum) =>
     v &&
     v.length < minimum &&
-    `${Intl.NumberFormat('ko-KR').format(minimum)}자 이상으로 입력해주세요.`,
+    `${formatPrice(minimum)}자 이상으로 입력해주세요.`,
   email: v =>
     v &&
     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(v) &&

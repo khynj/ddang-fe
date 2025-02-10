@@ -2,14 +2,15 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import relativeTime from '@/utils/relativeTime'
 import ProductImage from './ProductImage'
+import { formatPrice } from '@/utils/formatPrice'
 
 function ProductHistoryItem({ product }) {
   const price = product.hammeredTime
-    ? Intl.NumberFormat('ko-KR').format(product.hammeredPrice) + '원 낙찰'
+    ? formatPrice(product.hammeredPrice) + '원 낙찰'
     : '유찰'
-  const minimumBid = Intl.NumberFormat('ko-KR').format(product.minimumBid)
+  const minimumBid = formatPrice(product.minimumBid)
   const instantHammerPrice = product.instantHammerPrice
-    ? Intl.NumberFormat('ko-KR').format(product.instantHammerPrice)
+    ? formatPrice(product.instantHammerPrice)
     : null
   const day =
     product.hammeredTime && product.hammeredTime < product.endTime

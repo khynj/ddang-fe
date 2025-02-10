@@ -4,12 +4,11 @@ import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
+import { formatPrice } from '@/utils/formatPrice'
 
 function ProductItemHorizontal({ product }) {
-  const price = Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
-  const instantHammerPrice = Intl.NumberFormat('ko-KR').format(
-    product.instantHammerPrice,
-  )
+  const price = formatPrice(product.currentBidPrice)
+  const instantHammerPrice = formatPrice(product.instantHammerPrice)
   return (
     <Link
       className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200 ${

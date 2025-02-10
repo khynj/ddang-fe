@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import { dday } from '@/utils/Dday'
 import { Link } from 'react-router'
+import { formatPrice } from '@/utils/formatPrice'
 
 function HomeMainProduct({ product, index, size }) {
-  const price = Intl.NumberFormat('ko-KR').format(product.currentBidPrice)
+  const price = formatPrice(product.currentBidPrice)
   return (
     <Link
       to={`/popup/product/${product.auctionId}`}

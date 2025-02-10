@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useRef, useState } from 'react'
-import profileImage from '@/assets/images/profileImage.png'
+import profileImage from '@/assets/images/characters/profileImage.png'
 
 function EditProfileImage({ src, setBlob, size }) {
   const inputRef = useRef(null)

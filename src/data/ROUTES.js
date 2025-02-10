@@ -35,6 +35,8 @@ const ROUTES = {
   REVIEW_REGISTER: '/mypage/review/register/:id',
   USER_REVIEW_HISTORY: '/mypage/review-history/:id',
   CHARGE: '/mypage/charge',
+  CHARGE_SUCCESS: '/api/pay/deposit/success',
+  CHARGE_FAIL: '/api/pay/deposit/fail',
   POLICIES: '/mypage/policies',
   CHANGE_PASSWORD: '/mypage/app-setting/change-password',
 }
