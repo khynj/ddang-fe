@@ -2,6 +2,8 @@ import usePageName from '../../../hooks/usePageName'
 import MyPageMenu from '../components/MyPageMenu'
 import { Outlet } from 'react-router'
 import useFcmToken from '../hooks/useFcmToken'
+import { useAuth } from '@/contexts/AuthContext'
+import MaterialIcon from '@/components/icons/MaterialIcon'
 
 function AppSettingPage() {
   usePageName('앱 설정')
@@ -11,6 +13,8 @@ function AppSettingPage() {
     navigator.clipboard.writeText(fcmToken)
   }
 
+  const { user, login, logout } = useAuth()
+
   return (
     <div className='flex flex-col bg-white'>
       <main>
@@ -19,11 +23,11 @@ function AppSettingPage() {
           title='비밀번호 변경'
           to='/mypage/app-setting/change-password'
         />
-        <MyPageMenu
-          icon={{ name: 'logout', size: 24, color: 'gray-950' }}
-          title='로그아웃'
-          to='/logout'
-        />
+
+        <button onClick={logout} className='flex items-center gap-2 p-4 px-6'>
+          <MaterialIcon name='logout' size={24} color='gray-950' />
+          <span className=' font-bold text-base text-gray-800'>로그아웃</span>
+        </button>
         <MyPageMenu
           icon={{ name: 'exit_to_app', size: 24, color: 'gray-950' }}
           title='탈퇴하기'

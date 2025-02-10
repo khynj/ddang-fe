@@ -91,7 +91,7 @@ function SignupPage() {
           />
           {error && (
             <div className='text-sm text-red-400'>
-              입력 데이터를 확인해주세요.
+              {error.response?.data?.message || '회원가입에 실패했어요.'}
             </div>
           )}
         </div>

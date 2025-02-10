@@ -6,18 +6,29 @@ import Profile from '../components/Profile'
 import moneyBag2 from '@/assets/images/moneyBag2.png'
 import payDdang from '@/assets/images/payDdang.png'
 import menus from '../data/menus'
+import { useAuth } from '@/contexts/AuthContext'
+import { useMemberInfo } from '@/apis/member'
+import { useEffect } from 'react'
 
 function MyPage() {
   usePageName('마이페이지')
+
+  const { user } = useAuth()
+
+  const { data: userData } = useMemberInfo(user?.memberId)
+
+  useEffect(() => {
+    console.log('userData', userData)
+  }, [userData])
 
   return (
     <div>
       {/* 프로필 섹션 */}
       <Profile
-        profileSrc={profileImage}
-        name='성시경이타고있어요'
-        trustScore={78}
-        id={1}
+        profileSrc={user?.imageUrl ? user.imageUrl : profileImage}
+        name={user?.nickname}
+        trustScore={userData?.reliability}
+        id={user?.memberId}
       />
       <hr className='border-gray-200' />
 

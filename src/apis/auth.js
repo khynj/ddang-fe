@@ -5,7 +5,7 @@ import AXIOS from '@/utils/axios_'
 export function useLogin() {
   return useMutation({
     mutationFn: ({ email, password }) =>
-      AXIOS.post('/api/auth/login', {
+      AXIOS.post('/auth/login', {
         email,
         password,
       }).then(res => {
@@ -18,8 +18,6 @@ export function useLogin() {
 export function useSocialLogin() {
   return useMutation({
     mutationFn: providerName =>
-      AXIOS.post(`/auth/login/oauth2/authorization/${providerName}`).then(
-        res => res.data,
-      ),
+      AXIOS.post(`/oauth2/authorization/${providerName}`).then(res => res.data),
   })
 }

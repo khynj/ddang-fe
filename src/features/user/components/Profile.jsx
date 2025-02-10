@@ -3,9 +3,10 @@ import { Link } from 'react-router'
 import ProfileImage from './ProfileImage'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import TrustScoreBar from './TrustScoreBar'
+import { useAuth } from '@/contexts/AuthContext'
 
 function Profile({ profileSrc, name, trustScore, id }) {
-  const userId = 1 // 로그인한 사용자의 id
+  const { user } = useAuth()
 
   return (
     <div className='p-6 bg-white'>
@@ -14,7 +15,7 @@ function Profile({ profileSrc, name, trustScore, id }) {
         <ProfileImage src={profileSrc} size={64} />
         <div className='flex flex-row justify-between items-center w-full ml-4'>
           <p className='text-base font-bold'>{name}</p>
-          {userId === id ? (
+          {user.memberId === id ? (
             <Link to='/mypage/edit-profile'>
               <button
                 style={{
@@ -50,7 +51,7 @@ function Profile({ profileSrc, name, trustScore, id }) {
           <span className='text-sm font-bold'>{trustScore}%</span>
         </div>
         {/* 5단계 중 현재 3단계 */}
-        <TrustScoreBar trustScore={62} />
+        <TrustScoreBar trustScore={trustScore} />
       </div>
     </div>
   )

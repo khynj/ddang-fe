@@ -4,18 +4,27 @@ import usePageName from '@/hooks/usePageName'
 import TextInput from '@/components/form/TextInput'
 import StickyContainer from '../../../components/StickyContainer'
 import DefaultButton from '../../../components/buttons/DefaultButton'
+import { useAuth } from '@/contexts/AuthContext'
+import { useState } from 'react'
 
 function EditProfilePage() {
   usePageName('프로필 수정')
+  const { user } = useAuth()
+  const [nickname, setNickname] = useState(user?.nickname)
 
   return (
     <>
       <div className='flex flex-col bg-white p-4 pt-16 gap-8'>
         <EditProfileImage src={handstandingMole} size={120} />
-        <TextInput label='별명' required />
+        <TextInput
+          label='별명'
+          required
+          value={nickname}
+          setValue={setNickname}
+        />
       </div>
       <StickyContainer plain>
-        <DefaultButton type='gray'>확인</DefaultButton>
+        <DefaultButton>수정</DefaultButton>
       </StickyContainer>
     </>
   )

@@ -7,7 +7,7 @@ export function useSignUp() {
   return useMutation({
     mutationFn: ({ name, nickname, email, password }) => {
       console.log({ name, nickname, email, password })
-      return AXIOS.post('/api/member', {
+      return AXIOS.post('/member', {
         name,
         nickname,
         email,
@@ -20,7 +20,7 @@ export function useSignUp() {
 // 소셜 회원가입 (요청 정보 없음)
 export function useSocialSignUp() {
   return useMutation({
-    mutationFn: () => AXIOS.post('/api/member/social').then(res => res.data),
+    mutationFn: () => AXIOS.post('/member/social').then(res => res.data),
   })
 }
 
@@ -39,7 +39,7 @@ export function useCheckDuplicate({ email, nickname }) {
   return useQuery({
     queryKey: ['checkDuplicate', email, nickname],
     queryFn: () =>
-      AXIOS.get('/api/member/exist', { params: { email, nickname } }).then(
+      AXIOS.get('/member/exist', { params: { email, nickname } }).then(
         res => res.data,
       ),
     enabled: !!email || !!nickname,
@@ -48,6 +48,7 @@ export function useCheckDuplicate({ email, nickname }) {
 
 // 회원 정보 조회
 export function useMemberInfo(memberId) {
+  console.log('searching ', memberId)
   return useQuery({
     queryKey: ['memberInfo', memberId],
     queryFn: () => AXIOS.get(`/member/${memberId}`).then(res => res.data),
