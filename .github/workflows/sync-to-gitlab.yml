@@ -44,5 +44,5 @@ jobs:
           cd A705
           git add Front-End/
           git commit -m "Sync Front-End from github-repo [$(date)]" || echo "No changes to commit"
-          git pull
+          git pull origin FE-sync  # Pull to avoid conflicts
           git push origin FE-sync  # Push to FE-sync branch
