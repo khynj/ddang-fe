@@ -20,10 +20,7 @@ jobs:
 
       - name: Clone GitLab A705
         run: |
-          if git rev-parse --verify FE-sync; then
-            git clone -b FE-sync https://oauth2:${{ secrets.GITLAB_PAT }}@lab.ssafy.com/s12-webmobile2-sub1/S12P11A705.git A705
-          else
-            git clone https://oauth2:${{ secrets.GITLAB_PAT }}@lab.ssafy.com/s12-webmobile2-sub1/S12P11A705.git A705
+          git clone https://oauth2:${{ secrets.GITLAB_PAT }}@lab.ssafy.com/s12-webmobile2-sub1/S12P11A705.git A705
           cd A705
           git config user.email "dkandjsl@gmail.com"
           git config user.name "GitHub Actions"
