@@ -10,7 +10,8 @@ function ChargePage() {
 
   const accountName = '카카오페이'
   const [amount, setAmount] = useState(0) // 숫자로 저장
-  const afterTransactionBalance = () => formatPrice(amount + payInfo?.balance)
+  const afterTransactionBalance = () =>
+    formatPrice(Number(amount) + Number(payInfo?.balance))
 
   const payDeposit = usePayDeposit()
   const { data: payInfo } = usePayInfo()
@@ -30,6 +31,9 @@ function ChargePage() {
       {
         onSuccess: data => {
           window.location = data?.next_redirect_app_url
+          // import.meta.env.DEV
+          //   ? data?.next_redirect_pc_url
+          //   : data?.next_redirect_app_url
         },
         onError: err => {
           console.log('결제 mutation err', err)
