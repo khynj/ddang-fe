@@ -25,7 +25,7 @@ function MyPage() {
     <div>
       {/* 프로필 섹션 */}
       <Profile
-        profileSrc={user?.imageUrl ? user.imageUrl : profileImage}
+        profileSrc={userData?.imageUrl || profileImage}
         name={user?.nickname}
         trustScore={userData?.reliability}
         id={user?.memberId}

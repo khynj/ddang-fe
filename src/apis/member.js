@@ -34,7 +34,9 @@ export function useUpdateProfilePhoto() {
   return useMutation({
     mutationFn: formData =>
       AXIOS.put('/member/photo', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       }).then(res => res.data),
   })
 }
@@ -53,7 +55,6 @@ export function useCheckDuplicate({ email, nickname }) {
 
 // 회원 정보 조회
 export function useMemberInfo(memberId) {
-  console.log('searching ', memberId)
   return useQuery({
     queryKey: ['memberInfo', memberId],
     queryFn: () => AXIOS.get(`/member/${memberId}`).then(res => res.data),

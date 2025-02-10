@@ -86,3 +86,11 @@ export function useConfirmPurchase() {
       AXIOS.post(`/auction/${auctionId}/confirm`).then(res => res.data),
   })
 }
+
+export function useCategory(parent) {
+  return useQuery({
+    queryKey: ['category', { parent: parent }],
+    queryFn: () =>
+      AXIOS.get(`/category?parent=${parent}`).then(res => res.data),
+  })
+}

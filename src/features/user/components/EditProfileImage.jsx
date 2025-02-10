@@ -1,15 +1,24 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from '@/components/icons/MaterialIcon'
+import { useRef, useState } from 'react'
+import profileImage from '@/assets/images/profileImage.png'
 
-function EditProfileImage({ src, size }) {
+function EditProfileImage({ src, setBlob, size }) {
+  const inputRef = useRef(null)
+  const [imageUrl, setImageUrl] = useState(src)
+
+  const selectImage = () => {
+    inputRef.current.click()
+  }
+
   return (
-    <div className='flex justify-center items-center'>
+    <button onClick={selectImage} className='flex justify-center items-center'>
       <div
         className='relative rounded-full bg-gray-100 overflow-hidden aspect-square'
         style={{ width: size, height: size }}
       >
         <img
-          src={src}
+          src={imageUrl || profileImage}
           alt='EditProfileImage'
           className='object-cover w-full h-full'
         />
@@ -24,13 +33,25 @@ function EditProfileImage({ src, size }) {
           <MaterialIcon name='edit' filled />
         </div>
       </div>
-    </div>
+      <input
+        ref={inputRef}
+        className='hidden'
+        type='file'
+        accept='image/*'
+        onChange={e => {
+          const files = e.target.files
+          setBlob(files[0])
+          setImageUrl(URL.createObjectURL(files[0]))
+        }}
+      />
+    </button>
   )
 }
 
 EditProfileImage.propTypes = {
-  src: PropTypes.string.isRequired,
   size: PropTypes.number.isRequired,
+  src: PropTypes.string,
+  setBlob: PropTypes.func,
 }
 
 export default EditProfileImage
