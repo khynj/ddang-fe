@@ -16,8 +16,15 @@ export function useLogin() {
 }
 
 export function useSocialLogin() {
-  return useMutation({
-    mutationFn: providerName =>
-      AXIOS.post(`/oauth2/authorization/${providerName}`).then(res => res.data),
+  // return useMutation({
+  //   mutationFn: providerName =>
+  //     AXIOS.post(`/oauth2/authorization/${providerName}`).then(res => res.data),
+  // })
+  // to get
+
+  return useQuery({
+    queryKey: ['socialLogin'],
+    queryFn: providerName =>
+      AXIOS.get(`/oauth2/authorization/${providerName}`).then(res => res.data),
   })
 }

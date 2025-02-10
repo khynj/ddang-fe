@@ -3,62 +3,42 @@ import googleIcon from '@/assets/images/oauth/google.png'
 import kakaoIcon from '@/assets/images/oauth/kakao.png'
 import naverIcon from '@/assets/images/oauth/naver.png'
 
+const socials = [
+  {
+    name: 'google',
+    icon: googleIcon,
+    className: 'border-1 border-[#747775]',
+    text: 'Google 계정으로 로그인',
+  },
+  {
+    name: 'kakao',
+    icon: kakaoIcon,
+    className: 'bg-[#FEE500]',
+    text: '카카오 로그인',
+  },
+  {
+    name: 'naver',
+    icon: naverIcon,
+    className: 'bg-[#03C75A] text-white',
+    text: '네이버 로그인',
+  },
+]
+
 function SocialLoginButtons() {
-  const { mutate } = useSocialLogin()
-  const loginAs = provider => {
-    mutate(provider, {
-      onSuccess: data => {
-        console.log(data)
-      },
-      onError: error => {
-        console.log(error)
-      },
-    })
-  }
   return (
     <div className='flex flex-col gap-4'>
-      <button
-        onClick={() => loginAs('google')}
-        className='flex flex-row justify-between rounded-lg p-3 border-1 border-[#747775]'
-      >
-        <img
-          width='24'
-          height='24'
-          src={googleIcon}
-          alt='Google'
-          className='object-contain'
-        />
-        Google 계정으로 로그인
-        <div className='p-2'></div>
-      </button>
-      <button
-        onClick={() => loginAs('kakao')}
-        className='flex flex-row justify-between rounded-lg bg-[#FEE500] p-3'
-      >
-        <img
-          width='24'
-          height='24'
-          src={kakaoIcon}
-          alt='Kakao'
-          className='object-contain'
-        />
-        카카오 로그인
-        <div className='p-2'></div>
-      </button>
-      <button
-        onClick={() => loginAs('naver')}
-        className='flex flex-row justify-between rounded-lg bg-[#03C75A] text-white p-3'
-      >
-        <img
-          width='24'
-          height='24'
-          src={naverIcon}
-          alt='Naver'
-          className='object-contain'
-        />
-        네이버 로그인
-        <div className='p-2 '></div>
-      </button>
+      {socials.map(({ name, icon, className, text }) => (
+        <a
+          key={name}
+          className={`flex items-center justify-center w-full h-12 rounded-xl ${className}`}
+          target='_blank'
+          href={`http://127.0.0.1:8080/api/oauth2/authorization/${name}`}
+          rel='noopener noreferrer'
+        >
+          <img src={icon} alt={name} className='w-6 h-6 mr-2' />
+          <span>{text}</span>
+        </a>
+      ))}
     </div>
   )
 }
