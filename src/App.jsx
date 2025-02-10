@@ -45,7 +45,8 @@ import ROUTES from './data/ROUTES'
 import ReviewHistoryLayout from './layouts/ReviewHistoryLayout'
 import { AuthProvider } from './contexts/AuthProvider'
 import AuthGuard from './components/AuthGuard'
-import SocialSignupPage from './features/user/pages/SocialSignupPage'
+import SocialSignupPage from './features/authentication/pages/SocialSignupPage'
+import SocialLandingPage from './features/authentication/pages/SocialLandingPage'
 
 function App() {
   const route = useNavigate()
@@ -65,6 +66,12 @@ function App() {
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           </Route>
           <Route path={ROUTES.WELCOME} element={<WelcomePage />} />
+          <Route path='/' element={<DefaultLayout />}>
+            <Route
+              path={ROUTES.SOCIAL_LANDING}
+              element={<SocialLandingPage />}
+            />
+          </Route>
           <Route path='/' element={<AuthGuard />}>
             <Route path={ROUTES.HOME} element={<ExploreLayout />}>
               <Route index element={<HomePage />} />

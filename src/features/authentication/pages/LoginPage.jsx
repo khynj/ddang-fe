@@ -8,7 +8,7 @@ import { useLogin } from '@/apis/auth'
 import { useState } from 'react'
 import { VALIDATIONS } from '@/utils/VALIDATIONS'
 import { useAuth } from '@/contexts/AuthContext'
-import SocialLoginButtons from './SocialLoginButtons'
+import SocialLoginButtons from '../components/SocialLoginButtons'
 
 function LoginPage() {
   usePageName('로그인')

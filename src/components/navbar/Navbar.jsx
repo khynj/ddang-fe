@@ -31,7 +31,8 @@ function Navbar() {
   ]
   return (
     <nav
-      className={`max-w-lg flex grow flex-row justify-around items-center bg-white ${style.navbar}`}
+      className={`fixed h-[64px] max-w-lg w-full bottom-0
+         flex grow flex-row justify-around items-center bg-white ${style.navbar}`}
     >
       {navs.map((nav, index) => (
         <NavLink

@@ -10,7 +10,7 @@ function ChargePage() {
 
   const accountName = '카카오페이'
   const [amount, setAmount] = useState(0) // 숫자로 저장
-  const afterTransactionBalance = () =>
+  const balanceAfterTransaction = () =>
     formatPrice(Number(amount) + Number(payInfo?.balance))
 
   const payDeposit = usePayDeposit()
@@ -43,9 +43,9 @@ function ChargePage() {
   }
 
   return (
-    <>
-      <div className='flex flex-col space-y-6 w-full max-w-md mx-auto p-4 bg-white'>
-        <div className='flex flex-col space-y-2 w-full max-w-md mx-auto'>
+    <div>
+      <div className='p-4'>
+        <div className='flex flex-col gap-2 mb-6'>
           <label
             htmlFor='charge-amount'
             className='text-ddblue-400 text-base font-bold'
@@ -63,22 +63,21 @@ function ChargePage() {
         </div>
 
         {/* 계좌 및 잔액 정보 */}
-        <div className='flex flex-col space-y-4 text-base text-gray-900'>
+        <div className='flex flex-col gap-4 text-gray-900'>
           <div className='flex justify-between'>
             <span>계좌</span>
             <span className='font-bold'>{accountName}</span>
           </div>
           <div className='flex justify-between'>
             <span>거래 후 잔액</span>
-            <span className='font-bold'>{afterTransactionBalance()}원</span>
+            <span className='font-bold'>{balanceAfterTransaction()}원</span>
           </div>
         </div>
       </div>
-      {/* 확인 버튼 */}
       <StickyContainer plain>
         <DefaultButton onClick={onSubmit}>충전하기</DefaultButton>
       </StickyContainer>
-    </>
+    </div>
   )
 }
 

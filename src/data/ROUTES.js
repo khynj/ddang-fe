@@ -3,6 +3,7 @@ const ROUTES = {
   WELCOME: '/welcome',
   LOGIN: '/login',
   SIGNUP: '/signup',
+  SOCIAL_LANDING: '/landing',
   SOCIAL_SIGNUP: '/social-signup',
   SEARCH: '/search',
   NOTIFICATIONS: '/notifications',

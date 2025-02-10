@@ -15,6 +15,13 @@ export function useLogin() {
   })
 }
 
+export function useMyInfo() {
+  return useQuery({
+    queryKey: ['myInfo'],
+    queryFn: () => AXIOS.get('/auth/me').then(res => res.data),
+  })
+}
+
 // export function useSocialLogin() {
 //   // return useMutation({
 //   //   mutationFn: providerName =>
