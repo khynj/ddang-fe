@@ -5,7 +5,9 @@ import usePageName from '@/hooks/usePageName'
 import StickyContainer from '@/components/StickyContainer'
 import { useState } from 'react'
 import ROUTES from '@/data/ROUTES'
-import { useSignUp } from '@/apis/member'
+import { useCheckDuplicate, useSignUp } from '@/apis/member'
+import { VALIDATIONS } from '@/utils/VALIDATIONS'
+import { useLogin } from '@/apis/auth'
 
 function SignupPage() {
   usePageName('회원가입')
@@ -17,30 +19,40 @@ function SignupPage() {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
 
-  const useSignup = useSignUp()
+  const { error, mutate: signUp } = useSignUp()
+  const { mutate: login } = useLogin()
+  const checkNickname = useCheckDuplicate({ email: '', nickname })
+  const checkEmail = useCheckDuplicate({ nickname: '', email })
 
-  const onSubmit = () => {
-    if (password !== passwordConfirm) {
-      alert('비밀번호가 일치하지 않습니다.')
-      return
-    }
+  const validation = {
+    nickname: nickname =>
+      VALIDATIONS.required(nickname) ||
+      (checkNickname.data?.nicknameExists ? '이미 존재하는 닉네임이에요.' : ''),
+    email: email =>
+      VALIDATIONS.required(email) ||
+      VALIDATIONS.email(email) ||
+      (checkEmail.data?.emailExists ? '이미 존재하는 이메일이에요.' : ''),
+    password: password => VALIDATIONS.required(password),
+    passwordConfirm: passwordConfirm =>
+      VALIDATIONS.required(passwordConfirm) ||
+      (passwordConfirm !== password ? '비밀번호가 일치하지 않습니다.' : ''),
+  }
 
-    useSignup.mutate(
+  const onSubmit = e => {
+    e.preventDefault()
+    signUp(
       { name, nickname, email, password },
       {
-        onSuccess: data => {
-          console.log(data)
+        onSuccess: () => {
+          login({ email, password })
           route(ROUTES.HOME, { state: { welcome: true } })
-        },
-        onError: error => {
-          alert(error.response.data.message)
         },
       },
     )
   }
 
   return (
-    <div>
+    <form onSubmit={onSubmit}>
       <div className='flex flex-col gap-6 p-4'>
         <div>
           <TextInput
@@ -48,6 +60,7 @@ function SignupPage() {
             required
             value={nickname}
             setValue={setNickname}
+            validate={validation.nickname}
           />
           <TextInput
             label='이메일'
@@ -55,6 +68,7 @@ function SignupPage() {
             type='email'
             value={email}
             setValue={setEmail}
+            validate={validation.email}
           />
           <TextInput label='이름' required value={name} setValue={setName} />
         </div>
@@ -65,6 +79,7 @@ function SignupPage() {
             type='password'
             value={password}
             setValue={setPassword}
+            validate={validation.password}
           />
           <TextInput
             label='비밀번호 확인'
@@ -72,13 +87,21 @@ function SignupPage() {
             type='password'
             value={passwordConfirm}
             setValue={setPasswordConfirm}
+            validate={validation.passwordConfirm}
           />
+          {error && (
+            <div className='text-sm text-red-400'>
+              입력 데이터를 확인해주세요.
+            </div>
+          )}
         </div>
       </div>
       <StickyContainer>
-        <DefaultButton onClick={onSubmit}>회원가입</DefaultButton>
+        <DefaultButton submit onClick={onSubmit}>
+          회원가입
+        </DefaultButton>
       </StickyContainer>
-    </div>
+    </form>
   )
 }
 

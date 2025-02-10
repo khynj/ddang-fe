@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-function DefaultButton({ children, onClick, type }) {
+function DefaultButton({ children, onClick, type, submit }) {
   return (
     <button
       className={`w-full p-3 rounded-xl ${
@@ -11,6 +11,7 @@ function DefaultButton({ children, onClick, type }) {
           : 'text-white bg-ddblue-400'
       }`}
       onClick={onClick}
+      type={submit ? 'submit' : 'button'}
     >
       {children}
     </button>
@@ -21,6 +22,7 @@ DefaultButton.propTypes = {
   children: PropTypes.node,
   onClick: PropTypes.func,
   type: PropTypes.string,
+  submit: PropTypes.bool,
 }
 
 export default DefaultButton

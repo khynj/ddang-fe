@@ -1,4 +1,4 @@
-const validate = {
+const VALIDATIONS = {
   maxValue: (v, maximum) =>
     v && v && v > maximum && `${maximum} 까지만 가능해요`,
   minValue: (v, minimum) =>
@@ -36,6 +36,10 @@ const validate = {
     v &&
     v.length < minimum &&
     `${Intl.NumberFormat('ko-KR').format(minimum)}자 이상으로 입력해주세요.`,
+  email: v =>
+    v &&
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(v) &&
+    '이메일 형식이 아닙니다.',
 }
 
-export { validate }
+export { VALIDATIONS }

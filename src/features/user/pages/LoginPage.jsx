@@ -9,30 +9,39 @@ import StickyContainer from '@/components/StickyContainer'
 import ROUTES from '@/data/ROUTES'
 import { useLogin } from '@/apis/auth'
 import { useState } from 'react'
+import { VALIDATIONS } from '@/utils/VALIDATIONS'
 
 function LoginPage() {
   usePageName('로그인')
   const route = useNavigate()
-  const login = useLogin()
+  const { mutate, error } = useLogin()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const handleLogin = () => {
-    const res = login.mutate({
-      email,
-      password,
-    })
-    console.log(res)
+  const handleLogin = e => {
+    e.preventDefault()
+    mutate(
+      {
+        email,
+        password,
+      },
+      {
+        onSuccess: () => {
+          route(ROUTES.HOME)
+        },
+      },
+    )
   }
 
   return (
     <div className='mt-2'>
-      <div className=' p-4'>
+      <form onSubmit={handleLogin} className=' p-4'>
         <TextInput
           label='이메일'
           required
           type='email'
           value={email}
           setValue={setEmail}
+          validate={e => VALIDATIONS.required(e) || VALIDATIONS.email(e)}
         />
         <TextInput
           label='비밀번호'
@@ -40,9 +49,17 @@ function LoginPage() {
           type='password'
           value={password}
           setValue={setPassword}
+          validate={VALIDATIONS.required}
         />
+        {error && (
+          <div className='text-red-500 text-sm'>
+            아이디 혹은 비밀번호가 다릅니다.
+          </div>
+        )}
         <div className='mt-8 mb-3'>
-          <DefaultButton onClick={handleLogin}>로그인</DefaultButton>
+          <DefaultButton submit onClick={handleLogin}>
+            로그인
+          </DefaultButton>
         </div>
         <div className='px-1 p-2 flex flex-row justify-between text-gray-500 text-sm'>
           {/* <div className='flex flex-row gap-4'>
@@ -50,7 +67,7 @@ function LoginPage() {
           </div> */}
           <Link to={ROUTES.SIGNUP}>회원가입</Link>
         </div>
-      </div>
+      </form>
       <StickyContainer plain>
         <div className='flex flex-col gap-4'>
           <div className='flex flex-row justify-between rounded-lg p-3 border-1 border-[#747775]'>

@@ -4,7 +4,7 @@ import TextInput from '@/components/form/TextInput'
 import TextArea from '@/components/form/TextArea'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import DatePicker from '@/components/form/DatePicker'
-import { validate } from '@/utils/validate'
+import { VALIDATIONS } from '@/utils/VALIDATIONS'
 import NumberInput from '@/components/form/NumberInput'
 import ImagePicker from '../components/ImagePicker'
 import CategoryPicker from '@/components/modals/CategoryPicker'
@@ -21,8 +21,8 @@ function ProductRegisterPage() {
   const [title, setTitle] = useState('')
   const [productName, setProductName] = useState('')
   const [category, setCategory] = useState(null)
-  const [minBidPrice, setMinBidPrice] = useState(0)
-  const [instantHammerPrice, setInstantHammerNowPrice] = useState(0)
+  const [minBidPrice, setMinBidPrice] = useState()
+  const [instantHammerPrice, setInstantHammerNowPrice] = useState()
   const [openDate, setOpenDate] = useState('')
   const [closeDate, setCloseDate] = useState('')
   const [description, setDescription] = useState('')
@@ -86,24 +86,28 @@ function ProductRegisterPage() {
   }
 
   const validation = {
-    title: title => validate.maxLength(title, 20) || validate.required(title),
+    title: title =>
+      VALIDATIONS.maxLength(title, 20) || VALIDATIONS.required(title),
     productName: productName =>
-      validate.maxLength(productName, 30) || validate.required(productName),
-    category: category => validate.required(category),
+      VALIDATIONS.maxLength(productName, 30) ||
+      VALIDATIONS.required(productName),
+    category: category => VALIDATIONS.required(category),
     minBidPrice: minBidPrice =>
-      validate.minPrice(minBidPrice, 0) ||
-      validate.maxPrice(minBidPrice, 10000000) ||
-      validate.required(minBidPrice),
+      VALIDATIONS.minPrice(minBidPrice, 0) ||
+      VALIDATIONS.maxPrice(minBidPrice, 10000000) ||
+      VALIDATIONS.required(minBidPrice),
     instantHammerPrice: instantHammerPrice =>
-      validate.minPrice(instantHammerPrice, minBidPrice) ||
-      validate.maxPrice(minBidPrice, 10000000),
-    openDate: openDate => validate.required(openDate),
+      VALIDATIONS.minPrice(instantHammerPrice, minBidPrice) ||
+      VALIDATIONS.maxPrice(minBidPrice, 10000000),
+    openDate: openDate => VALIDATIONS.required(openDate),
     closeDate: closeDate =>
-      validate.required(closeDate) || validate.minDate(closeDate, openDate),
+      VALIDATIONS.required(closeDate) ||
+      VALIDATIONS.minDate(closeDate, openDate),
     description: description =>
-      validate.maxLength(description, 200) || validate.required(description),
-    tradeType: tradeType => validate.required(tradeType),
-    tradePlace: tradePlace => validate.required(tradePlace),
+      VALIDATIONS.maxLength(description, 200) ||
+      VALIDATIONS.required(description),
+    tradeType: tradeType => VALIDATIONS.required(tradeType),
+    tradePlace: tradePlace => VALIDATIONS.required(tradePlace),
   }
 
   const handleSubmit = () => {

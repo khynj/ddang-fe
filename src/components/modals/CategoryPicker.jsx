@@ -16,9 +16,7 @@ function CategoryPicker({ label, required, value, setValue, validate }) {
   const [error, setError] = useState('')
   const onClose = useCallback(
     v => {
-      if (validate) {
-        setError(validate(v))
-      }
+      if (validate) setError(validate(v))
       setValue(v)
       close()
     },

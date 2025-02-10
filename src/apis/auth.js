@@ -5,7 +5,13 @@ import AXIOS from '@/utils/axios_'
 export function useLogin() {
   return useMutation({
     mutationFn: ({ email, password }) =>
-      AXIOS.post('/api/auth/login', { email, password }).then(res => res.data),
+      AXIOS.post('/api/auth/login', {
+        email,
+        password,
+      }).then(res => {
+        console.log(document.cookie)
+        return res.data
+      }),
   })
 }
 
