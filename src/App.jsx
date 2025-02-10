@@ -47,6 +47,7 @@ import { AuthProvider } from './contexts/AuthProvider'
 import AuthGuard from './components/AuthGuard'
 import SocialSignupPage from './features/authentication/pages/SocialSignupPage'
 import SocialLandingPage from './features/authentication/pages/SocialLandingPage'
+import TestPage from './pages/TestPage'
 
 function App() {
   const route = useNavigate()
@@ -60,6 +61,7 @@ function App() {
         className={`w-full h-dvh mx-auto bg-white max-w-lg overflow-x-hidden overflow-y-scroll`}
       >
         <Routes>
+          <Route path='/test' element={<TestPage />} />
           <Route path='/' element={<DefaultLayout back />}>
             <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
             <Route path={ROUTES.SOCIAL_SIGNUP} element={<SocialSignupPage />} />

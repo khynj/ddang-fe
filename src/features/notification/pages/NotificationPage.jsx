@@ -1,12 +1,14 @@
+import { useNotifications } from '@/apis/notifications.js'
 import usePageName from '../../../hooks/usePageName.js'
 import NotificationItem from '../components/NotificationItem.jsx'
-import notifications from '../data/notifications.js'
+import { useEffect } from 'react'
 
 function NotificationPage() {
   usePageName('알림')
+  const { data: notifications } = useNotifications()
   return (
     <div>
-      {notifications.map((notification, index) => (
+      {notifications?.notifications.map((notification, index) => (
         <NotificationItem key={index} notification={notification} />
       ))}
     </div>

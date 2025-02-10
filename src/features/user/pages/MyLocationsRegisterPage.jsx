@@ -7,47 +7,42 @@ import Modal from '@/components/modals/Modal'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import ROUTES from '@/data/ROUTES'
 import TextInput from '@/components/form/TextInput'
+import { useLocations } from '@/apis/location'
+import { useAddPreferredLocation } from '@/apis/member'
+
+/*
+ {
+    "locationId": 1,
+    "location": "서울시 강남구 역삼동"
+  }
+*/
 
 function MyLocationsRegisterPage() {
   usePageName('내 장소')
 
-  const data = [
-    '서울시 강남구 역삼동',
-    '서울시 강남구 논현동',
-    '서울시 강남구 대치동',
-    '서울시 강남구 삼성동',
-    '서울시 강남구 신사동',
-    '서울시 강남구 청담동',
-  ]
-
   const route = useNavigate()
 
   const [searchTerm, setSearchTerm] = useState('')
-  const [filteredResults, setFilteredResults] = useState([])
-  const [address, setAddress] = useState('')
+  const [selectedLocationId, setSelectedLocationId] = useState('')
   const [name, setName] = useState('')
   const { isOpen, open, close } = useModal()
   const [isConfirmed, setIsConfirmed] = useState(false)
 
-  const handleSearch = e => {
-    const term = e.target.value
-    setSearchTerm(term)
+  const { data: searchLocation } = useLocations(searchTerm)
+  const { mutate: registerLocation } = useAddPreferredLocation()
 
-    if (term) {
-      const results = data.filter(item => item.includes(term))
-      setFilteredResults(results)
-    } else {
-      setFilteredResults([])
-    }
+  const handleSearch = e => {
+    setSearchTerm(e.target.value)
   }
 
-  const handleClick = address => {
-    setAddress(address)
+  const handleClick = location => {
+    setSelectedLocationId(location.locationId)
     open()
   }
 
   const onConfirm = () => {
     console.log('Confirm')
+    registerLocation({ locationId: selectedLocationId, title: name })
     setIsConfirmed(true)
     close()
   }
@@ -72,14 +67,14 @@ function MyLocationsRegisterPage() {
 
         <div className='flex-1 w-full max-w-md mt-2 overflow-y-auto'>
           <ul className='bg-white divide-y divide-gray-300'>
-            {filteredResults.map((result, index) => (
+            {searchLocation?.map((location, index) => (
               <li
-                onClick={() => handleClick(result)}
+                onClick={() => handleClick(location)}
                 key={index}
                 className={`px-4 py-3 cursor-pointer ${
                   index === 0 ? 'border-t border-gray-300' : ''
                 } ${
-                  index === filteredResults.length - 1
+                  index === searchLocation.length - 1
                     ? 'border-b border-gray-300'
                     : ''
                 }`}
@@ -87,11 +82,12 @@ function MyLocationsRegisterPage() {
                 {result}
               </li>
             ))}
-            {filteredResults.length === 0 && searchTerm && (
-              <li className='px-4 py-3 text-gray-500 text-center'>
-                검색 결과가 없습니다.
-              </li>
-            )}
+            {!searchLocation ||
+              (searchLocation.length === 0 && searchTerm && (
+                <li className='px-4 py-3 text-gray-500 text-center'>
+                  검색 결과가 없습니다.
+                </li>
+              ))}
           </ul>
         </div>
       </div>
@@ -99,7 +95,7 @@ function MyLocationsRegisterPage() {
         <Modal close={close}>
           <div className='flex flex-col gap-4 w-full text-center'>
             <div className='flex flex-col gap-1'>
-              <p className='font-bold text-sm'>{address}</p>
+              <p className='font-bold text-sm'>{selectedLocationId}</p>
               <p className='font-bold text-ddblue-400'>내 장소 등록</p>
             </div>
             <TextInput required value={name} setValue={setName} />
@@ -116,7 +112,7 @@ function MyLocationsRegisterPage() {
         <Modal close={() => route(ROUTES.MY_LOCATIONS)}>
           <div className='flex flex-col gap-4 w-full text-center'>
             <div className='flex flex-col gap-1'>
-              <p className='font-bold text-sm'>{address}</p>
+              <p className='font-bold text-sm'>{selectedLocationId}</p>
               <p className='font-bold text-ddblue-400'>등록되었습니다.</p>
             </div>
             <div className='flex gap-4'>

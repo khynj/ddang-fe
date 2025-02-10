@@ -5,19 +5,13 @@ import Profile from '../components/Profile'
 import menus from '../data/menus'
 import { useAuth } from '@/contexts/AuthContext'
 import { useMemberInfo } from '@/apis/member'
-import { useEffect } from 'react'
 import Payment from './Payment'
 
 function MyPage() {
   usePageName('마이페이지')
 
   const { user } = useAuth()
-
   const { data: userData } = useMemberInfo(user?.memberId)
-
-  useEffect(() => {
-    console.log('userData', userData)
-  }, [userData])
 
   return (
     <div>

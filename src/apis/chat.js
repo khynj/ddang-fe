@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import AXIOS from '@/utils/axios_'
 // 채팅 관련 API
-export function useChatRooms(type = 'open') {
+export function useChatRooms(type = 'GROUP') {
   return useQuery({
     queryKey: ['chatRooms', type],
     queryFn: () =>

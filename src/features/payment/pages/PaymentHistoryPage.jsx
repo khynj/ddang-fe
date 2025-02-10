@@ -1,19 +1,13 @@
 import usePageName from '@/hooks/usePageName.js'
-import transactions from '../data/transactions.js'
-/** data
-{
-  payAccountHistoryId: 4,
-  title: '3년 된 라디오',
-  chageAmount: 150000,
-  balanceAfter: 1000000,
-  changedTime: '2025-01-20 06:30:00',
-}
- */
+import { usePayHistory } from '@/apis/pay.js'
 
 function PaymentHistoryPage() {
   usePageName('결제내역')
 
-  const transactionsByDate = transactions.reduce((acc, transaction) => {
+  const { data } = usePayHistory()
+  const transactions = data ? data.histories : []
+
+  const transactionsByDate = transactions?.reduce((acc, transaction) => {
     const dateObj = new Date(transaction.changedTime)
     const dateKey = dateObj.toISOString().split('T')[0]
 
