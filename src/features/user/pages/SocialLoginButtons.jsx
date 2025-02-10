@@ -1,4 +1,3 @@
-import { useSocialLogin } from '@/apis/auth'
 import googleIcon from '@/assets/images/oauth/google.png'
 import kakaoIcon from '@/assets/images/oauth/kakao.png'
 import naverIcon from '@/assets/images/oauth/naver.png'

@@ -20,7 +20,12 @@ export function useSignUp() {
 // 소셜 회원가입 (요청 정보 없음)
 export function useSocialSignUp() {
   return useMutation({
-    mutationFn: () => AXIOS.post('/member/social').then(res => res.data),
+    mutationFn: ({ name, nickname, email }) =>
+      AXIOS.post('/member/social', {
+        name,
+        nickname,
+        email,
+      }).then(res => res.data),
   })
 }
 

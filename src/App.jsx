@@ -43,6 +43,7 @@ import ROUTES from './data/ROUTES'
 import ReviewHistoryLayout from './layouts/ReviewHistoryLayout'
 import { AuthProvider } from './contexts/AuthProvider'
 import AuthGuard from './components/AuthGuard'
+import SocialSignupPage from './features/user/pages/SocialSignupPage'
 
 function App() {
   const route = useNavigate()
@@ -58,6 +59,7 @@ function App() {
         <Routes>
           <Route path='/' element={<DefaultLayout back />}>
             <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+            <Route path={ROUTES.SOCIAL_SIGNUP} element={<SocialSignupPage />} />
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           </Route>
           <Route path={ROUTES.WELCOME} element={<WelcomePage />} />
