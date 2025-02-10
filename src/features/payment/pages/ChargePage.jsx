@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import usePageName from '@/hooks/usePageName'
-import StickyContainer from '../../../components/StickyContainer'
-import DefaultButton from '../../../components/buttons/DefaultButton'
+import StickyContainer from '@/components/StickyContainer'
+import DefaultButton from '@/components/buttons/DefaultButton'
 import { usePayDeposit, usePayInfo } from '@/apis/pay'
 import { formatPrice } from '@/utils/formatPrice'
-import { useNavigate } from 'react-router'
 
 function ChargePage() {
   usePageName('충전')
@@ -30,7 +29,7 @@ function ChargePage() {
       { amount, paymentMethod: accountName },
       {
         onSuccess: data => {
-          window.location = data?.next_redirect_pc_url
+          window.location = data?.next_redirect_app_url
         },
         onError: err => {
           console.log('결제 mutation err', err)

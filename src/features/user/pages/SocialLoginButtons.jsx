@@ -30,11 +30,9 @@ function SocialLoginButtons() {
         <a
           key={name}
           className={`flex items-center justify-center w-full h-12 rounded-xl ${className}`}
-          target='_blank'
           href={`${
             import.meta.env.VITE_SERVER_URL
           }/api/oauth2/authorization/${name}`}
-          rel='noopener noreferrer'
         >
           <img src={icon} alt={name} className='w-6 h-6 mr-2' />
           <span>{text}</span>
