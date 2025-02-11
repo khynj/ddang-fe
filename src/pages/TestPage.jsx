@@ -1,17 +1,19 @@
 import DefaultButton from '@/components/buttons/DefaultButton'
-import { useState } from 'react'
+import TextInput from '@/components/form/TextInput'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
 
 function TestPage() {
   const [count, setCount] = useState(0)
-  console.log(count)
-  const [searchParams] = useSearchParams()
-  console.log(searchParams.get('asd'))
+  const [text, setText] = useState('')
+  console.log(window.innerHeight)
+  useEffect(() => {
+    console.log(window.innerHeight)
+  }, [])
   return (
-    <div>
-      Test Page
-      <p>{count}</p>
-      <DefaultButton onClick={() => setCount(count + 1)}>Click</DefaultButton>
+    <div className='p-4'>
+      <DefaultButton onClick={() => setCount(count + 1)}>{count}</DefaultButton>
+      <TextInput value={text} setValue={setText} />
     </div>
   )
 }
