@@ -1,15 +1,14 @@
 import DefaultButton from '@/components/buttons/DefaultButton'
 import TextInput from '@/components/form/TextInput'
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router'
 
 function TestPage() {
   const [count, setCount] = useState(0)
   const [text, setText] = useState('')
-  const [height, setHeight] = useState(window.innerHeight)
+  const [height, setHeight] = useState(window.visualViewport.height)
   useEffect(() => {
     window.onresize = () => {
-      setHeight(window.innerHeight)
+      setHeight(window.visualViewport.height)
     }
   }, [])
   return (
