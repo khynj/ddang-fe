@@ -141,6 +141,11 @@ function App() {
               </Route>
             </Route>
             <Route path='/' element={<DefaultLayout />}>
+              <Route
+                path={ROUTES.CHARGE_SUCCESS}
+                element={<ChargeSuccessPage />}
+              />
+              <Route path={ROUTES.CHARGE_FAIL} element={<ChargeFailPage />} />
               <Route path={ROUTES.MYPAGE} element={<MyPage />} />
               <Route path='*' element={<NotFoundPage />} />
             </Route>
@@ -201,11 +206,6 @@ function App() {
                 path={ROUTES.REVIEW_REGISTER}
                 element={<ReviewRegisterPage />}
               />
-              <Route
-                path={ROUTES.CHARGE_SUCCESS}
-                element={<ChargeSuccessPage />}
-              />
-              <Route path={ROUTES.CHARGE_FAIL} element={<ChargeFailPage />} />
             </Route>
             <Route path={ROUTES.MYPAGE} element={<DefaultLayout back />}>
               <Route

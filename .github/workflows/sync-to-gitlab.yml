@@ -43,5 +43,5 @@ jobs:
           rsync -av --exclude=A705 --exclude=.git ./ A705/Front-End/  # Copy everything except A705 and .git
           cd A705
           git add Front-End/
-          git commit -m "Sync Front-End from github-repo [$(date)]" || echo "No changes to commit"
+          git commit -m "[FE] sync" || echo "No changes to commit"
           git push origin FE-sync  # Push to FE-sync branch

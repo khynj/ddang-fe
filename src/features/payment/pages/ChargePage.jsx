@@ -30,14 +30,12 @@ function ChargePage() {
       { amount, paymentMethod: accountName },
       {
         onSuccess: data => {
-          // window.location = data?.next_redirect_app_url
-          // window.location = import.meta.env.DEV
-          //   ? data?.next_redirect_pc_url
-          //   : data?.next_redirect_app_url
-          window.location = data?.next_redirect_pc_url
+          window.location = data?.next_redirect_app_url
+          // window.location = data?.next_redirect_pc_url
         },
         onError: err => {
           console.log('결제 mutation err', err)
+          alert('결제 중 오류가 발생했습니다.')
         },
       },
     )

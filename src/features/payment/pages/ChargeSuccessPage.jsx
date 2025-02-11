@@ -8,14 +8,16 @@ import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 
 function ChargeSuccessPage() {
-  usePageName('충전 완료')
+  usePageName('충전')
   const route = useNavigate()
   const [searchParams] = useSearchParams()
-  const { mutate: sendDepositSuccess } = usePayDepositSuccess()
+  const {
+    mutate: sendDepositSuccess,
+    isError,
+    isSuccess,
+  } = usePayDepositSuccess()
   useEffect(() => {
     console.log(searchParams)
-    console.log(searchParams.get('pg_token'))
-    console.log(searchParams.get('order_id'))
     sendDepositSuccess(
       {
         pg_token: searchParams.get('pg_token'),
@@ -33,9 +35,44 @@ function ChargeSuccessPage() {
   }, [searchParams, sendDepositSuccess])
 
   return (
-    <div className='flex flex-col items-center justify-center gap-4 p-4 text-ddblue-400 h-full'>
-      <MaterialIcon name='check_circle' filled size={40} />
-      <p className='font-bold text-2xl'>충전에 성공했어요.</p>
+    <div className='flex flex-col items-center justify-center gap-4 p-4 h-[80%]'>
+      {isSuccess ? (
+        <>
+          <MaterialIcon
+            name='check_circle'
+            filled
+            size={40}
+            className='text-ddblue-400'
+          />
+          <p className='font-bold text-2xl text-ddblue-400'>
+            충전이 완료되었어요.
+          </p>
+        </>
+      ) : isError ? (
+        <>
+          <MaterialIcon
+            name='error'
+            filled
+            size={40}
+            className='text-ddred-500'
+          />
+          <p className='font-bold text-2xl text-ddred-500'>
+            충전에 실패했어요.
+          </p>
+        </>
+      ) : (
+        <>
+          <MaterialIcon
+            name='pending'
+            filled
+            size={40}
+            className='text-gray-700'
+          />
+          <p className='font-bold text-2xl text-gray-700'>
+            카카오톡에서 결제를 완료해주세요.
+          </p>
+        </>
+      )}
       <StickyContainer>
         <DefaultButton
           type='gray'
