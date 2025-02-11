@@ -6,14 +6,17 @@ import { useSearchParams } from 'react-router'
 function TestPage() {
   const [count, setCount] = useState(0)
   const [text, setText] = useState('')
-  console.log(window.innerHeight)
+  const [height, setHeight] = useState(window.innerHeight)
   useEffect(() => {
-    console.log(window.innerHeight)
+    window.onresize = () => {
+      setHeight(window.innerHeight)
+    }
   }, [])
   return (
     <div className='p-4'>
       <DefaultButton onClick={() => setCount(count + 1)}>{count}</DefaultButton>
       <TextInput value={text} setValue={setText} />
+      {height}
     </div>
   )
 }
