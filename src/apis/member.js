@@ -1,6 +1,5 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
 import AXIOS from '../utils/axios_'
-import axios from 'axios'
 
 // 회원가입
 export function useSignUp() {
