@@ -40,7 +40,7 @@ import DefaultLayout from './layouts/DefaultLayout'
 import DropDownLayout from './layouts/DropDownLayout'
 import MyAuctionLayout from './layouts/MyAuctionLayout'
 import NotFoundPage from './pages/NotFoundPage'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import ROUTES from './data/ROUTES'
 import ReviewHistoryLayout from './layouts/ReviewHistoryLayout'
 import { AuthProvider } from './contexts/AuthProvider'
@@ -51,6 +51,13 @@ import TestPage from './pages/TestPage'
 
 function App() {
   const route = useNavigate()
+  const [height, setHeight] = useState(window.visualViewport.height)
+
+  useEffect(() => {
+    window.onresize = () => {
+      setHeight(window.visualViewport.height)
+    }
+  }, [])
   useEffect(() => {
     initFCM()
   }, [])
@@ -58,7 +65,8 @@ function App() {
     <AuthProvider>
       <div
         id='app'
-        className={`w-full h-dvh mx-auto bg-white max-w-lg overflow-x-hidden overflow-y-scroll`}
+        className={`relative w-full mx-auto bg-white max-w-lg overflow-x-hidden overflow-y-scroll`}
+        style={{ height: height }}
       >
         <Routes>
           <Route path='/test' element={<TestPage />} />
