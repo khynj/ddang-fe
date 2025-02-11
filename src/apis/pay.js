@@ -46,9 +46,9 @@ export function usePayDeposit() {
 // 페이 충전 성공
 export function usePayDepositSuccess() {
   return useMutation({
-    mutationFn: ({ pgToken, orderId }) =>
-      AXIOS.get('/pay/deposit/success', { params: { pgToken, orderId } }).then(
-        res => res.data,
-      ),
+    mutationFn: ({ pg_token, order_id }) =>
+      AXIOS.get('/pay/deposit/success', {
+        params: { pg_token, order_id },
+      }).then(res => res.data),
   })
 }

@@ -18,8 +18,8 @@ function ChargeSuccessPage() {
     console.log(searchParams.get('order_id'))
     sendDepositSuccess(
       {
-        pgToken: searchParams.get('pg_token'),
-        orderId: searchParams.get('order_id'),
+        pg_token: searchParams.get('pg_token'),
+        order_id: searchParams.get('order_id'),
       },
       {
         onSuccess: data => {
