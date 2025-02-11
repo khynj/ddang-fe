@@ -12,7 +12,7 @@ function SocialLandingPage() {
   const { data: myInfo } = useMyInfo()
   const { login } = useAuth()
   useEffect(() => {
-    if (myInfo) {
+    if (myInfo && login) {
       login(myInfo)
       route(ROUTES.HOME)
     }

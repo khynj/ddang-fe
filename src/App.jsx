@@ -82,6 +82,7 @@ function App() {
               element={<SocialLandingPage />}
             />
           </Route>
+
           <Route path='/' element={<AuthGuard />}>
             <Route path={ROUTES.HOME} element={<ExploreLayout />}>
               <Route index element={<HomePage />} />

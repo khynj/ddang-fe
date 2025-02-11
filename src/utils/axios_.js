@@ -13,7 +13,7 @@ axios_.interceptors.response.use(
   },
   error => {
     if (error.status == 401) {
-      window.location.href = '/login'
+      window.location.href = '/welcome'
     }
     return Promise.reject(error)
   },
