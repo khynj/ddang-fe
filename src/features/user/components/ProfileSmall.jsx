@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types'
 import ProfileImage from './ProfileImage'
+import LoadingPage from '@/pages/LoadingPage'
 
 function ProfileSmall({ user }) {
+  if (!user) return <LoadingPage />
   const icon =
     user.reliability > 70 ? '😁' : user.reliability > 50 ? '😊' : '😒'
   return (

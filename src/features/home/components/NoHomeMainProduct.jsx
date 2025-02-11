@@ -20,7 +20,7 @@ function NoHomeMainProduct() {
         style={{ backgroundColor: '#00000080' }}
       >
         <p className='flex justify-between text-sm text-gray-50'>
-          아직 추천 상품이 없어요. 🥲
+          추천 상품이 없어요. 🥲
         </p>
         <p className='text-lg font-bold text-gray-100 mt-4'>
           직접 경매를 등록해보세요.

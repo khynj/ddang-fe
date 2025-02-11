@@ -33,6 +33,7 @@ function SocialLoginButtons() {
           href={`${
             import.meta.env.VITE_SERVER_URL
           }/api/oauth2/authorization/${name}`}
+          rel='external'
         >
           <img src={icon} alt={name} className='w-6 h-6 mr-2' />
           <span>{text}</span>

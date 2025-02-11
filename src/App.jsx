@@ -82,6 +82,7 @@ function App() {
               element={<SocialLandingPage />}
             />
           </Route>
+
           <Route path='/' element={<AuthGuard />}>
             <Route path={ROUTES.HOME} element={<ExploreLayout />}>
               <Route index element={<HomePage />} />
@@ -155,7 +156,7 @@ function App() {
               />
               <Route path={ROUTES.CHARGE_FAIL} element={<ChargeFailPage />} />
               <Route path={ROUTES.MYPAGE} element={<MyPage />} />
-              <Route path='*' element={<NotFoundPage />} />
+              {/* <Route path='*' element={<NotFoundPage />} /> */}
             </Route>
 
             <Route

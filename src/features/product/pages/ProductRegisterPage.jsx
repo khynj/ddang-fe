@@ -114,10 +114,10 @@ function ProductRegisterPage() {
     const valid = Object.keys(validation).every(
       key => !validation[key](states[key].state),
     )
-    // if (!valid) {
-    //   console.log('유효성 검사 실패')
-    //   return
-    // }
+    if (!valid) {
+      alert('입력 값을 확인하세요.')
+      return
+    }
     setIsConfirmModalOpen(true)
   }
 

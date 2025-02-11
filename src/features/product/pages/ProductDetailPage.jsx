@@ -1,6 +1,5 @@
 import usePageName from '@/hooks/usePageName'
 import PropTypes from 'prop-types'
-import example from '../data/product.js'
 import ProductDetailItem from '../components/ProductDetailItem.jsx'
 import ProfileSmall from '../../user/components/ProfileSmall.jsx'
 import Slider from '@/components/Slider.jsx'
@@ -12,30 +11,29 @@ import IconButton from '@/components/buttons/IconButton.jsx'
 import FavoriteButton from '@/components/icons/FavoriteButton.jsx'
 import DefaultButton from '@/components/buttons/DefaultButton.jsx'
 import { dday } from '@/utils/Dday.js'
-import { Link } from 'react-router'
-import { useEffect } from 'react'
+import { Link, useParams } from 'react-router'
 import ROUTES from '@/data/ROUTES.js'
 import { formatPrice } from '@/utils/formatPrice.js'
+import { useAuctionDetails } from '@/apis/auction.js'
 
-function ProductDetailPage({ product = example }) {
+function ProductDetailPage() {
   usePageName('제품상세')
-  const minimumBid = formatPrice(product.auction.minimumBid)
-  const instantHammerPrice = formatPrice(product.auction.instantHammerPrice)
-
-  const currentBidPrice = formatPrice(product.auction.currentBidPrice)
-
-  useEffect(() => {
-    // load product by id
-  }, [])
+  const productId = useParams().id
+  const { data: product } = useAuctionDetails(productId)
+  const minimumBid = product && formatPrice(product.auction.minimumBid)
+  const instantHammerPrice =
+    product && formatPrice(product.auction.instantHammerPrice)
+  const currentBidPrice =
+    product && formatPrice(product.auction.currentBidPrice)
 
   return (
     <div className='flex flex-col gap-2 pb-72'>
       <Slider>
-        {product.auction.photos.map((photo, index) => (
+        {product?.auction.photos.map((photo, index) => (
           <img
             key={index}
             src={photo}
-            alt={product.auction.productName}
+            alt={product?.auction.productName}
             className='w-full aspect-square object-cover snap-center'
           />
         ))}
@@ -43,7 +41,7 @@ function ProductDetailPage({ product = example }) {
       <div className='flex flex-col gap-6 p-4'>
         <div className='flex flex-col gap-4'>
           <h1 className='text-lg font-bold text-gray-950'>
-            {product.auction.productName}
+            {product?.auction.productName}
           </h1>
           <div className='flex flex-col gap-1 text-gray-900'>
             <ProductDetailItem
@@ -61,54 +59,59 @@ function ProductDetailPage({ product = example }) {
             <div className='flex items-center gap-0.5'>
               <MaterialIcon name='person_raised_hand' filled size={18} />
               <span>입찰자</span>
-              <span>{product.auction.bidderCount}명</span>
+              <span>{product?.auction.bidderCount}명</span>
             </div>
             <div className='flex items-center gap-0.5'>
               <MaterialIcon name='front_hand' filled size={18} />
               <span>입찰</span>
-              <span>{product.auction.bidCount}건</span>
+              <span>{product?.auction.bidCount}건</span>
             </div>
           </div>
         </div>
         <hr className='border-gray-200' />
         <div className='flex flex-col gap-1'>
           <p className='font-bold text-lg text-gray-950 leading-none'>
-            {product.auction.title}
+            {product?.auction.title}
           </p>
           <div className='text-gray-500 text-sm'>
-            <span>{product.auction.categoryId} </span>
-            <span>{product.auction.createdAt}</span>
+            <span>{product?.auction.categoryId} </span>
+            <span>{product?.auction.createdAt}</span>
           </div>
           <p className='pt-2 text-black tracking-tight'>
-            {product.auction.content}
+            {product?.auction.content}
           </p>
         </div>
         <hr className='border-gray-200' />
         <div className='flex flex-col'>
           <ProductDetailItem
             name='개찰 시각'
-            value={product.auction.startTime}
+            value={product?.auction.startTime}
           />
-          <ProductDetailItem name='종료 시각' value={product.auction.endTime} />
+          <ProductDetailItem
+            name='종료 시각'
+            value={product?.auction.endTime}
+          />
           <ProductDetailItem
             name='거래 방식'
-            value={product.auction.tradeType}
+            value={product?.auction.tradeType}
           />
           <ProductDetailItem
             name='직거래 장소'
-            value={product.auction.location}
+            value={product?.auction.location}
           />
         </div>
         <hr className='border-gray-200' />
         <Link
-          to={ROUTES.PROFILE.replace(':id', product.seller.memberId)}
+          to={ROUTES.PROFILE.replace(':id', product?.seller.memberId)}
           className='flex flex-col gap-2'
         >
-          <ProfileSmall user={product.seller} />
+          <ProfileSmall user={product?.seller} />
         </Link>
         <hr className='border-gray-200' />
         <div className='flex flex-col gap-3'>
-          <h1 className='font-bold'>{product.auction.productName} 관련 매물</h1>
+          <h1 className='font-bold'>
+            {product?.auction.productName} 관련 매물
+          </h1>
           <div
             className='flex flex-row gap-2 pb-1
         overflow-x-scroll snap-x snap-madatory'
@@ -119,10 +122,10 @@ function ProductDetailPage({ product = example }) {
           </div>
         </div>
       </div>
-      <StickyContainer>
+      <StickyContainer rounded>
         <div className='flex justify-between items-center mb-2'>
           <span className='text-sm'>
-            마감까지 {dday(product.auction.endTime)}
+            마감까지 {product && dday(product.auction.endTime)}
           </span>
           <div className='flex gap-4'>
             <IconButton
