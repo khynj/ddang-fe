@@ -29,3 +29,26 @@ export function usePayDeposit() {
       ),
   })
 }
+
+/**
+
+
+    @GetMapping("/deposit/success")
+    public ResponseEntity<KakaoApproveResponse> depositSuccess(
+            @RequestParam("pg_token") String pgToken,
+            @RequestParam("order_id") String orderId) {
+        log.info("결제 승인 요청: pg_token={}, order_id={}", pgToken, orderId);
+        KakaoApproveResponse response = kakaoPayService.approveDeposit(pgToken, orderId);
+        return ResponseEntity.ok(response);
+    }
+ */
+
+// 페이 충전 성공
+export function usePayDepositSuccess() {
+  return useMutation({
+    mutationFn: ({ pgToken, orderId }) =>
+      AXIOS.get('/pay/deposit/success', { params: { pgToken, orderId } }).then(
+        res => res.data,
+      ),
+  })
+}
