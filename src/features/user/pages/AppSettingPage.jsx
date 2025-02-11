@@ -14,7 +14,6 @@ function AppSettingPage() {
   }
 
   const { user, login, logout } = useAuth()
-
   return (
     <div className='flex flex-col bg-white'>
       <main>
@@ -28,11 +27,12 @@ function AppSettingPage() {
           <MaterialIcon name='logout' size={24} color='gray-950' />
           <span className=' font-bold text-base text-gray-800'>로그아웃</span>
         </button>
-        <MyPageMenu
-          icon={{ name: 'exit_to_app', size: 24, color: 'gray-950' }}
-          title='탈퇴하기'
-          to='/delete-account'
-        />
+        {/* <button onClick={signout} className='flex items-center gap-2 p-4 px-6'>
+          <MyPageMenu
+            icon={{ name: 'exit_to_app', size: 24, color: 'gray-950' }}
+            title='탈퇴하기'
+          />
+        </button> */}
         <div className='flex flex-col p-4'>
           <p className='whitespace-normal break-normal'>{fcmToken}</p>
           <button className='p-2 bg-gray-200 rounded-xl' onClick={copyToken}>
