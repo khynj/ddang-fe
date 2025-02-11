@@ -1,4 +1,3 @@
-import { useAuth } from '@/contexts/AuthContext'
 import axios from 'axios'
 
 const axios_ = axios.create({
