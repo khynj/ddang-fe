@@ -12,7 +12,7 @@ function MyLocationsPage() {
     <div>
       <main className='overflow-y-auto'>
         {myLocations?.memberLocations.map(location => (
-          <LocationItem key={location.id} location={location} />
+          <LocationItem key={location.memberLocationId} location={location} />
         ))}
       </main>
     </div>

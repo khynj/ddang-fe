@@ -55,9 +55,7 @@ function ImagePicker({ images, setImages }) {
         multiple
         onChange={e => {
           const files = e.target.files
-          const newImages = Array.from(files).map(file =>
-            URL.createObjectURL(file),
-          )
+          const newImages = Array.from(files).map(file => file)
           setImages([...images, ...newImages])
         }}
       />

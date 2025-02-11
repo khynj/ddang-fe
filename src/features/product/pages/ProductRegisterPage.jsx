@@ -14,6 +14,7 @@ import Modal from '@/components/modals/Modal'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useNavigate } from 'react-router'
 import { useCreateAuction } from '@/apis/auction'
+import ROUTES from '@/data/ROUTES'
 
 function ProductRegisterPage() {
   usePageName('상품등록')
@@ -21,14 +22,14 @@ function ProductRegisterPage() {
   const [images, setImages] = useState([])
   const [title, setTitle] = useState('')
   const [productName, setProductName] = useState('')
-  const [category, setCategory] = useState(null)
-  const [minBidPrice, setMinBidPrice] = useState()
+  const [categoryId, setCategory] = useState(null)
+  const [minimumBid, setMinimumBid] = useState()
   const [instantHammerPrice, setInstantHammerNowPrice] = useState()
-  const [openDate, setOpenDate] = useState('')
-  const [closeDate, setCloseDate] = useState('')
-  const [description, setDescription] = useState('')
+  const [startTime, setStartTime] = useState('')
+  const [endTime, setEndTime] = useState('')
+  const [content, setContent] = useState('')
   const [dealType, setDealType] = useState({ value: '', isDirect: false })
-  const [tradePlace, setTradePlace] = useState(null)
+  const [location, setLocation] = useState(null)
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
@@ -41,22 +42,31 @@ function ProductRegisterPage() {
     setIsConfirmModalOpen(false)
     // API 호출
     const form = new FormData()
-    form.append('title', title)
-    form.append('productName', productName)
-    form.append('category', category)
-    form.append('minBidPrice', minBidPrice)
-    form.append('instantHammerPrice', instantHammerPrice)
-    form.append('openDate', openDate)
-    form.append('closeDate', closeDate)
-    form.append('description', description)
-    form.append('dealType', dealType)
-    form.append('tradePlace', tradePlace)
-    images.forEach((image, index) => {
-      form.append(`images[${index}]`, image)
+    const product = {
+      title,
+      productName,
+      categoryId,
+      minimumBid,
+      instantHammerPrice,
+      startTime: new Date(startTime).toISOString(),
+      endTime: new Date(endTime).toISOString(),
+      content,
+      dealType,
+      location,
+    }
+    form.append(
+      'product',
+      new Blob([JSON.stringify(product)], { type: 'application/json' }),
+    )
+
+    images.forEach(image => {
+      console.log(image)
+      form.append(`images`, image)
     })
     registerProduct(form, {
       onSuccess: data => {
-        setRegisteredProductId(data.id)
+        console.log('auctionId: ', data.auctionId)
+        setRegisteredProductId(data.auctionId)
         setIsSuccessModalOpen(true)
       },
       onError: error => {
@@ -75,37 +85,37 @@ function ProductRegisterPage() {
       label: '상품명',
       state: productName,
     },
-    category: {
+    categoryId: {
       label: '카테고리',
-      state: category,
+      state: categoryId,
     },
-    minBidPrice: {
+    minimumBid: {
       label: '최소입찰가',
-      state: minBidPrice,
+      state: minimumBid,
     },
     instantHammerPrice: {
       label: '즉시낙찰가',
       state: instantHammerPrice,
     },
-    openDate: {
+    startTime: {
       label: '개찰 시각',
-      state: openDate,
+      state: startTime,
     },
-    closeDate: {
+    endTime: {
       label: '마감 시각',
-      state: closeDate,
+      state: endTime,
     },
-    description: {
+    content: {
       label: '자세한 설명',
-      state: description,
+      state: content,
     },
     dealType: {
       label: '거래 유형',
       state: dealType,
     },
-    tradePlace: {
+    location: {
       label: '거래희망장소',
-      state: tradePlace,
+      state: location,
     },
   }
 
@@ -115,24 +125,21 @@ function ProductRegisterPage() {
     productName: productName =>
       VALIDATIONS.maxLength(productName, 30) ||
       VALIDATIONS.required(productName),
-    category: category => VALIDATIONS.required(category),
-    minBidPrice: minBidPrice =>
-      VALIDATIONS.minPrice(minBidPrice, 0) ||
-      VALIDATIONS.maxPrice(minBidPrice, 10000000) ||
-      VALIDATIONS.required(minBidPrice),
+    categoryId: categoryId => VALIDATIONS.required(categoryId),
+    minimumBid: minimumBid =>
+      VALIDATIONS.minPrice(minimumBid, 0) ||
+      VALIDATIONS.maxPrice(minimumBid, 10000000) ||
+      VALIDATIONS.required(minimumBid),
     instantHammerPrice: instantHammerPrice =>
-      VALIDATIONS.minPrice(instantHammerPrice, minBidPrice) ||
-      VALIDATIONS.maxPrice(minBidPrice, 10000000),
-    openDate: openDate => VALIDATIONS.required(openDate),
-    closeDate: closeDate =>
-      VALIDATIONS.required(closeDate) ||
-      VALIDATIONS.minDate(closeDate, openDate),
-    description: description =>
-      VALIDATIONS.maxLength(description, 200) ||
-      VALIDATIONS.required(description),
+      VALIDATIONS.minPrice(instantHammerPrice, minimumBid) ||
+      VALIDATIONS.maxPrice(minimumBid, 10000000),
+    startTime: startTime => VALIDATIONS.required(startTime),
+    endTime: endTime =>
+      VALIDATIONS.required(endTime) || VALIDATIONS.minDate(endTime, startTime),
+    content: content =>
+      VALIDATIONS.maxLength(content, 200) || VALIDATIONS.required(content),
     dealType: dealType => VALIDATIONS.required(dealType),
-    tradePlace: tradePlace =>
-      dealType.isDirect && VALIDATIONS.required(tradePlace),
+    location: location => dealType.isDirect && VALIDATIONS.required(location),
   }
 
   const handleSubmit = () => {
@@ -149,6 +156,10 @@ function ProductRegisterPage() {
       return
     }
     setIsConfirmModalOpen(true)
+  }
+
+  const handleCommit = () => {
+    route(ROUTES.PRODUCT_DETAIL.replace(':id', registeredProductId))
   }
 
   return (
@@ -172,16 +183,16 @@ function ProductRegisterPage() {
       <CategoryPicker
         label='카테고리'
         required
-        value={category}
+        value={categoryId}
         setValue={setCategory}
-        validate={validation.category}
+        validate={validation.categoryId}
       />
       <NumberInput
         label='최소입찰가'
         required
-        value={minBidPrice}
-        setValue={setMinBidPrice}
-        validate={validation.minBidPrice}
+        value={minimumBid}
+        setValue={setMinimumBid}
+        validate={validation.minimumBid}
       />
       <NumberInput
         label='즉시낙찰가'
@@ -192,23 +203,23 @@ function ProductRegisterPage() {
       <DatePicker
         label='개찰 시각'
         required
-        value={openDate}
-        setValue={setOpenDate}
-        validate={validation.openDate}
+        value={startTime}
+        setValue={setStartTime}
+        validate={validation.startTime}
       />
       <DatePicker
         label='마감 시각'
         required
-        value={closeDate}
-        setValue={setCloseDate}
-        validate={validation.closeDate}
+        value={endTime}
+        setValue={setEndTime}
+        validate={validation.endTime}
       />
       <TextArea
         label='자세한 설명'
         required
-        value={description}
-        setValue={setDescription}
-        validate={validation.description}
+        value={content}
+        setValue={setContent}
+        validate={validation.content}
       />
       <DealTypePicker
         label='거래 유형'
@@ -221,9 +232,9 @@ function ProductRegisterPage() {
         <DealLocationPicker
           label='거래희망장소'
           required
-          value={tradePlace}
-          setValue={setTradePlace}
-          validate={validation.tradePlace}
+          value={location}
+          setValue={setLocation}
+          validate={validation.location}
         />
       )}
       <br />
@@ -241,7 +252,11 @@ function ProductRegisterPage() {
                   !!states[key].state && (
                     <div key={key} className='w-full flex justify-between'>
                       <span>{states[key].label}</span>
-                      <span>{states[key].state}</span>
+                      <span>
+                        {typeof states[key].state === 'object'
+                          ? states[key].state.value
+                          : states[key].state}
+                      </span>
                     </div>
                   ),
               )}
@@ -267,17 +282,13 @@ function ProductRegisterPage() {
           <div className='flex justify-center gap-2 w-full text-sm mb-2'>
             <p>경매 시작:</p>
             <p>
-              {new Date(openDate).toLocaleString('ko-KR', {
+              {new Date(startTime).toLocaleString('ko-KR', {
                 dateStyle: 'medium',
                 timeStyle: 'short',
               })}
             </p>
           </div>
-          <DefaultButton
-            onClick={() => route(`/popup/product/${registeredProductId}`)}
-          >
-            확인
-          </DefaultButton>
+          <DefaultButton onClick={handleCommit}>확인</DefaultButton>
         </Modal>
       )}
     </div>

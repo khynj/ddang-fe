@@ -14,6 +14,16 @@ import { useCategory } from '@/apis/auction'
 function CategoryPicker({ label, required, value, setValue, validate }) {
   const { isOpen, open, close } = useModal('')
   const [error, setError] = useState('')
+  const [parentId, setParentId] = useState(0)
+  const [categoryName, setCategoryName] = useState('')
+  const { data: categories } = useCategory(parentId)
+
+  useEffect(() => {
+    if (isOpen) {
+      setParentId(0)
+    }
+  }, [isOpen])
+
   const onClose = useCallback(
     v => {
       if (validate) setError(validate(v))
@@ -22,14 +32,6 @@ function CategoryPicker({ label, required, value, setValue, validate }) {
     },
     [validate, setValue, close],
   )
-  const [parentId, setParentId] = useState(0)
-  const { data: categories } = useCategory(parentId)
-
-  useEffect(() => {
-    if (isOpen) {
-      setParentId(0)
-    }
-  }, [isOpen])
 
   return (
     <>
@@ -40,7 +42,7 @@ function CategoryPicker({ label, required, value, setValue, validate }) {
           </Label>
         )}
         <PickerWrapper onClick={open}>
-          <InputValue value={value} label={label} />
+          <InputValue value={categoryName} label={label} />
           <MaterialIcon name='chevron_right' className='text-gray-600' />
         </PickerWrapper>
       </div>
@@ -54,9 +56,10 @@ function CategoryPicker({ label, required, value, setValue, validate }) {
               onClick={() => {
                 if (category.categoryId <= 99) {
                   setParentId(category.categoryId)
-                  setValue(category.name)
+                  setCategoryName(category.name)
                 } else {
-                  onClose(value + ' > ' + category.name)
+                  setCategoryName(categoryName + ' > ' + category.name)
+                  onClose(category.categoryId)
                 }
               }}
             >

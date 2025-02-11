@@ -6,7 +6,7 @@ import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/formatPrice'
 
 const ReviewItem = ({ review, received }) => {
-  const hammeredPrice = formatPrice(review.product.hammeredPrice)
+  const hammeredPrice = formatPrice(review.auction.hammeredPrice)
   const role = review.review.role === 'seller' ? '구매상품' : '판매상품'
 
   return (
@@ -22,14 +22,14 @@ const ReviewItem = ({ review, received }) => {
           )}
           <Link
             className='flex grid grid-cols-6 gap-2'
-            to={ROUTES.PRODUCT_DETAIL.replace(':id', review.product.productId)}
+            to={ROUTES.PRODUCT_DETAIL.replace(':id', review.auction.auctionId)}
           >
             <div className='col-span-1 py-1'>
-              <ProductImage product={review.product} small />
+              <ProductImage product={review.auction} small />
             </div>
             <div className='col-span-5 flex flex-col py-1'>
               <p className='text-gray-950 truncate flex-grow'>
-                {review.product.title}
+                {review.auction.title}
               </p>
               <p className='font-bold text-gray-950 mt-1'>{hammeredPrice}원</p>
             </div>

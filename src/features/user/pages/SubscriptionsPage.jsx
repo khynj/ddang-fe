@@ -28,10 +28,10 @@ function SubscriptionsPage() {
       <div className='flex overflow-x-scroll space-x-4 py-4 px-2'>
         {followings?.followings.map(profile => (
           <div
-            key={profile.memberId}
+            key={profile.nickname}
             className='flex flex-col w-[64px] items-center'
           >
-            <ProfileImage src={profile.photo} size={60} />
+            <ProfileImage src={profile.imageUrl} size={60} />
             <p
               className='text-sm mt-2 truncate w-full text-center'
               title={profile.nickname}
