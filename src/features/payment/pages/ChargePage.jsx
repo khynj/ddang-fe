@@ -30,8 +30,8 @@ function ChargePage() {
       { amount, paymentMethod: accountName },
       {
         onSuccess: data => {
-          window.location = data?.next_redirect_app_url
-          // window.location = data?.next_redirect_pc_url
+          // window.location = data?.next_redirect_app_url
+          window.location = data?.next_redirect_pc_url
         },
         onError: err => {
           console.log('결제 mutation err', err)
