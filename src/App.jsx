@@ -44,7 +44,7 @@ import { useEffect } from 'react'
 import ROUTES from './data/ROUTES'
 import ReviewHistoryLayout from './layouts/ReviewHistoryLayout'
 import { AuthProvider } from './contexts/AuthProvider'
-import AuthGuard from './components/AuthGuard'
+import AuthGuard from './features/authentication/components/AuthGuard'
 import SocialSignupPage from './features/authentication/pages/SocialSignupPage'
 import SocialLandingPage from './features/authentication/pages/SocialLandingPage'
 
