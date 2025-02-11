@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router'
 import IconButton from '../buttons/IconButton'
 import ROUTES from '../../data/ROUTES'
+import { useUnreadNotificationStatus } from '@/apis/notifications'
 
 function ExploreHeader() {
   const route = useNavigate()
@@ -9,6 +10,7 @@ function ExploreHeader() {
     route(`${ROUTES.PRODUCT_LIST}?search=${e.target[0].value}`)
     e.target[0].blur()
   }
+  const { data: notificationStatus } = useUnreadNotificationStatus()
   return (
     <header
       className={`
@@ -24,7 +26,9 @@ function ExploreHeader() {
       </form>
       <IconButton
         icon={{
-          name: 'notifications',
+          name: notificationStatus?.hasUnread
+            ? 'notifications_unread'
+            : 'notifications',
           size: 28,
           className: 'text-gray-600',
         }}
