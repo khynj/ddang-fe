@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-function ProductDetailItem({ name, value, bold }) {
+function ProductDetailItem({ name, value = '', bold }) {
   return (
     <div
       className={`flex justify-between ${bold ? 'font-bold' : ''} items-end`}

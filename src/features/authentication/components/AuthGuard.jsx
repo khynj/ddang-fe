@@ -9,8 +9,7 @@ function AuthGuard() {
 
   useEffect(() => {
     if (!user) {
-      console.log('AuthGuard: user not found')
-      route(ROUTES.LOGIN)
+      route(ROUTES.WELCOME)
     }
   }, [user, route])
 
