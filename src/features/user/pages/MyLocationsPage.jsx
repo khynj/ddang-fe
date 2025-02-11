@@ -1,24 +1,18 @@
+import { usePreferredLocations } from '@/apis/member'
 import usePageName from '../../../hooks/usePageName'
 import LocationItem from '../components/LocationItem'
-import myLocations from '../data/myLocations'
+// import myLocations from '../data/myLocations'
 
 function MyLocationsPage() {
   usePageName('내 장소')
 
-  const handleDelete = id => {
-    console.log(`Delete location with id: ${id}`)
-  }
+  const { data: myLocations } = usePreferredLocations()
 
   return (
-    <div className='max-w-md mx-auto bg-white h-screen'>
+    <div>
       <main className='overflow-y-auto'>
-        {myLocations.map(location => (
-          <LocationItem
-            key={location.id}
-            name={location.name}
-            address={location.address}
-            onDelete={() => handleDelete(location.id)}
-          />
+        {myLocations?.memberLocations.map(location => (
+          <LocationItem key={location.id} location={location} />
         ))}
       </main>
     </div>

@@ -1,14 +1,20 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from '@/components/icons/MaterialIcon'
+import { useDeletePreferredLocation } from '@/apis/member'
 
-function LocationItem({ name, address, onDelete }) {
+function LocationItem(location) {
+  const deleteLocation = useDeletePreferredLocation().mutate
+
   return (
     <div className='flex justify-between items-center p-4 border-b border-gray-200'>
       <div>
-        <p className='text-base mb-2'>{name}</p>
-        <p className='text-sm text-gray-700'>{address}</p>
+        <p className='text-base mb-2'>{location.presetName}</p>
+        <p className='text-sm text-gray-700'>{location.location}</p>
       </div>
-      <button onClick={onDelete} className='p-2 text-gray-600'>
+      <button
+        onClick={() => deleteLocation(location.memberLocationId)}
+        className='p-2 text-gray-600'
+      >
         <MaterialIcon name='close' filled>
           close
         </MaterialIcon>
@@ -18,9 +24,7 @@ function LocationItem({ name, address, onDelete }) {
 }
 
 LocationItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default LocationItem

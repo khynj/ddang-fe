@@ -46,6 +46,10 @@ function DealLocationPicker({ label, required, value, setValue, validate }) {
     }
   }, [searchValue])
 
+  const onClick = () => {
+    console.log('click')
+  }
+
   return (
     <>
       <div className='flex flex-col gap-2 py-3'>
@@ -88,7 +92,7 @@ function DealLocationPicker({ label, required, value, setValue, validate }) {
                 >
                   <ModalItem>
                     <div className='flex items-center gap-2'>
-                      <FavoriteButton liked />
+                      <FavoriteButton liked onClick={onClick} />
                       <p className='text-base'>{location.name}</p>
                     </div>
                   </ModalItem>

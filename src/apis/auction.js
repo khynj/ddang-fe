@@ -1,4 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  useQueries,
+} from '@tanstack/react-query'
 import AXIOS from '@/utils/axios_'
 
 // 경매 관련 API
@@ -61,6 +66,24 @@ export function useSearchAuctions(params) {
   return useQuery({
     queryKey: ['searchAuctions', params],
     queryFn: () => AXIOS.get('/auction', { params }).then(res => res.data),
+  })
+}
+
+export function useFollowingAuctions(memberIds, params) {
+  return useQueries({
+    queries: memberIds.map(memberId => ({
+      queryKey: ['searchAuctions', memberId, params],
+      queryFn: () =>
+        AXIOS.get('/auction', { params: { memberId, ...params } }).then(
+          res => res.data,
+        ),
+    })),
+    combine: results => {
+      return results.reduce((acc, result) => {
+        if (result.isLoading) return acc
+        return [...acc, ...result.data]
+      }, [])
+    },
   })
 }
 
