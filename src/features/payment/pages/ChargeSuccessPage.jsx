@@ -5,17 +5,21 @@ import StickyContainer from '@/components/StickyContainer'
 import ROUTES from '@/data/ROUTES'
 import usePageName from '@/hooks/usePageName'
 import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 
 function ChargeSuccessPage() {
   usePageName('충전 완료')
   const route = useNavigate()
-  const params = useParams()
+  const [searchParams] = useSearchParams()
   const { mutate: sendDepositSuccess } = usePayDepositSuccess()
   useEffect(() => {
+    console.log(searchParams)
+    console.log(searchParams.get('pg_token'))
+    console.log(searchParams.get('order_id'))
     sendDepositSuccess(
       {
-        ...params,
+        pgToken: searchParams.get('pg_token'),
+        orderId: searchParams.get('order_id'),
       },
       {
         onSuccess: data => {
@@ -26,7 +30,7 @@ function ChargeSuccessPage() {
         },
       },
     )
-  }, [params, sendDepositSuccess])
+  }, [searchParams, sendDepositSuccess])
 
   return (
     <div className='flex flex-col items-center justify-center gap-4 p-4 text-ddblue-400 h-full'>
