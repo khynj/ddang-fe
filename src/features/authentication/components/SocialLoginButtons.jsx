@@ -1,6 +1,7 @@
 import googleIcon from '@/assets/images/oauth/google.png'
 import kakaoIcon from '@/assets/images/oauth/kakao.png'
 import naverIcon from '@/assets/images/oauth/naver.png'
+import axios_ from '@/utils/axios_'
 
 const socials = [
   {
@@ -27,17 +28,20 @@ function SocialLoginButtons() {
   return (
     <div className='flex flex-col gap-4'>
       {socials.map(({ name, icon, className, text }) => (
-        <a
+        <button
           key={name}
           className={`flex items-center justify-center w-full h-12 rounded-xl ${className}`}
-          href={`${
-            import.meta.env.VITE_SERVER_URL
-          }/api/oauth2/authorization/${name}`}
-          rel='external'
+          onClick={() => {
+            axios_.get(
+              `${
+                import.meta.env.VITE_SERVER_URL
+              }/api/oauth2/authorization/${name}`,
+            )
+          }}
         >
           <img src={icon} alt={name} className='w-6 h-6 mr-2' />
           <span>{text}</span>
-        </a>
+        </button>
       ))}
     </div>
   )
