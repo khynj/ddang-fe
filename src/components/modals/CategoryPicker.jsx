@@ -8,8 +8,8 @@ import { useCallback, useEffect, useState } from 'react'
 import Label from '../form/Label'
 import InputError from '../form/InputError'
 import ModalItem from './ModalItem'
-import CATEGORIES from '@/features/product/data/categories'
 import DefaultButton from '../buttons/DefaultButton'
+import { useCategory } from '@/apis/auction'
 
 function CategoryPicker({ label, required, value, setValue, validate }) {
   const { isOpen, open, close } = useModal('')
@@ -22,24 +22,14 @@ function CategoryPicker({ label, required, value, setValue, validate }) {
     },
     [validate, setValue, close],
   )
-
-  const [firstCategory, setFirstCategory] = useState('')
-  const [secondCategory, setSecondCategory] = useState('')
-  const [categories, setCategories] = useState(CATEGORIES)
+  const [parentId, setParentId] = useState(0)
+  const { data: categories } = useCategory(parentId)
 
   useEffect(() => {
     if (isOpen) {
-      setFirstCategory('')
-      setSecondCategory('')
-      setCategories(CATEGORIES)
+      setParentId(0)
     }
   }, [isOpen])
-
-  useEffect(() => {
-    if (firstCategory && secondCategory) {
-      setValue(`${firstCategory} > ${secondCategory}`)
-    }
-  }, [firstCategory, secondCategory, setValue])
 
   return (
     <>
@@ -57,17 +47,16 @@ function CategoryPicker({ label, required, value, setValue, validate }) {
       {isOpen && (
         <Modal close={() => onClose(value)}>
           <p className='text-sm text-center'>카테고리</p>
-          {categories.map(category => (
+          {categories?.map(category => (
             <div
               className='w-full'
-              key={category.id}
+              key={category.categoryId}
               onClick={() => {
-                if (category.subcategories) {
-                  setFirstCategory(category.name)
-                  setCategories(category.subcategories)
+                if (category.categoryId <= 99) {
+                  setParentId(category.categoryId)
+                  setValue(category.name)
                 } else {
-                  setSecondCategory(category.name)
-                  onClose(`${firstCategory} > ${category.name}`)
+                  onClose(value + ' > ' + category.name)
                 }
               }}
             >

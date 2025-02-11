@@ -41,7 +41,7 @@ function DealTypePicker({ label, required, value, setValue, validate }) {
             <div
               className='w-full'
               key={dealType.value}
-              onClick={() => onClose(dealType.value)}
+              onClick={() => onClose({ ...dealType })}
             >
               <ModalItem type={'gray'}>{dealType.value}</ModalItem>
             </div>

@@ -10,9 +10,10 @@ import ImagePicker from '../components/ImagePicker'
 import CategoryPicker from '@/components/modals/CategoryPicker'
 import DealTypePicker from '@/components/modals/DealtypePicker'
 import DealLocationPicker from '@/components/modals/DealLocationPicker'
-import Modal from '../../../components/modals/Modal'
-import MaterialIcon from '../../../components/icons/MaterialIcon'
+import Modal from '@/components/modals/Modal'
+import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useNavigate } from 'react-router'
+import { useCreateAuction } from '@/apis/auction'
 
 function ProductRegisterPage() {
   usePageName('상품등록')
@@ -26,20 +27,43 @@ function ProductRegisterPage() {
   const [openDate, setOpenDate] = useState('')
   const [closeDate, setCloseDate] = useState('')
   const [description, setDescription] = useState('')
-  const [tradeType, setTradeType] = useState('')
+  const [dealType, setDealType] = useState({ value: '', isDirect: false })
   const [tradePlace, setTradePlace] = useState(null)
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
-
   const [registeredProductId, setRegisteredProductId] = useState(null)
+
+  const { mutate: registerProduct } = useCreateAuction()
 
   const route = useNavigate()
   const onConfirm = () => {
     setIsConfirmModalOpen(false)
     // API 호출
-    setRegisteredProductId(123)
-    setIsSuccessModalOpen(true)
+    const form = new FormData()
+    form.append('title', title)
+    form.append('productName', productName)
+    form.append('category', category)
+    form.append('minBidPrice', minBidPrice)
+    form.append('instantHammerPrice', instantHammerPrice)
+    form.append('openDate', openDate)
+    form.append('closeDate', closeDate)
+    form.append('description', description)
+    form.append('dealType', dealType)
+    form.append('tradePlace', tradePlace)
+    images.forEach((image, index) => {
+      form.append(`images[${index}]`, image)
+    })
+    registerProduct(form, {
+      onSuccess: data => {
+        setRegisteredProductId(data.id)
+        setIsSuccessModalOpen(true)
+      },
+      onError: error => {
+        console.error(error)
+        alert('상품 등록에 실패했습니다.')
+      },
+    })
   }
 
   const states = {
@@ -75,9 +99,9 @@ function ProductRegisterPage() {
       label: '자세한 설명',
       state: description,
     },
-    tradeType: {
+    dealType: {
       label: '거래 유형',
-      state: tradeType,
+      state: dealType,
     },
     tradePlace: {
       label: '거래희망장소',
@@ -106,14 +130,20 @@ function ProductRegisterPage() {
     description: description =>
       VALIDATIONS.maxLength(description, 200) ||
       VALIDATIONS.required(description),
-    tradeType: tradeType => VALIDATIONS.required(tradeType),
-    tradePlace: tradePlace => VALIDATIONS.required(tradePlace),
+    dealType: dealType => VALIDATIONS.required(dealType),
+    tradePlace: tradePlace =>
+      dealType.isDirect && VALIDATIONS.required(tradePlace),
   }
 
   const handleSubmit = () => {
-    const valid = Object.keys(validation).every(
-      key => !validation[key](states[key].state),
-    )
+    const valid = Object.keys(validation).every(key => {
+      const result = validation[key](states[key].state)
+      if (result) {
+        alert(key + result)
+        return false
+      }
+      return true
+    })
     if (!valid) {
       alert('입력 값을 확인하세요.')
       return
@@ -183,11 +213,11 @@ function ProductRegisterPage() {
       <DealTypePicker
         label='거래 유형'
         required
-        value={tradeType}
-        setValue={setTradeType}
-        validate={validation.tradeType}
+        value={dealType.value}
+        setValue={setDealType}
+        validate={validation.dealType}
       />
-      {tradeType.includes('직거래') && (
+      {dealType.isDirect && (
         <DealLocationPicker
           label='거래희망장소'
           required
