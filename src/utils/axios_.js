@@ -10,11 +10,9 @@ const axios_ = axios.create({
 axios_.interceptors.response.use(
   response => {
     console.log('response', response)
+    return response
   },
   error => {
-    console.error('error : ', error)
-    console.error('error status : ', error.status)
-    console.error('error status ==401', error.status == 401)
     if (error.status == 401) {
       window.location.href = '/login'
     }
