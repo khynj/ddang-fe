@@ -156,6 +156,7 @@ function App() {
               />
               <Route path={ROUTES.CHARGE_FAIL} element={<ChargeFailPage />} />
               <Route path={ROUTES.MYPAGE} element={<MyPage />} />
+              {/* <Route path='*' element={<NotFoundPage />} /> */}
             </Route>
 
             <Route
