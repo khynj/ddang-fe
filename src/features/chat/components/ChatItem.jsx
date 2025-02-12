@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import ProfileImage from '../../user/components/ProfileImage'
 import MaterialIcon from '../../../components/icons/MaterialIcon'
+import { useAuth } from '@/contexts/AuthContext'
 
 function ChatItem({ chat }) {
-  const isMe = chat.nickname == 'Bob'
+  const { user } = useAuth()
+  const isMe = chat.memberId == user.memberId
   const isSystem = chat.nickname == 'SYSTEM'
   const createdTime = new Date(chat.createdTime).toLocaleTimeString('ko-KR', {
     hour: 'numeric',
@@ -11,8 +13,8 @@ function ChatItem({ chat }) {
     hour12: false,
   })
   return (
-    <div className={`flex ${isMe ? 'justify-end' : ''} p-4`}>
-      <div className='flex items-center gap-2'>
+    <div className={`w-full flex ${isMe ? 'justify-end' : ''} p-4`}>
+      <div className='max-w-full flex items-center gap-2'>
         {isMe && (
           <div className='flex h-full items-end text-xs text-gray-500'>
             <div>{createdTime}</div>
@@ -33,8 +35,8 @@ function ChatItem({ chat }) {
           {!isMe && (
             <div className='font-bold text-gray-800'>{chat.nickname}</div>
           )}
-          <div
-            className={`rounded-xl p-2 px-3 ${
+          <p
+            className={`max-w-2xs rounded-xl p-2 px-3  ${
               isSystem
                 ? 'bg-gray-600 text-white'
                 : isMe
@@ -42,8 +44,8 @@ function ChatItem({ chat }) {
                 : 'bg-gray-50 text-gray-950'
             }`}
           >
-            {chat.content}
-          </div>
+            <p className='whitespace-pre-wrap break-all'>{chat.content}</p>
+          </p>
         </div>
         {!isMe && (
           <div className='flex h-full items-end text-xs text-gray-500'>

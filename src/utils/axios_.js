@@ -12,7 +12,7 @@ axios_.interceptors.response.use(
     return response
   },
   error => {
-    if (error.status == 401) {
+    if (error.status == 401 && error.config.url !== '/auth/login') {
       window.location.href = '/welcome'
     }
     return Promise.reject(error)
