@@ -7,7 +7,7 @@ import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/formatPrice'
 
 function ProductItemHorizontal({ product }) {
-  const price = formatPrice(product.currentBidPrice)
+  const price = formatPrice(product.currentBidPrice || product.minimumBid)
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
   return (
     <Link

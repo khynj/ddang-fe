@@ -17,7 +17,6 @@ function ChargeSuccessPage() {
     isSuccess,
   } = usePayDepositSuccess()
   useEffect(() => {
-    console.log(searchParams)
     sendDepositSuccess(
       {
         pg_token: searchParams.get('pg_token'),

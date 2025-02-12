@@ -12,7 +12,7 @@ function CategoryList({ category }) {
           {/* <img src={subCategory.imageUrl} alt='' className='rounded-xl' /> */}
           <p className='text-center mt-1'>{subCategory.name}</p>
         </div>
-      ))}{' '}
+      ))}
     </>
   )
 }

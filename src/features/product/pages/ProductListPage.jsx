@@ -2,17 +2,22 @@ import { useEffect, useState } from 'react'
 import FilterChipArray from '../components/FilterChipArray.jsx'
 import FilterChipBool from '../components/FilterChipBool.jsx'
 import ProductItemHorizontal from '../components/ProductItemHorizontal.jsx'
-import productsData from '../data/products.js'
 import PropTypes from 'prop-types'
 import FilterBar from '../../../components/FilterBar.jsx'
+import { useSearchAuctions } from '@/apis/auction.js'
+import { useSearchParams } from 'react-router'
 
-function ProductListPage({ filter = _ => _, filters }) {
+function ProductListPage({ filters }) {
   const [isBidding, setIsBidding] = useState(false)
-  const products = productsData.filter(filter)
+  const [searchParams] = useSearchParams()
 
-  useEffect(() => {
-    // get products by filters or param
-  }, [])
+  const params = {}
+  searchParams.forEach((value, key) => {
+    if (!value) return
+    params[key] = value
+  })
+
+  const { data: products } = useSearchAuctions(params)
 
   return (
     <div className='flex flex-col'>
@@ -38,7 +43,7 @@ function ProductListPage({ filter = _ => _, filters }) {
         )}
       </FilterBar>
       <div className='flex flex-col'>
-        {products.map(product => (
+        {products?.auctionDetailProjection.map(product => (
           <ProductItemHorizontal key={product.auctionId} product={product} />
         ))}
       </div>
@@ -47,7 +52,6 @@ function ProductListPage({ filter = _ => _, filters }) {
 }
 
 ProductListPage.propTypes = {
-  filter: PropTypes.func,
   filters: PropTypes.bool,
 }
 

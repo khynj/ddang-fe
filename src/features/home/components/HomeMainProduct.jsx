@@ -5,7 +5,7 @@ import { formatPrice } from '@/utils/formatPrice'
 import ROUTES from '@/data/ROUTES'
 
 function HomeMainProduct({ product, index, size }) {
-  const price = formatPrice(product.currentBidPrice)
+  const price = formatPrice(product.currentBidPrice || product.minimumBid)
   return (
     <Link
       to={ROUTES.PRODUCT_DETAIL.replace(':id', product.auctionId)}

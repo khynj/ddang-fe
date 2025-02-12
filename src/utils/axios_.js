@@ -8,7 +8,7 @@ const axios_ = axios.create({
 
 axios_.interceptors.response.use(
   response => {
-    console.log('response', response)
+    console.log(response.config.url, response)
     return response
   },
   error => {
