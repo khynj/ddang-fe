@@ -13,19 +13,6 @@ function MyAuctionLayout({ name, tabs }) {
           to: tab.to,
           end: tab.end,
         }))}
-
-        //   [
-        //   {
-        //     index: true,
-        //     name: `${name}중인 상품`,
-        //     to: '',
-        //     end: true,
-        //   },
-        //   {
-        //     name: '낙찰된 상품',
-        //     to: 'sold',
-        //   },
-        // ]
       />
       <Outlet />
     </div>

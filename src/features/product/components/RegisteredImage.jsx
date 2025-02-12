@@ -5,9 +5,9 @@ function RegisteredImage({ src, deleteFunc }) {
   return (
     <div
       className='relative flex items-center w-[18%] aspect-square justify-center
-      rounded-lg bg-gray-100'
+      overflow-hidden rounded-lg bg-gray-100'
     >
-      <div className='overflow-hidden aspect-square'>
+      <div className='aspect-square'>
         <img
           src={URL.createObjectURL(src)}
           alt='preview'

@@ -6,7 +6,7 @@ function ProductDetailItem({ name, value = '', bold }) {
       className={`flex justify-between ${bold ? 'font-bold' : ''} items-end`}
     >
       <span className='text-gray-700 text-sm'>{name}</span>
-      <span className='text-gray-950'>{value.toString()}</span>
+      <span className='text-gray-950'>{value}</span>
     </div>
   )
 }

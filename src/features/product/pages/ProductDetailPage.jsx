@@ -30,12 +30,18 @@ function ProductDetailPage() {
     <div className='flex flex-col gap-2 pb-72'>
       <Slider>
         {product?.auction.photos.map((photo, index) => (
-          <img
+          <div
             key={index}
-            src={photo}
-            alt={product?.auction.productName}
-            className='w-full aspect-square object-cover snap-center'
-          />
+            className='flex items-center justify-center shrink-0
+             w-full max-w-lg aspect-square snap-center
+             brightness-97 bg-white'
+          >
+            <img
+              src={photo}
+              alt={product?.auction.productName}
+              className='object-cover'
+            />
+          </div>
         ))}
       </Slider>
       <div className='flex flex-col gap-6 p-4'>
@@ -93,12 +99,14 @@ function ProductDetailPage() {
           />
           <ProductDetailItem
             name='거래 방식'
-            value={product?.auction.tradeType}
+            value={JSON.stringify(product?.auction.tradeType)}
           />
-          <ProductDetailItem
-            name='직거래 장소'
-            value={product?.auction.location}
-          />
+          {product?.auction.tradeType.isDirect && (
+            <ProductDetailItem
+              name='직거래 장소'
+              value={product?.auction.location}
+            />
+          )}
         </div>
         <hr className='border-gray-200' />
         <Link
