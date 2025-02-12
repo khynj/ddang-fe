@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react'
 import FilterChipArray from '../components/FilterChipArray.jsx'
-import FilterChipBool from '../components/FilterChipBool.jsx'
 import ProductItemHorizontal from '../components/ProductItemHorizontal.jsx'
 import PropTypes from 'prop-types'
 import FilterBar from '../../../components/FilterBar.jsx'
 import { useSearchAuctions } from '@/apis/auction.js'
 import { useSearchParams } from 'react-router'
 import CategoryPicker from '@/components/modals/CategoryPicker.jsx'
+import CategoryPickerSmall from '@/components/modals/CategoryPickerSmall.jsx'
 
 function ProductListPage({ filters, params = {} }) {
   const [searchParams] = useSearchParams()
@@ -19,8 +19,8 @@ function ProductListPage({ filters, params = {} }) {
   const [deliveryMethod, setDeliveryMethod] = useState(
     params.deliveryMethod || 'any',
   )
-  const [categoryId, setCategoryId] = useState(null)
-  const [status, setStatus] = useState(false)
+  const [categoryId, setCategoryId] = useState(params.categoryId)
+  const [status, setStatus] = useState(params.status || 'upcoming')
 
   const searchOptions = useMemo(() => {
     return {
@@ -41,19 +41,19 @@ function ProductListPage({ filters, params = {} }) {
           <>
             <FilterChipArray
               values={[
-                { value: 'any', name: '거래방식' },
+                { value: 'any', name: '직거래/택배' },
                 { value: 'direct', name: '직거래' },
                 { value: 'package', name: '택배' },
               ]}
               value={deliveryMethod}
               setValue={setDeliveryMethod}
             />
-            <CategoryPicker value={categoryId} setValue={setCategoryId} />
+            <CategoryPickerSmall value={categoryId} setValue={setCategoryId} />
             <FilterChipArray
               values={[
-                { value: '', name: '경매중' },
-                { value: '', name: '경매예정' },
-                { value: '', name: '경매종료' },
+                { value: 'ongoing', name: '경매중' },
+                { value: 'upcoming', name: '경매예정' },
+                { value: 'ended', name: '경매종료' },
               ]}
               value={status}
               setValue={setStatus}

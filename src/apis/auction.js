@@ -80,6 +80,7 @@ export function useDeleteAuctionSearchHistory() {
  * @returns
  */
 export function useSearchAuctions(params) {
+  console.log('params : ', params)
   const defaultParams = {
     searchKey: '',
     deliveryMethod: '',

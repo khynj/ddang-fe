@@ -20,10 +20,10 @@ function FilterBar({ children, sortType = 'createdAt', setSortType }) {
   } = useModal(options.find(option => option.key === sortType).name)
 
   return (
-    <div className='flex px-4 py-2 justify-between items-center'>
-      <div className='flex gap-2 w-full h-8'>{children}</div>
+    <div className='flex px-4 py-2 justify-between items-center text-xs'>
+      <div className='flex gap-1 w-full h-7.5'>{children}</div>
       <div
-        className='font-bold text-sm flex gap-1 items-center text-gray-950'
+        className='font-bold flex gap-1 items-center text-gray-950'
         onClick={open}
       >
         <MaterialIcon name='sort' size={16} />
