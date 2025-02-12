@@ -23,6 +23,8 @@ function ProductListPage({ filters, isFavorite }) {
   const [categoryId, setCategoryId] = useState(params.categoryId)
   const [status, setStatus] = useState(params.status || 'ongoing')
 
+  const [page, setPage] = useState(1)
+
   const searchOptions = useMemo(() => {
     return {
       sortType,
@@ -30,8 +32,9 @@ function ProductListPage({ filters, isFavorite }) {
       categoryId,
       status,
       isFavorite,
+      page,
     }
-  }, [sortType, deliveryMethod, categoryId, status, isFavorite])
+  }, [sortType, deliveryMethod, categoryId, status, isFavorite, page])
 
   const { data: products } = useSearchAuctions(searchOptions)
 
@@ -62,7 +65,7 @@ function ProductListPage({ filters, isFavorite }) {
           </>
         )}
       </FilterBar>
-      <Pagenated>
+      <Pagenated setPage={setPage}>
         {products?.auctionDetailProjection.map(product => (
           <ProductItemHorizontal key={product.auctionId} product={product} />
         ))}

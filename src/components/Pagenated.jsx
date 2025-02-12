@@ -10,7 +10,7 @@ function Pagenated({ children, page = 1, setPage, parentProps }) {
     scrollRef.current.addEventListener('scroll', () => {
       console.log('scrolled!')
       if (
-        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 100 >=
+        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 300 >=
         scrollRef.current.scrollHeight
       ) {
         setPage(page + 1)
@@ -19,7 +19,11 @@ function Pagenated({ children, page = 1, setPage, parentProps }) {
   }, [])
 
   return (
-    <div {...parentProps} ref={scrollRef} className='overflow-y-scroll'>
+    <div
+      {...parentProps}
+      ref={scrollRef}
+      className='flex flex-col h-full overflow-y-scroll'
+    >
       {children}
     </div>
   )
@@ -28,7 +32,7 @@ function Pagenated({ children, page = 1, setPage, parentProps }) {
 Pagenated.propTypes = {
   children: PropTypes.node,
   page: PropTypes.number,
-  setPage: PropTypes.func,
+  setPage: PropTypes.func.isRequired,
   parentProps: PropTypes.object,
 }
 
