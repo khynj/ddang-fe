@@ -6,7 +6,7 @@ function NoticesPage() {
   usePageName('공지사항')
 
   return (
-    <div className='max-w-4xl mx-auto my-8 border border-gray-300 bg-white'>
+    <div className='max-w-4xl mx-auto my-1 bg-white'>
       {notices.map((notice, index) => (
         <NoticeItem
           key={index}
