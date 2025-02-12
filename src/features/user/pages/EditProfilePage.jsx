@@ -14,7 +14,6 @@ function EditProfilePage() {
   const { user } = useAuth()
   const [nickname, setNickname] = useState(user?.nickname)
   const { data: userData } = useMemberInfo(user?.memberId)
-  const [image, setImage] = useState(user?.imageUrl)
   const [blob, setBlob] = useState(null)
 
   const updatePhotoMutation = useUpdateProfilePhoto()
@@ -36,7 +35,11 @@ function EditProfilePage() {
   return (
     <>
       <div className='flex flex-col bg-white p-4 pt-16 gap-8'>
-        <EditProfileImage src={image} setBlob={setBlob} size={120} />
+        <EditProfileImage
+          src={userData?.imageUrl}
+          setBlob={setBlob}
+          size={120}
+        />
         <TextInput
           label='별명'
           required

@@ -31,8 +31,7 @@ import {
   ReviewHistoryPage,
   MyProductListPage,
   ReviewRegisterPage,
-  ChargeSuccessPage,
-  ChargeFailPage,
+  ChargeResultPage,
 } from './features'
 import ExploreLayout from './layouts/ExploreLayout'
 import DefaultLayout from './layouts/DefaultLayout'
@@ -82,6 +81,42 @@ function App() {
             />
           </Route>
           <Route path='/' element={<AuthGuard />}>
+            <Route path='/' element={<DefaultLayout />}>
+              <Route path={ROUTES.MYPAGE} element={<MyPage />} />
+              <Route path='*' element={<NotFoundPage />} />
+            </Route>
+            <Route path='/' element={<DefaultLayout back />}>
+              <Route
+                path={ROUTES.CHARGE_SUCCESS}
+                element={<ChargeResultPage />}
+              />
+              <Route path={ROUTES.CHATROOM} element={<ChatroomPage />} />
+              <Route
+                path={ROUTES.PRODUCT_REGISTER}
+                element={<ProductRegisterPage />}
+              />
+              <Route
+                path={ROUTES.PRODUCT_LIST_BY_USER}
+                element={<ProductListPage />} //
+              />
+              <Route
+                path={ROUTES.PRODUCT_DETAIL}
+                element={<ProductDetailPage />}
+              />
+              <Route
+                path={ROUTES.NOTIFICATIONS}
+                element={<NotificationPage />}
+              />
+              <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
+              <Route
+                path={ROUTES.MY_LOCATIONS_REGISTER}
+                element={<MyLocationsRegisterPage />}
+              />
+              <Route
+                path={ROUTES.REVIEW_REGISTER}
+                element={<ReviewRegisterPage />}
+              />
+            </Route>
             <Route path={ROUTES.HOME} element={<ExploreLayout />}>
               <Route index element={<HomePage />} />
               <Route path={ROUTES.SEARCH} element={<SearchPage />} />
@@ -147,15 +182,6 @@ function App() {
                 />
               </Route>
             </Route>
-            <Route path='/' element={<DefaultLayout />}>
-              <Route
-                path={ROUTES.CHARGE_SUCCESS}
-                element={<ChargeSuccessPage />}
-              />
-              <Route path={ROUTES.CHARGE_FAIL} element={<ChargeFailPage />} />
-              <Route path={ROUTES.MYPAGE} element={<MyPage />} />
-              <Route path='*' element={<NotFoundPage />} />
-            </Route>
 
             <Route
               path={ROUTES.CHAT}
@@ -186,34 +212,6 @@ function App() {
                 element={<DebateListPage type='debates' />}
               />
             </Route>
-            <Route path='/' element={<DefaultLayout back />}>
-              <Route path={ROUTES.CHATROOM} element={<ChatroomPage />} />
-              <Route
-                path={ROUTES.PRODUCT_REGISTER}
-                element={<ProductRegisterPage />}
-              />
-              <Route
-                path={ROUTES.PRODUCT_LIST_BY_USER}
-                element={<ProductListPage />} //
-              />
-              <Route
-                path={ROUTES.PRODUCT_DETAIL}
-                element={<ProductDetailPage />}
-              />
-              <Route
-                path={ROUTES.NOTIFICATIONS}
-                element={<NotificationPage />}
-              />
-              <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-              <Route
-                path={ROUTES.MY_LOCATIONS_REGISTER}
-                element={<MyLocationsRegisterPage />}
-              />
-              <Route
-                path={ROUTES.REVIEW_REGISTER}
-                element={<ReviewRegisterPage />}
-              />
-            </Route>
             <Route path={ROUTES.MYPAGE} element={<DefaultLayout back />}>
               <Route
                 path={ROUTES.PAYMENT_HISTORY}
@@ -228,9 +226,30 @@ function App() {
               <Route path={ROUTES.SALE_HISTORY} element={<SaleHistoryPage />} />
               <Route path={ROUTES.FAVORITES} element={<FavoritesPage />}>
                 <Route index element={<Navigate to={'pre'} replace />} />
-                <Route path={'pre'} element={<ProductListPage />} />
-                <Route path={'after'} element={<ProductListPage />} />
-                <Route path={'ongoing'} element={<ProductListPage />} />
+                <Route
+                  path={'pre'}
+                  element={
+                    <ProductListPage
+                      params={{ status: 'upcoming', isFavorite: true }}
+                    />
+                  }
+                />
+                <Route
+                  path={'after'}
+                  element={
+                    <ProductListPage
+                      params={{ status: 'ended', isFavorite: true }}
+                    />
+                  }
+                />
+                <Route
+                  path={'ongoing'}
+                  element={
+                    <ProductListPage
+                      params={{ status: 'ongoing', isFavorite: true }}
+                    />
+                  }
+                />
               </Route>
               <Route path={ROUTES.APP_SETTING} element={<AppSettingPage />} />
               <Route

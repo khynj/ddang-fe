@@ -20,6 +20,8 @@ function ChargePage() {
     console.log('payInfo', payInfo)
   }, [payInfo])
 
+  const onChange = e => setAmount(Number(e.target.value).toString())
+
   const onSubmit = () => {
     if (amount <= 0) {
       alert('충전 금액을 확인해주세요.')
@@ -30,8 +32,6 @@ function ChargePage() {
       { amount, paymentMethod: accountName },
       {
         onSuccess: data => {
-          // window.location = data?.next_redirect_app_url
-          // window.location = data?.next_redirect_pc_url
           window.location = data?.next_redirect_mobile_url
         },
         onError: err => {
@@ -57,7 +57,7 @@ function ChargePage() {
             type='number'
             inputMode='numeric' // 모바일에서 숫자 키보드 표시
             value={amount}
-            onChange={e => setAmount(e.target.value)}
+            onChange={onChange}
             className='border-2 border-ddblue-400 rounded-lg px-4 py-2 text-black font-bold text-lg'
           />
         </div>

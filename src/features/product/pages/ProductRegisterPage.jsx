@@ -15,6 +15,7 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useNavigate } from 'react-router'
 import { useCreateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
+import { formatDateToKst } from '@/utils/formantDateToKST'
 
 function ProductRegisterPage() {
   usePageName('상품등록')
@@ -23,12 +24,12 @@ function ProductRegisterPage() {
   const [title, setTitle] = useState('')
   const [productName, setProductName] = useState('')
   const [categoryId, setCategory] = useState(null)
-  const [minimumBid, setMinimumBid] = useState()
-  const [instantHammerPrice, setInstantHammerNowPrice] = useState()
+  const [minimumBid, setMinimumBid] = useState(0)
+  const [instantHammerPrice, setInstantHammerNowPrice] = useState(0)
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
   const [content, setContent] = useState('')
-  const [dealType, setDealType] = useState({ value: '', isDirect: false })
+  const [tradeType, setTradeType] = useState({ value: '', isDirect: false })
   const [location, setLocation] = useState(null)
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
@@ -48,12 +49,15 @@ function ProductRegisterPage() {
       categoryId,
       minimumBid,
       instantHammerPrice,
-      startTime: new Date(startTime).toISOString(),
-      endTime: new Date(endTime).toISOString(),
+      startTime: formatDateToKst(new Date(startTime)),
+      endTime: formatDateToKst(new Date(endTime)),
       content,
-      dealType,
+      tradeType,
       location,
     }
+
+    console.log(product)
+
     form.append(
       'product',
       new Blob([JSON.stringify(product)], { type: 'application/json' }),
@@ -109,9 +113,9 @@ function ProductRegisterPage() {
       label: '자세한 설명',
       state: content,
     },
-    dealType: {
+    tradeType: {
       label: '거래 유형',
-      state: dealType,
+      state: tradeType,
     },
     location: {
       label: '거래희망장소',
@@ -138,8 +142,8 @@ function ProductRegisterPage() {
       VALIDATIONS.required(endTime) || VALIDATIONS.minDate(endTime, startTime),
     content: content =>
       VALIDATIONS.maxLength(content, 200) || VALIDATIONS.required(content),
-    dealType: dealType => VALIDATIONS.required(dealType),
-    location: location => dealType.isDirect && VALIDATIONS.required(location),
+    tradeType: tradeType => VALIDATIONS.required(tradeType),
+    location: location => tradeType.isDirect && VALIDATIONS.required(location),
   }
 
   const handleSubmit = () => {
@@ -224,11 +228,11 @@ function ProductRegisterPage() {
       <DealTypePicker
         label='거래 유형'
         required
-        value={dealType.value}
-        setValue={setDealType}
-        validate={validation.dealType}
+        value={tradeType.value}
+        setValue={setTradeType}
+        validate={validation.tradeType}
       />
-      {dealType.isDirect && (
+      {tradeType.isDirect && (
         <DealLocationPicker
           label='거래희망장소'
           required
@@ -250,9 +254,12 @@ function ProductRegisterPage() {
               {Object.keys(states).map(
                 key =>
                   !!states[key].state && (
-                    <div key={key} className='w-full flex justify-between'>
-                      <span>{states[key].label}</span>
-                      <span>
+                    <div key={key} className='w-full grid grid-cols-7'>
+                      <span className='text-start col-span-2 whitespace-nowrap'>
+                        {states[key].label}
+                      </span>
+                      <div></div>
+                      <span className='text-end truncate col-span-4'>
                         {typeof states[key].state === 'object'
                           ? states[key].state.value
                           : states[key].state}

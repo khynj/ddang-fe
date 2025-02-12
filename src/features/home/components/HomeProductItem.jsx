@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/formatPrice'
 function HomeProductItem({ product }) {
-  const price = formatPrice(product.currentBidPrice)
+  const price = formatPrice(product.currentBidPrice || product.minimumBid)
   return (
     <Link
       className='flex flex-col'

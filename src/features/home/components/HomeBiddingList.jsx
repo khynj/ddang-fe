@@ -1,9 +1,13 @@
 import HomeListHeader from './HomeListHeader'
 import ProductItemSmall from '../../product/components/ProductItemSmall'
-import products from '../../product/data/products'
 import ROUTES from '@/data/ROUTES'
+import { useSearchAuctions } from '@/apis/auction'
 
 function HomeBiddingList() {
+  const { data: products } = useSearchAuctions({
+    isHammered: false,
+    role: 'buyer',
+  })
   return (
     <div>
       <HomeListHeader
@@ -18,7 +22,7 @@ function HomeBiddingList() {
         className='flex flex-row gap-2 pb-1
         overflow-x-scroll snap-x snap-madatory'
       >
-        {products.map(product => (
+        {products?.auctionDetailProjection.map(product => (
           <ProductItemSmall key={product.auctionId} product={product} />
         ))}
       </div>

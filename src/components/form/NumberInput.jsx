@@ -6,7 +6,7 @@ import InputError from './InputError'
 function NumberInput({ label, required, value, setValue, validate }) {
   const [error, setError] = useState('')
   const onChange = e => {
-    const value = Number(e.target.value)
+    const value = Number(e.target.value).toString()
     if (validate) {
       setError(validate(value))
     }

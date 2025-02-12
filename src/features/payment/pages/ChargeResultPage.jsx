@@ -7,7 +7,7 @@ import usePageName from '@/hooks/usePageName'
 import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 
-function ChargeSuccessPage() {
+function ChargeResultPage() {
   usePageName('충전')
   const route = useNavigate()
   const [searchParams] = useSearchParams()
@@ -17,7 +17,6 @@ function ChargeSuccessPage() {
     isSuccess,
   } = usePayDepositSuccess()
   useEffect(() => {
-    console.log(searchParams)
     sendDepositSuccess(
       {
         pg_token: searchParams.get('pg_token'),
@@ -86,4 +85,4 @@ function ChargeSuccessPage() {
   )
 }
 
-export default ChargeSuccessPage
+export default ChargeResultPage

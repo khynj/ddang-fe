@@ -61,11 +61,46 @@ export function useDeleteAuctionSearchHistory() {
       ),
   })
 }
-
+/**
+ *
+ * @param {
+ * searchKey,
+ * deliveryMethod,
+ * status,
+ * isFavorite,
+ * categoryId,
+ * sortType,
+ * sortOrder,
+ * page,
+ * size,
+ * isHammered,
+ * role,
+ * sellerId
+ *} params
+ * @returns
+ */
 export function useSearchAuctions(params) {
+  console.log('params : ', params)
+  const defaultParams = {
+    searchKey: '',
+    deliveryMethod: '',
+    status: '',
+    isFavorite: '',
+    categoryId: '',
+    sortType: 'createdAt',
+    sortOrder: 'asc',
+    page: 1,
+    size: 10,
+    isHammered: '',
+    role: '',
+    sellerId: '',
+  }
   return useQuery({
     queryKey: ['searchAuctions', params],
-    queryFn: () => AXIOS.get('/auction', { params }).then(res => res.data),
+    queryFn: () =>
+      AXIOS.get('/auction', { params: { ...defaultParams, ...params } }).then(
+        res => res.data,
+      ),
   })
 }
 

@@ -13,7 +13,8 @@ function AuthGuard() {
     }
   }, [user, route])
 
-  return <Outlet />
+  if (user) return <Outlet />
+  else return null
 }
 
 export default AuthGuard

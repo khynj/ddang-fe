@@ -5,7 +5,11 @@ import { useToggleFavorite } from '@/apis/auction'
 function ProductImage({ product, heartSize = 32, heart, small }) {
   const { mutate: toggleLike } = useToggleFavorite()
   const onClick = () => {
-    toggleLike(product.auctionId)
+    toggleLike(product.auctionId, {
+      onSuccess: () => {
+        product.isFavorite = !product.isFavorite
+      },
+    })
   }
   return (
     <div

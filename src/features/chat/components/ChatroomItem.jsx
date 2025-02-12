@@ -22,7 +22,7 @@ function ChatroomItem({ chatroom }) {
             {chatroom.lastMessage}
           </span>
           <div className='bg-ddred-500 text-white rounded-full px-1.5 text-sm'>
-            {chatroom.messgaesLeft}
+            {chatroom.messageLeft}
           </div>
         </div>
       </div>

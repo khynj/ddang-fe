@@ -7,7 +7,7 @@ function ExploreHeader() {
   const route = useNavigate()
   const search = e => {
     e.preventDefault()
-    route(`${ROUTES.PRODUCT_LIST}?search=${e.target[0].value}`)
+    route(`${ROUTES.PRODUCT_LIST}?searchKey=${e.target[0].value}`)
     e.target[0].blur()
   }
   const { data: notificationStatus } = useUnreadNotificationStatus()
