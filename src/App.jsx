@@ -49,13 +49,6 @@ import TestPage from './pages/TestPage'
 
 function App() {
   const route = useNavigate()
-  const [height, setHeight] = useState(window.visualViewport.height)
-
-  useEffect(() => {
-    window.onresize = () => {
-      setHeight(window.visualViewport.height)
-    }
-  }, [])
   useEffect(() => {
     initFCM()
   }, [])
@@ -63,8 +56,7 @@ function App() {
     <AuthProvider>
       <div
         id='app'
-        className={`relative w-full mx-auto bg-white max-w-lg overflow-x-hidden overflow-y-scroll`}
-        style={{ height: height }}
+        className={`relative w-ful h-dvh mx-auto bg-white max-w-lg overflow-x-hidden overflow-y-scroll`}
       >
         <Routes>
           <Route path='/test' element={<TestPage />} />
@@ -224,33 +216,7 @@ function App() {
                 element={<PurchaseHistoryPage />}
               />
               <Route path={ROUTES.SALE_HISTORY} element={<SaleHistoryPage />} />
-              <Route path={ROUTES.FAVORITES} element={<FavoritesPage />}>
-                <Route index element={<Navigate to={'pre'} replace />} />
-                <Route
-                  path={'pre'}
-                  element={
-                    <ProductListPage
-                      params={{ status: 'upcoming', isFavorite: true }}
-                    />
-                  }
-                />
-                <Route
-                  path={'after'}
-                  element={
-                    <ProductListPage
-                      params={{ status: 'ended', isFavorite: true }}
-                    />
-                  }
-                />
-                <Route
-                  path={'ongoing'}
-                  element={
-                    <ProductListPage
-                      params={{ status: 'ongoing', isFavorite: true }}
-                    />
-                  }
-                />
-              </Route>
+              <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
               <Route path={ROUTES.APP_SETTING} element={<AppSettingPage />} />
               <Route
                 path={ROUTES.CHANGE_PASSWORD}

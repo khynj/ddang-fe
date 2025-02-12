@@ -5,9 +5,8 @@ import ProductSoldItem from '../components/my/ProductSoldItem'
 import { useSearchAuctions } from '@/apis/auction'
 function MyProductListPage({ isSeller, isHammered, isPre }) {
   const params = {
-    isSeller,
-    isHammered,
-    isPre,
+    role: isSeller ? 'seller' : 'buyer',
+    status: isHammered ? 'ended' : isPre ? 'upcoming' : 'ongoing',
   }
   const { data: products } = useSearchAuctions(params)
   return (

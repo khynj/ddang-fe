@@ -1,15 +1,28 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import usePageName from '@/hooks/usePageName'
 import ProductItemHorizontal from '../../product/components/ProductItemHorizontal'
 import ProfileImage from '../components/ProfileImage'
 import FilterChipArray from '../../product/components/FilterChipArray'
 import FilterBar from '@/components/FilterBar'
-import FilterChipBool from '../../product/components/FilterChipBool'
 import { useFollowingList } from '@/apis/member'
 import { useFollowingAuctions } from '@/apis/auction'
+import CategoryPickerSmall from '@/components/modals/CategoryPickerSmall'
 
 function SubscriptionsPage() {
-  const [isBidding, setIsBidding] = useState(false)
+  const [sortType, setSortType] = useState('createdAt')
+  const [deliveryMethod, setDeliveryMethod] = useState('any')
+  const [categoryId, setCategoryId] = useState()
+  const [status, setStatus] = useState('ongoing')
+
+  const searchOptions = useMemo(() => {
+    return {
+      sortType,
+      deliveryMethod,
+      categoryId,
+      status,
+    }
+  }, [sortType, deliveryMethod, categoryId, status])
+
   usePageName('모아보기')
 
   const { data: followings } = useFollowingList()
@@ -17,11 +30,8 @@ function SubscriptionsPage() {
     followings
       ? followings.followings.map(following => following.memberId)
       : [],
+    searchOptions,
   )
-
-  // useEffect(() => {
-  //   if (!followings) return
-  // }, [followings])
 
   return (
     <div>
@@ -42,26 +52,26 @@ function SubscriptionsPage() {
         ))}
       </div>
 
-      <FilterBar>
-        {
-          <>
-            <FilterChipArray
-              values={['거래방식', '직거래', '택배']}
-              index={0}
-            />
-            <FilterChipArray
-              values={['카테고리', '전자제품', '의류']}
-              index={0}
-            />
-            <FilterChipBool
-              text='경매중'
-              value={isBidding}
-              onChange={() => {
-                setIsBidding(!isBidding)
-              }}
-            />
-          </>
-        }
+      <FilterBar sortType={sortType} setSortType={setSortType}>
+        <FilterChipArray
+          values={[
+            { value: 'any', name: '직거래/택배' },
+            { value: 'direct', name: '직거래' },
+            { value: 'package', name: '택배' },
+          ]}
+          value={deliveryMethod}
+          setValue={setDeliveryMethod}
+        />
+        <CategoryPickerSmall value={categoryId} setValue={setCategoryId} />
+        <FilterChipArray
+          values={[
+            { value: 'ongoing', name: '경매중' },
+            { value: 'upcoming', name: '경매예정' },
+            { value: 'ended', name: '경매종료' },
+          ]}
+          value={status}
+          setValue={setStatus}
+        />
       </FilterBar>
 
       <div>

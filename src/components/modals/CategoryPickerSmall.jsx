@@ -7,12 +7,15 @@ import { useCallback, useEffect, useState } from 'react'
 import ModalItem from './ModalItem'
 import DefaultButton from '../buttons/DefaultButton'
 import { useCategory } from '@/apis/auction'
+import { useSearchParams } from 'react-router'
 
 function CategoryPickerSmall({ label, value, setValue, validate }) {
   const { isOpen, open, close } = useModal('')
   const [error, setError] = useState('')
   const [parentId, setParentId] = useState(0)
-  const [categoryName, setCategoryName] = useState('카테고리')
+  const [searchParams] = useSearchParams()
+  const categoryNameParam = searchParams.get('categoryName') || '카테고리'
+  const [categoryName, setCategoryName] = useState(categoryNameParam)
   const { data: categories } = useCategory(parentId)
 
   useEffect(() => {
@@ -38,7 +41,7 @@ function CategoryPickerSmall({ label, value, setValue, validate }) {
             text-gray-950 bg-gray-100 rounded-lg whitespace-nowrap'
       >
         <InputValue value={categoryName} label={label} />
-        <MaterialIcon name='arrow_drop_down' size={20} />
+        <MaterialIcon name='arrow_drop_down' size={18} />
       </button>
       {isOpen && (
         <Modal close={() => onClose(value)}>

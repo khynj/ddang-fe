@@ -2,14 +2,15 @@ import { useMemo, useState } from 'react'
 import FilterChipArray from '../components/FilterChipArray.jsx'
 import ProductItemHorizontal from '../components/ProductItemHorizontal.jsx'
 import PropTypes from 'prop-types'
-import FilterBar from '../../../components/FilterBar.jsx'
+import FilterBar from '@/components/FilterBar.jsx'
 import { useSearchAuctions } from '@/apis/auction.js'
 import { useSearchParams } from 'react-router'
-import CategoryPicker from '@/components/modals/CategoryPicker.jsx'
 import CategoryPickerSmall from '@/components/modals/CategoryPickerSmall.jsx'
+import Pagenated from '@/components/Pagenated.jsx'
 
-function ProductListPage({ filters, params = {} }) {
+function ProductListPage({ filters, isFavorite }) {
   const [searchParams] = useSearchParams()
+  const params = {}
   searchParams.forEach((value, key) => {
     if (!value) return
     params[key] = value
@@ -20,22 +21,22 @@ function ProductListPage({ filters, params = {} }) {
     params.deliveryMethod || 'any',
   )
   const [categoryId, setCategoryId] = useState(params.categoryId)
-  const [status, setStatus] = useState(params.status || 'upcoming')
+  const [status, setStatus] = useState(params.status || 'ongoing')
 
   const searchOptions = useMemo(() => {
     return {
-      ...params,
       sortType,
       deliveryMethod,
       categoryId,
       status,
+      isFavorite,
     }
-  }, [params, sortType, deliveryMethod, categoryId, status])
+  }, [sortType, deliveryMethod, categoryId, status, isFavorite])
 
   const { data: products } = useSearchAuctions(searchOptions)
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col h-full'>
       <FilterBar sortType={sortType} setSortType={setSortType}>
         {filters && (
           <>
@@ -61,18 +62,18 @@ function ProductListPage({ filters, params = {} }) {
           </>
         )}
       </FilterBar>
-      <div className='flex flex-col'>
+      <Pagenated>
         {products?.auctionDetailProjection.map(product => (
           <ProductItemHorizontal key={product.auctionId} product={product} />
         ))}
-      </div>
+      </Pagenated>
     </div>
   )
 }
 
 ProductListPage.propTypes = {
   filters: PropTypes.bool,
-  params: PropTypes.object,
+  isFavorite: PropTypes.bool,
 }
 
 export default ProductListPage

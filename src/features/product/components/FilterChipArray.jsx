@@ -21,7 +21,7 @@ function FilterChipArray({ values, value, setValue }) {
     text-gray-950 bg-gray-100 rounded-lg whitespace-nowrap'
       >
         {name}
-        <MaterialIcon name='arrow_drop_down' size={20} />
+        <MaterialIcon name='arrow_drop_down' size={18} />
       </button>
       {isOpen && (
         <Modal close={close}>

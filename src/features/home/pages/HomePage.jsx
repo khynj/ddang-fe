@@ -1,7 +1,4 @@
-import HomeBiddingList from '../components/HomeBiddingList'
 import HomeMainSlider from '../components/HomeMainSlider'
-import HomeProductList from '../components/HomeProductList'
-import types from '../../product/data/homeProductTypes'
 import WelcomeBanner from '../../user/components/WelcomeBanner'
 import HomeListHeader from '../components/HomeListHeader'
 import HomeProductItem from '../components/HomeProductItem'
@@ -55,7 +52,7 @@ function HomePage() {
         <section>
           <HomeListHeader
             title={`마감 임박`}
-            to={ROUTES.PRODUCT_LIST}
+            to={`${ROUTES.PRODUCT_LIST}?sortType=endTime`}
             icon='local_fire_department'
           ></HomeListHeader>
           <div className='grid grid-cols-2 gap-4'>

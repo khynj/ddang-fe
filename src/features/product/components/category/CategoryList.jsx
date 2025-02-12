@@ -10,7 +10,7 @@ function CategoryList({ category }) {
     <>
       {subCategories?.map((subCategory, index) => (
         <Link
-          to={ROUTES.PRODUCT_LIST + '?categoryId=' + subCategory.categoryId}
+          to={`${ROUTES.PRODUCT_LIST}?categoryId=${subCategory.categoryId}&categoryName=${subCategory.name}`}
           key={index}
           className='w-[30%]'
         >
