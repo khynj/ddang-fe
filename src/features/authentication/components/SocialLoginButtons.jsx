@@ -28,20 +28,16 @@ function SocialLoginButtons() {
   return (
     <div className='flex flex-col gap-4'>
       {socials.map(({ name, icon, className, text }) => (
-        <button
+        <a
           key={name}
           className={`flex items-center justify-center w-full h-12 rounded-xl ${className}`}
-          onClick={() => {
-            axios_.get(
-              `${
-                import.meta.env.VITE_SERVER_URL
-              }/api/oauth2/authorization/${name}`,
-            )
-          }}
+          href={`${
+            import.meta.env.VITE_SERVER_URL
+          }/api/oauth2/authorization/${name}`}
         >
           <img src={icon} alt={name} className='w-6 h-6 mr-2' />
           <span>{text}</span>
-        </button>
+        </a>
       ))}
     </div>
   )

@@ -48,8 +48,12 @@ function SignupPage() {
       {
         onSuccess: ({ memberId }) => {
           login({ memberId, name, nickname, email })
-          requestLogin({ email, password })
-          route(ROUTES.HOME, { state: { welcome: true } })
+          requestLogin(
+            { email, password },
+            {
+              onSuccess: () => route(ROUTES.HOME, { state: { welcome: true } }),
+            },
+          )
         },
       },
     )

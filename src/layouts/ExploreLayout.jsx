@@ -4,9 +4,10 @@ import Navbar from '../components/navbar/Navbar'
 function ExploreLayout() {
   return (
     <>
-      <ExploreHeader />
-      <Outlet />
-      <div className='py-12'></div>
+      <div className='h-[calc(100dvh-64px)] pb-[56px]'>
+        <ExploreHeader />
+        <Outlet />
+      </div>
       <Navbar />
     </>
   )

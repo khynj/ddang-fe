@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import FilterChipArray from '../components/FilterChipArray.jsx'
 import ProductItemHorizontal from '../components/ProductItemHorizontal.jsx'
 import PropTypes from 'prop-types'
@@ -6,7 +6,7 @@ import FilterBar from '@/components/FilterBar.jsx'
 import { useSearchAuctions } from '@/apis/auction.js'
 import { useSearchParams } from 'react-router'
 import CategoryPickerSmall from '@/components/modals/CategoryPickerSmall.jsx'
-import Pagenated from '@/components/Pagenated.jsx'
+import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper.jsx'
 
 function ProductListPage({ filters, isFavorite }) {
   const [searchParams] = useSearchParams()
@@ -16,6 +16,8 @@ function ProductListPage({ filters, isFavorite }) {
     params[key] = value
   })
 
+  const searchKey = searchParams.get('searchKey')
+
   const [sortType, setSortType] = useState(params.sortType || 'createdAt')
   const [deliveryMethod, setDeliveryMethod] = useState(
     params.deliveryMethod || 'any',
@@ -24,19 +26,35 @@ function ProductListPage({ filters, isFavorite }) {
   const [status, setStatus] = useState(params.status || 'ongoing')
 
   const [page, setPage] = useState(1)
+  const [searchOptions, setSearchOptions] = useState({})
+  const { data: newProducts } = useSearchAuctions(searchOptions)
 
-  const searchOptions = useMemo(() => {
-    return {
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    setSearchOptions(prev => ({ ...prev, page }))
+  }, [page])
+
+  useEffect(() => {
+    setProducts([])
+    setPage(1)
+    setSearchOptions({
       sortType,
       deliveryMethod,
       categoryId,
       status,
       isFavorite,
-      page,
-    }
-  }, [sortType, deliveryMethod, categoryId, status, isFavorite, page])
+      searchKey,
+    })
+  }, [sortType, deliveryMethod, categoryId, status, isFavorite, searchKey])
 
-  const { data: products } = useSearchAuctions(searchOptions)
+  useEffect(() => {
+    if (newProducts) {
+      setProducts(prev => {
+        return [...prev, ...newProducts.auctionDetailProjection]
+      })
+    }
+  }, [newProducts, page])
 
   return (
     <div className='flex flex-col h-full'>
@@ -65,11 +83,11 @@ function ProductListPage({ filters, isFavorite }) {
           </>
         )}
       </FilterBar>
-      <Pagenated setPage={setPage}>
-        {products?.auctionDetailProjection.map(product => (
-          <ProductItemHorizontal key={product.auctionId} product={product} />
+      <InfiniteScrollWrapper setPage={setPage}>
+        {products.map((product, i) => (
+          <ProductItemHorizontal key={i} product={product} />
         ))}
-      </Pagenated>
+      </InfiniteScrollWrapper>
     </div>
   )
 }

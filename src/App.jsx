@@ -56,7 +56,7 @@ function App() {
     <AuthProvider>
       <div
         id='app'
-        className={`relative w-ful h-dvh mx-auto bg-white max-w-lg overflow-x-hidden overflow-y-scroll`}
+        className={`relative flex flex-col w-ful h-dvh mx-auto bg-white max-w-lg overflow-x-hidden overflow-y-scroll`}
       >
         <Routes>
           <Route path='/test' element={<TestPage />} />
