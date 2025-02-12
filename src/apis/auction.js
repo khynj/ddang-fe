@@ -87,7 +87,7 @@ export function useSearchAuctions(params) {
     isFavorite: '',
     categoryId: '',
     sortType: 'createdAt',
-    sortOrder: '',
+    sortOrder: 'asc',
     page: 1,
     size: 10,
     isHammered: '',

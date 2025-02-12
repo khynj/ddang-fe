@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 import FilterChipArray from '../components/FilterChipArray.jsx'
 import FilterChipBool from '../components/FilterChipBool.jsx'
 import ProductItemHorizontal from '../components/ProductItemHorizontal.jsx'
@@ -6,38 +6,57 @@ import PropTypes from 'prop-types'
 import FilterBar from '../../../components/FilterBar.jsx'
 import { useSearchAuctions } from '@/apis/auction.js'
 import { useSearchParams } from 'react-router'
+import CategoryPicker from '@/components/modals/CategoryPicker.jsx'
 
-function ProductListPage({ filters }) {
-  const [isBidding, setIsBidding] = useState(false)
+function ProductListPage({ filters, params = {} }) {
   const [searchParams] = useSearchParams()
-
-  const params = {}
   searchParams.forEach((value, key) => {
     if (!value) return
     params[key] = value
   })
 
-  const { data: products } = useSearchAuctions(params)
+  const [sortType, setSortType] = useState(params.sortType || 'createdAt')
+  const [deliveryMethod, setDeliveryMethod] = useState(
+    params.deliveryMethod || 'any',
+  )
+  const [categoryId, setCategoryId] = useState(null)
+  const [status, setStatus] = useState(false)
+
+  const searchOptions = useMemo(() => {
+    return {
+      ...params,
+      sortType,
+      deliveryMethod,
+      categoryId,
+      status,
+    }
+  }, [params, sortType, deliveryMethod, categoryId, status])
+
+  const { data: products } = useSearchAuctions(searchOptions)
 
   return (
     <div className='flex flex-col'>
-      <FilterBar>
+      <FilterBar sortType={sortType} setSortType={setSortType}>
         {filters && (
           <>
             <FilterChipArray
-              values={['거래방식', '직거래', '택배']}
-              index={0}
+              values={[
+                { value: 'any', name: '거래방식' },
+                { value: 'direct', name: '직거래' },
+                { value: 'package', name: '택배' },
+              ]}
+              value={deliveryMethod}
+              setValue={setDeliveryMethod}
             />
+            <CategoryPicker value={categoryId} setValue={setCategoryId} />
             <FilterChipArray
-              values={['카테고리', '전자제품', '의류']}
-              index={0}
-            />
-            <FilterChipBool
-              text='경매중'
-              value={isBidding}
-              onChange={() => {
-                setIsBidding(!isBidding)
-              }}
+              values={[
+                { value: '', name: '경매중' },
+                { value: '', name: '경매예정' },
+                { value: '', name: '경매종료' },
+              ]}
+              value={status}
+              setValue={setStatus}
             />
           </>
         )}
@@ -53,6 +72,7 @@ function ProductListPage({ filters }) {
 
 ProductListPage.propTypes = {
   filters: PropTypes.bool,
+  params: PropTypes.object,
 }
 
 export default ProductListPage

@@ -226,9 +226,30 @@ function App() {
               <Route path={ROUTES.SALE_HISTORY} element={<SaleHistoryPage />} />
               <Route path={ROUTES.FAVORITES} element={<FavoritesPage />}>
                 <Route index element={<Navigate to={'pre'} replace />} />
-                <Route path={'pre'} element={<ProductListPage />} />
-                <Route path={'after'} element={<ProductListPage />} />
-                <Route path={'ongoing'} element={<ProductListPage />} />
+                <Route
+                  path={'pre'}
+                  element={
+                    <ProductListPage
+                      params={{ status: 'upcoming', isFavorite: true }}
+                    />
+                  }
+                />
+                <Route
+                  path={'after'}
+                  element={
+                    <ProductListPage
+                      params={{ status: 'ended', isFavorite: true }}
+                    />
+                  }
+                />
+                <Route
+                  path={'ongoing'}
+                  element={
+                    <ProductListPage
+                      params={{ status: 'ongoing', isFavorite: true }}
+                    />
+                  }
+                />
               </Route>
               <Route path={ROUTES.APP_SETTING} element={<AppSettingPage />} />
               <Route
