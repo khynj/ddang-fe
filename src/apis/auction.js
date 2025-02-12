@@ -10,7 +10,7 @@ import AXIOS from '@/utils/axios_'
 export function useCreateAuction() {
   return useMutation({
     mutationFn: formData =>
-      AXIOS.post('/auction', formData, {
+      AXIOS.post(`/auction`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       }).then(res => res.data),
   })

@@ -18,7 +18,7 @@ function ProductItemSmall({ product }) {
       }}
     >
       <img
-        src={product.photo}
+        src={product.url}
         alt={product.title}
         className='w-full aspect-square rounded-xl object-cover bg-white'
         style={{ filter: 'brightness(0.96)' }}

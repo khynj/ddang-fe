@@ -22,7 +22,6 @@ import {
   ChatroomPage,
   AppSettingPage,
   CustomerServicePage,
-  TermsAndPoliciesPage,
   MyLocationsPage,
   SubscriptionsPage,
   NoticesPage,
@@ -241,10 +240,6 @@ function App() {
               <Route
                 path={ROUTES.CUSTOMER_SERVICE}
                 element={<CustomerServicePage />}
-              />
-              <Route
-                path={ROUTES.POLICIES}
-                element={<TermsAndPoliciesPage />}
               />
               <Route
                 path={ROUTES.SUBSCRIPTIONS}

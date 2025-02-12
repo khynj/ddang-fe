@@ -8,7 +8,11 @@ function RegisteredImage({ src, deleteFunc }) {
       rounded-lg bg-gray-100'
     >
       <div className='overflow-hidden aspect-square'>
-        <img src={src} alt='preview' className='object-cover' />
+        <img
+          src={URL.createObjectURL(src)}
+          alt='preview'
+          className='object-cover'
+        />
       </div>
       <button
         onClick={deleteFunc}

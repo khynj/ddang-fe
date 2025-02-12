@@ -2,17 +2,18 @@ import PropTypes from 'prop-types'
 import { dday } from '@/utils/Dday'
 import { Link } from 'react-router'
 import { formatPrice } from '@/utils/formatPrice'
+import ROUTES from '@/data/ROUTES'
 
 function HomeMainProduct({ product, index, size }) {
   const price = formatPrice(product.currentBidPrice)
   return (
     <Link
-      to={`/popup/product/${product.auctionId}`}
+      to={ROUTES.PRODUCT_DETAIL.replace(':id', product.auctionId)}
       className='relative aspect-square w-full flex-shrink-0 snap-center'
     >
       <div className='bg-white brightness-96'>
         <img
-          src={product.photo}
+          src={product.url}
           alt='product'
           className='aspect-square w-full object-contain'
         />

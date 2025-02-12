@@ -22,7 +22,7 @@ function ProductImage({ product, heartSize = 32, heart, small }) {
         </div>
       )}
       <img
-        src={product.photo}
+        src={product.url}
         alt={product.title}
         className='h-full object-contain'
       />

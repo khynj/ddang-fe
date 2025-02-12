@@ -4,7 +4,7 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 function FilterChipArray({ values, index }) {
   return (
     <div
-      className='flex w-fit items-center pl-2.5 pr-1.5 mr-2
+      className='flex w-fit items-center pl-2 pr-2 mr-1.5
     text-gray-950 text-sm bg-gray-100 rounded-lg whitespace-nowrap'
     >
       {values[index]}

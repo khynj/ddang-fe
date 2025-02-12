@@ -1,16 +1,7 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
-import MaterialIcon from '../../../components/icons/MaterialIcon'
-import relativeTime from '../../../utils/relativeTime'
-/*
-    notificationId: 4,
-    title: '상위 입찰',
-    content: '보스qc35가 350,000에 상위 입찰되었어요!',
-    isRead: false,
-    sentAt: '2025-01-20 06:30:00',
-    url: 'auction/2/bids/completed',
-    notificationType: 'bid',
-*/
+import MaterialIcon from '@/components/icons/MaterialIcon'
+import relativeTime from '@/utils/relativeTime'
 
 const icon = {
   HAMMER_FOR_SELLER: 'check',
@@ -24,7 +15,7 @@ function NotificationItem({ notification }) {
   const sentAt = relativeTime(notification.sentAt)
   return (
     <Link
-      to={`/${notification.url}`}
+      to={notification.url}
       className={`flex items-center p-4 gap-4 border-b border-gray-200 ${
         notification.isRead ? `opacity-50` : ''
       }`}

@@ -24,7 +24,7 @@ function HomeMainSlider() {
           <HomeMainProduct
             key={index}
             index={index + 1}
-            size={products.length}
+            size={products.auctionDetailProjection.length}
             product={product}
           />
         ))
