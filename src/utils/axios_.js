@@ -12,6 +12,7 @@ axios_.interceptors.response.use(
     return response
   },
   error => {
+    console.log('error', error)
     if (error.status == 401 && error.config.url !== '/auth/login') {
       window.location.href = '/welcome'
     }

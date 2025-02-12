@@ -3,7 +3,7 @@ import ProductHistoryItem from '../components/ProductHistoryItem'
 import sale from '../data/sale'
 
 function SaleHistoryPage() {
-  usePageName('구매내역')
+  usePageName('판매내역')
 
   return (
     <div>
