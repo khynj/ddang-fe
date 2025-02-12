@@ -1,12 +1,18 @@
 import PropTypes from 'prop-types'
 import ProductBiddingItem from '../components/my/ProductBiddingItem'
-import products from '../data/products'
 import ProductItemHorizontal from '../components/ProductItemHorizontal'
 import ProductSoldItem from '../components/my/ProductSoldItem'
+import { useSearchAuctions } from '@/apis/auction'
 function MyProductListPage({ isSeller, isHammered, isPre }) {
+  const params = {
+    isSeller,
+    isHammered,
+    isPre,
+  }
+  const { data: products } = useSearchAuctions(params)
   return (
     <>
-      {products.map(product =>
+      {products?.auctionDetailProjection.map(product =>
         isSeller ? (
           isHammered ? (
             <ProductSoldItem

@@ -3,8 +3,10 @@ import { dday } from '@/utils/Dday'
 import { Link } from 'react-router'
 import { formatPrice } from '@/utils/formatPrice'
 import ROUTES from '@/data/ROUTES'
+import { useAuth } from '@/contexts/AuthContext'
 
 function HomeMainProduct({ product, index, size }) {
+  const { user } = useAuth()
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
   return (
     <Link
@@ -23,7 +25,7 @@ function HomeMainProduct({ product, index, size }) {
         style={{ backgroundColor: '#00000060' }}
       >
         <div className='flex justify-between text-sm text-gray-50'>
-          <span>{'twinkay'}님을 위한 상품</span>
+          <span>{user.nickname}님을 위한 상품</span>
           <span>{dday(product.endTime)} 남음</span>
         </div>
         <p className='text-lg font-bold text-gray-100 mt-4'>
