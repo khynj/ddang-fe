@@ -11,11 +11,18 @@ import ModalItem from './ModalItem'
 import DefaultButton from '../buttons/DefaultButton'
 import { useCategory } from '@/apis/auction'
 
-function CategoryPicker({ label, required, value, setValue, validate }) {
+function CategoryPicker({
+  label,
+  required,
+  value,
+  setValue,
+  validate,
+  initialCategoryName,
+}) {
   const { isOpen, open, close } = useModal('')
   const [error, setError] = useState('')
   const [parentId, setParentId] = useState(0)
-  const [categoryName, setCategoryName] = useState('')
+  const [categoryName, setCategoryName] = useState(initialCategoryName)
   const { data: categories } = useCategory(parentId)
 
   useEffect(() => {
@@ -82,6 +89,7 @@ CategoryPicker.propTypes = {
   setValue: PropTypes.func,
   validate: PropTypes.func,
   children: PropTypes.node,
+  initialCategoryName: PropTypes.string,
 }
 
 export default CategoryPicker

@@ -13,27 +13,34 @@ import DealLocationPicker from '@/components/modals/DealLocationPicker'
 import Modal from '@/components/modals/Modal'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useLocation, useNavigate } from 'react-router'
-import { useCreateAuction } from '@/apis/auction'
+import { useCreateAuction, useUpdateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
-import { dateToKst } from '@/utils/date'
+import { dateToKst, kstToDate } from '@/utils/date'
 
 function ProductRegisterPage() {
-  usePageName('상품등록')
-
   const { state } = useLocation()
 
   const auction = state?.product ? state.product.auction : null
+  const isEdit = !!auction
+  const actionName = isEdit ? '수정' : '등록'
+  usePageName(`경매${actionName}`)
 
   const [images, setImages] = useState([])
   const [title, setTitle] = useState(auction?.title || '')
   const [productName, setProductName] = useState(auction?.productName || '')
-  const [categoryId, setCategory] = useState(auction?.categoryId || null)
+  const [categoryId, setCategory] = useState(
+    auction?.category.categoryId || null,
+  )
   const [minimumBid, setMinimumBid] = useState(auction?.minimumBid || 0)
   const [instantHammerPrice, setInstantHammerNowPrice] = useState(
     auction?.instantHammerPrice || 0,
   )
-  const [startTime, setStartTime] = useState(auction?.startTime || '')
-  const [endTime, setEndTime] = useState(auction?.endTime || '')
+  const [startTime, setStartTime] = useState(
+    auction ? kstToDate(auction.startTime) : '',
+  )
+  const [endTime, setEndTime] = useState(
+    auction ? kstToDate(auction.endTime) : '',
+  )
   const [content, setContent] = useState(auction?.content || '')
   const [tradeType, setTradeType] = useState(
     auction?.tradeType || { value: '', isDirect: false },
@@ -45,6 +52,7 @@ function ProductRegisterPage() {
   const [registeredProductId, setRegisteredProductId] = useState(null)
 
   const { mutate: registerProduct } = useCreateAuction()
+  const { mutate: updateProduct } = useUpdateAuction()
 
   const route = useNavigate()
   const onConfirm = () => {
@@ -75,7 +83,7 @@ function ProductRegisterPage() {
       console.log(image)
       form.append(`images`, image)
     })
-    registerProduct(form, {
+    const options = {
       onSuccess: data => {
         console.log('auctionId: ', data.auctionId)
         setRegisteredProductId(data.auctionId)
@@ -83,9 +91,12 @@ function ProductRegisterPage() {
       },
       onError: error => {
         console.error(error)
-        alert('상품 등록에 실패했습니다.')
+        alert(`상품 ${actionName}에 실패했습니다.`)
       },
-    })
+    }
+    isEdit
+      ? updateProduct({ auctionId: auction.auctionId, formData: form }, options)
+      : registerProduct(form, options)
   }
 
   const states = {
@@ -156,22 +167,25 @@ function ProductRegisterPage() {
 
   const handleSubmit = () => {
     const valid = Object.keys(validation).every(key => {
+      if (images.length === 0) {
+        alert('이미지를 등록해주세요.')
+        return false
+      }
       const result = validation[key](states[key].state)
       if (result) {
-        alert(key + result)
+        alert(key, result)
         return false
       }
       return true
     })
-    if (!valid) {
-      alert('입력 값을 확인하세요.')
-      return
-    }
+    if (!valid) return
     setIsConfirmModalOpen(true)
   }
 
   const handleCommit = () => {
-    route(ROUTES.PRODUCT_DETAIL.replace(':id', registeredProductId))
+    route(ROUTES.PRODUCT_DETAIL.replace(':id', registeredProductId), {
+      replace: true,
+    })
   }
 
   return (
@@ -198,6 +212,7 @@ function ProductRegisterPage() {
         value={categoryId}
         setValue={setCategory}
         validate={validation.categoryId}
+        initialCategoryName={auction?.category.categoryName}
       />
       <NumberInput
         label='최소입찰가'
@@ -250,13 +265,13 @@ function ProductRegisterPage() {
         />
       )}
       <br />
-      <DefaultButton onClick={handleSubmit}>등록</DefaultButton>
+      <DefaultButton onClick={handleSubmit}>{actionName}</DefaultButton>
       {isConfirmModalOpen && (
         <Modal close={() => setIsConfirmModalOpen(false)}>
           <div className='flex flex-col gap-4 w-full text-center'>
             <div className='flex flex-col gap-1'>
               <p className='font-bold text-sm'>{productName}</p>
-              <p className='font-bold text-ddblue-400'>경매 등록</p>
+              <p className='font-bold text-ddblue-400'>경매 {actionName}</p>
             </div>
             <div className='flex flex-col text-sm p-2 gap-1'>
               {Object.keys(states).map(
@@ -292,7 +307,7 @@ function ProductRegisterPage() {
         <Modal close={() => setIsSuccessModalOpen(false)}>
           <div className='flex flex-col items-center gap-1 text-ddblue-400'>
             <MaterialIcon name='check_circle' size={32} filled />
-            <p className='font-bold'>경매 등록 완료</p>
+            <p className='font-bold'>경매 {actionName} 완료</p>
           </div>
           <div className='flex justify-center gap-2 w-full text-sm mb-2'>
             <p>경매 시작:</p>
