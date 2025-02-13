@@ -9,8 +9,10 @@ function DefaultLayout({ back, feature }) {
   return (
     <>
       <DefaultHeader back={back} title={title} feature={feature} />
-      <Outlet context={{ setTitle }} />
-      {back || <div className='py-8'></div>}
+      <div className={`h-[calc(100dvh-64px)] ${!back && 'pb-[56px]'}`}>
+        <Outlet context={{ setTitle }} />
+        {back || <div className='py-8'></div>}
+      </div>
       {back || <Navbar />}
     </>
   )
