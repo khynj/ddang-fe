@@ -17,6 +17,9 @@ import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
+/* TODO
+  경매 시작 전 화면 (판매자, 구매자)
+*/
 function ProductDetailDrawer({ product, isMine }) {
   const route = useNavigate()
   const queryClient = useQueryClient()
@@ -145,11 +148,11 @@ function ProductDetailDrawer({ product, isMine }) {
       </div>
       {isMine ? (
         <div className='flex gap-4 mt-2'>
+          <DefaultButton type='red' onClick={onDelete}>
+            <span>삭제</span>
+          </DefaultButton>
           <DefaultButton type={'gray'} onClick={onEdit}>
             <span>수정</span>
-          </DefaultButton>
-          <DefaultButton onClick={onDelete}>
-            <span>삭제</span>
           </DefaultButton>
         </div>
       ) : (

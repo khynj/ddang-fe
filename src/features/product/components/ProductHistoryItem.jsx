@@ -40,7 +40,7 @@ function ProductHistoryItem({ product }) {
           <p className='font-bold text-gray-950'>{price}</p>
           <div className='text-xs text-gray-900'>
             <p className='block'>입찰시작가 {minimumBid}원</p>
-            {product.instantHammerPrice && (
+            {!!product.instantHammerPrice && (
               <p className='block'>즉시낙찰가 {instantHammerPrice}원</p>
             )}
           </div>

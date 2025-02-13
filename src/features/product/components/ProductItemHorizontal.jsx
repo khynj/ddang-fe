@@ -40,7 +40,7 @@ function ProductItemHorizontal({ product }) {
                 {price}원
               </p>
             </div>
-            {product.instantHammerPrice && (
+            {!!product.instantHammerPrice && (
               <p className='text-sm text-gray-600'>
                 즉시낙찰가 {instantHammerPrice}원
               </p>
