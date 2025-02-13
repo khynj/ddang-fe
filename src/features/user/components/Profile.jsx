@@ -4,9 +4,20 @@ import ProfileImage from './ProfileImage'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import TrustScoreBar from './TrustScoreBar'
 import { useAuth } from '@/contexts/AuthContext'
+import { useToggleFollow } from '@/apis/member'
+import { useQueryClient } from '@tanstack/react-query'
 
 function Profile({ profileSrc, name, trustScore, id }) {
+  const queryClient = useQueryClient()
   const { user } = useAuth()
+  const { mutate: toggleFollow } = useToggleFollow()
+  const onToggleFollow = () => {
+    toggleFollow(id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('memberInfo')
+      },
+    })
+  }
 
   return (
     <div className='p-6 bg-white'>
@@ -35,11 +46,12 @@ function Profile({ profileSrc, name, trustScore, id }) {
               </button>
             </Link>
           ) : (
-            <Link to='gathered-items'>
-              <button className='text-sm bg-gray-100 text-black py-2 px-2 rounded-lg cursor-pointer'>
-                구독하기
-              </button>
-            </Link>
+            <button
+              onClick={onToggleFollow}
+              className='text-sm bg-gray-100 text-black py-2 px-2 rounded-lg cursor-pointer'
+            >
+              구독하기
+            </button>
           )}
         </div>
       </div>

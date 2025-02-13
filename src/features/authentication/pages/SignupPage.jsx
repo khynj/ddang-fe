@@ -30,7 +30,7 @@ function SignupPage() {
   const validation = {
     nickname: nickname =>
       VALIDATIONS.required(nickname) ||
-      (checkNickname.data?.nicknameExists ? '이미 존재하는 닉네임이에요.' : ''),
+      (checkNickname.data?.nicknameExists ? '이미 존재하는 별명이에요.' : ''),
     email: email =>
       VALIDATIONS.required(email) ||
       VALIDATIONS.email(email) ||

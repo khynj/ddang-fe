@@ -14,7 +14,7 @@ import { dday } from '@/utils/Dday'
 import { formatPrice } from '@/utils/formatPrice'
 import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 function ProductDetailDrawer({ product, isMine }) {
@@ -37,6 +37,10 @@ function ProductDetailDrawer({ product, isMine }) {
     setBidPrice(e.target.value)
   }
 
+  const addPrice = price => {
+    setBidPrice(bidPrice + price)
+  }
+
   const onLike = () => {
     toggleLike(auction.auctionId, {
       onSuccess: data => {
@@ -47,21 +51,22 @@ function ProductDetailDrawer({ product, isMine }) {
   }
 
   const onBid = () => {
-    if (!confirm(formatPrice(bidPrice) + '원에 입찰하시겠습니까?')) return
     if (bidPrice < minimumBidPrice)
       return alert('최소 입찰가보다 높게 입찰해주세요.')
+    if (bidPrice == auction.instantHammerPrice) return onPurchase()
+    if (!confirm(formatPrice(bidPrice) + '원에 입찰하시겠습니까?')) return
     bid(
       {
         auctionId: auction.auctionId,
         bidPrice: bidPrice,
       },
       {
-        onSuccess: data => {
+        onSuccess: () => {
           alert('입찰에 성공했습니다.')
           queryClient.invalidateQueries('auctionDetails')
         },
-        onError: error => {
-          alert(error)
+        onError: () => {
+          alert('잔액이 부족합니다.')
         },
       },
     )
@@ -101,6 +106,14 @@ function ProductDetailDrawer({ product, isMine }) {
       },
     })
   }
+
+  useEffect(() => {
+    if (!auction.instantHammerPrice) return
+    if (bidPrice > auction.instantHammerPrice) {
+      alert('즉시구매가보다 높게 입찰할 수 없습니다.')
+      setBidPrice(auction.instantHammerPrice)
+    }
+  }, [bidPrice, setBidPrice, auction.instantHammerPrice])
 
   return (
     <StickyContainer rounded>
@@ -148,10 +161,16 @@ function ProductDetailDrawer({ product, isMine }) {
             className='flex grow border-b-2 w-full font-bold text-end text-2xl'
           />
           <div className='flex gap-2 leading-none text-sm py-4'>
-            <button className='bg-ddblue-400 text-white p-2 font-bold rounded-md'>
+            <button
+              onClick={() => addPrice(1000)}
+              className='bg-ddblue-400 text-white p-2 font-bold rounded-md'
+            >
               +1,000
             </button>
-            <button className='bg-ddblue-500 text-white p-2 font-bold rounded-md'>
+            <button
+              onClick={() => addPrice(10000)}
+              className='bg-ddblue-500 text-white p-2 font-bold rounded-md'
+            >
               +10,000
             </button>
           </div>

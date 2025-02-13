@@ -1,46 +1,57 @@
 import usePageName from '@/hooks/usePageName'
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import USER from '../data/USER'
 import Profile from '../components/Profile'
 import ProfileSection from '../components/ProfileSection'
 import ROUTES from '@/data/ROUTES'
-import products from '@/features/product/data/products'
 import ProductItemHorizontalSmall from '@/features/product/components/ProductItemHorizontalSmall'
-import REVIEWS from '../data/REVIEWS'
 import ReviewItem from '../components/ReviewItem'
+import { useMemberInfo, useMemberReviews } from '@/apis/member'
+import LoadingPage from '@/pages/LoadingPage'
+import { useSearchAuctions } from '@/apis/auction'
 
 function ProfilePage() {
   usePageName('프로필')
   const { id } = useParams()
-  const [user, setUser] = useState(null)
-  useEffect(() => {
-    // get user data by id
-    setUser(USER)
-  }, [])
-
-  if (!user) return null
+  const { data: userData } = useMemberInfo(id)
+  const { data: products } = useSearchAuctions({ sellerId: id })
+  const { data: reviews_seller } = useMemberReviews({
+    memberId: id,
+    role: 'seller',
+  })
+  const { data: reviews_buyer } = useMemberReviews({
+    memberId: id,
+    role: 'buyer',
+  })
+  if (!userData) return <LoadingPage />
 
   return (
     <div>
       <Profile
-        name={user.nickname}
-        trustScore={user.reliability}
-        profileSrc={user.imageUrl}
+        name={userData.nickname}
+        trustScore={userData.reliability}
+        profileSrc={userData.imageUrl}
+        id={id}
       />
-      <ProfileSection
-        title='판매 상품'
-        to={ROUTES.PRODUCT_LIST_BY_USER.replace(':id', id)}
-      >
-        {products.slice(0, 3).map((product, i) => (
-          <ProductItemHorizontalSmall key={i} product={product} />
-        ))}
-      </ProfileSection>
-      <ProfileSection title='리뷰' to={`${ROUTES.REVIEW_HISTORY}/${id}`}>
-        {REVIEWS.slice(0, 3).map((review, i) => (
-          <ReviewItem key={i} review={review} received />
-        ))}
-      </ProfileSection>
+      {products && (
+        <ProfileSection
+          title='판매 상품'
+          to={ROUTES.PRODUCT_LIST_BY_USER.replace(':id', id)}
+        >
+          {products.auctionDetailProjection.slice(0, 3).map((product, i) => (
+            <ProductItemHorizontalSmall key={i} product={product} />
+          ))}
+        </ProfileSection>
+      )}
+      {
+        <ProfileSection title='리뷰' to={`${ROUTES.REVIEW_HISTORY}/${id}`}>
+          {reviews_buyer?.slice(0, 3).map((review, i) => (
+            <ReviewItem key={i} review={review} received />
+          ))}
+          {reviews_seller?.slice(0, 3).map((review, i) => (
+            <ReviewItem key={i} review={review} received />
+          ))}
+        </ProfileSection>
+      }
     </div>
   )
 }
