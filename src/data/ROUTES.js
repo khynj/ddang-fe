@@ -14,6 +14,7 @@ const ROUTES = {
   PRODUCT: '/product',
   PRODUCT_DETAIL: '/product/:id',
   PRODUCT_REGISTER: '/product/register',
+  PRODUCT_EDIT: '/product/edit/:id',
   PRODUCT_LIST: '/search/products',
   PRODUCT_LIST_BY_USER: '/search/products/:id',
   MY_PRODUCTS: '/products/my',

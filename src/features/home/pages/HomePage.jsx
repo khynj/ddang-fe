@@ -25,7 +25,7 @@ function HomePage() {
   const { data: subscribedProducts } = useFollowingAuctions(
     follows ? follows.followings.map(follow => follow.id) : [],
   )
-  //! todo
+
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
       <WelcomeBanner />
@@ -39,7 +39,7 @@ function HomePage() {
           />
           <div
             className='flex flex-row gap-2 pb-1
-        overflow-x-scroll snap-x snap-madatory'
+          overflow-x-scroll snap-x snap-madatory'
           >
             {biddingProducts?.auctionDetailProjection
               .slice(0, 9)

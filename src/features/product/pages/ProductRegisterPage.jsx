@@ -12,25 +12,35 @@ import DealTypePicker from '@/components/modals/DealtypePicker'
 import DealLocationPicker from '@/components/modals/DealLocationPicker'
 import Modal from '@/components/modals/Modal'
 import MaterialIcon from '@/components/icons/MaterialIcon'
-import { useNavigate } from 'react-router'
-import { useCreateAuction } from '@/apis/auction'
+import { useLocation, useNavigate, useParams } from 'react-router'
+import { useAuctionDetails, useCreateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
 import { dateToKst } from '@/utils/date'
+import { getTradeType } from '@/utils/auction'
 
 function ProductRegisterPage() {
   usePageName('상품등록')
 
-  const [images, setImages] = useState([])
-  const [title, setTitle] = useState('')
-  const [productName, setProductName] = useState('')
-  const [categoryId, setCategory] = useState(null)
-  const [minimumBid, setMinimumBid] = useState(0)
-  const [instantHammerPrice, setInstantHammerNowPrice] = useState(0)
-  const [startTime, setStartTime] = useState('')
-  const [endTime, setEndTime] = useState('')
-  const [content, setContent] = useState('')
-  const [tradeType, setTradeType] = useState({ value: '', isDirect: false })
-  const [location, setLocation] = useState(null)
+  const { state } = useLocation()
+
+  const auction = state.product?.auction
+  console.log(auction)
+
+  const [images, setImages] = useState(auction.photos || [])
+  const [title, setTitle] = useState(auction.title || '')
+  const [productName, setProductName] = useState(auction.productName || '')
+  const [categoryId, setCategory] = useState(auction.categoryId || null)
+  const [minimumBid, setMinimumBid] = useState(auction.minimumBid || 0)
+  const [instantHammerPrice, setInstantHammerNowPrice] = useState(
+    auction.instantHammerPrice || 0,
+  )
+  const [startTime, setStartTime] = useState(auction.startTime || '')
+  const [endTime, setEndTime] = useState(auction.endTime || '')
+  const [content, setContent] = useState(auction.content || '')
+  const [tradeType, setTradeType] = useState(
+    auction.tradeType || { value: '', isDirect: false },
+  )
+  const [location, setLocation] = useState(auction.location || null)
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)

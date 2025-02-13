@@ -40,6 +40,7 @@ function EditProfilePage() {
           setBlob={setBlob}
           size={120}
         />
+        {/* <p>{userData.email}</p> */}
         <TextInput
           label='별명'
           required

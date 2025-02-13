@@ -1,42 +1,47 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from './icons/MaterialIcon'
-import useModal from '../hooks/useModal'
 import Modal from './modals/Modal'
 import DefaultButton from './buttons/DefaultButton'
+import { useMemo, useState } from 'react'
 
-function FilterBar({ children, sortType = 'createdAt', setSortType }) {
-  const options = [
-    { key: 'createdAt', name: '최신순' },
-    { key: 'endTime', name: '인기순' },
-    { key: 'endTime', name: '마감임박' },
-    { key: 'startTime', name: '시작임박' },
-  ]
+const options = [
+  { value: 'createdAt', name: '최신순' },
+  // { value: 'endTime', name: '인기순' },
+  { value: 'endTime', name: '마감임박' },
+  { value: 'startTime', name: '시작임박' },
+]
+function FilterBar({ children, keyName, searchParams, setSearchParams }) {
+  const name = useMemo(
+    () => options.find(v => v.value === searchParams.get(keyName))?.name,
+    [searchParams, keyName],
+  )
 
-  const {
-    isOpen,
-    open,
-    close,
-    value: name,
-  } = useModal(options.find(option => option.key === sortType).name)
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div className='flex px-4 py-2 justify-between items-center text-xs'>
       <div className='flex gap-1 w-full h-7.5'>{children}</div>
       <div
         className='font-bold flex gap-0.5 items-center text-gray-950'
-        onClick={open}
+        onClick={() => setIsOpen(true)}
       >
         <MaterialIcon name='sort' size={16} />
         <div className='whitespace-nowrap'>{name}</div>
       </div>
       {isOpen && (
-        <Modal close={close}>
+        <Modal close={() => setIsOpen(false)}>
           {options.map((option, index) => (
             <DefaultButton
               key={index}
               onClick={() => {
-                setSortType(option.key)
-                close(option.name)
+                setSearchParams(
+                  params => {
+                    params.set(keyName, option.value)
+                    return params
+                  },
+                  { replace: true },
+                )
+                setIsOpen(false)
               }}
               type={option.name == name ? undefined : 'gray'}
             >
@@ -51,8 +56,9 @@ function FilterBar({ children, sortType = 'createdAt', setSortType }) {
 
 FilterBar.propTypes = {
   children: PropTypes.node,
-  sortType: PropTypes.string,
-  setSortType: PropTypes.func,
+  keyName: PropTypes.string,
+  searchParams: PropTypes.object,
+  setSearchParams: PropTypes.func,
 }
 
 export default FilterBar

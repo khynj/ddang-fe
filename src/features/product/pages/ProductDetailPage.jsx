@@ -15,12 +15,14 @@ import { dateLocale } from '@/utils/date.js'
 import { parseTradeType } from '@/utils/auction.js'
 import relativeTime from '@/utils/relativeTime.js'
 import ProductDetailDrawer from '../components/ProductDetailDrawer.jsx'
+import { useAuth } from '@/contexts/AuthContext.jsx'
 
 function ProductDetailPage() {
   usePageName('제품상세')
 
   const productId = useParams().id
   const { data: product, isLoading } = useAuctionDetails(productId)
+  const { user } = useAuth()
 
   if (isLoading) return <LoadingPage />
 
@@ -82,7 +84,7 @@ function ProductDetailPage() {
           </p>
           <div className='text-gray-500 text-sm'>
             <Link
-              to={`${ROUTES.PRODUCT_LIST}?category=${auction.category.categoryId}&categoryName=${auction.category.categoryName}`}
+              to={`${ROUTES.PRODUCT_LIST}?categoryId=${auction.category.categoryId}&categoryName=${auction.category.categoryName}`}
             >
               <span className='underline'>
                 {auction.category.parentCategoryName}
@@ -130,7 +132,10 @@ function ProductDetailPage() {
           </div>
         </div>
       </div>
-      <ProductDetailDrawer product={product} />
+      <ProductDetailDrawer
+        product={product}
+        isMine={seller.memberId == user.memberId}
+      />
     </div>
   )
 }

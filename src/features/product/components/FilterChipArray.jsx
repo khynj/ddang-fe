@@ -5,13 +5,13 @@ import { useMemo } from 'react'
 import Modal from '@/components/modals/Modal'
 import DefaultButton from '@/components/buttons/DefaultButton'
 
-function FilterChipArray({ values, value, setValue }) {
+function FilterChipArray({ options, searchParams, setSearchParams, keyName }) {
   const name = useMemo(
-    () => values.find(v => v.value === value)?.name,
-    [value, values],
+    () => options.find(v => v.value === searchParams.get(keyName))?.name,
+    [options, searchParams, keyName],
   )
 
-  const { isOpen, open, close, value: modalValue } = useModal(value)
+  const { isOpen, open, close } = useModal(name)
 
   return (
     <>
@@ -25,11 +25,17 @@ function FilterChipArray({ values, value, setValue }) {
       </button>
       {isOpen && (
         <Modal close={close}>
-          {values.map((option, index) => (
+          {options.map((option, index) => (
             <DefaultButton
               key={index}
               onClick={() => {
-                setValue(option.value)
+                setSearchParams(
+                  params => {
+                    params.set(keyName, option.value)
+                    return params
+                  },
+                  { replace: true },
+                )
                 close(option.name)
               }}
               type={option.name == name ? undefined : 'gray'}
@@ -44,9 +50,10 @@ function FilterChipArray({ values, value, setValue }) {
 }
 
 FilterChipArray.propTypes = {
-  values: PropTypes.array.isRequired,
-  value: PropTypes.string.isRequired,
-  setValue: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired,
+  searchParams: PropTypes.object.isRequired,
+  setSearchParams: PropTypes.func.isRequired,
+  keyName: PropTypes.string.isRequired,
 }
 
 export default FilterChipArray

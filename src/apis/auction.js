@@ -1,9 +1,4 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  useQueries,
-} from '@tanstack/react-query'
+import { useQuery, useMutation, useQueries } from '@tanstack/react-query'
 import AXIOS from '@/utils/axios_'
 
 // 경매 관련 API

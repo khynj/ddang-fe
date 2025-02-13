@@ -22,7 +22,8 @@ function ChargePage() {
 
   const onChange = e => setAmount(Number(e.target.value).toString())
 
-  const onSubmit = () => {
+  const onSubmit = e => {
+    e.preventDefault()
     if (amount <= 0) {
       alert('충전 금액을 확인해주세요.')
       return
@@ -43,7 +44,7 @@ function ChargePage() {
   }
 
   return (
-    <div>
+    <form onSubmit={onSubmit}>
       <div className='p-4'>
         <div className='flex flex-col gap-2 mb-6'>
           <label
@@ -75,9 +76,9 @@ function ChargePage() {
         </div>
       </div>
       <StickyContainer plain>
-        <DefaultButton onClick={onSubmit}>충전하기</DefaultButton>
+        <DefaultButton submit>충전하기</DefaultButton>
       </StickyContainer>
-    </div>
+    </form>
   )
 }
 

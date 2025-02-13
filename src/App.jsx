@@ -85,6 +85,10 @@ function App() {
                 element={<ProductRegisterPage />}
               />
               <Route
+                path={ROUTES.PRODUCT_EDIT}
+                element={<ProductRegisterPage />}
+              />
+              <Route
                 path={ROUTES.PRODUCT_LIST_BY_USER}
                 element={<ProductListPage />} //
               />

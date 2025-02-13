@@ -7,7 +7,7 @@ import { Link } from 'react-router'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice || product.minimumBid)
-  const isTop = product.currentBidPrice === product.myBidPrice
+  const isTop = product.currentBidPrice <= product.myBidPrice
   const didBid = product.myBidPrice > 0
   return (
     <Link
