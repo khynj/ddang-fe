@@ -1,19 +1,26 @@
 import PropTypes from 'prop-types'
 import { useEffect, useRef } from 'react'
 
-function InfiniteScrollWrapper({ children, page = 1, setPage, parentProps }) {
+function InfiniteScrollWrapper({ children, setPage, parentProps }) {
   const scrollRef = useRef()
 
   useEffect(() => {
-    scrollRef.current.addEventListener('scroll', () => {
+    const handleScroll = () => {
       if (
-        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 300 >=
+        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 200 >=
         scrollRef.current.scrollHeight
       ) {
-        setPage(page + 1)
+        setPage(prevPage => prevPage + 1)
       }
-    })
-  }, [page, setPage])
+    }
+
+    const currentRef = scrollRef.current
+    currentRef.addEventListener('scroll', handleScroll)
+
+    return () => {
+      currentRef.removeEventListener('scroll', handleScroll)
+    }
+  }, [setPage])
 
   return (
     <div

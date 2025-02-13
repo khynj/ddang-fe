@@ -49,9 +49,10 @@ function ProductListPage({ filters, isFavorite }) {
   useEffect(() => {
     if (newProducts) {
       if (page == 1) setProducts(newProducts.auctionDetailProjection)
-      else setProducts([...products, ...newProducts.auctionDetailProjection])
+      else
+        setProducts(prev => [...prev, ...newProducts.auctionDetailProjection])
     }
-  }, [newProducts, products, page])
+  }, [newProducts, page])
 
   return (
     <div className='flex flex-col h-full'>
