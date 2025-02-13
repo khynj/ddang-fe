@@ -3,14 +3,17 @@ import DefaultButton from '@/components/buttons/DefaultButton'
 import IconButton from '@/components/buttons/IconButton'
 import FavoriteButton from '@/components/icons/FavoriteButton'
 import StickyContainer from '@/components/StickyContainer'
+import ROUTES from '@/data/ROUTES'
 import LoadingPage from '@/pages/LoadingPage'
 import { dday } from '@/utils/Dday'
 import { formatPrice } from '@/utils/formatPrice'
 import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 
 function ProductDetailDrawer({ product }) {
+  const route = useNavigate()
   const queryClient = useQueryClient()
   const { mutate: toggleLike } = useToggleFavorite()
   const { mutate: bid } = useBidAuction()
@@ -61,6 +64,9 @@ function ProductDetailDrawer({ product }) {
               className: 'text-gray-500',
               filled: true,
             }}
+            onClick={() =>
+              route(ROUTES.CHATROOM.replace(':id', auction.chattingRoomId))
+            }
           />
           <FavoriteButton
             liked={auction.isFavorite}

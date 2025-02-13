@@ -44,7 +44,9 @@ function ChatItem({ chat }) {
                 : 'bg-gray-50 text-gray-950'
             }`}
           >
-            <p className='whitespace-pre-wrap break-all'>{chat.content}</p>
+            <span className='whitespace-pre-wrap break-all'>
+              {chat.content}
+            </span>
           </p>
         </div>
         {!isMe && (

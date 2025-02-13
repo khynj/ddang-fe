@@ -3,7 +3,11 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useEffect, useState } from 'react'
 import Stomp from 'stompjs'
 
-const SOCKET_URL = `${import.meta.env.VITE_SERVER_URL}/api/ws-stomp` // Replace with your WebSocket URL
+const SOCKET_URL = `${
+  import.meta.env.PROD
+    ? import.meta.env.VITE_SERVER_URL
+    : import.meta.env.VITE_DEV_SERVER_URL
+}/api/ws-stomp` // Replace with your WebSocket URL
 
 export function useStompClient(id, scrollRef) {
   const [stompClient, setStompClient] = useState(null)
@@ -28,7 +32,6 @@ export function useStompClient(id, scrollRef) {
   }, [isSuccess, chatHistory])
 
   useEffect(() => {
-    if (!isSuccess) return
     const socket = new WebSocket(SOCKET_URL) // Use native WebSocket instead of SockJS
     const stomp = Stomp.over(socket)
 
@@ -48,7 +51,7 @@ export function useStompClient(id, scrollRef) {
         stomp.disconnect()
       }
     })
-  }, [id, isSuccess])
+  }, [id])
 
   useEffect(() => {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight
