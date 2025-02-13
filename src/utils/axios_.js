@@ -1,7 +1,11 @@
 import axios from 'axios'
 
 const axios_ = axios.create({
-  baseURL: `${import.meta.env.VITE_SERVER_URL}/api`,
+  baseURL: `${
+    import.meta.env.PROD
+      ? import.meta.env.VITE_SERVER_URL
+      : import.meta.env.VITE_DEV_SERVER_URL
+  }/api`,
   maxBodyLength: Infinity,
   withCredentials: true,
 })

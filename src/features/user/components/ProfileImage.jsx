@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import profileImage from '@/assets/images/characters/profileImage.png'
 
 function ProfileImage({ src, size }) {
   return (
@@ -8,7 +9,7 @@ function ProfileImage({ src, size }) {
          rounded-full bg-gray-200 overflow-hidden`}
       style={{ width: `${size}px` }}
     >
-      <img src={src} className={`object-cover w-full h-full`} />
+      <img src={src || profileImage} className={`object-cover w-full h-full`} />
     </div>
   )
 }

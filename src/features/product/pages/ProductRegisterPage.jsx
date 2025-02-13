@@ -15,7 +15,7 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useNavigate } from 'react-router'
 import { useCreateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
-import { formatDateToKst } from '@/utils/formantDateToKST'
+import { dateToKst } from '@/utils/date'
 
 function ProductRegisterPage() {
   usePageName('상품등록')
@@ -49,8 +49,8 @@ function ProductRegisterPage() {
       categoryId,
       minimumBid,
       instantHammerPrice,
-      startTime: formatDateToKst(new Date(startTime)),
-      endTime: formatDateToKst(new Date(endTime)),
+      startTime: dateToKst(startTime),
+      endTime: dateToKst(endTime),
       content,
       tradeType,
       location,

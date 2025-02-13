@@ -1,6 +1,5 @@
 import MyPageMenu from '../components/MyPageMenu'
 import usePageName from '@/hooks/usePageName'
-import profileImage from '@/assets/images/characters/profileImage.png'
 import Profile from '../components/Profile'
 import menus from '../data/menus'
 import { useAuth } from '@/contexts/AuthContext'
@@ -17,7 +16,7 @@ function MyPage() {
     <div>
       {/* 프로필 섹션 */}
       <Profile
-        profileSrc={userData?.imageUrl || profileImage}
+        profileSrc={userData?.imageUrl}
         name={user?.nickname}
         trustScore={userData?.reliability}
         id={user?.memberId}

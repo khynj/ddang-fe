@@ -1,33 +1,33 @@
 const DEAL_TYPES = [
   {
     value: '직거래',
-    isPackage: false,
     isDirect: true,
-    pay: '',
+    isPackage: false,
+    parcelFeeOption: undefined,
   },
   {
     value: '택배(선불)',
-    isPackage: true,
     isDirect: false,
-    pay: 'prepaid',
+    isPackage: true,
+    parcelFeeOption: 'PREPAID',
   },
   {
     value: '택배(착불)',
-    isPackage: true,
     isDirect: false,
-    pay: 'postpaid',
+    isPackage: true,
+    parcelFeeOption: 'COD',
   },
   {
     value: '직거래 / 택배(선불)',
-    isPackage: true,
     isDirect: true,
-    pay: 'prepaid',
+    isPackage: true,
+    parcelFeeOption: 'PREPAID',
   },
   {
     value: '직거래 / 택배(착불)',
-    isPackage: true,
     isDirect: true,
-    pay: 'postpaid',
+    isPackage: true,
+    parcelFeeOption: 'COD',
   },
 ]
 

@@ -32,7 +32,9 @@ function SocialLoginButtons() {
           key={name}
           className={`flex items-center justify-center w-full h-12 rounded-xl ${className}`}
           href={`${
-            import.meta.env.VITE_SERVER_URL
+            import.meta.env.PROD
+              ? import.meta.env.VITE_SOCIAL_URL
+              : import.meta.env.VITE_DEV_SOCIAL_URL
           }/api/oauth2/authorization/${name}`}
         >
           <img src={icon} alt={name} className='w-6 h-6 mr-2' />
