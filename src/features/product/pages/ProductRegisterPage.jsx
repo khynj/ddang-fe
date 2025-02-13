@@ -57,7 +57,6 @@ function ProductRegisterPage() {
   const route = useNavigate()
   const onConfirm = () => {
     setIsConfirmModalOpen(false)
-    // API 호출
     const form = new FormData()
     const product = {
       title,
@@ -72,17 +71,15 @@ function ProductRegisterPage() {
       location,
     }
 
-    console.log(product)
-
     form.append(
       'product',
       new Blob([JSON.stringify(product)], { type: 'application/json' }),
     )
 
     images.forEach(image => {
-      console.log(image)
       form.append(`images`, image)
     })
+
     const options = {
       onSuccess: data => {
         console.log('auctionId: ', data.auctionId)
@@ -213,6 +210,7 @@ function ProductRegisterPage() {
         setValue={setCategory}
         validate={validation.categoryId}
         initialCategoryName={auction?.category.categoryName}
+        title={title}
       />
       <NumberInput
         label='최소입찰가'

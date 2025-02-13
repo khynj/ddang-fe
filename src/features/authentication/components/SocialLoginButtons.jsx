@@ -1,7 +1,6 @@
 import googleIcon from '@/assets/images/oauth/google.png'
 import kakaoIcon from '@/assets/images/oauth/kakao.png'
 import naverIcon from '@/assets/images/oauth/naver.png'
-import axios_ from '@/utils/axios_'
 
 const socials = [
   {

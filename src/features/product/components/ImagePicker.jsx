@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import RegisteredImage from './RegisteredImage'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useEffect, useRef } from 'react'
+import { compressImage } from '@/utils/image'
 
 function ImagePicker({ images, setImages }) {
   const inputRef = useRef(null)
@@ -9,6 +10,7 @@ function ImagePicker({ images, setImages }) {
     const newImages = images.filter(image => image !== src)
     setImages(newImages)
   }
+
   useEffect(() => {
     if (images.length > 10) {
       setImages(images.slice(0, 10))
@@ -53,9 +55,14 @@ function ImagePicker({ images, setImages }) {
         type='file'
         accept='image/*'
         multiple
-        onChange={e => {
+        onChange={async e => {
           const files = e.target.files
-          const newImages = Array.from(files).map(file => file)
+          const newImages = await Promise.all(
+            Array.from(files).map(file => compressImage(file)),
+          )
+          console.log('e.target.files', e.target.files)
+          console.log('newImages', newImages)
+
           setImages([...images, ...newImages])
         }}
       />

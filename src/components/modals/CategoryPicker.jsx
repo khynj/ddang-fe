@@ -10,6 +10,50 @@ import InputError from '../form/InputError'
 import ModalItem from './ModalItem'
 import DefaultButton from '../buttons/DefaultButton'
 import { useCategory } from '@/apis/auction'
+import { useCategoryRecommendation } from '@/apis/ai'
+
+const RECOMMENDATIONS = [
+  [
+    {
+      1: '패션 및 뷰티',
+    },
+    {
+      101: '여성의류',
+    },
+  ],
+  [
+    {
+      11: '기타',
+    },
+    {
+      1102: '기타',
+    },
+  ],
+  [
+    {
+      1: '패션 및 뷰티',
+    },
+    {
+      101: '여성의류',
+    },
+  ],
+  [
+    {
+      11: '기타',
+    },
+    {
+      1102: '기타',
+    },
+  ],
+  [
+    {
+      1: '패션 및 뷰티',
+    },
+    {
+      101: '여성의류',
+    },
+  ],
+]
 
 function CategoryPicker({
   label,
@@ -18,6 +62,7 @@ function CategoryPicker({
   setValue,
   validate,
   initialCategoryName,
+  title,
 }) {
   const { isOpen, open, close } = useModal('')
   const [error, setError] = useState('')
@@ -30,7 +75,10 @@ function CategoryPicker({
       setParentId(0)
     }
   }, [isOpen])
+  const [categoryRecommendation, setCategoryRecommendation] =
+    useState(RECOMMENDATIONS)
 
+  const { mutate: recommendCategory } = useCategoryRecommendation()
   const onClose = useCallback(
     v => {
       if (validate) setError(validate(v))
@@ -39,6 +87,15 @@ function CategoryPicker({
     },
     [validate, setValue, close],
   )
+
+  useEffect(() => {
+    if (!title) return
+    recommendCategory(title, {
+      onSuccess: data => {
+        setCategoryRecommendation(data)
+      },
+    })
+  }, [title, recommendCategory])
 
   return (
     <>
@@ -78,6 +135,23 @@ function CategoryPicker({
           </DefaultButton>
         </Modal>
       )}
+
+      {categoryRecommendation.length > 0 && (
+        <div className='flex gap-2 overflow-x-scroll'>
+          {categoryRecommendation.map(([parent, child], i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setValue(Object.keys(child)[0])
+                setCategoryName(Object.values(child)[0])
+              }}
+              className='bg-gray-100 p-2 rounded-md text-sm shrink-0'
+            >
+              {Object.values(child)[0]}
+            </button>
+          ))}
+        </div>
+      )}
     </>
   )
 }
@@ -90,6 +164,7 @@ CategoryPicker.propTypes = {
   validate: PropTypes.func,
   children: PropTypes.node,
   initialCategoryName: PropTypes.string,
+  title: PropTypes.string,
 }
 
 export default CategoryPicker

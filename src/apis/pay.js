@@ -1,11 +1,11 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
-import AXIOS from '@/utils/axios_'
+import { axios_spring } from '@/utils/axiosInstances'
 
 // 페이 정보 조회
 export function usePayInfo() {
   return useQuery({
     queryKey: ['payInfo'],
-    queryFn: () => AXIOS.get('/pay').then(res => res.data),
+    queryFn: () => axios_spring.get('/pay').then(res => res.data),
   })
 }
 
@@ -14,9 +14,9 @@ export function usePayHistory(page = 1, size = 10) {
   return useQuery({
     queryKey: ['payHistory', page, size],
     queryFn: () =>
-      AXIOS.get('/pay/history', { params: { page, size } }).then(
-        res => res.data,
-      ),
+      axios_spring
+        .get('/pay/history', { params: { page, size } })
+        .then(res => res.data),
   })
 }
 
@@ -24,9 +24,9 @@ export function usePayHistory(page = 1, size = 10) {
 export function usePayDeposit() {
   return useMutation({
     mutationFn: ({ amount, paymentMethod }) =>
-      AXIOS.post('/pay/deposit', { amount, paymentMethod }).then(
-        res => res.data,
-      ),
+      axios_spring
+        .post('/pay/deposit', { amount, paymentMethod })
+        .then(res => res.data),
   })
 }
 
@@ -47,8 +47,10 @@ export function usePayDeposit() {
 export function usePayDepositSuccess() {
   return useMutation({
     mutationFn: ({ pg_token, order_id }) =>
-      AXIOS.get('/pay/deposit/success', {
-        params: { pg_token, order_id },
-      }).then(res => res.data),
+      axios_spring
+        .get('/pay/deposit/success', {
+          params: { pg_token, order_id },
+        })
+        .then(res => res.data),
   })
 }

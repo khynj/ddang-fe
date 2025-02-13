@@ -1,17 +1,19 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
-import AXIOS from '../utils/axios_'
+import { axios_spring } from '../utils/axiosInstances'
 
 // 회원가입
 export function useSignUp() {
   return useMutation({
     mutationFn: ({ name, nickname, email, password }) => {
       console.log({ name, nickname, email, password })
-      return AXIOS.post('/member', {
-        name,
-        nickname,
-        email,
-        password,
-      }).then(res => res.data)
+      return axios_spring
+        .post('/member', {
+          name,
+          nickname,
+          email,
+          password,
+        })
+        .then(res => res.data)
     },
   })
 }
@@ -20,11 +22,13 @@ export function useSignUp() {
 export function useSocialSignUp() {
   return useMutation({
     mutationFn: ({ name, nickname, email }) =>
-      AXIOS.post('/member/social', {
-        name,
-        nickname,
-        email,
-      }).then(res => res.data),
+      axios_spring
+        .post('/member/social', {
+          name,
+          nickname,
+          email,
+        })
+        .then(res => res.data),
   })
 }
 
@@ -32,11 +36,13 @@ export function useSocialSignUp() {
 export function useUpdateProfilePhoto() {
   return useMutation({
     mutationFn: formData =>
-      AXIOS.put('/member/photo', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }).then(res => res.data),
+      axios_spring
+        .put('/member/photo', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(res => res.data),
   })
 }
 
@@ -45,9 +51,9 @@ export function useCheckDuplicate({ email, nickname }) {
   return useQuery({
     queryKey: ['checkDuplicate', email, nickname],
     queryFn: () =>
-      AXIOS.get('/member/exist', { params: { email, nickname } }).then(
-        res => res.data,
-      ),
+      axios_spring
+        .get('/member/exist', { params: { email, nickname } })
+        .then(res => res.data),
     enabled: !!email || !!nickname,
   })
 }
@@ -56,7 +62,8 @@ export function useCheckDuplicate({ email, nickname }) {
 export function useMemberInfo(memberId) {
   return useQuery({
     queryKey: ['memberInfo', memberId],
-    queryFn: () => AXIOS.get(`/member/${memberId}`).then(res => res.data),
+    queryFn: () =>
+      axios_spring.get(`/member/${memberId}`).then(res => res.data),
     enabled: !!memberId,
   })
 }
@@ -65,7 +72,7 @@ export function useMemberInfo(memberId) {
 export function useFollowingList() {
   return useQuery({
     queryKey: ['followingList'],
-    queryFn: () => AXIOS.get('/member/following').then(res => res.data),
+    queryFn: () => axios_spring.get('/member/following').then(res => res.data),
   })
 }
 
@@ -73,7 +80,7 @@ export function useFollowingList() {
 export function useToggleFollow() {
   return useMutation({
     mutationFn: memberId =>
-      AXIOS.post(`/member/${memberId}/follow`).then(res => res.data),
+      axios_spring.post(`/member/${memberId}/follow`).then(res => res.data),
   })
 }
 
@@ -82,9 +89,9 @@ export function useMemberReviews({ memberId, type = 'received', role }) {
   return useQuery({
     queryKey: ['memberReviews', memberId, type, role],
     queryFn: () =>
-      AXIOS.get(`/member/${memberId}/review`, { params: { type, role } }).then(
-        res => res.data,
-      ),
+      axios_spring
+        .get(`/member/${memberId}/review`, { params: { type, role } })
+        .then(res => res.data),
     enabled: !!memberId,
   })
 }
@@ -93,7 +100,7 @@ export function useMemberReviews({ memberId, type = 'received', role }) {
 export function useWriteReview() {
   return useMutation({
     mutationFn: reviewData =>
-      AXIOS.post('/member/review', reviewData).then(res => res.data),
+      axios_spring.post('/member/review', reviewData).then(res => res.data),
   })
 }
 
@@ -101,7 +108,7 @@ export function useWriteReview() {
 export function usePreferredLocations() {
   return useQuery({
     queryKey: ['preferredLocations'],
-    queryFn: () => AXIOS.get('/member/location').then(res => res.data),
+    queryFn: () => axios_spring.get('/member/location').then(res => res.data),
   })
 }
 
@@ -109,7 +116,7 @@ export function usePreferredLocations() {
 export function useAddPreferredLocation() {
   return useMutation({
     mutationFn: locationData =>
-      AXIOS.post('/member/location', locationData).then(res => res.data),
+      axios_spring.post('/member/location', locationData).then(res => res.data),
   })
 }
 
@@ -117,8 +124,8 @@ export function useAddPreferredLocation() {
 export function useDeletePreferredLocation() {
   return useMutation({
     mutationFn: memberLocationId =>
-      AXIOS.delete(`/member/location/${memberLocationId}`).then(
-        res => res.data,
-      ),
+      axios_spring
+        .delete(`/member/location/${memberLocationId}`)
+        .then(res => res.data),
   })
 }

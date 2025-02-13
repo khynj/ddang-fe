@@ -46,6 +46,7 @@ import AuthGuard from './features/authentication/components/AuthGuard'
 import SocialSignupPage from './features/authentication/pages/SocialSignupPage'
 import LandingPage from './features/authentication/pages/LandingPage'
 import TestPage from './pages/TestPage'
+import UserProductListPage from './features/product/components/UserProductListPage'
 
 function App() {
   const route = useNavigate()
@@ -90,7 +91,7 @@ function App() {
               />
               <Route
                 path={ROUTES.PRODUCT_LIST_BY_USER}
-                element={<ProductListPage />} //
+                element={<UserProductListPage />}
               />
               <Route
                 path={ROUTES.PRODUCT_DETAIL}
