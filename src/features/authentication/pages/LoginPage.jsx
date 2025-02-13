@@ -12,7 +12,7 @@ import SocialLoginButtons from '../components/SocialLoginButtons'
 function LoginPage() {
   usePageName('로그인')
   const route = useNavigate()
-  const { mutate: mutateLogin, error } = useLogin()
+  const { mutate: requestLogin, error } = useLogin()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const handleLogin = e => {
@@ -21,7 +21,7 @@ function LoginPage() {
       email,
       password,
     }
-    mutateLogin(loginData, {
+    requestLogin(loginData, {
       onSuccess: () => {
         route(ROUTES.LANDING)
       },
