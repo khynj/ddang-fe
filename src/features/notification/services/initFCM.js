@@ -46,3 +46,7 @@ function saveToken() {
     localStorage.setItem('fcmToken', token)
   })
 }
+
+export function getFCMToken() {
+  return localStorage.getItem('fcmToken')
+}

@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { VALIDATIONS } from '@/utils/VALIDATIONS'
 import { useAuth } from '@/contexts/AuthContext'
 import SocialLoginButtons from '../components/SocialLoginButtons'
+import { getFCMToken } from '@/features/notification/services/initFCM'
 
 function LoginPage() {
   usePageName('로그인')
@@ -22,6 +23,7 @@ function LoginPage() {
     const loginData = {
       email,
       password,
+      deviceToken: getFCMToken(),
     }
     mutate(loginData, {
       onSuccess: data => {

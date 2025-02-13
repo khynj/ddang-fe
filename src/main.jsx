@@ -15,7 +15,7 @@ createRoot(document.getElementById('root')).render(
       <ScrollToTop />
       <QueryClientProvider client={queryClient}>
         <App />
-        {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+        <ReactQueryDevtools initialIsOpen={true} />
       </QueryClientProvider>
     </BrowserRouter>
   </StrictMode>,

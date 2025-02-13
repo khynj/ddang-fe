@@ -5,11 +5,12 @@ import ROUTES from '@/data/ROUTES'
 import { useMyInfo } from '@/apis/auth'
 import LoadingPage from '@/pages/LoadingPage'
 import { useAuth } from '@/contexts/AuthContext'
+import { getFCMToken } from '@/features/notification/services/initFCM'
 
 function SocialLandingPage() {
   usePageName('소셜 로그인')
   const route = useNavigate()
-  const { data: myInfo } = useMyInfo()
+  const { data: myInfo } = useMyInfo(getFCMToken())
   const { login } = useAuth()
   useEffect(() => {
     if (myInfo && login) {

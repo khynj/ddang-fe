@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import FilterChipArray from '../components/FilterChipArray.jsx'
 import ProductItemHorizontal from '../components/ProductItemHorizontal.jsx'
 import PropTypes from 'prop-types'
@@ -32,8 +32,8 @@ function ProductListPage({ filters, isFavorite }) {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    setSearchOptions(prev => ({ ...prev, page }))
-  }, [page])
+    setSearchOptions(prev => ({ ...prev, page, isFavorite }))
+  }, [page, isFavorite])
 
   useEffect(() => {
     setProducts([])
@@ -50,9 +50,11 @@ function ProductListPage({ filters, isFavorite }) {
 
   useEffect(() => {
     if (newProducts) {
-      setProducts(prev => {
-        return [...prev, ...newProducts.auctionDetailProjection]
-      })
+      if (page == 1) setProducts(newProducts.auctionDetailProjection)
+      else
+        setProducts(prev => {
+          return [...prev, ...newProducts.auctionDetailProjection]
+        })
     }
   }, [newProducts, page])
 

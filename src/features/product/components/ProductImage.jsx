@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types'
 import FavoriteButton from '@/components/icons/FavoriteButton'
 import { useToggleFavorite } from '@/apis/auction'
+import { useQueryClient } from '@tanstack/react-query'
 
 function ProductImage({ product, heartSize = 32, heart, small }) {
   const { mutate: toggleLike } = useToggleFavorite()
+  const queryClient = useQueryClient()
   const onClick = () => {
     toggleLike(product.auctionId, {
       onSuccess: () => {
-        product.isFavorite = !product.isFavorite
+        queryClient.invalidateQueries('searchAuctions')
       },
     })
   }

@@ -4,10 +4,11 @@ import AXIOS from '@/utils/axios_'
 // 인증 관련 API
 export function useLogin() {
   return useMutation({
-    mutationFn: ({ email, password }) =>
+    mutationFn: ({ email, password, deviceToken }) =>
       AXIOS.post('/auth/login', {
         email,
         password,
+        deviceToken,
       }).then(res => {
         console.log(document.cookie)
         return res.data
@@ -15,10 +16,11 @@ export function useLogin() {
   })
 }
 
-export function useMyInfo() {
+export function useMyInfo(deviceToken) {
   return useQuery({
     queryKey: ['myInfo'],
-    queryFn: () => AXIOS.get('/auth/me').then(res => res.data),
+    queryFn: () =>
+      AXIOS.get('/auth/me', { params: { deviceToken } }).then(res => res.data),
   })
 }
 
