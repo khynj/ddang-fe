@@ -16,7 +16,6 @@ import { useLocation, useNavigate } from 'react-router'
 import { useCreateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
 import { dateToKst } from '@/utils/date'
-import { fetchPhotoFromUrl } from '@/utils/image'
 
 function ProductRegisterPage() {
   usePageName('상품등록')
@@ -25,9 +24,7 @@ function ProductRegisterPage() {
 
   const auction = state?.product ? state.product.auction : null
 
-  const [images, setImages] = useState(
-    auction?.photos.map(photo => fetchPhotoFromUrl(photo)) || [],
-  )
+  const [images, setImages] = useState([])
   const [title, setTitle] = useState(auction?.title || '')
   const [productName, setProductName] = useState(auction?.productName || '')
   const [categoryId, setCategory] = useState(auction?.categoryId || null)
