@@ -19,17 +19,26 @@ import LoadingPage from '@/pages/LoadingPage.jsx'
 import { dateLocale } from '@/utils/date.js'
 import { parseTradeType } from '@/utils/auction.js'
 import relativeTime from '@/utils/relativeTime.js'
+import { useState } from 'react'
 
 function ProductDetailPage() {
   usePageName('제품상세')
   const productId = useParams().id
   const { data: product, isLoading } = useAuctionDetails(productId)
 
+  const [bidPrice, setBidPrice] = useState(
+    isLoading
+      ? 0
+      : product.auction.currentBidPrice || product.auction.minimumBid,
+  )
+
   if (isLoading) return <LoadingPage />
 
-  const { auction, seller, category } = product
-
+  const { auction, seller } = product
   const tradeType = parseTradeType(auction.tradeType)
+  const handleBidPrice = e => {
+    setBidPrice(e.target.value)
+  }
 
   return (
     <div className='flex flex-col gap-2 pb-72'>
@@ -158,7 +167,8 @@ function ProductDetailPage() {
         </div>
         <input
           type='number'
-          placeholder={auction.currentBidPrice || auction.minimumBid}
+          value={bidPrice}
+          onChange={handleBidPrice}
           className='flex grow border-b-2 w-full font-bold text-end text-2xl'
         />
         <div className='flex gap-2 leading-none text-sm py-4'>

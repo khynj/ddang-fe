@@ -25,9 +25,9 @@ function HomePage() {
   const { data: subscribedProducts } = useFollowingAuctions(
     follows ? follows.followings.map(follow => follow.id) : [],
   )
-
+  //! todo
   return (
-    <div>
+    <div className='flex flex-col h-full overflow-y-scroll'>
       <WelcomeBanner />
       <HomeMainSlider />
       <div className='flex flex-col gap-4 px-3'>

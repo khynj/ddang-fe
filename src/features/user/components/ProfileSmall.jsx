@@ -9,7 +9,7 @@ function ProfileSmall({ user }) {
   return (
     <div className='flex items-center justify-between'>
       <div className='flex items-center gap-2'>
-        <ProfileImage src={user.photo} size={40} />
+        <ProfileImage src={user.imageUrl} size={40} />
         <h1 className='font-bold text-sm'>{user.nickname}</h1>
       </div>
       <div className='flex flex-col items-end gap-1'>

@@ -7,10 +7,13 @@ import { useState } from 'react'
 import ROUTES from '@/data/ROUTES'
 import { useCheckDuplicate, useSocialSignUp } from '@/apis/member'
 import { VALIDATIONS } from '@/utils/VALIDATIONS'
+import { useAuth } from '@/contexts/AuthContext'
 
 function SocialSignupPage() {
   usePageName('회원가입')
   const route = useNavigate()
+
+  const { login } = useAuth()
 
   const [nickname, setNickname] = useState('')
   const [email, setEmail] = useState('')
@@ -36,6 +39,11 @@ function SocialSignupPage() {
       { name, nickname, email },
       {
         onSuccess: () => {
+          login({
+            name,
+            nickname,
+            email,
+          })
           route(ROUTES.HOME, { state: { welcome: true } })
         },
       },

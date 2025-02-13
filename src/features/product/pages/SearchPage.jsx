@@ -7,7 +7,7 @@ function SearchPage() {
   const { data: searchHistory } = useAuctionSearchHistory()
   const { data: categories } = useCategory(0)
   return (
-    <div className='flex flex-col '>
+    <div className='flex flex-col h-full overflow-y-scroll'>
       <div className='flex items-center gap-2 p-3 font-bold text-gray-700'>
         <MaterialIcon name='search_activity' size={24} />
         <p>최근 검색어</p>

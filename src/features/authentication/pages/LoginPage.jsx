@@ -7,28 +7,23 @@ import ROUTES from '@/data/ROUTES'
 import { useLogin } from '@/apis/auth'
 import { useState } from 'react'
 import { VALIDATIONS } from '@/utils/VALIDATIONS'
-import { useAuth } from '@/contexts/AuthContext'
 import SocialLoginButtons from '../components/SocialLoginButtons'
-import { getFCMToken } from '@/features/notification/services/initFCM'
 
 function LoginPage() {
   usePageName('로그인')
   const route = useNavigate()
-  const { mutate, error } = useLogin()
+  const { mutate: mutateLogin, error } = useLogin()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { login } = useAuth()
   const handleLogin = e => {
     e.preventDefault()
     const loginData = {
       email,
       password,
-      deviceToken: getFCMToken(),
     }
-    mutate(loginData, {
-      onSuccess: data => {
-        login(data)
-        route(ROUTES.HOME)
+    mutateLogin(loginData, {
+      onSuccess: () => {
+        route(ROUTES.LANDING)
       },
     })
   }

@@ -51,7 +51,8 @@ function SignupPage() {
           requestLogin(
             { email, password },
             {
-              onSuccess: () => route(ROUTES.HOME, { state: { welcome: true } }),
+              onSuccess: () =>
+                route(ROUTES.LANDING, { state: { welcome: true } }),
             },
           )
         },

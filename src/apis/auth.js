@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import AXIOS from '@/utils/axios_'
+import { getFCMToken } from '@/features/notification/services/initFCM'
 
 // 인증 관련 API
 export function useLogin() {
@@ -16,11 +17,15 @@ export function useLogin() {
   })
 }
 
-export function useMyInfo(deviceToken) {
+export function useMyInfo() {
   return useQuery({
     queryKey: ['myInfo'],
     queryFn: () =>
-      AXIOS.get('/auth/me', { params: { deviceToken } }).then(res => res.data),
+      AXIOS.get('/auth/me', {
+        headers: {
+          'Device-Token': getFCMToken(),
+        },
+      }).then(res => res.data),
   })
 }
 

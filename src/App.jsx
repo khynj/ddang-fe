@@ -38,13 +38,13 @@ import DefaultLayout from './layouts/DefaultLayout'
 import DropDownLayout from './layouts/DropDownLayout'
 import MyAuctionLayout from './layouts/MyAuctionLayout'
 import NotFoundPage from './pages/NotFoundPage'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import ROUTES from './data/ROUTES'
 import ReviewHistoryLayout from './layouts/ReviewHistoryLayout'
 import { AuthProvider } from './contexts/AuthProvider'
 import AuthGuard from './features/authentication/components/AuthGuard'
 import SocialSignupPage from './features/authentication/pages/SocialSignupPage'
-import SocialLandingPage from './features/authentication/pages/SocialLandingPage'
+import LandingPage from './features/authentication/pages/LandingPage'
 import TestPage from './pages/TestPage'
 
 function App() {
@@ -67,10 +67,7 @@ function App() {
           </Route>
           <Route path={ROUTES.WELCOME} element={<WelcomePage />} />
           <Route path='/' element={<DefaultLayout />}>
-            <Route
-              path={ROUTES.SOCIAL_LANDING}
-              element={<SocialLandingPage />}
-            />
+            <Route path={ROUTES.LANDING} element={<LandingPage />} />
           </Route>
           <Route path='/' element={<AuthGuard />}>
             <Route path='/' element={<DefaultLayout />}>
