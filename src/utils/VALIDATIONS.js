@@ -7,15 +7,14 @@ const VALIDATIONS = {
     v && v < minimum && `${minimum} 이상으로 입력해주세요.`,
   maxDate: (v, maximum) =>
     v &&
-    v &&
-    v > maximum &&
+    new Date(v) > new Date(maximum) &&
     `${new Date(maximum).toLocaleString('ko-KR', {
       dateStyle: 'medium',
       timeStyle: 'short',
     })} 까지만 가능해요`,
   minDate: (v, minimum) =>
     v &&
-    v < minimum &&
+    new Date(v) < new Date(minimum) &&
     `${new Date(minimum).toLocaleString('ko-KR', {
       dateStyle: 'medium',
       timeStyle: 'short',

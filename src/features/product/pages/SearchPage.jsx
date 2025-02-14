@@ -6,6 +6,7 @@ import CategoryList from '../components/category/CategoryList'
 function SearchPage() {
   const { data: searchHistory } = useAuctionSearchHistory()
   const { data: categories } = useCategory(0)
+
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
       <div className='flex items-center gap-2 p-3 font-bold text-gray-700'>
