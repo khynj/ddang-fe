@@ -33,7 +33,10 @@ function ChargePage() {
       { amount, paymentMethod: accountName },
       {
         onSuccess: data => {
-          window.location = data?.next_redirect_mobile_url
+          const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+          window.location = isMobile
+            ? data?.next_redirect_mobile_url
+            : data?.next_redirect_pc_url
         },
         onError: err => {
           console.log('결제 mutation err', err)

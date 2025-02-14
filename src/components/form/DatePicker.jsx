@@ -9,14 +9,14 @@ import InputError from './InputError'
 function DatePicker({ label, required, value, setValue, validate }) {
   const dateInput = useRef(null)
   const [error, setError] = useState('')
-  
+
   const koreanLocalDate = useMemo(() => {
-    return value
-      ? new Date(value).toLocaleString('ko-KR', {
-          dateStyle: 'medium',
-          timeStyle: 'short',
-        })
-      : ''
+    if (!value) return ''
+    return new Date(value).toLocaleString('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    })
   }, [value])
 
   const onChange = e => {
@@ -25,19 +25,7 @@ function DatePicker({ label, required, value, setValue, validate }) {
     }
     setValue(e.target.value)
   }
-
-  // iOS 체크
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-
-  const handleClick = () => {
-    if (isIOS) {
-      // iOS의 경우 input을 직접 클릭
-      dateInput.current.click()
-    } else {
-      // 안드로이드의 경우 showPicker 사용
-      dateInput.current.showPicker()
-    }
-  }
+  const handleClick = () => dateInput.current.showPicker()
 
   return (
     <div className='flex flex-col gap-2 py-3'>
@@ -55,11 +43,7 @@ function DatePicker({ label, required, value, setValue, validate }) {
         value={value}
         onChange={onChange}
         type='datetime-local'
-        className={`${
-          error && 'invalid'
-        } ${isIOS ? 'absolute' : 'fixed'} bottom-0 opacity-0 ${
-          isIOS ? 'pointer-events-auto' : 'pointer-events-none'
-        }`}
+        className={`fixed bottom-0 opacity-0 pointer-events-none'`}
       />
     </div>
   )
