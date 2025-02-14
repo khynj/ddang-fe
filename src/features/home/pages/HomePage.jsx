@@ -5,25 +5,28 @@ import HomeProductItem from '../components/HomeProductItem'
 import { useAuth } from '@/contexts/AuthContext'
 import ROUTES from '@/data/ROUTES'
 import ProductItemSmall from '@/features/product/components/ProductItemSmall'
-import { useFollowingAuctions, useSearchAuctions } from '@/apis/auction'
+import {
+  useFollowingAuctions,
+  useSearchAuctions,
+  useSearchMyBids,
+} from '@/apis/auction'
 import { useFollowingList } from '@/apis/member'
 
 function HomePage() {
   const { user } = useAuth()
 
-  const { data: biddingProducts } = useSearchAuctions({
-    isHammered: false,
-    role: 'buyer',
-  })
+  const { data: biddingProducts } = useSearchMyBids({})
 
   const { data: closingProducts } = useSearchAuctions({
     sortType: 'endTime',
     size: 4,
   })
 
-  const { data: follows } = useFollowingList()
+  const { data: followings } = useFollowingList()
   const { data: subscribedProducts } = useFollowingAuctions(
-    follows ? follows.followings.map(follow => follow.id) : [],
+    followings
+      ? followings.followings.map(following => following.memberId)
+      : [],
   )
 
   return (
@@ -71,11 +74,9 @@ function HomePage() {
             icon='bookmark'
           ></HomeListHeader>
           <div className='grid grid-cols-2 gap-4'>
-            {subscribedProducts?.auctionDetailProjection
-              .slice(0, 4)
-              .map((product, i) => (
-                <HomeProductItem key={i} product={product} />
-              ))}
+            {subscribedProducts?.slice(0, 4).map((product, i) => (
+              <HomeProductItem key={i} product={product} />
+            ))}
           </div>
         </section>
       </div>

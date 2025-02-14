@@ -104,21 +104,49 @@ export function useSearchAuctions(params) {
         .then(res => res.data),
   })
 }
+export function useSearchMyBids(params) {
+  return useQuery({
+    queryKey: ['searchMyBids', params],
+    queryFn: () =>
+      axios_spring.get('/auction/me/bids', { params }).then(res => res.data),
+  })
+}
 
 export function useFollowingAuctions(memberIds, params) {
+  const defaultParams = {
+    searchKey: '',
+    deliveryMethod: '',
+    status: '',
+    isFavorite: '',
+    categoryId: '',
+    sortType: 'createdAt',
+    sortOrder: 'asc',
+    page: 1,
+    size: 10,
+    isHammered: '',
+    role: '',
+    sellerId: '',
+  }
   return useQueries({
     queries: memberIds.map(memberId => ({
       queryKey: ['searchAuctions', memberId, params],
       queryFn: () =>
         axios_spring
-          .get('/auction', { params: { memberId, ...params } })
+          .get('/auction', {
+            params: { sellerId: memberId, ...defaultParams, ...params },
+          })
           .then(res => res.data),
     })),
     combine: results => {
-      return results.reduce((acc, result) => {
-        if (result.isLoading) return acc
-        return [...acc, ...result.data]
-      }, [])
+      return {
+        data: results.reduce((acc, result) => {
+          if (result.isLoading) return acc
+          console.dir(result.data.auctionDetailProjection)
+          console.log(acc)
+          return [...acc, ...result.data.auctionDetailProjection]
+        }, []),
+        pending: results.some(result => result.isPending),
+      }
     },
   })
 }
