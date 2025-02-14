@@ -81,7 +81,7 @@ export function useDeleteAuctionSearchHistory() {
  * @returns
  */
 export function useSearchAuctions(params) {
-  console.log('params : ', params)
+  // console.log('params : ', params)
   const defaultParams = {
     searchKey: '',
     deliveryMethod: '',
@@ -105,6 +105,7 @@ export function useSearchAuctions(params) {
   })
 }
 export function useSearchMyBids(params) {
+  console.log('params : ', params)
   return useQuery({
     queryKey: ['searchMyBids', params],
     queryFn: () =>

@@ -40,6 +40,10 @@ function SignupPage() {
 
   const onSubmit = e => {
     e.preventDefault()
+    if (password != passwordConfirm) {
+      return alert('비밀번호가 일치하지 않습니다.')
+    }
+    e.preventDefault()
     signUp(
       { name, nickname, email, password },
       {
