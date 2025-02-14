@@ -214,13 +214,6 @@ function ProductRegisterPage() {
           setTitle(e.target.value)
         }}
       />
-      <TextInput
-        label='상품명'
-        required
-        value={productName}
-        setValue={setProductName}
-        validate={validation.productName}
-      />
       <CategoryPicker
         label='카테고리'
         required
@@ -230,6 +223,13 @@ function ProductRegisterPage() {
         initialCategoryName={auction?.category.categoryName}
         title={title}
         categoryRecommendation={categoryRecommendation}
+      />
+      <TextInput
+        label='상품명'
+        required
+        value={productName}
+        setValue={setProductName}
+        validate={validation.productName}
       />
       <NumberInput
         label='최소입찰가'
