@@ -186,10 +186,6 @@ function App() {
                     { name: '채팅방', to: ROUTES.CHATROOM_LIST_PRIVATE },
                     { name: '토론방', to: ROUTES.CHATROOM_LIST_GROUP },
                   ]}
-                  feature={{
-                    icon: { name: 'edit', className: 'text-gray-600' },
-                    onClick: () => console.log('edit chatroom'),
-                  }}
                 />
               }
             >
