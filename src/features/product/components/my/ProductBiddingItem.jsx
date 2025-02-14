@@ -3,13 +3,20 @@ import PropTypes from 'prop-types'
 import ProductImage from '../ProductImage'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
-import { dday } from '@/utils/Dday'
 import { formatPrice } from '@/utils/formatPrice'
+import { useQueryClient } from '@tanstack/react-query'
+import useEndTimeDDay from '@/hooks/useEndTimeDDay'
+import { dateToKst } from '@/utils/date'
 
 function ProductBiddingItem({ product }) {
   const price = formatPrice(product.currentBidPrice)
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
   const isTopBidder = product.myBidPrice === product.currentBidPrice
+  const queryClient = useQueryClient()
+  const endTimeDDay = useEndTimeDDay(dateToKst(product.endTime))
+  if (!endTimeDDay) {
+    queryClient.invalidateQueries('searchAuctions')
+  }
   return (
     <Link
       className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200`}
@@ -50,7 +57,9 @@ function ProductBiddingItem({ product }) {
         </div>
       </div>
       <div className='flex flex-col justify-between items-end col-span-2'>
-        <p className='text-sm text-gray-700'>{dday(product.endTime)} 남음</p>
+        <p className='text-sm text-gray-700'>
+          {endTimeDDay ? `${endTimeDDay} 남음` : `경매 종료됨`}
+        </p>
 
         <div className='flex items-end text-gray-600 gap-2'>
           <div className='flex items-center gap-0.5'>

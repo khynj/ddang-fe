@@ -26,9 +26,8 @@ export function useStompClient(id, scrollRef) {
   }
 
   useEffect(() => {
-    if (isSuccess) {
-      setMessages(chatHistory.chat)
-    }
+    if (!isSuccess || !chatHistory) return
+    setMessages(chatHistory.chat)
   }, [isSuccess, chatHistory])
 
   useEffect(() => {

@@ -83,7 +83,7 @@ function ProductListPage({ filters, isFavorite }) {
               options={[
                 { value: 'ongoing', name: '경매중' },
                 { value: 'upcoming', name: '경매예정' },
-                { value: 'ended', name: '경매종료' },
+                { value: 'ended', name: '경매종료' }, // todo
               ]}
               keyName={'status'}
             />
