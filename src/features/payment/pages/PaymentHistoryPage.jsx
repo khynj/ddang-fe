@@ -1,6 +1,6 @@
 import usePageName from '@/hooks/usePageName.js'
 import { usePayHistory } from '@/apis/pay.js'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/price'
 
 function PaymentHistoryPage() {
   usePageName('결제내역')

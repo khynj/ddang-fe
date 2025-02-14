@@ -12,7 +12,7 @@ import ROUTES from '@/data/ROUTES'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
 import LoadingPage from '@/pages/LoadingPage'
 import { dateToKst } from '@/utils/date'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice, getMinimumBidUnit } from '@/utils/price'
 import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
@@ -28,15 +28,23 @@ function ProductDetailDrawer({ product, isMine }) {
   const { mutate: bid } = useBidAuction()
   const { mutate: purchase } = usePurchaseAuction()
   const { mutate: requestDelete } = useDeleteAuction()
-  const minimumBidPrice = product
-    ? product.auction.currentBidPrice || product.auction.minimumBid
-    : 0
+
+  const [minimumBidPrice, setMinimumBidPrice] = useState(0)
+  const [minimumBidUnit, setMinimumBidUnit] = useState(0)
   const [bidPrice, setBidPrice] = useState(minimumBidPrice)
 
   const endTimeDDay = useEndTimeDDay(dateToKst(product.auction.endTime))
   if (!endTimeDDay) {
     queryClient.invalidateQueries('searchAuctions')
   }
+
+  useEffect(() => {
+    if (!product) return
+    const minPrice =
+      product.auction.currentBidPrice || product.auction.minimumBid
+    setMinimumBidPrice(minPrice + getMinimumBidUnit(minPrice))
+    setMinimumBidUnit(getMinimumBidUnit(minPrice))
+  }, [product])
 
   if (!product) return <LoadingPage />
 
@@ -61,6 +69,10 @@ function ProductDetailDrawer({ product, isMine }) {
   }
 
   const onBid = () => {
+    if (bidPrice > auction.instantHammerPrice) {
+      setBidPrice(auction.instantHammerPrice)
+      return alert('즉시구매가보다 높게 입찰할 수 없습니다.')
+    }
     if (bidPrice < minimumBidPrice)
       return alert('최소 입찰가보다 높게 입찰해주세요.')
     if (bidPrice == auction.instantHammerPrice) return onPurchase()
@@ -117,14 +129,6 @@ function ProductDetailDrawer({ product, isMine }) {
     })
   }
 
-  useEffect(() => {
-    if (!auction.instantHammerPrice) return
-    if (bidPrice > auction.instantHammerPrice) {
-      alert('즉시구매가보다 높게 입찰할 수 없습니다.')
-      setBidPrice(auction.instantHammerPrice)
-    }
-  }, [bidPrice, setBidPrice, auction.instantHammerPrice])
-
   return (
     <StickyContainer rounded>
       <div className='flex justify-between items-center mb-2'>
@@ -151,9 +155,7 @@ function ProductDetailDrawer({ product, isMine }) {
         </div>
       </div>
       <div className='flex'>
-        <p className='font-bold'>
-          현재 {formatPrice(auction.currentBidPrice || auction.minimumBid)}원
-        </p>
+        <p className='font-bold'>최소입찰가 {formatPrice(minimumBidPrice)}원</p>
       </div>
       {isMine ? (
         <div className='flex gap-4 mt-2'>
@@ -174,16 +176,16 @@ function ProductDetailDrawer({ product, isMine }) {
           />
           <div className='flex gap-2 leading-none text-sm py-4'>
             <button
-              onClick={() => addPrice(1000)}
+              onClick={() => addPrice(minimumBidUnit)}
               className='bg-ddblue-400 text-white p-2 font-bold rounded-md'
             >
-              +1,000
+              +{minimumBidUnit}
             </button>
             <button
-              onClick={() => addPrice(10000)}
+              onClick={() => addPrice(minimumBidUnit * 10)}
               className='bg-ddblue-500 text-white p-2 font-bold rounded-md'
             >
-              +10,000
+              +{minimumBidUnit * 10}
             </button>
           </div>
           <div className='flex gap-4 mt-2'>

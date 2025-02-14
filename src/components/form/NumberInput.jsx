@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import Label from './Label'
 import { useState } from 'react'
 import InputError from './InputError'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/price'
 
 function NumberInput({ label, required, value, setValue, validate }) {
   const [error, setError] = useState('')
@@ -10,7 +10,7 @@ function NumberInput({ label, required, value, setValue, validate }) {
     // 숫자만 추출
     const numericValue = e.target.value.replace(/[^0-9]/g, '')
     const value = numericValue ? parseInt(numericValue) : 0
-    
+
     if (validate) {
       setError(validate(value))
     }

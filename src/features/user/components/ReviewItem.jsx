@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/price'
 
 const ReviewItem = ({ review, received }) => {
   const hammeredPrice = formatPrice(review.auction.hammeredPrice)

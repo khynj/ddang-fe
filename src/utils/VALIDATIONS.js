@@ -1,4 +1,4 @@
-import { formatPrice } from './formatPrice'
+import { formatPrice } from './price'
 
 const VALIDATIONS = {
   maxValue: (v, maximum) =>

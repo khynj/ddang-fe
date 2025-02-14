@@ -7,7 +7,7 @@ import { useState } from 'react'
 import Modal from '@/components/modals/Modal'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import MaterialIcon from '@/components/icons/MaterialIcon'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/price'
 
 function ProductSoldItem({ product, isSeller }) {
   const price = formatPrice(product.myBidPrice)

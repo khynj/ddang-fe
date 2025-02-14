@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
-import { dday } from '@/utils/Dday'
 import { Link } from 'react-router'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/price'
 import ROUTES from '@/data/ROUTES'
 import { useAuth } from '@/contexts/AuthContext'
 import { useQueryClient } from '@tanstack/react-query'

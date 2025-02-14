@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import relativeTime from '@/utils/relativeTime'
 import ProductImage from './ProductImage'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/price'
 
 function ProductHistoryItem({ product }) {
   const price = product.hammeredTime

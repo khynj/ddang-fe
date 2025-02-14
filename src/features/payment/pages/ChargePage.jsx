@@ -3,7 +3,7 @@ import usePageName from '@/hooks/usePageName'
 import StickyContainer from '@/components/StickyContainer'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import { usePayDeposit, usePayInfo } from '@/apis/pay'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/price'
 
 function ChargePage() {
   usePageName('충전')
