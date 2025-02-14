@@ -3,6 +3,7 @@ import moneyBag from '@/assets/images/icons/moneyBag.png'
 import payDdang from '@/assets/images/characters/payDdang.png'
 import { usePayInfo } from '@/apis/pay'
 import { useEffect } from 'react'
+import { formatPrice } from '@/utils/formatPrice'
 
 function Payment() {
   const { data: payInfo } = usePayInfo()
@@ -40,11 +41,11 @@ function Payment() {
       <div className='mt-2'>
         <div className='flex justify-between font-bold text-gray-950 mt-4'>
           <span className='text-sm'>잔액</span>
-          <span>{payInfo?.balance}원</span>
+          <span>{formatPrice(payInfo?.balance)}원</span>
         </div>
         <div className='flex justify-between font-bold text-gray-950 mt-4'>
           <span className='text-sm'>입찰가능금액</span>
-          <span>{payInfo?.availableBalance}원</span>
+          <span>{formatPrice(payInfo?.availableBalance)}원</span>
         </div>
       </div>
     </section>
