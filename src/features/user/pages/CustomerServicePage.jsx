@@ -1,15 +1,17 @@
 import usePageName from '../../../hooks/usePageName' // 페이지 이름 설정 Hook
 import NoticeItem from '../components/NoticeItem'
 import { customerServiceFAQs } from '../data/customerService'
+import { useAuth } from '@/contexts/AuthContext'
 
 function CustomerServicePage() {
   usePageName('고객센터')
+  const { user } = useAuth()
 
   return (
     <div className='max-w-4xl mx-auto bg-white'>
       <div className='p-6 flex items-end justify-between border-b border-gray-200'>
         <p className='text-xl font-bold text-gray-800'>
-          지연님, <br />
+          {user.nickname}님, <br />
           무엇을 도와드릴까요?
         </p>
         <img
