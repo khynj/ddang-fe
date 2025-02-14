@@ -39,6 +39,8 @@ const VALIDATIONS = {
     v &&
     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(v) &&
     '이메일 형식이 아닙니다.',
+  futureStartTime: v => 
+    v && new Date(v) < new Date() && '개찰 시각은 현재 시간 이후여야 합니다.',
 }
 
 export { VALIDATIONS }

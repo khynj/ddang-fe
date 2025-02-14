@@ -155,7 +155,8 @@ function ProductRegisterPage() {
     instantHammerPrice: instantHammerPrice =>
       VALIDATIONS.minPrice(instantHammerPrice, minimumBid) ||
       VALIDATIONS.maxPrice(minimumBid, 10000000),
-    startTime: startTime => VALIDATIONS.required(startTime),
+    startTime: startTime => 
+      VALIDATIONS.required(startTime) || VALIDATIONS.futureStartTime(startTime),
     endTime: endTime =>
       VALIDATIONS.required(endTime) || VALIDATIONS.minDate(endTime, startTime),
     content: content =>
@@ -172,7 +173,7 @@ function ProductRegisterPage() {
       }
       const result = validation[key](states[key].state)
       if (result) {
-        alert(key, result)
+        alert(result)
         return false
       }
       return true
