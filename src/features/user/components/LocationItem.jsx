@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useDeletePreferredLocation } from '@/apis/member'
+import { useQueryClient } from '@tanstack/react-query'
 
 function LocationItem({ location }) {
-  const deleteLocation = useDeletePreferredLocation().mutate
+  const queryClient = useQueryClient()
+  const { mutate: deleteLocation } = useDeletePreferredLocation()
 
   return (
     <div className='flex justify-between items-center p-4 border-b border-gray-200'>
@@ -12,7 +14,14 @@ function LocationItem({ location }) {
         <p className='text-sm text-gray-700'>{location.locationName}</p>
       </div>
       <button
-        onClick={() => deleteLocation(location.memberLocationId)}
+        onClick={() => {
+          if (!confirm('정말 삭제하시겠습니까?')) return
+          deleteLocation(location.memberLocationId, {
+            onSuccess: () => {
+              queryClient.invalidateQueries('preferredLocations')
+            },
+          })
+        }}
         className='p-2 text-gray-600'
       >
         <MaterialIcon name='close' filled>

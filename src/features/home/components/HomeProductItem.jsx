@@ -1,30 +1,19 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from '@/components/icons/MaterialIcon'
-import { dday } from '@/utils/Dday'
 import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/formatPrice'
-import { useEffect, useState } from 'react'
+import useEndTimeDDay from '@/hooks/useEndTimeDDay'
+import { dateToKst } from '@/utils/date'
 import { useQueryClient } from '@tanstack/react-query'
 function HomeProductItem({ product }) {
+  const queryClient = useQueryClient()
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
-  const [endTime, setEndTime] = useState(new Date(product.endTime))
-  // const [mountedTime, setMountedTime] = useState(new Date())
-  // const queryClient = useQueryClient()
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setEndTime(cur => cur - 1000)
-  //   }, 1000)
-
-  //   return () => {
-  //     clearInterval(interval)
-  //   }
-  // }, [])
-
-  // if (endTime - mountedTime < 0) {
-  //   queryClient.invalidateQueries('searchAuctions')
-  // }
+  const endTimeDDay = useEndTimeDDay(dateToKst(product.endTime))
+  if (!endTimeDDay) {
+    queryClient.invalidateQueries('searchAuctions')
+  }
 
   return (
     <Link
@@ -50,7 +39,9 @@ function HomeProductItem({ product }) {
               <span className='text-sm tracking-tight'>{product.bidCount}</span>
             </div>
           </div>
-          <span className='text-gray-600 text-sm'>{dday(endTime)} 남음</span>
+          <span className='text-gray-600 text-sm'>
+            {endTimeDDay ? `${endTimeDDay} 남음` : `경매 종료됨`}
+          </span>
         </div>
       </div>
     </Link>

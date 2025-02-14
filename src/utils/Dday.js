@@ -1,20 +1,19 @@
 export function dday(date) {
-  const f = new Intl.RelativeTimeFormat('ko', {
-    numeric: 'always',
-  })
   const now = new Date()
-  const target = new Date(date)
-  const diff = target - now
+  const targetDate = new Date(date)
+  const diff = targetDate - now
 
-  const day = diff / (1000 * 60 * 60 * 24)
-  if (day >= 1) return f.format(-Math.floor(day), 'day').replace(' 전', '')
+  const weeks = Math.floor(diff / (1000 * 60 * 60 * 24 * 7))
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
 
-  const hour = (day - Math.floor(day)) * 24
-  if (hour >= 1) return f.format(-Math.floor(hour), 'hour').replace(' 전', '')
-
-  const min = (hour - Math.floor(hour)) * 60
-  const sec = (min - Math.floor(min)) * 60
-  const minute = f.format(-Math.floor(min), 'minute').replace('분 전', '')
-  const second = f.format(-Math.floor(sec), 'second').replace('초 전', '')
-  return minute + ':' + second
+  if (weeks > 0) return `${weeks}주 ${days}일`
+  if (days > 0) return `${days}일 ${hours}시간`
+  return hours === 0
+    ? minutes === 0
+      ? `${seconds}초`
+      : `${minutes}:${seconds}`
+    : `${hours}시간`
 }

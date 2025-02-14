@@ -10,13 +10,6 @@ import TextInput from '@/components/form/TextInput'
 import { useLocations } from '@/apis/location'
 import { useAddPreferredLocation } from '@/apis/member'
 
-/*
- {
-    "locationId": 1,
-    "location": "서울시 강남구 역삼동"
-  }
-*/
-
 function MyLocationsRegisterPage() {
   usePageName('내 장소')
 
@@ -24,6 +17,7 @@ function MyLocationsRegisterPage() {
 
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedLocationId, setSelectedLocationId] = useState('')
+  const [selectedLocationName, setSelectedLocationName] = useState('')
   const [name, setName] = useState('')
   const { isOpen, open, close } = useModal()
   const [isConfirmed, setIsConfirmed] = useState(false)
@@ -36,13 +30,22 @@ function MyLocationsRegisterPage() {
   }
 
   const handleClick = location => {
-    setSelectedLocationId(location.locationId)
+    setSelectedLocationId(location.id)
+    setSelectedLocationName(location.locationName)
     open()
   }
 
-  const onConfirm = () => {
-    console.log('Confirm')
-    registerLocation({ locationId: selectedLocationId, title: name })
+  const onConfirm = e => {
+    e.preventDefault()
+    console.log({ locationId: selectedLocationId, title: name })
+    registerLocation(
+      { locationId: selectedLocationId, title: name },
+      {
+        onSuccess: () => {
+          route(ROUTES.MY_LOCATIONS, { replace: true })
+        },
+      },
+    )
     setIsConfirmed(true)
     close()
   }
@@ -93,28 +96,37 @@ function MyLocationsRegisterPage() {
       </div>
       {isOpen && (
         <Modal close={close}>
-          <div className='flex flex-col gap-4 w-full text-center'>
+          <form
+            onSubmit={onConfirm}
+            className='flex flex-col gap-4 w-full text-center'
+          >
             <div className='flex flex-col gap-1'>
-              <p className='font-bold text-sm'>{selectedLocationId}</p>
               <p className='font-bold text-ddblue-400'>내 장소 등록</p>
             </div>
+            <p className='font-bold text-sm'>{selectedLocationName}</p>
             <TextInput required value={name} setValue={setName} />
             <div className='flex gap-4'>
               <DefaultButton type='gray' onClick={close}>
                 닫기
               </DefaultButton>
-              <DefaultButton onClick={onConfirm}>확인</DefaultButton>
+              <DefaultButton submit>확인</DefaultButton>
             </div>
-          </div>
+          </form>
         </Modal>
       )}
       {isConfirmed && (
         <Modal close={() => route(ROUTES.MY_LOCATIONS)}>
           <div className='flex flex-col gap-4 w-full text-center'>
             <div className='flex flex-col gap-1'>
-              <p className='font-bold text-sm'>{selectedLocationId}</p>
+              <MaterialIcon
+                name='check_circle'
+                filled
+                size={26}
+                className='text-ddblue-400'
+              />
               <p className='font-bold text-ddblue-400'>등록되었습니다.</p>
             </div>
+            <p className='font-bold'>{name}</p>
             <div className='flex gap-4'>
               <DefaultButton onClick={() => route(ROUTES.MY_LOCATIONS)}>
                 확인
