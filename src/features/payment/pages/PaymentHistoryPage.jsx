@@ -5,39 +5,16 @@ import { formatPrice } from '@/utils/formatPrice'
 function PaymentHistoryPage() {
   usePageName('결제내역')
 
-  const data = {
-    histories: [
-      {
-        payAccountHistoryId: 4,
-        title: '카카오페이 충전',
-        changeAmount: 5000,
-        balanceAfter: 57020,
-        createdTime: '2025-02-11 04:28:43',
-      },
-      {
-        payAccountHistoryId: 3,
-        title: '카카오페이 충전',
-        changeAmount: 2020,
-        balanceAfter: 52020,
-        createdTime: '2025-02-11 04:19:05',
-      },
-      {
-        payAccountHistoryId: 2,
-        title: '카카오페이 충전',
-        changeAmount: 30000,
-        balanceAfter: 50000,
-        createdTime: '2025-02-11 04:17:43',
-      },
-      {
-        payAccountHistoryId: 1,
-        title: '카카오페이 충전',
-        changeAmount: 20000,
-        balanceAfter: 20000,
-        createdTime: '2025-02-11 04:16:27',
-      },
-    ],
+  const { data } = usePayHistory()
+
+  if (!data || data.histories.length === 0) {
+    return (
+      <div className='flex justify-center items-center h-full'>
+        <div className='text-center text-gray-700'>결제 내역이 없습니다.</div>
+      </div>
+    )
   }
-  // const { data } = usePayHistory()
+
   const transactions = data ? data.histories : []
 
   const transactionsByDate = transactions.reduce((acc, transaction) => {

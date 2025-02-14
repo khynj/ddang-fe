@@ -6,6 +6,15 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/ai': {
+        target: 'http://70.12.115.57:8001',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/ai/, ''),
+      },
+    },
+  },
   plugins: [
     react(),
     tailwindcss(),

@@ -62,7 +62,7 @@ function CategoryPicker({
   setValue,
   validate,
   initialCategoryName,
-  title,
+  categoryRecommendation,
 }) {
   const { isOpen, open, close } = useModal('')
   const [error, setError] = useState('')
@@ -75,10 +75,7 @@ function CategoryPicker({
       setParentId(0)
     }
   }, [isOpen])
-  const [categoryRecommendation, setCategoryRecommendation] =
-    useState(RECOMMENDATIONS)
 
-  const { mutate: recommendCategory } = useCategoryRecommendation()
   const onClose = useCallback(
     v => {
       if (validate) setError(validate(v))
@@ -87,15 +84,6 @@ function CategoryPicker({
     },
     [validate, setValue, close],
   )
-
-  useEffect(() => {
-    if (!title) return
-    recommendCategory(title, {
-      onSuccess: data => {
-        setCategoryRecommendation(data)
-      },
-    })
-  }, [title, recommendCategory])
 
   return (
     <>
@@ -164,7 +152,7 @@ CategoryPicker.propTypes = {
   validate: PropTypes.func,
   children: PropTypes.node,
   initialCategoryName: PropTypes.string,
-  title: PropTypes.string,
+  categoryRecommendation: PropTypes.array,
 }
 
 export default CategoryPicker

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import ProfileImage from './ProfileImage'
+// import ProfileImage from './ProfileImage'
 import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
@@ -16,7 +16,7 @@ const ReviewItem = ({ review, received }) => {
         <div className='flex flex-col gap-2'>
           {received && (
             <div className='flex items-center gap-2 px-1'>
-              <ProfileImage src={review.review.profileImage} size={32} />
+              {/* <ProfileImage src={review.review.profileImage} size={32} /> */}
               <p className='text-gray-700'>{review.review.nickname}</p>
             </div>
           )}

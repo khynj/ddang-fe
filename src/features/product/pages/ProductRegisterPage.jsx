@@ -16,6 +16,8 @@ import { useLocation, useNavigate } from 'react-router'
 import { useCreateAuction, useUpdateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
 import { dateToKst, kstToDate } from '@/utils/date'
+import TitleInput from '@/components/form/TitleInput'
+import { useCategoryRecommendation } from '@/apis/ai'
 
 function ProductRegisterPage() {
   const { state } = useLocation()
@@ -184,17 +186,31 @@ function ProductRegisterPage() {
       replace: true,
     })
   }
+  const [categoryRecommendation, setCategoryRecommendation] = useState([])
+
+  const { mutateAsync: recommendCategory } = useCategoryRecommendation()
 
   return (
     <div className='flex flex-col p-4'>
       <ImagePicker images={images} setImages={setImages} />
       <hr className='my-3 mb-2 border-gray-200' />
-      <TextInput
+      <TitleInput
         label='제목'
         required
         value={title}
-        setValue={setTitle}
         validate={validation.title}
+        onChange={e => {
+          console.log(e.target.value)
+          recommendCategory(
+            { title: e.target.value },
+            {
+              onSuccess: data => {
+                setCategoryRecommendation(data)
+              },
+            },
+          )
+          setTitle(e.target.value)
+        }}
       />
       <TextInput
         label='상품명'
@@ -211,6 +227,7 @@ function ProductRegisterPage() {
         validate={validation.categoryId}
         initialCategoryName={auction?.category.categoryName}
         title={title}
+        categoryRecommendation={categoryRecommendation}
       />
       <NumberInput
         label='최소입찰가'
