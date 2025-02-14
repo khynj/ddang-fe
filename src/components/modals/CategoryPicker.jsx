@@ -87,6 +87,22 @@ function CategoryPicker({
 
   return (
     <>
+      {categoryRecommendation.length > 0 && (
+        <div className='flex gap-2 overflow-x-scroll'>
+          {categoryRecommendation.map(([parent, child], i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setValue(Object.keys(child)[0])
+                setCategoryName(Object.values(child)[0])
+              }}
+              className='bg-gray-100 p-2 rounded-md text-sm shrink-0'
+            >
+              {Object.values(child)[0]}
+            </button>
+          ))}
+        </div>
+      )}
       <div className='flex flex-col gap-2 py-3'>
         {label && (
           <Label text={label} required={required}>
@@ -122,23 +138,6 @@ function CategoryPicker({
             닫기
           </DefaultButton>
         </Modal>
-      )}
-
-      {categoryRecommendation.length > 0 && (
-        <div className='flex gap-2 overflow-x-scroll'>
-          {categoryRecommendation.map(([parent, child], i) => (
-            <button
-              key={i}
-              onClick={() => {
-                setValue(Object.keys(child)[0])
-                setCategoryName(Object.values(child)[0])
-              }}
-              className='bg-gray-100 p-2 rounded-md text-sm shrink-0'
-            >
-              {Object.values(child)[0]}
-            </button>
-          ))}
-        </div>
       )}
     </>
   )
