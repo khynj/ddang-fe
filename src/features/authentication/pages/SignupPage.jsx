@@ -8,13 +8,10 @@ import ROUTES from '@/data/ROUTES'
 import { useCheckDuplicate, useSignUp } from '@/apis/member'
 import { VALIDATIONS } from '@/utils/VALIDATIONS'
 import { useLogin } from '@/apis/auth'
-import { useAuth } from '@/contexts/AuthContext'
 
 function SignupPage() {
   usePageName('회원가입')
   const route = useNavigate()
-
-  const { login } = useAuth()
 
   const [nickname, setNickname] = useState('')
   const [email, setEmail] = useState('')
@@ -46,8 +43,7 @@ function SignupPage() {
     signUp(
       { name, nickname, email, password },
       {
-        onSuccess: ({ memberId }) => {
-          login({ memberId, name, nickname, email })
+        onSuccess: () => {
           requestLogin(
             { email, password },
             {

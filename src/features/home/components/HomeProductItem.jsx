@@ -5,8 +5,27 @@ import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/formatPrice'
+import { useEffect, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 function HomeProductItem({ product }) {
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
+  const [endTime, setEndTime] = useState(new Date(product.endTime))
+  // const [mountedTime, setMountedTime] = useState(new Date())
+  // const queryClient = useQueryClient()
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setEndTime(cur => cur - 1000)
+  //   }, 1000)
+
+  //   return () => {
+  //     clearInterval(interval)
+  //   }
+  // }, [])
+
+  // if (endTime - mountedTime < 0) {
+  //   queryClient.invalidateQueries('searchAuctions')
+  // }
+
   return (
     <Link
       className='flex flex-col'
@@ -31,9 +50,7 @@ function HomeProductItem({ product }) {
               <span className='text-sm tracking-tight'>{product.bidCount}</span>
             </div>
           </div>
-          <span className='text-gray-600 text-sm'>
-            {dday(product.endTime)} 남음
-          </span>
+          <span className='text-gray-600 text-sm'>{dday(endTime)} 남음</span>
         </div>
       </div>
     </Link>

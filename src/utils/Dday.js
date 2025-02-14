@@ -16,5 +16,5 @@ export function dday(date) {
   const sec = (min - Math.floor(min)) * 60
   const minute = f.format(-Math.floor(min), 'minute').replace('분 전', '')
   const second = f.format(-Math.floor(sec), 'second').replace('초 전', '')
-  return minute + ' : ' + second
+  return minute + ':' + second
 }
