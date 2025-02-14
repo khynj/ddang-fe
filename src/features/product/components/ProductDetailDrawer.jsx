@@ -37,7 +37,8 @@ function ProductDetailDrawer({ product, isMine }) {
   const { auction, seller } = product
 
   const handleBidPrice = e => {
-    setBidPrice(e.target.value)
+    const value = e.target.value.replace(/[^0-9]/g, '')
+    setBidPrice(parseInt(value) || 0)
   }
 
   const addPrice = price => {
@@ -158,8 +159,8 @@ function ProductDetailDrawer({ product, isMine }) {
       ) : (
         <>
           <input
-            type='number'
-            value={bidPrice}
+            type='text'
+            value={formatPrice(bidPrice)}
             onChange={handleBidPrice}
             className='flex grow border-b-2 w-full font-bold text-end text-2xl'
           />
