@@ -8,6 +8,8 @@ import InputError from './InputError'
 
 function DatePicker({ label, required, value, setValue, validate }) {
   const dateInput = useRef(null)
+  const [error, setError] = useState('')
+  
   const koreanLocalDate = useMemo(() => {
     return value
       ? new Date(value).toLocaleString('ko-KR', {
@@ -16,12 +18,25 @@ function DatePicker({ label, required, value, setValue, validate }) {
         })
       : ''
   }, [value])
-  const [error, setError] = useState('')
+
   const onChange = e => {
     if (validate) {
       setError(validate(e.target.value))
     }
     setValue(e.target.value)
+  }
+
+  // iOS 체크
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+
+  const handleClick = () => {
+    if (isIOS) {
+      // iOS의 경우 input을 직접 클릭
+      dateInput.current.click()
+    } else {
+      // 안드로이드의 경우 showPicker 사용
+      dateInput.current.showPicker()
+    }
   }
 
   return (
@@ -31,7 +46,7 @@ function DatePicker({ label, required, value, setValue, validate }) {
           {error && <InputError>{error}</InputError>}
         </Label>
       )}
-      <PickerWrapper onClick={() => dateInput.current.showPicker()}>
+      <PickerWrapper onClick={handleClick}>
         <InputValue value={koreanLocalDate} label={label} />
         <MaterialIcon name='calendar_month' className='text-gray-600' />
       </PickerWrapper>
@@ -42,7 +57,9 @@ function DatePicker({ label, required, value, setValue, validate }) {
         type='datetime-local'
         className={`${
           error && 'invalid'
-        } fixed bottom-0 opacity-0 pointer-events-none`}
+        } ${isIOS ? 'absolute' : 'fixed'} bottom-0 opacity-0 ${
+          isIOS ? 'pointer-events-auto' : 'pointer-events-none'
+        }`}
       />
     </div>
   )
