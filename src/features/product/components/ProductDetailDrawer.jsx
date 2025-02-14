@@ -9,8 +9,9 @@ import IconButton from '@/components/buttons/IconButton'
 import FavoriteButton from '@/components/icons/FavoriteButton'
 import StickyContainer from '@/components/StickyContainer'
 import ROUTES from '@/data/ROUTES'
+import useEndTimeDDay from '@/hooks/useEndTimeDDay'
 import LoadingPage from '@/pages/LoadingPage'
-import { dday } from '@/utils/Dday'
+import { dateToKst } from '@/utils/date'
 import { formatPrice } from '@/utils/formatPrice'
 import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
@@ -31,6 +32,11 @@ function ProductDetailDrawer({ product, isMine }) {
     ? product.auction.currentBidPrice || product.auction.minimumBid
     : 0
   const [bidPrice, setBidPrice] = useState(minimumBidPrice)
+
+  const endTimeDDay = useEndTimeDDay(dateToKst(product.auction.endTime))
+  if (!endTimeDDay) {
+    queryClient.invalidateQueries('searchAuctions')
+  }
 
   if (!product) return <LoadingPage />
 
@@ -121,7 +127,9 @@ function ProductDetailDrawer({ product, isMine }) {
   return (
     <StickyContainer rounded>
       <div className='flex justify-between items-center mb-2'>
-        <span className='text-sm'>마감까지 {dday(auction.endTime)}</span>
+        <span className='text-sm'>
+          {endTimeDDay ? `마감까지 ${endTimeDDay} 남음` : `경매 종료됨`}
+        </span>
         <div className='flex gap-4'>
           <IconButton
             icon={{

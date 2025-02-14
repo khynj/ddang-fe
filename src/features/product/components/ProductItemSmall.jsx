@@ -1,14 +1,21 @@
 import PropTypes from 'prop-types'
-import { dday } from '@/utils/Dday'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { wonitzie } from '@/utils/wonitize'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
+import { useQueryClient } from '@tanstack/react-query'
+import useEndTimeDDay from '@/hooks/useEndTimeDDay'
+import { dateToKst } from '@/utils/date'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice || product.minimumBid)
   const isTop = product.currentBidPrice <= product.myBidPrice
   const didBid = product.myBidPrice > 0
+  const queryClient = useQueryClient()
+  const endTimeDDay = useEndTimeDDay(dateToKst(product.endTime))
+  if (!endTimeDDay) {
+    queryClient.invalidateQueries('searchAuctions')
+  }
   return (
     <Link
       to={`${ROUTES.PRODUCT_DETAIL}`.replace(':id', product.auctionId)}
@@ -48,7 +55,7 @@ function ProductItemSmall({ product }) {
         </div>
       )}
       <span className='text-sm text-gray-600 mt-0.5 w-fit'>
-        {dday(product.endTime)} 남음
+        {endTimeDDay ? `${endTimeDDay} 남음` : `경매 종료됨`}
       </span>
     </Link>
   )

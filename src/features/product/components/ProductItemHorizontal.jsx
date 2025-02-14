@@ -5,10 +5,19 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/formatPrice'
+import useEndTimeDDay from '@/hooks/useEndTimeDDay'
+import { dateToKst } from '@/utils/date'
+import { useQueryClient } from '@tanstack/react-query'
 
 function ProductItemHorizontal({ product }) {
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
+
+  const queryClient = useQueryClient()
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
+  const endTimeDDay = useEndTimeDDay(dateToKst(product.endTime))
+  if (!endTimeDDay) {
+    queryClient.invalidateQueries('searchAuctions')
+  }
   return (
     <Link
       className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200 ${
@@ -49,7 +58,9 @@ function ProductItemHorizontal({ product }) {
         </div>
       </div>
       <div className='flex flex-col justify-between items-end col-span-2'>
-        <p className='text-sm text-gray-700'>{dday(product.endTime)} 남음</p>
+        <p className='text-sm text-gray-700'>
+          {endTimeDDay ? `${endTimeDDay} 남음` : `경매 종료됨`}
+        </p>
 
         <div className='flex items-end text-gray-600 gap-2'>
           <div className='flex items-center gap-0.5'>

@@ -8,8 +8,8 @@ import useEndTimeDDay from '@/hooks/useEndTimeDDay'
 import { dateToKst } from '@/utils/date'
 import { useQueryClient } from '@tanstack/react-query'
 function HomeProductItem({ product }) {
-  const queryClient = useQueryClient()
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
+  const queryClient = useQueryClient()
   const endTimeDDay = useEndTimeDDay(dateToKst(product.endTime))
   if (!endTimeDDay) {
     queryClient.invalidateQueries('searchAuctions')

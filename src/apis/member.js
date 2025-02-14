@@ -115,8 +115,8 @@ export function usePreferredLocations() {
 // 선호 지역 등록
 export function useAddPreferredLocation() {
   return useMutation({
-    mutationFn: locationData =>
-      axios_spring.post('/member/location', locationData).then(res => res.data),
+    mutationFn: params =>
+      axios_spring.post('/member/location', params).then(res => res.data),
   })
 }
 

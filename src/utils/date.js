@@ -1,5 +1,5 @@
 export function dateToKst(dateString) {
-  console.log(dateString)
+  if (!dateString) return ''
   const date = new Date(dateString)
   const offset = 9 * 60 // KST (UTC+9) offset in minutes
   const localDate = new Date(date.getTime() + offset * 60000)
