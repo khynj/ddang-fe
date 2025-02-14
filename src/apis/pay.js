@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useQuery, useMutation, useInfiniteQuery } from '@tanstack/react-query'
 import { axios_spring } from '@/utils/axiosInstances'
 
 // 페이 정보 조회
@@ -10,13 +10,22 @@ export function usePayInfo() {
 }
 
 // 페이 내역 조회 (페이지네이션 지원)
-export function usePayHistory(page = 1, size = 10) {
-  return useQuery({
-    queryKey: ['payHistory', page, size],
-    queryFn: () =>
+export function usePayHistory({ page = 1, size = 10 } = {}) {
+  return useInfiniteQuery({
+    queryKey: ['payHistory'],
+    queryFn: ({ pageParam = 1 }) =>
       axios_spring
-        .get('/pay/history', { params: { page, size } })
+        .get('/pay/history', {
+          params: {
+            page: pageParam,
+            size,
+          },
+        })
         .then(res => res.data),
+    getNextPageParam: (lastPage) => {
+      if (!lastPage.pageInfo.hasNext) return undefined
+      return lastPage.pageInfo.page + 1
+    },
   })
 }
 

@@ -1,13 +1,18 @@
 import usePageName from '@/hooks/usePageName.js'
 import { usePayHistory } from '@/apis/pay.js'
 import { formatPrice } from '@/utils/formatPrice'
+import { useState } from 'react'
+import DefaultButton from '@/components/buttons/DefaultButton'
 
 function PaymentHistoryPage() {
   usePageName('결제내역')
+  const [page, setPage] = useState(1)
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = usePayHistory({
+    page,
+    size: 10,
+  })
 
-  const { data } = usePayHistory()
-
-  if (!data || data.histories.length === 0) {
+  if (!data || data.pages[0].histories.length === 0) {
     return (
       <div className='flex justify-center items-center h-full'>
         <div className='text-center text-gray-700'>결제 내역이 없습니다.</div>
@@ -15,7 +20,7 @@ function PaymentHistoryPage() {
     )
   }
 
-  const transactions = data ? data.histories : []
+  const transactions = data.pages.flatMap(page => page.histories)
 
   const transactionsByDate = transactions.reduce((acc, transaction) => {
     const dateObj = new Date(transaction.createdTime)
@@ -39,10 +44,13 @@ function PaymentHistoryPage() {
     <div className='flex flex-col p-4'>
       {Object.keys(sortedTransactionsByDate).map(date => (
         <div key={date}>
-          <h2 className='text-base text-sm text-gray-600 py-2 px-1'>{date}</h2>{' '}
+          <h2 className='text-base text-sm text-gray-600 py-2 px-1'>{date}</h2>
           <div className='flex flex-col gap-2'>
             {sortedTransactionsByDate[date].map(transaction => {
-              const time = transaction.createdTime.split(' ')[1].slice(0, 5)
+              const time = new Date(transaction.createdTime).toLocaleTimeString('ko-KR', {
+                hour: '2-digit',
+                minute: '2-digit',
+              })
               return (
                 <div
                   key={transaction.payAccountHistoryId}
@@ -74,6 +82,15 @@ function PaymentHistoryPage() {
           </div>
         </div>
       ))}
+      {hasNextPage && (
+        <DefaultButton
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+          className="mt-4"
+        >
+          {isFetchingNextPage ? '로딩중...' : '더보기'}
+        </DefaultButton>
+      )}
     </div>
   )
 }
