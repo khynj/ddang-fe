@@ -11,7 +11,7 @@ import ROUTES from '@/data/ROUTES.js'
 import { formatPrice } from '@/utils/price.js'
 import { useAuctionDetails } from '@/apis/auction.js'
 import LoadingPage from '@/pages/LoadingPage.jsx'
-import { dateToKst, relativeTime } from '@/utils/date'
+import { UTCToDate, relativeTime } from '@/utils/date'
 import { parseTradeType } from '@/utils/auction.js'
 import ProductDetailDrawer from '../components/ProductDetailDrawer.jsx'
 import { useAuth } from '@/contexts/AuthContext.jsx'
@@ -100,11 +100,11 @@ function ProductDetailPage() {
         <div className='flex flex-col'>
           <ProductDetailItem
             name='개찰 시각'
-            value={new Date(dateToKst(auction.startTime)).toLocaleString()}
+            value={new Date(auction.startTime).toLocaleString()}
           />
           <ProductDetailItem
             name='종료 시각'
-            value={new Date(dateToKst(auction.endTime)).toLocaleString()}
+            value={new Date(auction.endTime).toLocaleString()}
           />
           <ProductDetailItem name='거래 방식' value={tradeType} />
           {auction.tradeType.isDirect && (

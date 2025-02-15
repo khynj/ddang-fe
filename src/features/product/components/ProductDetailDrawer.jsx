@@ -12,7 +12,7 @@ import ROUTES from '@/data/ROUTES'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
 import LoadingPage from '@/pages/LoadingPage'
 import { getAuctionStatus } from '@/utils/auction'
-import { dateToKst, relativeTime } from '@/utils/date'
+import { UTCToDate, relativeTime } from '@/utils/date'
 import { formatPrice, getMinimumBidUnit } from '@/utils/price'
 import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
@@ -31,7 +31,7 @@ function ProductDetailDrawer({ product, isMine }) {
   const [minimumBidUnit, setMinimumBidUnit] = useState(0)
   const [bidPrice, setBidPrice] = useState(minimumBidPrice)
 
-  const endTimeDDay = useEndTimeDDay(dateToKst(product.auction.endTime))
+  const endTimeDDay = useEndTimeDDay(product.auction.endTime)
   if (!endTimeDDay) {
     queryClient.invalidateQueries('searchAuctions')
   }
@@ -50,7 +50,7 @@ function ProductDetailDrawer({ product, isMine }) {
   if (!product) return <LoadingPage />
 
   const { auction, seller } = product
-  const status = getAuctionStatus(auction.startTime, auction.endTime)
+  const status = getAuctionStatus(auction)
 
   const handleBidPrice = e => {
     const value = e.target.value.replace(/[^0-9]/g, '')
@@ -161,7 +161,13 @@ function ProductDetailDrawer({ product, isMine }) {
         </div>
       </div>
       <div className='flex'>
-        <p className='font-bold'>최소입찰가 {formatPrice(minimumBidPrice)}원</p>
+        <p className='font-bold text-ddblue-400'>
+          {status == 2
+            ? auction.currentBidPrice > 0
+              ? `낙찰가 ${formatPrice(auction.currentBidPrice)}원`
+              : '유찰된 경매입니다.'
+            : `최소입찰가 ${formatPrice(minimumBidPrice)}원`}
+        </p>
       </div>
       {isMine &&
         (status == 0 ? (

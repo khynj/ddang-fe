@@ -2,6 +2,8 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import SearchHistory from '../components/SearchHistory'
 import { useAuctionSearchHistory, useCategory } from '@/apis/auction'
 import CategoryList from '../components/category/CategoryList'
+import { Link } from 'react-router'
+import ROUTES from '@/data/ROUTES'
 
 function SearchPage() {
   const { data: searchHistory } = useAuctionSearchHistory()
@@ -25,6 +27,12 @@ function SearchPage() {
           />
         ))}
       <div className='flex flex-col mt-4 gap-2 px-2'>
+        <Link
+          className='flex flex-col gap-2 p-2 text-gray-950'
+          to={`${ROUTES.PRODUCT_LIST}`}
+        >
+          <p className='font-bold mb-1'>전체조회</p>
+        </Link>
         {categories?.map((category, index) => (
           <div key={index} className='flex flex-col gap-2 p-2 text-gray-950'>
             <p className='font-bold mb-1'>{category.name}</p>

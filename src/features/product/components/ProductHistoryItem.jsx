@@ -6,8 +6,8 @@ import { formatPrice } from '@/utils/price'
 import ROUTES from '@/data/ROUTES'
 
 function ProductHistoryItem({ product }) {
-  const price = product.hammeredTime
-    ? formatPrice(product.hammeredPrice) + '원 낙찰'
+  const price = product.currentBidPrice
+    ? formatPrice(product.currentBidPrice) + '원 낙찰'
     : '유찰'
   const minimumBid = formatPrice(product.minimumBid)
   const instantHammerPrice = product.instantHammerPrice

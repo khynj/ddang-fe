@@ -6,14 +6,14 @@ import { Link } from 'react-router'
 import { formatPrice } from '@/utils/price'
 import { useQueryClient } from '@tanstack/react-query'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
-import { dateToKst } from '@/utils/date'
+import { UTCToDate } from '@/utils/date'
 
 function ProductBiddingItem({ product }) {
   const price = formatPrice(product.currentBidPrice)
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
   const isTopBidder = product.myBidPrice === product.currentBidPrice
   const queryClient = useQueryClient()
-  const endTimeDDay = useEndTimeDDay(dateToKst(product.endTime))
+  const endTimeDDay = useEndTimeDDay(product.endTime)
   if (!endTimeDDay) {
     queryClient.invalidateQueries('searchAuctions')
   }

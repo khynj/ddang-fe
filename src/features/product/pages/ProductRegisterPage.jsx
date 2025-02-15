@@ -15,9 +15,9 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useLocation, useNavigate } from 'react-router'
 import { useCreateAuction, useUpdateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
-import { convertDateToUTC, kstToDate } from '@/utils/date'
 import TitleInput from '@/components/form/TitleInput'
 import { useCategoryRecommendation } from '@/apis/ai'
+import { UTCToDate } from '@/utils/date'
 
 function ProductRegisterPage() {
   const { state } = useLocation()
@@ -38,10 +38,10 @@ function ProductRegisterPage() {
     auction?.instantHammerPrice || 0,
   )
   const [startTime, setStartTime] = useState(
-    auction ? kstToDate(auction.startTime) : '',
+    auction ? UTCToDate(auction.startTime) : '',
   )
   const [endTime, setEndTime] = useState(
-    auction ? kstToDate(auction.endTime) : '',
+    auction ? UTCToDate(auction.endTime) : '',
   )
   const [content, setContent] = useState(auction?.content || '')
   const [tradeType, setTradeType] = useState(
@@ -66,8 +66,8 @@ function ProductRegisterPage() {
       categoryId,
       minimumBid,
       instantHammerPrice,
-      startTime: convertDateToUTC(new Date(startTime)),
-      endTime: convertDateToUTC(new Date(endTime)),
+      startTime: new Date(startTime),
+      endTime: new Date(endTime),
       content,
       tradeType,
       location,

@@ -1,5 +1,5 @@
 import DEAL_TYPES from '@/data/DEAL_TYPES'
-import { dateToKst } from './date'
+import { UTCToDate } from './date'
 
 export function parseTradeType({ isDirect, isPackage, pay }) {
   return isDirect
@@ -27,12 +27,13 @@ export function getTradeType({ isDirect, isPackage, pay }) {
   return tradeType
 }
 
-export function getAuctionStatus(startTime, endTime) {
+export function getAuctionStatus({ startTime, endTime, hammeredTime }) {
   const now = new Date()
-  const start = new Date(dateToKst(startTime))
-  const end = new Date(dateToKst(endTime))
+  const start = new Date(startTime)
+  const end = new Date(endTime)
 
   if (now < start) return 0
+  if (hammeredTime) return 2
   if (now > end) return 2
   return 1
 }

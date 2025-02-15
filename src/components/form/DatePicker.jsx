@@ -12,14 +12,11 @@ function DatePicker({ label, required, value, setValue, validate }) {
 
   const koreanLocalDate = useMemo(() => {
     if (!value) return ''
-    return new Date(value).toLocaleString('ko-KR', {
-      timeZone: 'Asia/Seoul',
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    })
+    return new Date(value).toLocaleString().replace(/:\d{2}\s/, ' ')
   }, [value])
 
   const onChange = e => {
+    console.log(e.target.value)
     if (validate) {
       setError(validate(e.target.value))
     }

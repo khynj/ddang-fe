@@ -5,13 +5,13 @@ import ROUTES from '@/data/ROUTES'
 import { useAuth } from '@/contexts/AuthContext'
 import { useQueryClient } from '@tanstack/react-query'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
-import { dateToKst } from '@/utils/date'
+import { UTCToDate } from '@/utils/date'
 
 function HomeMainProduct({ product, index, size }) {
   const { user } = useAuth()
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
   const queryClient = useQueryClient()
-  const endTimeDDay = useEndTimeDDay(dateToKst(product.endTime))
+  const endTimeDDay = useEndTimeDDay(product.endTime)
   if (!endTimeDDay) {
     queryClient.invalidateQueries('searchAuctions')
   }

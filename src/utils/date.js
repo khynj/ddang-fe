@@ -1,22 +1,6 @@
-export function dateToKst(dateString) {
-  if (!dateString) return ''
-  const date = new Date(dateString)
-  const offset = 18 * 60 // KST (UTC+9) offset in minutes
-  const localDate = new Date(date.getTime() + offset * 60000)
-  const isoString = localDate.toISOString().replace('Z', '+09:00')
-  return isoString.slice(0, 19) + '+09:00'
-}
-
-export function dateLocale(dateString) {
-  const date = new Date(dateString)
-  return date.toLocaleString()
-}
-
-export function kstToDate(dateString) {
-  const date = new Date(dateString)
-  const offset = 18 * 60 // KST (UTC+9) offset in minutes
-  const localDate = new Date(date.getTime() + offset * 60000)
-  return localDate.toISOString().slice(0, 19)
+export function UTCToDate(dateString) {
+  // return new Date(dateString)
+  return new Date(new Date(dateString).toString() + ' UTC')
 }
 
 export function relativeTime(time) {
@@ -25,7 +9,9 @@ export function relativeTime(time) {
   })
   const now = new Date()
   const target = new Date(time)
-  const diff = now - target
+  let diff = now - target
+
+  if (diff < 0) diff = -diff
 
   const day = diff / (1000 * 60 * 60 * 24)
 

@@ -15,7 +15,7 @@ import { useFollowingList } from '@/apis/member'
 function HomePage() {
   const { user } = useAuth()
 
-  const { data: biddingProducts } = useSearchMyBids({})
+  const { data: biddingProducts } = useSearchMyBids({ status: 'ongoing' })
 
   const { data: closingProducts } = useSearchAuctions({
     sortType: 'endTime',
