@@ -115,6 +115,15 @@ export function useSearchMyBids(params) {
   })
 }
 
+export function useSearchAuctionHistories(params) {
+  // role = buyer/seller
+  return useQuery({
+    queryKey: ['searchAuctionHistories', params],
+    queryFn: () =>
+      axios_spring.get('/auction/history', { params }).then(res => res.data),
+  })
+}
+
 export function useFollowingAuctions(memberIds, params) {
   const defaultParams = {
     searchKey: '',

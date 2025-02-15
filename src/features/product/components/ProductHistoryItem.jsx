@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { relativeTime } from '@/utils/date'
 import ProductImage from './ProductImage'
 import { formatPrice } from '@/utils/price'
+import ROUTES from '@/data/ROUTES'
 
 function ProductHistoryItem({ product }) {
   const price = product.hammeredTime
@@ -24,7 +25,7 @@ function ProductHistoryItem({ product }) {
       className={`grid grid-cols-9 p-4 py-3.5 gap-3 border-b border-gray-200 ${
         product.myBidPrice && 'bg-gray-50'
       }`}
-      to={`/popup/product/${product.auctionId}`}
+      to={ROUTES.PRODUCT_DETAIL.replace(':id', product.auctionId)}
     >
       <div className='col-span-2 m-auto'>
         <ProductImage product={product} />

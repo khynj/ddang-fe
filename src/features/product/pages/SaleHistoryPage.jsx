@@ -1,13 +1,15 @@
 import usePageName from '@/hooks/usePageName'
 import ProductHistoryItem from '../components/ProductHistoryItem'
-import sale from '../data/sale'
+import { useSearchAuctionHistories } from '@/apis/auction'
 
 function SaleHistoryPage() {
   usePageName('판매내역')
 
+  const { data: sale } = useSearchAuctionHistories({ role: 'seller' })
+
   return (
     <div>
-      {sale.map((product, index) => (
+      {sale?.auctionDetailProjection.map((product, index) => (
         <ProductHistoryItem key={index} product={product} />
       ))}
     </div>
