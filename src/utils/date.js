@@ -63,3 +63,14 @@ export function dday(date) {
       : `${minutes}:${seconds}`
     : `${hours}시간`
 }
+
+export function convertDateToUTC(date) {
+  return new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
+  )
+}
