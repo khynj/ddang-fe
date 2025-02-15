@@ -163,24 +163,25 @@ function ProductDetailDrawer({ product, isMine }) {
       <div className='flex'>
         <p className='font-bold'>최소입찰가 {formatPrice(minimumBidPrice)}원</p>
       </div>
-      {isMine && status == 0 ? (
-        <div className='flex gap-4 mt-2'>
-          <DefaultButton type='red' onClick={onDelete}>
-            <span>삭제</span>
-          </DefaultButton>
-          <DefaultButton type={'gray'} onClick={onEdit}>
-            <span>수정</span>
-          </DefaultButton>
-        </div>
-      ) : status == 1 ? (
-        <div className='flex gap-4 mt-2 text-ddblue-400'>
-          {auction.currentBidPrice > 0 ? (
-            <p>현재 입찰가 {formatPrice(auction.currentBidPrice)}원</p>
-          ) : (
-            <p>아직 입찰이 없습니다.</p>
-          )}
-        </div>
-      ) : null}
+      {isMine &&
+        (status == 0 ? (
+          <div className='flex gap-4 mt-2'>
+            <DefaultButton type='red' onClick={onDelete}>
+              <span>삭제</span>
+            </DefaultButton>
+            <DefaultButton type={'gray'} onClick={onEdit}>
+              <span>수정</span>
+            </DefaultButton>
+          </div>
+        ) : status == 1 ? (
+          <div className='flex gap-4 mt-2 text-ddblue-400'>
+            {auction.currentBidPrice > 0 ? (
+              <p>현재 입찰가 {formatPrice(auction.currentBidPrice)}원</p>
+            ) : (
+              <p>아직 입찰자가 없어요.</p>
+            )}
+          </div>
+        ) : null)}
 
       {!isMine && status == 1 && (
         <>
