@@ -87,8 +87,8 @@ function ProductDetailDrawer({ product, isMine }) {
           alert('입찰에 성공했습니다.')
           queryClient.invalidateQueries('auctionDetails')
         },
-        onError: () => {
-          alert('잔액이 부족합니다.')
+        onError: err => {
+          alert('err')
         },
       },
     )
@@ -102,7 +102,7 @@ function ProductDetailDrawer({ product, isMine }) {
     )
       return
     purchase(auction.auctionId, {
-      onSuccess: data => {
+      onSuccess: () => {
         alert('즉시구매에 성공했습니다.')
         queryClient.invalidateQueries('auctionDetails')
       },
