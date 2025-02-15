@@ -2,7 +2,7 @@ import ROUTES from '@/data/ROUTES'
 
 export default [
   [
-    { to: ROUTES.PAYMENT_HISTORY, icon: 'credit_card', title: '결제내역' },
+    { to: ROUTES.PAYMENT_HISTORY, icon: 'credit_card', title: '페이내역' },
     { to: ROUTES.PURCHASE_HISTORY, icon: 'sticky_note_2', title: '구매내역' },
     { to: ROUTES.SALE_HISTORY, icon: 'sticky_note_2', title: '판매내역' },
     { to: ROUTES.FAVORITES, icon: 'favorite', title: '찜 목록' },

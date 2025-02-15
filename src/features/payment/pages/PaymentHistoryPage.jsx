@@ -3,9 +3,28 @@ import { usePayHistory } from '@/apis/pay.js'
 import { formatPrice } from '@/utils/price'
 
 function PaymentHistoryPage() {
-  usePageName('결제내역')
+  usePageName('페이내역')
 
   const { data } = usePayHistory()
+  // const data = {
+  //   histories: [
+  //     {
+  //       payAccountHistoryId: 7,
+  //       title: '카카오페이 충전',
+  //       changeAmount: 500000,
+  //       balanceAfter: 500000,
+  //       createdTime: '2025-02-15T03:35:39Z',
+  //     },
+  //   ],
+  //   pageInfo: {
+  //     page: 1,
+  //     size: 10,
+  //     totalElements: 1,
+  //     totalPages: 1,
+  //     hasPrevious: false,
+  //     hasNext: false,
+  //   },
+  // }
 
   if (!data || data.histories.length === 0) {
     return (
@@ -42,7 +61,13 @@ function PaymentHistoryPage() {
           <h2 className='text-base text-sm text-gray-600 py-2 px-1'>{date}</h2>{' '}
           <div className='flex flex-col gap-2'>
             {sortedTransactionsByDate[date].map(transaction => {
-              const time = transaction.createdTime.split(' ')[1].slice(0, 5)
+              const time = new Date(transaction.createdTime).toLocaleTimeString(
+                'ko-KR',
+                {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                },
+              )
               return (
                 <div
                   key={transaction.payAccountHistoryId}
