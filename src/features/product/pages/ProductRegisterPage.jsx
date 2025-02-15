@@ -204,6 +204,7 @@ function ProductRegisterPage() {
         validate={validation.title}
         onChange={e => {
           console.log(e.target.value)
+          setTitle(e.target.value)
           if (isPending) return
           recommendCategory(
             { title: e.target.value },
@@ -213,7 +214,6 @@ function ProductRegisterPage() {
               },
             },
           )
-          setTitle(e.target.value)
         }}
       />
       <CategoryPicker
