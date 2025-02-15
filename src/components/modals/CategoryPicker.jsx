@@ -10,50 +10,6 @@ import InputError from '../form/InputError'
 import ModalItem from './ModalItem'
 import DefaultButton from '../buttons/DefaultButton'
 import { useCategory } from '@/apis/auction'
-import { useCategoryRecommendation } from '@/apis/ai'
-
-const RECOMMENDATIONS = [
-  [
-    {
-      1: '패션 및 뷰티',
-    },
-    {
-      101: '여성의류',
-    },
-  ],
-  [
-    {
-      11: '기타',
-    },
-    {
-      1102: '기타',
-    },
-  ],
-  [
-    {
-      1: '패션 및 뷰티',
-    },
-    {
-      101: '여성의류',
-    },
-  ],
-  [
-    {
-      11: '기타',
-    },
-    {
-      1102: '기타',
-    },
-  ],
-  [
-    {
-      1: '패션 및 뷰티',
-    },
-    {
-      101: '여성의류',
-    },
-  ],
-]
 
 function CategoryPicker({
   label,
@@ -96,7 +52,7 @@ function CategoryPicker({
                 setValue(Object.keys(child)[0])
                 setCategoryName(Object.values(child)[0])
               }}
-              className='bg-gray-100 p-2 rounded-md text-sm shrink-0'
+              className='bg-ddblue-400 text-white px-2 py-1.5 rounded-md text-sm shrink-0'
             >
               {Object.values(child)[0]}
             </button>

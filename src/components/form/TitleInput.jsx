@@ -33,6 +33,7 @@ function TitleInput({
         type={type}
         value={value}
         onChange={onChange}
+        onBlur={onChange}
         className={`flex border-1 border-gray-300 rounded-md p-3 ${
           error ? 'invalid' : ''
         }`}
