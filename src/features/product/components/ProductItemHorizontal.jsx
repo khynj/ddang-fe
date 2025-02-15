@@ -57,7 +57,7 @@ function ProductItemHorizontal({ product }) {
         </div>
       </div>
       <div className='flex flex-col justify-between items-end col-span-2'>
-        <p className='text-sm text-gray-700'>
+        <p className='text-sm text-gray-700 whitespace-nowrap'>
           {endTimeDDay ? `${endTimeDDay} 남음` : `경매 종료됨`}
         </p>
 
