@@ -50,6 +50,11 @@ export function useStompClient(id, scrollRef) {
         stomp.disconnect()
       }
     })
+
+    return () => {
+      stomp.disconnect()
+      socket.close()
+    }
   }, [id])
 
   useEffect(() => {

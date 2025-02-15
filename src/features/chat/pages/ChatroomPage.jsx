@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import usePageName from '../../../hooks/usePageName'
 import ChatItem from '../components/ChatItem'
 import MaterialIcon from '@/components/icons/MaterialIcon'
