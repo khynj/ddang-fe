@@ -15,6 +15,7 @@ function ProductListPage({ filters, isFavorite }) {
   const [page, setPage] = useState(1)
 
   const param = useMemo(() => {
+    console.log(searchParams, page, isFavorite)
     const params = {}
     searchParams.forEach((value, key) => {
       if (!value) return
@@ -30,15 +31,11 @@ function ProductListPage({ filters, isFavorite }) {
   useEffect(() => {
     setSearchParams(
       params => {
-        if (params.get('sortType') === null) {
-          params.set('sortType', 'createdAt')
-        }
-        if (searchParams.get('deliveryMethod') === null) {
+        params.get('sortType') || params.set('sortType', 'createdAt')
+        searchParams.get('deliveryMethod') ||
           params.set('deliveryMethod', 'any')
-        }
-        if (searchParams.get('status') === null) {
-          params.set('status', 'ongoing')
-        }
+        searchParams.get('status') || params.set('status', 'ongoing')
+
         return params
       },
       { replace: true },

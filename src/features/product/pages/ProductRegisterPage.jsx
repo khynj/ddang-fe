@@ -15,7 +15,7 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useLocation, useNavigate } from 'react-router'
 import { useCreateAuction, useUpdateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
-import { dateToKst, kstToDate } from '@/utils/date'
+import { kstToDate } from '@/utils/date'
 import TitleInput from '@/components/form/TitleInput'
 import { useCategoryRecommendation } from '@/apis/ai'
 
@@ -190,7 +190,8 @@ function ProductRegisterPage() {
   }
   const [categoryRecommendation, setCategoryRecommendation] = useState([])
 
-  const { mutateAsync: recommendCategory } = useCategoryRecommendation()
+  const { mutateAsync: recommendCategory, isPending } =
+    useCategoryRecommendation()
 
   return (
     <div className='flex flex-col p-4'>
@@ -203,6 +204,7 @@ function ProductRegisterPage() {
         validate={validation.title}
         onChange={e => {
           console.log(e.target.value)
+          if (isPending) return
           recommendCategory(
             { title: e.target.value },
             {

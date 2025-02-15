@@ -81,11 +81,11 @@ export function useDeleteAuctionSearchHistory() {
  * @returns
  */
 export function useSearchAuctions(params) {
-  // console.log('params : ', params)
+  console.log('params : ', params)
   const defaultParams = {
     searchKey: '',
-    deliveryMethod: '',
-    status: '',
+    deliveryMethod: 'any',
+    status: 'ongoing',
     isFavorite: '',
     categoryId: '',
     sortType: 'createdAt',
@@ -96,11 +96,13 @@ export function useSearchAuctions(params) {
     role: '',
     sellerId: '',
   }
+  const paramsWithDefault = { ...defaultParams, ...params }
+  console.log('paramsWithDefault : ', paramsWithDefault)
   return useQuery({
-    queryKey: ['searchAuctions', params],
+    queryKey: ['searchAuctions', paramsWithDefault],
     queryFn: () =>
       axios_spring
-        .get('/auction', { params: { ...defaultParams, ...params } })
+        .get('/auction', { params: paramsWithDefault })
         .then(res => res.data),
   })
 }

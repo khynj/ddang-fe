@@ -1,15 +1,26 @@
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import IconButton from '../buttons/IconButton'
 import ROUTES from '../../data/ROUTES'
 import { useUnreadNotificationStatus } from '@/apis/notifications'
+import { useEffect, useState } from 'react'
 
 function ExploreHeader() {
+  const [searchParams] = useSearchParams()
   const route = useNavigate()
+  const [searchKey, setSearchKey] = useState(
+    searchParams.get('searchKey') || '',
+  )
+
   const search = e => {
     e.preventDefault()
-    route(`${ROUTES.PRODUCT_LIST}?searchKey=${e.target[0].value}`)
+    route(`${ROUTES.PRODUCT_LIST}?searchKey=${searchKey}`)
     e.target[0].blur()
   }
+
+  useEffect(() => {
+    setSearchKey(searchParams.get('searchKey') || '')
+  }, [searchParams])
+
   const { data: notificationStatus } = useUnreadNotificationStatus()
   return (
     <header
@@ -22,6 +33,8 @@ function ExploreHeader() {
           className={`px-3 h-full w-full rounded-xl text-sm border border-gray-400 font-bold text-gray-950`}
           type='text'
           placeholder='제목으로 검색하세요'
+          value={searchKey}
+          onChange={e => setSearchKey(e.target.value)}
         />
       </form>
       <IconButton
