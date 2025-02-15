@@ -15,7 +15,7 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useLocation, useNavigate } from 'react-router'
 import { useCreateAuction, useUpdateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
-import { kstToDate } from '@/utils/date'
+import { convertDateToUTC, kstToDate } from '@/utils/date'
 import TitleInput from '@/components/form/TitleInput'
 import { useCategoryRecommendation } from '@/apis/ai'
 
@@ -66,8 +66,8 @@ function ProductRegisterPage() {
       categoryId,
       minimumBid,
       instantHammerPrice,
-      startTime: new Date(startTime),
-      endTime: new Date(endTime),
+      startTime: convertDateToUTC(new Date(startTime)),
+      endTime: convertDateToUTC(new Date(endTime)),
       content,
       tradeType,
       location,
