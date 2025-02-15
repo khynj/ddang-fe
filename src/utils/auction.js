@@ -1,4 +1,5 @@
 import DEAL_TYPES from '@/data/DEAL_TYPES'
+import { dateToKst } from './date'
 
 export function parseTradeType({ isDirect, isPackage, pay }) {
   return isDirect
@@ -24,4 +25,14 @@ export function getTradeType({ isDirect, isPackage, pay }) {
         toString(pay).toLowerCase(),
   )
   return tradeType
+}
+
+export function getAuctionStatus(startTime, endTime) {
+  const now = new Date()
+  const start = new Date(dateToKst(startTime))
+  const end = new Date(dateToKst(endTime))
+
+  if (now < start) return 0
+  if (now > end) return 2
+  return 1
 }

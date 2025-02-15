@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
-import relativeTime from '@/utils/relativeTime'
+import { relativeTime } from '@/utils/date'
 import ProductImage from './ProductImage'
 import { formatPrice } from '@/utils/price'
 

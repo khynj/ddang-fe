@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { dday } from '@/utils/Dday'
+import { dday } from '@/utils/date'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
 import ProductImage from './ProductImage'

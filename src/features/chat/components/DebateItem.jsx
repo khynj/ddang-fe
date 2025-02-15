@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import relativeTime from '../../../utils/relativeTime'
+import { relativeTime } from '@/utils/date'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 

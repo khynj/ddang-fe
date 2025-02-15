@@ -1,4 +1,4 @@
-import { dday } from '@/utils/Dday'
+import { dday } from '@/utils/date'
 import { useEffect, useMemo, useState } from 'react'
 
 export default function useEndTimeDDay(endTime) {
