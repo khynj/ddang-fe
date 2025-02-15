@@ -32,9 +32,9 @@ function ProductListPage({ filters, isFavorite }) {
     setSearchParams(
       params => {
         params.get('sortType') || params.set('sortType', 'createdAt')
-        searchParams.get('deliveryMethod') ||
-          params.set('deliveryMethod', 'any')
-        searchParams.get('status') || params.set('status', 'ongoing')
+        // searchParams.get('deliveryMethod') ||
+        //   params.set('deliveryMethod', 'any')
+        // searchParams.get('status') || params.set('status', 'ongoing')
 
         return params
       },
@@ -44,11 +44,9 @@ function ProductListPage({ filters, isFavorite }) {
   }, [searchParams, setSearchParams])
 
   useEffect(() => {
-    if (newProducts) {
-      if (page == 1) setProducts(newProducts.auctionDetailProjection)
-      else
-        setProducts(prev => [...prev, ...newProducts.auctionDetailProjection])
-    }
+    if (!newProducts) return
+    if (page == 1) setProducts(newProducts.auctionDetailProjection)
+    else setProducts(prev => [...prev, ...newProducts.auctionDetailProjection])
   }, [newProducts, page])
 
   return (
@@ -69,6 +67,7 @@ function ProductListPage({ filters, isFavorite }) {
                 { value: 'package', name: '택배' },
               ]}
               keyName={'deliveryMethod'}
+              defaultName={'배송방식'}
             />
             <CategoryPickerSmall
               searchParams={searchParams}
@@ -78,11 +77,13 @@ function ProductListPage({ filters, isFavorite }) {
               searchParams={searchParams}
               setSearchParams={setSearchParams}
               options={[
+                // { value: 'any', name: '경매상태' },
                 { value: 'ongoing', name: '경매중' },
                 { value: 'upcoming', name: '경매예정' },
                 { value: 'ended', name: '경매종료' }, // todo
               ]}
               keyName={'status'}
+              defaultName={'경매상태'}
             />
           </>
         )}

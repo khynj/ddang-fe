@@ -84,8 +84,8 @@ export function useSearchAuctions(params) {
   console.log('params : ', params)
   const defaultParams = {
     searchKey: '',
-    deliveryMethod: 'any',
-    status: 'ongoing',
+    deliveryMethod: '',
+    status: '',
     isFavorite: '',
     categoryId: '',
     sortType: 'createdAt',

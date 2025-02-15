@@ -5,11 +5,17 @@ import { useMemo } from 'react'
 import Modal from '@/components/modals/Modal'
 import DefaultButton from '@/components/buttons/DefaultButton'
 
-function FilterChipArray({ options, searchParams, setSearchParams, keyName }) {
-  const name = useMemo(
-    () => options.find(v => v.value === searchParams.get(keyName))?.name,
-    [options, searchParams, keyName],
-  )
+function FilterChipArray({
+  options,
+  searchParams,
+  setSearchParams,
+  keyName,
+  defaultName,
+}) {
+  const name = useMemo(() => {
+    const v = options.find(v => v.value === searchParams.get(keyName))
+    return v ? v.name : defaultName
+  }, [options, searchParams, keyName, defaultName])
 
   const { isOpen, open, close } = useModal(name)
 
@@ -25,6 +31,21 @@ function FilterChipArray({ options, searchParams, setSearchParams, keyName }) {
       </button>
       {isOpen && (
         <Modal close={close}>
+          <DefaultButton
+            onClick={() => {
+              setSearchParams(
+                params => {
+                  params.delete(keyName)
+                  return params
+                },
+                { replace: true },
+              )
+              close()
+            }}
+            type='gray'
+          >
+            전체
+          </DefaultButton>
           {options.map((option, index) => (
             <DefaultButton
               key={index}
@@ -54,6 +75,7 @@ FilterChipArray.propTypes = {
   searchParams: PropTypes.object.isRequired,
   setSearchParams: PropTypes.func.isRequired,
   keyName: PropTypes.string.isRequired,
+  defaultName: PropTypes.string,
 }
 
 export default FilterChipArray
