@@ -6,7 +6,7 @@ import ProductImage from './ProductImage'
 import { formatPrice } from '@/utils/price'
 
 function ProductItemHorizontalSmall({ product }) {
-  const price = formatPrice(product.currentBidPrice)
+  const price = formatPrice(product.currentBidPrice || product.minimumBid)
   return (
     <Link
       to={`${ROUTES.PRODUCT_DETAIL}`.replace(':id', product.auctionId)}
