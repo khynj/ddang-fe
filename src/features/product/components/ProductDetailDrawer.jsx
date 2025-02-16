@@ -29,7 +29,7 @@ function ProductDetailDrawer({ product, isMine }) {
 
   const [minimumBidPrice, setMinimumBidPrice] = useState(0)
   const [minimumBidUnit, setMinimumBidUnit] = useState(0)
-  const [bidPrice, setBidPrice] = useState(minimumBidPrice)
+  const [bidPrice, setBidPrice] = useState(0)
 
   const endTimeDDay = useEndTimeDDay(product.auction.endTime)
   if (!endTimeDDay) {
@@ -40,11 +40,11 @@ function ProductDetailDrawer({ product, isMine }) {
     if (!product || !getMinimumBidUnit || !setMinimumBidPrice) return
     const bidUnit = getMinimumBidUnit(product.auction.minimumBid)
     setMinimumBidUnit(bidUnit)
-    setMinimumBidPrice(
-      product.auction.currentBidPrice
-        ? product.auction.currentBidPrice + bidUnit
-        : product.auction.minimumBid,
-    )
+    const mimimumBidPrice = product.auction.currentBidPrice
+      ? product.auction.currentBidPrice + bidUnit
+      : product.auction.minimumBid
+    setMinimumBidPrice(mimimumBidPrice)
+    setBidPrice(mimimumBidPrice)
   }, [product, setMinimumBidUnit, setMinimumBidPrice])
 
   if (!product) return <LoadingPage />
@@ -137,7 +137,7 @@ function ProductDetailDrawer({ product, isMine }) {
 
   return (
     <StickyContainer rounded>
-      <div className='flex justify-between items-center mb-2'>
+      <div className='flex justify-between items-center mb-1'>
         <span className='text-sm'>
           {status == 0
             ? `경매 시작 ${relativeTime(auction.startTime)}`
@@ -164,15 +164,13 @@ function ProductDetailDrawer({ product, isMine }) {
           />
         </div>
       </div>
-      <div className='flex'>
-        <p className='font-bold text-ddblue-400'>
-          {status == 2
-            ? auction.currentBidPrice > 0
-              ? `낙찰가 ${formatPrice(auction.currentBidPrice)}원`
-              : '유찰된 경매입니다.'
-            : `최소입찰가 ${formatPrice(minimumBidPrice)}원`}
-        </p>
-      </div>
+      <p className='font-bold text-ddblue-400'>
+        {status == 2
+          ? auction.currentBidPrice > 0
+            ? `낙찰가 ${formatPrice(auction.currentBidPrice)}원`
+            : '유찰된 경매입니다.'
+          : `최소입찰가 ${formatPrice(minimumBidPrice)}원`}
+      </p>
       {isMine &&
         (status == 0 ? (
           <div className='flex gap-4 mt-2'>

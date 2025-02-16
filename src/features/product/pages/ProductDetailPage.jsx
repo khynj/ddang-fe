@@ -16,11 +16,10 @@ import { useAuth } from '@/contexts/AuthContext.jsx'
 import RelatedProductList from '../components/RelatedProductList.jsx'
 
 function ProductDetailPage() {
-  usePageName('제품상세')
-
   const productId = useParams().id
   const { data: product, isPending } = useAuctionDetails(productId)
   const { user } = useAuth()
+  usePageName(product ? product.auction.productName : '제품상세')
 
   if (isPending) return <LoadingPage />
 
@@ -28,7 +27,7 @@ function ProductDetailPage() {
   const tradeType = parseTradeType(auction.tradeType)
 
   return (
-    <div className='flex flex-col gap-2 pb-72'>
+    <div className='flex flex-col h-full gap-2 pb-64 overflow-y-scroll'>
       <Slider>
         {auction.photos.map((photo, index) => (
           <div
