@@ -37,7 +37,7 @@ function ProductDetailDrawer({ product, isMine }) {
   }
 
   useEffect(() => {
-    if (!product) return
+    if (!product || !getMinimumBidUnit || !setMinimumBidPrice) return
     const bidUnit = getMinimumBidUnit(product.auction.minimumBid)
     setMinimumBidUnit(bidUnit)
     setMinimumBidPrice(
@@ -45,7 +45,7 @@ function ProductDetailDrawer({ product, isMine }) {
         ? product.auction.currentBidPrice + bidUnit
         : product.auction.minimumBid,
     )
-  }, [product])
+  }, [product, setMinimumBidUnit, setMinimumBidPrice])
 
   if (!product) return <LoadingPage />
 
@@ -71,7 +71,10 @@ function ProductDetailDrawer({ product, isMine }) {
   }
 
   const onBid = () => {
-    if (bidPrice > auction.instantHammerPrice) {
+    if (
+      auction.instantHammerPrice > 0 &&
+      bidPrice > auction.instantHammerPrice
+    ) {
       setBidPrice(auction.instantHammerPrice)
       return alert('즉시구매가보다 높게 입찰할 수 없습니다.')
     }
@@ -97,6 +100,7 @@ function ProductDetailDrawer({ product, isMine }) {
   }
 
   const onPurchase = () => {
+    if (auction.instantHammerPrice < 1) return
     if (
       !confirm(
         formatPrice(auction.instantHammerPrice) + '원에 즉시구매 하시겠습니까?',
@@ -212,9 +216,11 @@ function ProductDetailDrawer({ product, isMine }) {
             </button>
           </div>
           <div className='flex gap-4 mt-2'>
-            <DefaultButton type={'red'} onClick={onPurchase}>
-              <span>즉시낙찰</span>
-            </DefaultButton>
+            {auction.instantHammerPrice > 0 && (
+              <DefaultButton type={'red'} onClick={onPurchase}>
+                <span>즉시낙찰</span>
+              </DefaultButton>
+            )}
             <DefaultButton onClick={onBid}>
               <span>응찰</span>
             </DefaultButton>

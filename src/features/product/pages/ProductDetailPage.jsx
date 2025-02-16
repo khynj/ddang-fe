@@ -57,11 +57,13 @@ function ProductDetailPage() {
               value={formatPrice(auction.minimumBid) + '원'}
               bold
             />
-            <ProductDetailItem
-              name='즉시낙찰가'
-              value={formatPrice(auction.instantHammerPrice) + '원'}
-              bold
-            />
+            {!!auction.instantHammerPrice && (
+              <ProductDetailItem
+                name='즉시낙찰가'
+                value={formatPrice(auction.instantHammerPrice) + '원'}
+                bold
+              />
+            )}
           </div>
           <div className='flex gap-4 text-sm font-bold text-gray-900'>
             <div className='flex items-center gap-0.5'>
