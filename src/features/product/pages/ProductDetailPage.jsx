@@ -15,15 +15,16 @@ import { relativeTime } from '@/utils/date'
 import { parseTradeType } from '@/utils/auction.js'
 import ProductDetailDrawer from '../components/ProductDetailDrawer.jsx'
 import { useAuth } from '@/contexts/AuthContext.jsx'
+import RelatedProductList from '../components/RelatedProductList.jsx'
 
 function ProductDetailPage() {
   usePageName('제품상세')
 
   const productId = useParams().id
-  const { data: product, isLoading } = useAuctionDetails(productId)
+  const { data: product, isPending } = useAuctionDetails(productId)
   const { user } = useAuth()
 
-  if (isLoading) return <LoadingPage />
+  if (isPending) return <LoadingPage />
 
   const { auction, seller } = product
   const tradeType = parseTradeType(auction.tradeType)
@@ -121,17 +122,7 @@ function ProductDetailPage() {
           <ProfileSmall user={seller} />
         </Link>
         <hr className='border-gray-200' />
-        <div className='flex flex-col gap-3'>
-          <h1 className='font-bold'>{auction.productName} 관련 매물</h1>
-          <div
-            className='flex flex-row gap-2 pb-1
-        overflow-x-scroll snap-x snap-madatory'
-          >
-            {products.map((product, i) => (
-              <ProductItemSmall product={{ ...product, id: i }} key={i} />
-            ))}
-          </div>
-        </div>
+        <RelatedProductList product={product} />
       </div>
       <ProductDetailDrawer
         product={product}

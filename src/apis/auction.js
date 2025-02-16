@@ -194,3 +194,11 @@ export function useCategory(parent) {
       axios_spring.get(`/category?parent=${parent}`).then(res => res.data),
   })
 }
+
+export function useRelatedAuctions(auctionId) {
+  return useQuery({
+    queryKey: ['relatedAuctions'],
+    queryFn: () =>
+      axios_spring.get(`/auction/${auctionId}/related`).then(res => res.data),
+  })
+}
