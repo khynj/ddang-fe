@@ -26,12 +26,7 @@ function ProfilePage() {
 
   return (
     <div>
-      <Profile
-        name={userData.nickname}
-        trustScore={userData.reliability}
-        profileSrc={userData.imageUrl}
-        id={id}
-      />
+      <Profile userData={userData} />
       {products && (
         <ProfileSection
           title='판매 상품'

@@ -7,12 +7,12 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useToggleFollow } from '@/apis/member'
 import { useQueryClient } from '@tanstack/react-query'
 
-function Profile({ profileSrc, name, trustScore, id }) {
+function Profile({ userData }) {
   const queryClient = useQueryClient()
   const { user } = useAuth()
   const { mutate: toggleFollow } = useToggleFollow()
   const onToggleFollow = () => {
-    toggleFollow(id, {
+    toggleFollow(userData.id, {
       onSuccess: () => {
         queryClient.invalidateQueries('memberInfo')
       },
@@ -23,10 +23,10 @@ function Profile({ profileSrc, name, trustScore, id }) {
     <div className='p-6 bg-white'>
       {/* 프로필 이미지 및 이름 섹션 */}
       <div className='flex items-center'>
-        <ProfileImage src={profileSrc} size={64} />
+        <ProfileImage src={userData.profileSrc} size={64} />
         <div className='flex flex-row justify-between items-center w-full ml-4'>
           <p className='text-base font-bold'>{name}</p>
-          {user.memberId === id ? (
+          {user.memberId === userData.id ? (
             <Link to='/mypage/edit-profile'>
               <button
                 style={{
@@ -45,10 +45,17 @@ function Profile({ profileSrc, name, trustScore, id }) {
                 </MaterialIcon>
               </button>
             </Link>
-          ) : (
+          ) : userData.isFollowing ? (
             <button
               onClick={onToggleFollow}
               className='text-sm bg-gray-100 text-black py-2 px-2 rounded-lg cursor-pointer'
+            >
+              구독취소
+            </button>
+          ) : (
+            <button
+              onClick={onToggleFollow}
+              className='text-sm bg-ddblue-400 text-white py-2 px-2 rounded-lg cursor-pointer'
             >
               구독하기
             </button>
@@ -60,20 +67,17 @@ function Profile({ profileSrc, name, trustScore, id }) {
       <div className='mt-5'>
         <div className='flex items-center justify-between'>
           <p className='text-ddblue-400 font-bold text-[14px]'>신뢰도</p>
-          <span className='text-sm font-bold'>{trustScore}%</span>
+          <span className='text-sm font-bold'>{userData.trustScore}%</span>
         </div>
         {/* 5단계 중 현재 3단계 */}
-        <TrustScoreBar trustScore={trustScore} />
+        <TrustScoreBar trustScore={userData.trustScore} />
       </div>
     </div>
   )
 }
 
 Profile.propTypes = {
-  profileSrc: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  trustScore: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
+  userData: PropTypes.object.isRequired,
 }
 
 export default Profile
