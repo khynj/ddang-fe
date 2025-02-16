@@ -18,6 +18,7 @@ function HomePage() {
   const { data: biddingProducts } = useSearchMyBids({ status: 'ongoing' })
 
   const { data: closingProducts } = useSearchAuctions({
+    status: 'ongoing',
     sortType: 'endTime',
     size: 4,
   })

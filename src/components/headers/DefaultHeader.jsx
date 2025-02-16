@@ -26,7 +26,7 @@ function DefaultHeader({ back, feature, title }) {
       </div>
 
       <div className='min-w-12'>
-        <p className='font-bold text-lg'>{title}</p>
+        <p className='font-bold text-lg truncate'>{title}</p>
       </div>
       <div className='min-w-12 flex items-center justify-end'>
         {feature && (
