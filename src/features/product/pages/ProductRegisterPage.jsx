@@ -158,7 +158,7 @@ function ProductRegisterPage() {
     endTime: endTime =>
       VALIDATIONS.required(endTime) || VALIDATIONS.minDate(endTime, startTime),
     content: content =>
-      VALIDATIONS.maxLength(content, 200) || VALIDATIONS.required(content),
+      VALIDATIONS.maxLength(content, 500) || VALIDATIONS.required(content),
     tradeType: tradeType => VALIDATIONS.required(tradeType),
     location: location => tradeType.isDirect && VALIDATIONS.required(location),
   }

@@ -4,8 +4,6 @@ import ProductDetailItem from '../components/ProductDetailItem.jsx'
 import ProfileSmall from '../../user/components/ProfileSmall.jsx'
 import Slider from '@/components/Slider.jsx'
 import MaterialIcon from '@/components/icons/MaterialIcon.jsx'
-import ProductItemSmall from '../components/ProductItemSmall.jsx'
-import products from '../data/products.js'
 import { Link, useParams } from 'react-router'
 import ROUTES from '@/data/ROUTES.js'
 import { formatPrice } from '@/utils/price.js'
@@ -97,7 +95,9 @@ function ProductDetailPage() {
             <span className='px-2 text-'>·</span>
             <span>{relativeTime(auction.createdAt)}</span>
           </div>
-          <p className='pt-2 text-black tracking-tight'>{auction.content}</p>
+          <p className='pt-2 text-black tracking-tight whitespace-pre-wrap'>
+            {auction.content}
+          </p>
         </div>
         <hr className='border-gray-200' />
         <div className='flex flex-col'>
