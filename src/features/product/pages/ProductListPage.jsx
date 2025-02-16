@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import FilterChipArray from '../components/FilterChipArray.jsx'
 import ProductItemHorizontal from '../components/ProductItemHorizontal.jsx'
 import PropTypes from 'prop-types'
@@ -24,7 +24,7 @@ function ProductListPage({ filters, isFavorite }) {
     return params
   }, [searchParams, isFavorite])
 
-  const { data: products, fetchNextPage } = useSearchAuctions(param)
+  const { data: products, fetchNextPage, isPending } = useSearchAuctions(param)
   console.log('products:', products)
 
   useEffect(() => {
@@ -82,7 +82,10 @@ function ProductListPage({ filters, isFavorite }) {
           </>
         )}
       </FilterBar>
-      <InfiniteScrollWrapper fetchNextPage={fetchNextPage}>
+      <InfiniteScrollWrapper
+        fetchNextPage={fetchNextPage}
+        isPending={isPending}
+      >
         {products?.pages.map(product =>
           product.auctionDetailProjection.map((product, i) => (
             <ProductItemHorizontal key={i} product={product} />

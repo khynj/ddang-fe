@@ -25,7 +25,11 @@ function MyLocationsRegisterPage() {
 
   // const [searchedLocations, setSearchedLocations] = useState([])
   const searchParams = useMemo(() => ({ searchKey, size: 25 }), [searchKey])
-  const { data: searchLocation, fetchNextPage } = useLocations(searchParams)
+  const {
+    data: searchLocation,
+    fetchNextPage,
+    isPending,
+  } = useLocations(searchParams)
   console.log(searchLocation)
   const { mutate: registerLocation } = useAddPreferredLocation()
 
@@ -73,7 +77,10 @@ function MyLocationsRegisterPage() {
         </div>
       </div>
 
-      <InfiniteScrollWrapper fetchNextPage={fetchNextPage}>
+      <InfiniteScrollWrapper
+        fetchNextPage={fetchNextPage}
+        isPending={isPending}
+      >
         {searchLocation?.pages.map(page =>
           page.locations.map((location, index) => (
             <button
