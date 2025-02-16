@@ -8,6 +8,7 @@ import Modal from '@/components/modals/Modal'
 import DefaultButton from '@/components/buttons/DefaultButton'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { formatPrice } from '@/utils/price'
+import { useConfirmPurchase } from '@/apis/auction'
 
 function ProductSoldItem({ product, isSeller }) {
   const price = formatPrice(product.myBidPrice)
@@ -18,11 +19,18 @@ function ProductSoldItem({ product, isSeller }) {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const [isReviewConfirmModalOpen, setIsReviewConfirmModalOpen] =
     useState(false)
+
+  const { mutate: confirmPurchase } = useConfirmPurchase()
+
   const openConfirmModal = () => setIsConfirmModalOpen(true)
   const closeConfirmModal = () => setIsConfirmModalOpen(false)
-  const openReviewConfirmModal = () => {
-    setIsConfirmModalOpen(false)
-    setIsReviewConfirmModalOpen(true)
+  const onConfirmPurchase = () => {
+    confirmPurchase(product.auctionId, {
+      onSuccess: () => {
+        setIsConfirmModalOpen(false)
+        setIsReviewConfirmModalOpen(true)
+      },
+    })
   }
   const closeReviewConfirmModal = () => setIsReviewConfirmModalOpen(false)
 
@@ -81,7 +89,7 @@ function ProductSoldItem({ product, isSeller }) {
               <DefaultButton type='gray' onClick={closeConfirmModal}>
                 취소
               </DefaultButton>
-              <DefaultButton type='red' onClick={openReviewConfirmModal}>
+              <DefaultButton type='red' onClick={onConfirmPurchase}>
                 {isSeller ? '판매확정' : '구매확정'}
               </DefaultButton>
             </div>
@@ -116,9 +124,6 @@ function ProductSoldItem({ product, isSeller }) {
                   closeReviewConfirmModal()
                   route(
                     ROUTES.REVIEW_REGISTER.replace(':id', product.auctionId),
-                    {
-                      state: { product },
-                    },
                   )
                 }}
               >

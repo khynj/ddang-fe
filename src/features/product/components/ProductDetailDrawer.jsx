@@ -92,8 +92,8 @@ function ProductDetailDrawer({ product, isMine }) {
           alert('입찰에 성공했습니다.')
           queryClient.invalidateQueries('auctionDetails')
         },
-        onError: err => {
-          alert(err.response.data.message)
+        onError: error => {
+          alert(error.response.data.message)
         },
       },
     )
@@ -113,7 +113,7 @@ function ProductDetailDrawer({ product, isMine }) {
         queryClient.invalidateQueries('auctionDetails')
       },
       onError: error => {
-        alert(error)
+        alert(error.response.data.message)
       },
     })
   }
