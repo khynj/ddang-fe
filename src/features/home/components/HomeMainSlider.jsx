@@ -1,32 +1,20 @@
 import Slider from '@/components/Slider'
 import HomeMainProduct from './HomeMainProduct'
-import { useSearchAuctions } from '@/apis/auction'
+import { usePersonalizedAuctions } from '@/apis/auction'
 import NoHomeMainProduct from './NoHomeMainProduct'
 
 function HomeMainSlider() {
-  const {
-    data: products,
-    isError,
-    isLoading,
-  } = useSearchAuctions({
-    sortType: 'createdAt',
-    sortOrder: 'DESC',
-    page: 1,
-    size: 10,
-    isHammered: false,
-  })
+  const { data: products, isError, isLoading } = usePersonalizedAuctions()
   return (
     <Slider>
-      {isError ||
-      isLoading ||
-      products?.pages[0].auctionDetailProjection.length < 1 ? (
+      {isError || isLoading || products?.length < 1 ? (
         <NoHomeMainProduct />
       ) : (
-        products?.pages[0].auctionDetailProjection.map((product, index) => (
+        products?.map((product, index) => (
           <HomeMainProduct
             key={index}
             index={index + 1}
-            size={products.pages[0].auctionDetailProjection.length}
+            size={products.length}
             product={product}
           />
         ))

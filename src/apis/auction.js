@@ -202,3 +202,13 @@ export function useRelatedAuctions(auctionId) {
       axios_spring.get(`/auction/${auctionId}/related`).then(res => res.data),
   })
 }
+
+// /api/auction/personalized
+
+export function usePersonalizedAuctions() {
+  return useQuery({
+    queryKey: 'personalizedAuctions',
+    queryFn: () =>
+      axios_spring.get(`/auction/personalized`).then(res => res.data),
+  })
+}

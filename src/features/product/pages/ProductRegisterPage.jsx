@@ -187,8 +187,7 @@ function ProductRegisterPage() {
   }
   const [categoryRecommendation, setCategoryRecommendation] = useState([])
 
-  const { mutateAsync: recommendCategory, isPending } =
-    useCategoryRecommendation()
+  const { mutateAsync: recommendCategory } = useCategoryRecommendation()
 
   return (
     <div className='flex flex-col p-4'>
@@ -202,7 +201,6 @@ function ProductRegisterPage() {
         onChange={e => {
           console.log(e.target.value)
           setTitle(e.target.value)
-          if (isPending) return
           recommendCategory(
             { title: e.target.value },
             {

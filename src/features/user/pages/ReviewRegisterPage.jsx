@@ -1,7 +1,6 @@
 import { useAuctionDetails } from '@/apis/auction'
 import usePageName from '@/hooks/usePageName'
-import { useNavigate, useParams } from 'react-router'
-import product from '@/features/product/data/product'
+import { useLocation, useNavigate, useParams } from 'react-router'
 import ProfileSmall from '../components/ProfileSmall'
 import StickyContainer from '@/components/StickyContainer'
 import DefaultButton from '@/components/buttons/DefaultButton'
@@ -12,18 +11,35 @@ import useModal from '@/hooks/useModal'
 import Modal from '@/components/modals/Modal'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import ROUTES from '@/data/ROUTES'
+import { useWriteReview } from '@/apis/member'
+import LoadingPage from '@/pages/LoadingPage'
 
 function ReviewRegisterPage() {
   usePageName('리뷰 작성')
   const route = useNavigate()
-  const { id: productId } = useParams()
-  // const { data: product } = useAuctionDetails(productId)
+  const { id: auctionId } = useParams()
+  const { revieweeRole } = useLocation().state
+  const { mutate: writeReview } = useWriteReview()
+  const { data: auction } = useAuctionDetails(auctionId)
 
-  const [review, setReview] = useState('')
+  const [content, setContent] = useState('')
+  const [score, setScore] = useState(3)
   const { isOpen, open, close } = useModal()
 
   const handleSubmit = () => {
-    // enroll review
+    writeReview(
+      {
+        auctionId,
+        revieweeId: auction.seller.memberId,
+        revieweeRole,
+        content,
+        satisfyScore: score,
+      },
+      {
+        onSuccess: () => open(),
+        onError: error => alert('error message ' + error.response.data.message),
+      },
+    )
     open()
   }
 
@@ -32,18 +48,20 @@ function ReviewRegisterPage() {
     route(ROUTES.HOME)
   }
 
+  if (!auction) return <LoadingPage />
+
   return (
     <div>
       <div className='flex flex-col gap-8 p-4'>
-        <ProfileSmall user={product.seller} />
+        <ProfileSmall user={auction.seller} />
         <div>
           <div className='flex items-center justify-between'>
             <p className='text-ddblue-400 font-bold text-[14px]'>신뢰도</p>
             <span className='text-sm font-bold'>보통</span>
           </div>
-          <StepTrustBar />
+          <StepTrustBar setScore={setScore} />
         </div>
-        <TextArea rows={12} value={review} setValue={setReview} />
+        <TextArea rows={12} value={content} setValue={setContent} />
       </div>
       <StickyContainer plain>
         <DefaultButton onClick={handleSubmit}>등록</DefaultButton>

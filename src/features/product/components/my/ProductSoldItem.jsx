@@ -32,6 +32,12 @@ function ProductSoldItem({ product, isSeller }) {
       },
     })
   }
+  const onConfirmReview = () => {
+    closeReviewConfirmModal()
+    route(ROUTES.REVIEW_REGISTER.replace(':id', product.auctionId), {
+      state: { revieweeRole: isSeller ? 'buyer' : 'seller' },
+    })
+  }
   const closeReviewConfirmModal = () => setIsReviewConfirmModalOpen(false)
 
   return (
@@ -119,16 +125,7 @@ function ProductSoldItem({ product, isSeller }) {
               <DefaultButton type='gray' onClick={closeReviewConfirmModal}>
                 닫기
               </DefaultButton>
-              <DefaultButton
-                onClick={() => {
-                  closeReviewConfirmModal()
-                  route(
-                    ROUTES.REVIEW_REGISTER.replace(':id', product.auctionId),
-                  )
-                }}
-              >
-                확인
-              </DefaultButton>
+              <DefaultButton onClick={onConfirmReview}>확인</DefaultButton>
             </div>
           </div>
         </Modal>

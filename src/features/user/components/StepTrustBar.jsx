@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 
-function StepTrustBar() {
+function StepTrustBar({ setScore }) {
   const [currentStep, setCurrentStep] = useState(0) // 초기 단계
 
   // 단계 클릭 핸들러
   const onStepClick = index => {
     setCurrentStep(index)
+    setScore(index)
   }
 
   return (
@@ -40,7 +41,7 @@ function StepTrustBar() {
 }
 
 StepTrustBar.propTypes = {
-  steps: PropTypes.number.isRequired, // 단계 개수
+  setScore: PropTypes.func.isRequired,
 }
 
 export default StepTrustBar
