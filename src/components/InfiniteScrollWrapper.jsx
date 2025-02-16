@@ -13,7 +13,7 @@ function InfiniteScrollWrapper({
     if (!fetchNextPage) return
     const handleScroll = () => {
       if (
-        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 200 >=
+        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 400 >=
         scrollRef.current.scrollHeight
       ) {
         console.log('fetchNextPage')
