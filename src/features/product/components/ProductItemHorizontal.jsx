@@ -16,7 +16,7 @@ function ProductItemHorizontal({ product }) {
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
   const endTimeDDay = useEndTimeDDay(product.endTime)
   if (!endTimeDDay) {
-    queryClient.invalidateQueries('searchAuctions')
+    queryClient.invalidateQueries(['searchAuctions'])
   }
   const status = getAuctionStatus(product)
   return (

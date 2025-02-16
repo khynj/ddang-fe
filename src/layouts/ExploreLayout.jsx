@@ -4,7 +4,7 @@ import Navbar from '../components/navbar/Navbar'
 function ExploreLayout() {
   return (
     <>
-      <div className='h-[calc(100dvh-64px)] pb-[56px]'>
+      <div className='h-[calc(100dvh-64px)]'>
         <ExploreHeader />
         <Outlet />
       </div>

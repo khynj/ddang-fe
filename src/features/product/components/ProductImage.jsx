@@ -9,7 +9,7 @@ function ProductImage({ product, heartSize = 32, heart, small }) {
   const onClick = () => {
     toggleLike(product.auctionId, {
       onSuccess: () => {
-        queryClient.invalidateQueries('searchAuctions')
+        queryClient.invalidateQueries(['searchAuctions'])
       },
     })
   }

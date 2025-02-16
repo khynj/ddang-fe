@@ -11,7 +11,7 @@ function HomeProductItem({ product }) {
   const queryClient = useQueryClient()
   const endTimeDDay = useEndTimeDDay(product.endTime)
   if (!endTimeDDay) {
-    queryClient.invalidateQueries('searchAuctions')
+    queryClient.invalidateQueries(['searchAuctions'])
   }
 
   return (

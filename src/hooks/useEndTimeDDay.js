@@ -5,9 +5,9 @@ export default function useEndTimeDDay(endTime) {
   const [currentTime, setCurrentTime] = useState(new Date().getTime())
 
   const endTimeDDay = useMemo(() => {
-    if (new Date(endTime).getTime() < currentTime) {
-      return false
-    }
+    console.log(new Date(endTime).toString(), new Date(currentTime).toString())
+    console.log(new Date(endTime).toString() < new Date(currentTime).toString())
+    if (new Date(endTime).getTime() < currentTime) return false
     return dday(endTime)
   }, [currentTime, endTime])
 

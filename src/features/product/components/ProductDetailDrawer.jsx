@@ -33,7 +33,7 @@ function ProductDetailDrawer({ product, isMine }) {
 
   const endTimeDDay = useEndTimeDDay(product.auction.endTime)
   if (!endTimeDDay) {
-    queryClient.invalidateQueries('searchAuctions')
+    queryClient.invalidateQueries(['searchAuctions'])
   }
 
   useEffect(() => {
