@@ -15,12 +15,7 @@ function MyPage() {
   return (
     <div>
       {/* 프로필 섹션 */}
-      <Profile
-        profileSrc={userData?.imageUrl}
-        name={user?.nickname}
-        trustScore={userData?.reliability}
-        id={user?.memberId}
-      />
+      <Profile userData={userData} />
       <hr className='border-gray-200' />
 
       {/* 땅땅머니 섹션 */}

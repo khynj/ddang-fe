@@ -6,6 +6,7 @@ import TrustScoreBar from './TrustScoreBar'
 import { useAuth } from '@/contexts/AuthContext'
 import { useToggleFollow } from '@/apis/member'
 import { useQueryClient } from '@tanstack/react-query'
+import LoadingPage from '@/pages/LoadingPage'
 
 function Profile({ userData }) {
   const queryClient = useQueryClient()
@@ -19,13 +20,15 @@ function Profile({ userData }) {
     })
   }
 
+  if (!userData) return <LoadingPage />
+
   return (
     <div className='p-6 bg-white'>
       {/* 프로필 이미지 및 이름 섹션 */}
       <div className='flex items-center'>
         <ProfileImage src={userData.profileSrc} size={64} />
         <div className='flex flex-row justify-between items-center w-full ml-4'>
-          <p className='text-base font-bold'>{name}</p>
+          <p className='text-base font-bold'>{userData.nickname}</p>
           {user.memberId === userData.id ? (
             <Link to='/mypage/edit-profile'>
               <button
