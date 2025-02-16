@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
-import { useMemo, useRef, useState } from 'react'
+import { useState } from 'react'
+import ReactDatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css"
 import Label from './Label'
 import MaterialIcon from '../icons/MaterialIcon'
 import InputValue from './InputValue'
@@ -7,22 +9,34 @@ import PickerWrapper from './PickerWrapper'
 import InputError from './InputError'
 
 function DatePicker({ label, required, value, setValue, validate }) {
-  const dateInput = useRef(null)
   const [error, setError] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
 
-  const koreanLocalDate = useMemo(() => {
-    if (!value) return ''
-    return new Date(value).toLocaleString().replace(/:\d{2}\s/, ' ')
-  }, [value])
-
-  const onChange = e => {
-    console.log(e.target.value)
-    if (validate) {
-      setError(validate(e.target.value))
-    }
-    setValue(e.target.value)
+  const formatDateToString = (date) => {
+    if (!date) return '';
+    return date.toISOString().slice(0, 16); // "YYYY-MM-DDTHH:mm" 형식으로 변환
   }
-  const handleClick = () => dateInput.current.showPicker()
+
+  const handleChange = (date) => {
+    const newDateString = formatDateToString(date);
+    const currentDateString = formatDateToString(value);
+
+    // 문자열로 변환한 값이 같으면 업데이트하지 않음
+    if (newDateString === currentDateString) {
+      setIsOpen(false);
+      return;
+    }
+
+    if (validate) {
+      setError(validate(date))
+    }
+    setValue(date)
+    setIsOpen(false)
+  }
+
+  const handleClick = () => {
+    setIsOpen(!isOpen)
+  }
 
   return (
     <div className='flex flex-col gap-2 py-3'>
@@ -32,15 +46,22 @@ function DatePicker({ label, required, value, setValue, validate }) {
         </Label>
       )}
       <PickerWrapper onClick={handleClick}>
-        <InputValue value={koreanLocalDate} label={label} />
+        <InputValue
+          value={value ? value.toLocaleString().replace(/:\d{2}\s/, ' ') : ''}
+          label={label}
+        />
         <MaterialIcon name='calendar_month' className='text-gray-600' />
       </PickerWrapper>
-      <input
-        ref={dateInput}
-        value={value}
-        onChange={onChange}
-        type='datetime-local'
-        className={`fixed bottom-0 opacity-0 pointer-events-none'`}
+      <ReactDatePicker
+        selected={value}
+        onChange={handleChange}
+        showTimeSelect
+        dateFormat="yyyy/MM/dd HH:mm"
+        timeIntervals={5}
+        open={isOpen}
+        onClickOutside={() => setIsOpen(false)}
+        className="!absolute !h-0 !p-0 !m-0 opacity-0 pointer-events-none"
+        wrapperClassName="!h-0 !p-0 !m-0"
       />
     </div>
   )
