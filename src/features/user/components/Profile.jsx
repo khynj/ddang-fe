@@ -29,7 +29,7 @@ function Profile({ userData }) {
         <ProfileImage src={userData.profileSrc} size={64} />
         <div className='flex flex-row justify-between items-center w-full ml-4'>
           <p className='text-base font-bold'>{userData.nickname}</p>
-          {user.memberId === userData.id ? (
+          {user.memberId === userData.memberId ? (
             <Link to='/mypage/edit-profile'>
               <button
                 style={{
@@ -70,10 +70,10 @@ function Profile({ userData }) {
       <div className='mt-5'>
         <div className='flex items-center justify-between'>
           <p className='text-ddblue-400 font-bold text-[14px]'>신뢰도</p>
-          <span className='text-sm font-bold'>{userData.trustScore}%</span>
+          <span className='text-sm font-bold'>{userData.reliability}%</span>
         </div>
         {/* 5단계 중 현재 3단계 */}
-        <TrustScoreBar trustScore={userData.trustScore} />
+        <TrustScoreBar trustScore={userData.reliability} />
       </div>
     </div>
   )
