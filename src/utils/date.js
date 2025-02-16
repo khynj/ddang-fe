@@ -25,9 +25,7 @@ export function relativeTime(time) {
 
   const min = (hour - Math.floor(hour)) * 60
 
-  if (min >= 1) return f.format(-Math.floor(min), 'minute')
-
-  return '방금'
+  return f.format(-Math.floor(min), 'minute')
 }
 
 export function dday(date) {

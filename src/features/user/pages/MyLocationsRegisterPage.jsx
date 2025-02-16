@@ -25,12 +25,13 @@ function MyLocationsRegisterPage() {
 
   // const [searchedLocations, setSearchedLocations] = useState([])
   const searchParams = useMemo(() => ({ searchKey, size: 25 }), [searchKey])
+
   const {
     data: searchLocation,
     fetchNextPage,
     isPending,
   } = useLocations(searchParams)
-  console.log(searchLocation)
+
   const { mutate: registerLocation } = useAddPreferredLocation()
 
   // useEffect(() => {

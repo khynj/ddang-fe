@@ -19,13 +19,17 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
     ...params,
     sellerId: user.memberId,
   })
+
   const {
     data: myBids,
     fetchNextPage: fetchNextBidsPage,
     isPending: isBidsPending,
   } = useSearchMyBids(params)
 
-  console.log('myproducts', products)
+  console.log(
+    'myBids',
+    myBids?.pages.map(page => page.auctionDetailProjection),
+  )
   return (
     <>
       {isSeller ? (

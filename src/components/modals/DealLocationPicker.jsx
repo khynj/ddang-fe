@@ -4,15 +4,15 @@ import Modal from './Modal'
 import MaterialIcon from '../icons/MaterialIcon'
 import InputValue from '../form/InputValue'
 import PickerWrapper from '../form/PickerWrapper'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Label from '../form/Label'
 import InputError from '../form/InputError'
 import ModalItem from './ModalItem'
 import TextInput from '../form/TextInput'
-import MY_LOCATIONS from '../../data/MY_LOCATIONS'
 import FavoriteButton from '../icons/FavoriteButton'
 import DefaultButton from '../buttons/DefaultButton'
-import LOCATIONS from '../../data/LOCATIONS'
+import { usePreferredLocations } from '@/apis/member'
+import { useLocations } from '@/apis/location'
 
 function DealLocationPicker({ label, required, value, setValue, validate }) {
   const { isOpen, open, close } = useModal(value)
@@ -25,26 +25,22 @@ function DealLocationPicker({ label, required, value, setValue, validate }) {
     close()
   }
 
-  const [searchValue, setSearchValue] = useState('')
-  const [searchResult, setSearchResult] = useState([])
+  const [searchKey, setSearchKey] = useState('')
+  const { data: myLocations } = usePreferredLocations()
+  const searchParams = useMemo(() => ({ searchKey, size: 25 }), [searchKey])
+
+  const {
+    data: searchLocation,
+    fetchNextPage,
+    isPending,
+  } = useLocations(searchParams)
+  console.log(searchLocation)
 
   useEffect(() => {
     if (isOpen) {
-      setSearchValue('')
+      setSearchKey('')
     }
   }, [isOpen])
-  useEffect(() => {
-    if (!searchValue) {
-      setSearchResult([])
-    } else {
-      setSearchResult(
-        LOCATIONS.filter(location => location.includes(searchValue)).slice(
-          0,
-          8,
-        ),
-      )
-    }
-  }, [searchValue])
 
   const onClick = () => {
     console.log('click')
@@ -70,21 +66,29 @@ function DealLocationPicker({ label, required, value, setValue, validate }) {
             <TextInput
               icon={'search'}
               placeholder={'지번으로 검색'}
-              value={searchValue}
-              setValue={setSearchValue}
+              value={searchKey}
+              setValue={setSearchKey}
             />
           </div>
-          {searchResult.length ? (
-            searchResult.map((location, i) => (
-              <div className='w-full' key={i} onClick={() => onClose(location)}>
-                <ModalItem>
-                  <p className='text-gray-600 text-sm'>{location}</p>
-                </ModalItem>
-              </div>
-            ))
+          {searchKey ? (
+            searchLocation?.pages.map(page =>
+              page.locations.map((location, i) => (
+                <div
+                  className='w-full'
+                  key={i}
+                  onClick={() => onClose(location.locationName)}
+                >
+                  <ModalItem>
+                    <p className='text-gray-600 text-sm'>
+                      {location.locationName}
+                    </p>
+                  </ModalItem>
+                </div>
+              )),
+            )
           ) : (
             <div className='w-full flex flex-col gap-4 mb-3'>
-              {MY_LOCATIONS.map(location => (
+              {myLocations?.memberLocations.map(location => (
                 <div
                   className='w-full'
                   key={location.name}

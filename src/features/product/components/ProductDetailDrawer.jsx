@@ -93,7 +93,7 @@ function ProductDetailDrawer({ product, isMine }) {
           queryClient.invalidateQueries('auctionDetails')
         },
         onError: err => {
-          alert('err')
+          alert(err.response.data.message)
         },
       },
     )
