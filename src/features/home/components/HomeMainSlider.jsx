@@ -17,14 +17,16 @@ function HomeMainSlider() {
   })
   return (
     <Slider>
-      {isError || isLoading || products?.auctionDetailProjection.length < 1 ? (
+      {isError ||
+      isLoading ||
+      products?.pages[0].auctionDetailProjection.length < 1 ? (
         <NoHomeMainProduct />
       ) : (
-        products?.auctionDetailProjection.map((product, index) => (
+        products?.pages[0].auctionDetailProjection.map((product, index) => (
           <HomeMainProduct
             key={index}
             index={index + 1}
-            size={products.auctionDetailProjection.length}
+            size={products.pages[0].auctionDetailProjection.length}
             product={product}
           />
         ))

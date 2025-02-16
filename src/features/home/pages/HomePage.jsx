@@ -28,6 +28,7 @@ function HomePage() {
       ? followings.followings.map(following => following.memberId)
       : [],
   )
+  console.log('sub', subscribedProducts)
 
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
@@ -44,7 +45,7 @@ function HomePage() {
             className='flex flex-row gap-2 pb-1
           overflow-x-scroll snap-x snap-madatory'
           >
-            {biddingProducts?.auctionDetailProjection
+            {biddingProducts?.pages[0].auctionDetailProjection
               .slice(0, 9)
               .map(product => (
                 <ProductItemSmall key={product.auctionId} product={product} />
@@ -59,7 +60,7 @@ function HomePage() {
             icon='local_fire_department'
           ></HomeListHeader>
           <div className='grid grid-cols-2 gap-4'>
-            {closingProducts?.auctionDetailProjection
+            {closingProducts?.pages[0].auctionDetailProjection
               .slice(0, 4)
               .map((product, i) => (
                 <HomeProductItem key={i} product={product} />

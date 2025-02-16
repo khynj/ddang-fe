@@ -12,7 +12,7 @@ function DebateItem({ chatroom }) {
     >
       <div className='flex flex-shrink-0'>
         <img
-          src={chatroom.photo}
+          src={chatroom.productPhoto}
           alt=''
           className='aspect-square rounded-lg size-14 bg-gray-200'
         />

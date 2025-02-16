@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types'
 import { useEffect, useRef } from 'react'
 
-function InfiniteScrollWrapper({ children, setPage, parentProps }) {
+function InfiniteScrollWrapper({ children, fetchNextPage, parentProps }) {
   const scrollRef = useRef()
 
   useEffect(() => {
+    if (!fetchNextPage) return
     const handleScroll = () => {
       if (
         scrollRef.current.scrollTop + scrollRef.current.clientHeight + 200 >=
         scrollRef.current.scrollHeight
       ) {
-        setPage(prevPage => prevPage + 1)
+        console.log('fetchNextPage')
+        fetchNextPage()
       }
     }
 
@@ -20,7 +22,7 @@ function InfiniteScrollWrapper({ children, setPage, parentProps }) {
     return () => {
       currentRef.removeEventListener('scroll', handleScroll)
     }
-  }, [setPage])
+  }, [fetchNextPage])
 
   return (
     <div
@@ -36,7 +38,7 @@ function InfiniteScrollWrapper({ children, setPage, parentProps }) {
 InfiniteScrollWrapper.propTypes = {
   children: PropTypes.node,
   page: PropTypes.number,
-  setPage: PropTypes.func.isRequired,
+  fetchNextPage: PropTypes.func,
   parentProps: PropTypes.object,
 }
 

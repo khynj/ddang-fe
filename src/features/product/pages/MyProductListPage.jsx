@@ -11,41 +11,56 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
     status: isHammered ? 'ended' : isPre ? 'upcoming' : 'ongoing',
   }
   const { user } = useAuth()
-  const { data: products } = useSearchAuctions({
-    ...params,
-    sellerId: user.memberId,
-  })
-  const { data: myBids } = useSearchMyBids(params)
+  const { data: products, fetchNextPage: fetchNextSellingPage } =
+    useSearchAuctions({
+      ...params,
+      sellerId: user.memberId,
+    })
+  const { data: myBids, fetchNextPage: fetchNextBidsPage } =
+    useSearchMyBids(params)
+
+  console.log('myproducts', products)
   return (
-    <InfiniteScrollWrapper>
-      {isSeller
-        ? products?.auctionDetailProjection.map(product =>
-            isHammered ? (
-              <ProductSoldItem
-                key={product.auctionId}
-                product={product}
-                isSeller
-              />
-            ) : isPre ? (
-              <ProductItemHorizontal
-                key={product.auctionId}
-                product={product}
-              />
-            ) : (
-              <ProductItemHorizontal
-                key={product.auctionId}
-                product={product}
-              />
-            ),
-          )
-        : myBids?.auctionDetailProjection.map(product =>
-            isHammered ? (
-              <ProductSoldItem key={product.auctionId} product={product} />
-            ) : (
-              <ProductBiddingItem key={product.auctionId} product={product} />
-            ),
-          )}
-    </InfiniteScrollWrapper>
+    <>
+      <InfiniteScrollWrapper
+        fetchNextPage={isSeller ? fetchNextSellingPage : fetchNextBidsPage}
+      >
+        {isSeller
+          ? products?.pages.map(page =>
+              page.auctionDetailProjection.map(product =>
+                isHammered ? (
+                  <ProductSoldItem
+                    key={product.auctionId}
+                    product={product}
+                    isSeller
+                  />
+                ) : isPre ? (
+                  <ProductItemHorizontal
+                    key={product.auctionId}
+                    product={product}
+                  />
+                ) : (
+                  <ProductItemHorizontal
+                    key={product.auctionId}
+                    product={product}
+                  />
+                ),
+              ),
+            )
+          : myBids?.pages.map(page =>
+              page.auctionDetailProjection.map(product =>
+                isHammered ? (
+                  <ProductSoldItem key={product.auctionId} product={product} />
+                ) : (
+                  <ProductBiddingItem
+                    key={product.auctionId}
+                    product={product}
+                  />
+                ),
+              ),
+            )}
+      </InfiniteScrollWrapper>
+    </>
   )
 }
 

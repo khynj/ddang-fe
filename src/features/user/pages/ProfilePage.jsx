@@ -37,9 +37,11 @@ function ProfilePage() {
           title='판매 상품'
           to={ROUTES.PRODUCT_LIST_BY_USER.replace(':id', id)}
         >
-          {products.auctionDetailProjection.slice(0, 3).map((product, i) => (
-            <ProductItemHorizontalSmall key={i} product={product} />
-          ))}
+          {products.pages[0].auctionDetailProjection
+            .slice(0, 3)
+            .map((product, i) => (
+              <ProductItemHorizontalSmall key={i} product={product} />
+            ))}
         </ProfileSection>
       )}
       {

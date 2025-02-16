@@ -11,43 +11,37 @@ import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper.jsx'
 function ProductListPage({ filters, isFavorite }) {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const [products, setProducts] = useState([])
-  const [page, setPage] = useState(1)
+  // const [products, setProducts] = useState([])
 
   const param = useMemo(() => {
-    console.log(searchParams, page, isFavorite)
+    console.log(searchParams, isFavorite)
     const params = {}
     searchParams.forEach((value, key) => {
       if (!value) return
       params[key] = value
     })
-    params.page = page
     params.isFavorite = isFavorite
     return params
-  }, [searchParams, page, isFavorite])
+  }, [searchParams, isFavorite])
 
-  const { data: newProducts } = useSearchAuctions(param)
+  const { data: products, fetchNextPage } = useSearchAuctions(param)
+  console.log('products:', products)
 
   useEffect(() => {
     setSearchParams(
       params => {
         params.get('sortType') || params.set('sortType', 'createdAt')
-        // searchParams.get('deliveryMethod') ||
-        //   params.set('deliveryMethod', 'any')
-        // searchParams.get('status') || params.set('status', 'ongoing')
-
         return params
       },
       { replace: true },
     )
-    setPage(1)
   }, [searchParams, setSearchParams])
 
-  useEffect(() => {
-    if (!newProducts) return
-    if (page == 1) setProducts(newProducts.auctionDetailProjection)
-    else setProducts(prev => [...prev, ...newProducts.auctionDetailProjection])
-  }, [newProducts, page])
+  // useEffect(() => {
+  //   if (!newProducts) return
+  //   if (page == 1) setProducts(newProducts.auctionDetailProjection)
+  //   else setProducts(prev => [...prev, ...newProducts.auctionDetailProjection])
+  // }, [newProducts, page])
 
   return (
     <div className='flex flex-col h-full'>
@@ -88,10 +82,12 @@ function ProductListPage({ filters, isFavorite }) {
           </>
         )}
       </FilterBar>
-      <InfiniteScrollWrapper setPage={setPage}>
-        {products.map((product, i) => (
-          <ProductItemHorizontal key={i} product={product} />
-        ))}
+      <InfiniteScrollWrapper fetchNextPage={fetchNextPage}>
+        {products?.pages.map(product =>
+          product.auctionDetailProjection.map((product, i) => (
+            <ProductItemHorizontal key={i} product={product} />
+          )),
+        )}
       </InfiniteScrollWrapper>
     </div>
   )

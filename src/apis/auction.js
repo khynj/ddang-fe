@@ -1,5 +1,25 @@
-import { useQuery, useMutation, useQueries } from '@tanstack/react-query'
+import {
+  useQuery,
+  useMutation,
+  useQueries,
+  useInfiniteQuery,
+} from '@tanstack/react-query'
 import { axios_spring } from '@/utils/axiosInstances'
+
+const defaultParams = {
+  searchKey: '',
+  deliveryMethod: '',
+  status: '',
+  isFavorite: '',
+  categoryId: '',
+  sortType: 'createdAt',
+  sortOrder: 'asc',
+  page: 1,
+  size: 10,
+  isHammered: '',
+  role: '',
+  sellerId: '',
+}
 
 // 경매 관련 API
 export function useCreateAuction() {
@@ -62,56 +82,34 @@ export function useDeleteAuctionSearchHistory() {
         .then(res => res.data),
   })
 }
-/**
- *
- * @param {
- * searchKey,
- * deliveryMethod,
- * status,
- * isFavorite,
- * categoryId,
- * sortType,
- * sortOrder,
- * page,
- * size,
- * isHammered,
- * role,
- * sellerId
- *} params
- * @returns
- */
+
 export function useSearchAuctions(params) {
-  console.log('params : ', params)
-  const defaultParams = {
-    searchKey: '',
-    deliveryMethod: '',
-    status: '',
-    isFavorite: '',
-    categoryId: '',
-    sortType: 'createdAt',
-    sortOrder: 'asc',
-    page: 1,
-    size: 10,
-    isHammered: '',
-    role: '',
-    sellerId: '',
-  }
   const paramsWithDefault = { ...defaultParams, ...params }
-  console.log('paramsWithDefault : ', paramsWithDefault)
-  return useQuery({
+  console.log('params : ', paramsWithDefault)
+
+  return useInfiniteQuery({
     queryKey: ['searchAuctions', paramsWithDefault],
-    queryFn: () =>
+    queryFn: ({ pageParam }) =>
       axios_spring
-        .get('/auction', { params: paramsWithDefault })
+        .get('/auction', { params: { ...paramsWithDefault, page: pageParam } })
         .then(res => res.data),
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      return lastPageParam + 1
+    },
+    initialPageParam: 1,
   })
 }
 export function useSearchMyBids(params) {
-  console.log('params : ', params)
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['searchMyBids', params],
-    queryFn: () =>
-      axios_spring.get('/auction/me/bids', { params }).then(res => res.data),
+    queryFn: ({ pageParam }) =>
+      axios_spring
+        .get('/auction/me/bids', { params: { ...params, page: pageParam } })
+        .then(res => res.data),
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      return lastPageParam + 1
+    },
+    initialPageParam: 1,
   })
 }
 
@@ -145,7 +143,11 @@ export function useFollowingAuctions(memberIds, params) {
       queryFn: () =>
         axios_spring
           .get('/auction', {
-            params: { sellerId: memberId, ...defaultParams, ...params },
+            params: {
+              sellerId: memberId,
+              ...defaultParams,
+              ...params,
+            },
           })
           .then(res => res.data),
     })),
@@ -153,13 +155,12 @@ export function useFollowingAuctions(memberIds, params) {
       return {
         data: results.reduce((acc, result) => {
           if (result.isLoading) return acc
-          console.dir(result.data.auctionDetailProjection)
-          console.log(acc)
           return [...acc, ...result.data.auctionDetailProjection]
         }, []),
         pending: results.some(result => result.isPending),
       }
     },
+    queryKey: ['followingAuctions'],
   })
 }
 

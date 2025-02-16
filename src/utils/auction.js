@@ -1,5 +1,4 @@
 import DEAL_TYPES from '@/data/DEAL_TYPES'
-import { UTCToDate } from './date'
 
 export function parseTradeType({ isDirect, isPackage, pay }) {
   return isDirect

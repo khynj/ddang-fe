@@ -9,14 +9,15 @@ function DropDownLayout({ back, routes, feature }) {
 
   return (
     <>
-      <DropDownHeader
-        back={back}
-        title={title}
-        routes={routes}
-        feature={feature}
-      />
-      <Outlet context={{ setTitle }} />
-      {back || <div className='py-8'></div>}
+      <div className='h-[calc(100dvh-64px)] pb-[56px]'>
+        <DropDownHeader
+          back={back}
+          title={title}
+          routes={routes}
+          feature={feature}
+        />
+        <Outlet context={{ setTitle }} />
+      </div>
       {back || <Navbar />}
     </>
   )

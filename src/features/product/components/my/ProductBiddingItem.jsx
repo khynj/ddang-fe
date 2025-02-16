@@ -6,7 +6,6 @@ import { Link } from 'react-router'
 import { formatPrice } from '@/utils/price'
 import { useQueryClient } from '@tanstack/react-query'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
-import { UTCToDate } from '@/utils/date'
 
 function ProductBiddingItem({ product }) {
   const price = formatPrice(product.currentBidPrice)

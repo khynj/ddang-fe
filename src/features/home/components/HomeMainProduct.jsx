@@ -5,7 +5,6 @@ import ROUTES from '@/data/ROUTES'
 import { useAuth } from '@/contexts/AuthContext'
 import { useQueryClient } from '@tanstack/react-query'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
-import { UTCToDate } from '@/utils/date'
 
 function HomeMainProduct({ product, index, size }) {
   const { user } = useAuth()

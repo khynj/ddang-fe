@@ -5,7 +5,6 @@ import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
 import { useQueryClient } from '@tanstack/react-query'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
-import { UTCToDate } from '@/utils/date'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice || product.minimumBid)

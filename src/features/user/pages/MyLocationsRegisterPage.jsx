@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import usePageName from '../../../hooks/usePageName'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import useModal from '@/hooks/useModal'
@@ -22,25 +22,22 @@ function MyLocationsRegisterPage() {
   const [name, setName] = useState('')
   const { isOpen, open, close } = useModal()
   const [isConfirmed, setIsConfirmed] = useState(false)
-  const [page, setPage] = useState(1)
 
-  const [searchedLocations, setSearchedLocations] = useState([])
-  const searchParams = useMemo(
-    () => ({ page, searchKey, size: 25 }),
-    [page, searchKey],
-  )
-  const { data: searchLocation } = useLocations(searchParams)
+  // const [searchedLocations, setSearchedLocations] = useState([])
+  const searchParams = useMemo(() => ({ searchKey, size: 25 }), [searchKey])
+  const { data: searchLocation, fetchNextPage } = useLocations(searchParams)
+  console.log(searchLocation)
   const { mutate: registerLocation } = useAddPreferredLocation()
 
-  useEffect(() => {
-    if (!searchLocation) return
-    if (page == 1) setSearchedLocations([...searchLocation.locations])
-    else setSearchedLocations(prev => [...prev, ...searchLocation.locations])
-  }, [setSearchedLocations, searchLocation, page])
+  // useEffect(() => {
+  //   if (!searchLocation) return
+  //   if (page == 1) setSearchedLocations([...searchLocation.locations])
+  //   else setSearchedLocations(prev => [...prev, ...searchLocation.locations])
+  // }, [setSearchedLocations, searchLocation])
 
-  useEffect(() => {
-    setPage(1)
-  }, [searchKey])
+  // useEffect(() => {
+  //   setPage(1)
+  // }, [searchKey])
 
   const handleSearch = e => {
     setSearchKey(e.target.value)
@@ -76,18 +73,20 @@ function MyLocationsRegisterPage() {
         </div>
       </div>
 
-      <InfiniteScrollWrapper setPage={setPage}>
-        {searchedLocations?.map((location, index) => (
-          <button
-            onClick={() => handleClick(location)}
-            key={index}
-            className={`px-6 py-4 border-b border-gray-300 text-start`}
-          >
-            {location.locationName}
-          </button>
-        ))}
-        {!searchedLocations ||
-          (searchedLocations.length === 0 && searchKey && (
+      <InfiniteScrollWrapper fetchNextPage={fetchNextPage}>
+        {searchLocation?.pages.map(page =>
+          page.locations.map((location, index) => (
+            <button
+              onClick={() => handleClick(location)}
+              key={index}
+              className={`px-6 py-4 border-b border-gray-300 text-start`}
+            >
+              {location.locationName}
+            </button>
+          )),
+        )}
+        {!searchLocation ||
+          (searchLocation.pages.length === 0 && searchKey && (
             <p className='px-4 py-3 text-gray-500 text-center'>
               검색 결과가 없습니다.
             </p>

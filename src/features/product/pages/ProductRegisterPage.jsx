@@ -17,7 +17,7 @@ import { useCreateAuction, useUpdateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
 import TitleInput from '@/components/form/TitleInput'
 import { useCategoryRecommendation } from '@/apis/ai'
-import { UTCToDate } from '@/utils/date'
+import { convertDateToUTC } from '@/utils/date'
 
 function ProductRegisterPage() {
   const { state } = useLocation()
@@ -37,12 +37,8 @@ function ProductRegisterPage() {
   const [instantHammerPrice, setInstantHammerNowPrice] = useState(
     auction?.instantHammerPrice || 0,
   )
-  const [startTime, setStartTime] = useState(
-    auction ? UTCToDate(auction.startTime) : '',
-  )
-  const [endTime, setEndTime] = useState(
-    auction ? UTCToDate(auction.endTime) : '',
-  )
+  const [startTime, setStartTime] = useState(auction ? auction.startTime : '')
+  const [endTime, setEndTime] = useState(auction ? auction.endTime : '')
   const [content, setContent] = useState(auction?.content || '')
   const [tradeType, setTradeType] = useState(
     auction?.tradeType || { value: '', isDirect: false },
@@ -66,12 +62,13 @@ function ProductRegisterPage() {
       categoryId,
       minimumBid,
       instantHammerPrice,
-      startTime: new Date(startTime),
-      endTime: new Date(endTime),
+      startTime: convertDateToUTC(new Date(startTime)),
+      endTime: convertDateToUTC(new Date(endTime)),
       content,
       tradeType,
       location,
     }
+    console.log(product.startTime)
 
     form.append(
       'product',

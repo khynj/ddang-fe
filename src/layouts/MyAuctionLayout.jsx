@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 function MyAuctionLayout({ name, tabs }) {
   usePageName(name)
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col h-full'>
       <TabBar
         routes={tabs.map(tab => ({
           name: tab.name,
