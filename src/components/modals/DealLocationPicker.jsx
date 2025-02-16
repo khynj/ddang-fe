@@ -92,15 +92,17 @@ function DealLocationPicker({ label, required, value, setValue, validate }) {
                 <div
                   className='w-full'
                   key={location.name}
-                  onClick={() => onClose(location.address)}
+                  onClick={() => onClose(location.locationName)}
                 >
                   <ModalItem>
                     <div className='flex items-center gap-2'>
                       <FavoriteButton liked onClick={onClick} />
-                      <p className='text-base'>{location.name}</p>
+                      <p className='text-base'>{location.title}</p>
                     </div>
                   </ModalItem>
-                  <p className='text-gray-600 text-sm'>{location.address}</p>
+                  <p className='text-gray-600 text-sm'>
+                    {location.locationName}
+                  </p>
                 </div>
               ))}
             </div>
