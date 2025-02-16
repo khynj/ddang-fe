@@ -14,7 +14,7 @@ const VALIDATIONS = {
     })} 까지만 가능해요`,
   minDate: (v, minimum) =>
     v &&
-    new Date(v) < new Date(minimum) &&
+    new Date(v) <= new Date(minimum) &&
     `${new Date(minimum).toLocaleString('ko-KR', {
       dateStyle: 'medium',
       timeStyle: 'short',
