@@ -48,7 +48,7 @@ function Profile({ userData }) {
                 </MaterialIcon>
               </button>
             </Link>
-          ) : userData.isFollowing ? (
+          ) : userData.follow ? (
             <button
               onClick={onToggleFollow}
               className='text-sm bg-gray-100 text-black py-2 px-2 rounded-lg cursor-pointer'
