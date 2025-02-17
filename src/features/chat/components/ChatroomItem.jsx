@@ -14,8 +14,8 @@ function ChatroomItem({ chatroom }) {
       <ProfileImage src={chatroom.userPhoto} size={52} />
       <div className='col-span-3 flex flex-col shrink w-full justify-between'>
         <div className='flex justify-between items-center'>
-          <div className='font-bold'>{chatroom.nickname}</div>
-          <div className='text-gray-500 text-sm'>{lastSetTime}</div>
+          <div className='font-bold truncate'>{chatroom.title}</div>
+          <div className='text-gray-500 text-sm shrink-0'>{lastSetTime}</div>
         </div>
         <div className='flex shrink justify-between items-center gap-2'>
           <span className='tracking-tight truncate'>

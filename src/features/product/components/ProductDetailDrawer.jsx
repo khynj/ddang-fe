@@ -135,17 +135,19 @@ function ProductDetailDrawer({ product, isMine }) {
       <div className='flex justify-between items-center mb-1'>
         <span className='text-sm'>{time}</span>
         <div className='flex gap-4'>
-          {status == 2 && auction.myBidPrice == auction.currentBidPrice && (
-            <IconButton
-              icon={{
-                name: 'mark_chat_unread',
-                size: 28,
-                className: 'text-ddred-500',
-                filled: true,
-              }}
-              onClick={() => route(ROUTES.CHATROOM_LIST_PRIVATE)}
-            />
-          )}
+          {status == 2 &&
+            auction.myBidPrice == auction.currentBidPrice &&
+            auction.currentBidPrice > 0 && (
+              <IconButton
+                icon={{
+                  name: 'mark_chat_unread',
+                  size: 28,
+                  className: 'text-ddred-500',
+                  filled: true,
+                }}
+                onClick={() => route(ROUTES.CHATROOM_LIST_PRIVATE)}
+              />
+            )}
           <IconButton
             icon={{
               name: 'forum',
