@@ -57,13 +57,17 @@ function ProductHistoryItem({ product, role }) {
       </div>
       <div className='flex flex-col col-span-2 items-end justify-between'>
         <p className='text-sm text-gray-700'>{day}</p>
-        {!product.reviewed && (
+        {!product.reviewed ? (
           <button
             onClick={onReview}
             className='p-2 bg-ddblue-400 text-white rounded-xl whitespace-nowrap text-sm'
           >
             리뷰작성
           </button>
+        ) : (
+          <p className='whitespace-nowrap text-sm text-gray-600'>
+            리뷰작성 완료
+          </p>
         )}
       </div>
     </Link>
