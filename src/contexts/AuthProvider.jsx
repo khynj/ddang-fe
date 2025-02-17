@@ -6,12 +6,13 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
   const login = userData => {
+    console.log('saving...', userData)
     setUser(userData)
     localStorage.setItem('user', JSON.stringify(userData))
   }
 
   const logout = () => {
-    console.log('logout')
+    console.log('logout...', user)
     setUser(null)
     localStorage.removeItem('user')
   }

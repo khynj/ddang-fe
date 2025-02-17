@@ -12,10 +12,7 @@ export function useLogin() {
           password,
           deviceToken,
         })
-        .then(res => {
-          console.log(document.cookie)
-          return res.data
-        }),
+        .then(res => res.data),
   })
 }
 
@@ -30,6 +27,7 @@ export function useMyInfo() {
           },
         })
         .then(res => res.data),
+    gcTime: 0,
   })
 }
 

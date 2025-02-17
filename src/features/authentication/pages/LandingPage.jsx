@@ -11,16 +11,14 @@ function LandingPage() {
   const route = useNavigate()
   const state = useLocation().state
 
-  const { data: myInfo, isSuccess } = useMyInfo()
+  const { data: myInfo } = useMyInfo()
   const { login } = useAuth()
   useEffect(() => {
-    if (isSuccess) {
-      if (myInfo && login) {
-        login(myInfo)
-        route(ROUTES.HOME, { state })
-      }
+    if (myInfo && login) {
+      login(myInfo)
+      route(ROUTES.HOME, { state })
     }
-  }, [isSuccess, myInfo, route, login, state])
+  }, [myInfo, route, login, state])
 
   return (
     <div className='flex h-full w-full justify-center items-center'>
