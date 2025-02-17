@@ -65,8 +65,8 @@ function ProductSoldItem({ product, isSeller }) {
           {product.myConfirm ? (
             <p className='p-2 px-4 whitespace-nowrap text-sm text-gray-500'>
               {product.opponentCofirm
-                ? '상대방이 확정 전이에요.'
-                : '거래가 확정되었어요.'}
+                ? '거래가 확정되었어요.'
+                : '상대방이 확정 전이에요.'}
             </p>
           ) : (
             <button
