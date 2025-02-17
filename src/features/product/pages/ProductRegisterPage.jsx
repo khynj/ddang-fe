@@ -90,6 +90,7 @@ function ProductRegisterPage() {
         alert(`상품 ${actionName}에 실패했습니다.`)
       },
     }
+
     isEdit
       ? updateProduct({ auctionId: auction.auctionId, formData: form }, options)
       : registerProduct(form, options)
@@ -144,7 +145,7 @@ function ProductRegisterPage() {
     location: {
       label: '거래희망장소',
       state: location,
-      display: () => location.value,
+      display: () => location,
     },
   }
 
@@ -169,19 +170,19 @@ function ProductRegisterPage() {
       VALIDATIONS.required(endTime) || VALIDATIONS.minDate(endTime, startTime),
     content: content =>
       VALIDATIONS.maxLength(content, 500) || VALIDATIONS.required(content),
-    tradeType: tradeType => VALIDATIONS.required(tradeType),
+    tradeType: tradeType => VALIDATIONS.required(tradeType.value),
     location: location => tradeType.isDirect && VALIDATIONS.required(location),
   }
 
   const handleSubmit = () => {
+    if (images.length === 0) {
+      alert('이미지를 등록해주세요.')
+      return false
+    }
     const valid = Object.keys(validation).every(key => {
-      if (images.length === 0) {
-        alert('이미지를 등록해주세요.')
-        return false
-      }
       const result = validation[key](states[key].state)
       if (result) {
-        alert(key + ' ' + result)
+        alert(states[key].label + ' ' + result)
         return false
       }
       return true
