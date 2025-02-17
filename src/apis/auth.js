@@ -33,16 +33,20 @@ export function useMyInfo() {
   })
 }
 
-// export function useSocialLogin() {
-//   // return useMutation({
-//   //   mutationFn: providerName =>
-//   //     axios_spring.post(`/oauth2/authorization/${providerName}`).then(res => res.data),
-//   // })
-//   // to get
-
-//   return useQuery({
-//     queryKey: ['socialLogin'],
-//     queryFn: providerName =>
-//       axios_spring.get(`/oauth2/authorization/${providerName}`).then(res => res.data),
-//   })
-// }
+// /auth/logout
+export function useSignout() {
+  return useMutation({
+    mutationFn: () =>
+      axios_spring
+        .post(
+          '/auth/logout',
+          {},
+          {
+            headers: {
+              'Device-Token': getFCMToken(),
+            },
+          },
+        )
+        .then(res => res.data),
+  })
+}

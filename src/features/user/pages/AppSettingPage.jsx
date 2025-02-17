@@ -4,6 +4,7 @@ import { Outlet } from 'react-router'
 import useFcmToken from '../hooks/useFcmToken'
 import { useAuth } from '@/contexts/AuthContext'
 import MaterialIcon from '@/components/icons/MaterialIcon'
+import { useSignout } from '@/apis/auth'
 
 function AppSettingPage() {
   usePageName('앱 설정')
@@ -14,6 +15,13 @@ function AppSettingPage() {
   }
 
   const { user, login, logout } = useAuth()
+  const { mutate: requestLogout } = useSignout()
+
+  const onLogout = () => {
+    requestLogout()
+    logout()
+  }
+
   return (
     <div className='flex flex-col bg-white'>
       <main>
@@ -23,7 +31,7 @@ function AppSettingPage() {
           to='/mypage/app-setting/change-password'
         />
 
-        <button onClick={logout} className='flex items-center gap-2 p-4 px-6'>
+        <button onClick={onLogout} className='flex items-center gap-2 p-4 px-6'>
           <MaterialIcon name='logout' size={24} color='gray-950' />
           <span className=' font-bold text-base text-gray-800'>로그아웃</span>
         </button>
