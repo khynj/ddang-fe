@@ -99,7 +99,7 @@ function ProductSoldItem({ product, isSeller }) {
               </div>
               <div className='flex justify-between'>
                 <p>낙찰일시</p>
-                <p>{product.endTime}</p>
+                <p>{new Date(product.endTime).toLocaleString()}</p>
               </div>
             </div>
             <div className='flex grow gap-2'>

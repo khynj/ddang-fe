@@ -17,13 +17,13 @@ function CategoryPicker({
   value,
   setValue,
   validate,
-  initialCategoryName,
+  categoryName,
+  setCategoryName,
   categoryRecommendation,
 }) {
   const { isOpen, open, close } = useModal('')
   const [error, setError] = useState('')
   const [parentId, setParentId] = useState(0)
-  const [categoryName, setCategoryName] = useState(initialCategoryName)
   const { data: categories } = useCategory(parentId)
 
   useEffect(() => {
@@ -106,8 +106,9 @@ CategoryPicker.propTypes = {
   setValue: PropTypes.func,
   validate: PropTypes.func,
   children: PropTypes.node,
-  initialCategoryName: PropTypes.string,
   categoryRecommendation: PropTypes.array,
+  categoryName: PropTypes.string,
+  setCategoryName: PropTypes.func,
 }
 
 export default CategoryPicker

@@ -17,7 +17,7 @@ import { useCreateAuction, useUpdateAuction } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
 import TitleInput from '@/components/form/TitleInput'
 import { useCategoryRecommendation } from '@/apis/ai'
-import { convertDateToUTC } from '@/utils/date'
+import { formatPrice } from '@/utils/price'
 
 function ProductRegisterPage() {
   const { state } = useLocation()
@@ -33,6 +33,7 @@ function ProductRegisterPage() {
   const [categoryId, setCategory] = useState(
     auction?.category.categoryId || null,
   )
+  const [categoryName, setCategoryName] = useState('')
   const [minimumBid, setMinimumBid] = useState(auction?.minimumBid || 0)
   const [instantHammerPrice, setInstantHammerNowPrice] = useState(
     auction?.instantHammerPrice || 0,
@@ -68,7 +69,6 @@ function ProductRegisterPage() {
       tradeType,
       location,
     }
-    console.log(product.startTime)
 
     form.append(
       'product',
@@ -99,42 +99,52 @@ function ProductRegisterPage() {
     title: {
       label: '제목',
       state: title,
+      display: () => title,
     },
     productName: {
       label: '상품명',
       state: productName,
+      display: () => productName,
     },
     categoryId: {
       label: '카테고리',
       state: categoryId,
+      display: () => categoryName,
     },
     minimumBid: {
       label: '최소입찰가',
       state: minimumBid,
+      display: () => formatPrice(minimumBid),
     },
     instantHammerPrice: {
       label: '즉시낙찰가',
       state: instantHammerPrice,
+      display: () => formatPrice(instantHammerPrice),
     },
     startTime: {
       label: '개찰 시각',
       state: startTime,
+      display: () => new Date(startTime).toLocaleString(),
     },
     endTime: {
       label: '마감 시각',
       state: endTime,
+      display: () => new Date(endTime).toLocaleString(),
     },
     content: {
       label: '자세한 설명',
       state: content,
+      display: () => content,
     },
     tradeType: {
       label: '거래 유형',
       state: tradeType,
+      display: () => tradeType.value,
     },
     location: {
       label: '거래희망장소',
       state: location,
+      display: () => location.value,
     },
   }
 
@@ -220,6 +230,8 @@ function ProductRegisterPage() {
         initialCategoryName={auction?.category.categoryName}
         title={title}
         categoryRecommendation={categoryRecommendation}
+        categoryName={categoryName}
+        setCategoryName={setCategoryName}
       />
       <TextInput
         label='상품명'
@@ -297,9 +309,7 @@ function ProductRegisterPage() {
                       </span>
                       <div></div>
                       <span className='text-end truncate col-span-4'>
-                        {typeof states[key].state === 'object'
-                          ? states[key].state.value
-                          : states[key].state}
+                        {states[key].display()}
                       </span>
                     </div>
                   ),
