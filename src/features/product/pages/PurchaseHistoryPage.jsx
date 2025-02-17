@@ -13,7 +13,7 @@ function PurchaseHistoryPage() {
     <>
       {purchase && purchase.auctionDetailProjection.length > 0 ? (
         purchase.auctionDetailProjection.map((product, index) => (
-          <ProductHistoryItem key={index} product={product} />
+          <ProductHistoryItem key={index} product={product} role={'buyer'} />
         ))
       ) : (
         <Placeholder>구매 내역이 없어요.</Placeholder>

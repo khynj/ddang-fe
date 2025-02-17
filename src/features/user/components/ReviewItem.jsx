@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types'
 // import ProfileImage from './ProfileImage'
 import ProductImage from '../../product/components/ProductImage'
-import { Link } from 'react-router'
-import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/price'
 
 const ReviewItem = ({ review, received }) => {
   const hammeredPrice = formatPrice(review.auction.hammeredPrice)
-  const role = review.review.role === 'seller' ? '구매상품' : '판매상품'
+  const action = review.review.role == 'SELLER' ? '구매' : '판매'
 
   return (
     <div className='flex flex-col gap-2 p-4 bg-white text-sm border-b border-gray-200'>
@@ -20,37 +18,29 @@ const ReviewItem = ({ review, received }) => {
               <p className='text-gray-700'>{review.review.nickname}</p>
             </div>
           )}
-          <Link
-            className='flex grid grid-cols-6 gap-2'
-            to={ROUTES.PRODUCT_DETAIL.replace(':id', review.auction.auctionId)}
-          >
+          <div className='flex grid grid-cols-5 gap-2'>
             <div className='col-span-1 py-1'>
               <ProductImage product={review.auction} small />
             </div>
-            <div className='col-span-5 flex flex-col py-1'>
+            <div className='col-span-4 flex flex-col py-1'>
               <p className='text-gray-950 truncate flex-grow'>
                 {review.auction.title}
               </p>
-              <p className='font-bold text-gray-950 mt-1'>{hammeredPrice}원</p>
+              <p className='font-bold text-gray-950 mt-1'>
+                {hammeredPrice}원 {action}
+              </p>
             </div>
-          </Link>
+          </div>
         </div>
-        <div className='flex flex-col shrink-0 gap-2.5 mt-1'>
+        <div className='flex flex-col shrink-0 gap-2.5 py-2'>
           <p className='text-xs text-gray-900'>2024. 01. 29</p>
-          <span
-            className={`text-xs font-bold flex-shrink-0 ml-2 ${
-              role === '판매상품' ? 'text-ddblue-500' : 'text-gray-700'
-            }`}
-          >
-            {role}
-          </span>
         </div>
       </div>
 
       <p className='text-sm font-bold text-gray-900'>
-        {scoreToText(review.review.score)}
+        {scoreToText(review.review.satisfyScore)}
       </p>
-      <p className='text-sm text-gray-800 '>{review.review.review}</p>
+      <p className='text-sm text-gray-800 '>{review.review.content}</p>
     </div>
   )
 }

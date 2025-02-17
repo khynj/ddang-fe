@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { shortRelativeTime } from '@/utils/date'
 import ProductImage from './ProductImage'
 import { formatPrice } from '@/utils/price'
 import ROUTES from '@/data/ROUTES'
 
-function ProductHistoryItem({ product }) {
+function ProductHistoryItem({ product, role }) {
   const price = product.currentBidPrice
     ? formatPrice(product.currentBidPrice) + '원 낙찰'
     : '유찰'
@@ -19,6 +19,14 @@ function ProductHistoryItem({ product }) {
       : product.endTime
       ? shortRelativeTime(product.endTime)
       : ''
+
+  const route = useNavigate()
+  const onReview = e => {
+    e.preventDefault()
+    route(ROUTES.REVIEW_REGISTER.replace(':id', product.auctionId), {
+      state: { revieweeRole: role == 'seller' ? 'BUYER' : 'SELLER' },
+    })
+  }
 
   return (
     <Link
@@ -47,8 +55,16 @@ function ProductHistoryItem({ product }) {
           </div>
         </div>
       </div>
-      <div className='flex col-span-2 justify-end'>
+      <div className='flex flex-col col-span-2 items-end justify-between'>
         <p className='text-sm text-gray-700'>{day}</p>
+        {!product.reviewed && (
+          <button
+            onClick={onReview}
+            className='p-2 bg-ddblue-400 text-white rounded-xl whitespace-nowrap text-sm'
+          >
+            리뷰작성
+          </button>
+        )}
       </div>
     </Link>
   )
