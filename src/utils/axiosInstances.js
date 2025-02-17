@@ -48,10 +48,6 @@ const axios_ai = axios.create({
       ? import.meta.env.VITE_SERVER_URL
       : import.meta.env.VITE_DEV_AI_URL
   }/ai`,
-  // baseURL: 'http://70.12.115.57:0000',
-  // baseURL: 'http://70.12.115.57:8001/ai',
-  // baseURL: 'http://localhost:5173/ai',
-  // baseURL: import.meta.env.VITE_SERVER_URL + '/ai',
   maxBodyLength: Infinity,
   withCredentials: true,
 })

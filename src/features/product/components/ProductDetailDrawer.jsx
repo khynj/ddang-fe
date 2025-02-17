@@ -89,6 +89,7 @@ function ProductDetailDrawer({ product, isMine, ref }) {
           queryClient.invalidateQueries(['auctionDetails'])
         },
         onError: error => {
+          queryClient.invalidateQueries(['auctionDetails'])
           alert(error.response.data.message)
         },
       },
