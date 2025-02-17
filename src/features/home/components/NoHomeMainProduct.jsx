@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 function NoHomeMainProduct() {
   return (
     <Link
-      to={ROUTES.PRODUCT_REGISTER}
+      to={ROUTES.SEARCH}
       className='relative aspect-square w-full flex-shrink-0 snap-center'
     >
       <div className='relative bg-white brightness-96'>
@@ -23,7 +23,7 @@ function NoHomeMainProduct() {
           추천 상품이 없어요. 🥲
         </p>
         <p className='text-lg font-bold text-gray-100 mt-4'>
-          직접 경매를 등록해보세요.
+          다양한 중고 경매를 탐색해보세요.
         </p>
       </div>
     </Link>

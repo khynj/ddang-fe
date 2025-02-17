@@ -22,7 +22,7 @@ function CategoryList({ category }) {
               className='w-full h-full object-cover bg-gray-100'
               onError={e => {
                 e.target.onerror = null
-                e.target.src = sadDdang // 기본 이미지 경로
+                e.target.src = sadDdang
               }}
             />
           </div>

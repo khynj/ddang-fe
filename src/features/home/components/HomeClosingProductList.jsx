@@ -2,6 +2,7 @@ import { useSearchAuctions } from '@/apis/auction'
 import HomeListHeader from './HomeListHeader'
 import HomeProductItem from './HomeProductItem'
 import ROUTES from '@/data/ROUTES'
+import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
 
 function HomeClosingProductList() {
   const { data: closingProducts } = useSearchAuctions({
@@ -17,13 +18,18 @@ function HomeClosingProductList() {
         to={`${ROUTES.PRODUCT_LIST}?sortType=endTime`}
         icon='local_fire_department'
       ></HomeListHeader>
-      <div className='grid grid-cols-2 gap-4'>
-        {closingProducts?.pages[0].auctionDetailProjection
-          .slice(0, 4)
-          .map((product, i) => (
-            <HomeProductItem key={i} product={product} />
-          ))}
-      </div>
+      {closingProducts &&
+      closingProducts.pages[0].auctionDetailProjection.length > 0 ? (
+        <div className='grid grid-cols-2 gap-4'>
+          {closingProducts.pages[0].auctionDetailProjection
+            .slice(0, 4)
+            .map((product, i) => (
+              <HomeProductItem key={i} product={product} />
+            ))}
+        </div>
+      ) : (
+        <InlinePlaceholder>경매중인 상품이 없어요.</InlinePlaceholder>
+      )}
     </section>
   )
 }

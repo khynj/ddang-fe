@@ -1,37 +1,15 @@
 import usePageName from '@/hooks/usePageName.js'
 import { usePayHistory } from '@/apis/pay.js'
 import { formatPrice } from '@/utils/price'
+import Placeholder from '@/components/placeholder/Placeholder'
 
 function PaymentHistoryPage() {
   usePageName('페이내역')
 
   const { data } = usePayHistory()
-  // const data = {
-  //   histories: [
-  //     {
-  //       payAccountHistoryId: 7,
-  //       title: '카카오페이 충전',
-  //       changeAmount: 500000,
-  //       balanceAfter: 500000,
-  //       createdTime: '2025-02-15T03:35:39Z',
-  //     },
-  //   ],
-  //   pageInfo: {
-  //     page: 1,
-  //     size: 10,
-  //     totalElements: 1,
-  //     totalPages: 1,
-  //     hasPrevious: false,
-  //     hasNext: false,
-  //   },
-  // }
 
   if (!data || data.histories.length === 0) {
-    return (
-      <div className='flex justify-center items-center h-full'>
-        <div className='text-center text-gray-700'>결제 내역이 없습니다.</div>
-      </div>
-    )
+    return <Placeholder>결제 내역이 없어요.</Placeholder>
   }
 
   const transactions = data ? data.histories : []

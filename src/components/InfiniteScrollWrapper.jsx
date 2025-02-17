@@ -1,4 +1,3 @@
-import LoadingPage from '@/pages/LoadingPage'
 import PropTypes from 'prop-types'
 import { useEffect, useRef } from 'react'
 

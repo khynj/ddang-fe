@@ -8,6 +8,7 @@ import ReviewItem from '../components/ReviewItem'
 import { useMemberInfo, useMemberReviews } from '@/apis/member'
 import LoadingPage from '@/pages/LoadingPage'
 import { useSearchAuctions } from '@/apis/auction'
+import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
 
 function ProfilePage() {
   usePageName('프로필')
@@ -41,12 +42,16 @@ function ProfilePage() {
       )}
       {
         <ProfileSection title='리뷰' to={`${ROUTES.REVIEW_HISTORY}/${id}`}>
-          {reviews_buyer?.slice(0, 3).map((review, i) => (
-            <ReviewItem key={i} review={review} received />
-          ))}
-          {reviews_seller?.slice(0, 3).map((review, i) => (
-            <ReviewItem key={i} review={review} received />
-          ))}
+          {(reviews_buyer && reviews_seller && reviews_buyer?.length) ||
+          reviews_seller?.length ? (
+            [...reviews_buyer, ...reviews_seller]
+              .slice(0, 6)
+              .map((review, i) => (
+                <ReviewItem key={i} review={review} received />
+              ))
+          ) : (
+            <InlinePlaceholder>리뷰가 없어요.</InlinePlaceholder>
+          )}
         </ProfileSection>
       }
     </div>

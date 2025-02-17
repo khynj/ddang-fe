@@ -3,6 +3,7 @@ import { useFollowingList } from '@/apis/member'
 import HomeListHeader from './HomeListHeader'
 import ROUTES from '@/data/ROUTES'
 import HomeProductItem from './HomeProductItem'
+import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
 
 function HomeSubscribedProductList() {
   const { data: followings } = useFollowingList()
@@ -18,11 +19,15 @@ function HomeSubscribedProductList() {
         to={ROUTES.SUBSCRIPTIONS}
         icon='bookmark'
       ></HomeListHeader>
-      <div className='grid grid-cols-2 gap-4'>
-        {subscribedProducts?.slice(0, 4).map((product, i) => (
-          <HomeProductItem key={i} product={product} />
-        ))}
-      </div>
+      {subscribedProducts && subscribedProducts.length > 0 ? (
+        <div className='grid grid-cols-2 gap-4'>
+          {subscribedProducts.slice(0, 4).map((product, i) => (
+            <HomeProductItem key={i} product={product} />
+          ))}
+        </div>
+      ) : (
+        <InlinePlaceholder>구독 상품이 없어요.</InlinePlaceholder>
+      )}
     </section>
   )
 }

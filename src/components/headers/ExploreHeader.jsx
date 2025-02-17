@@ -48,13 +48,19 @@ function ExploreHeader() {
         />
       </form>
       <IconButton
-        icon={{
-          name: notificationStatus?.hasUnread
-            ? 'notifications_unread'
-            : 'notifications',
-          size: 28,
-          className: 'text-gray-600',
-        }}
+        icon={
+          notificationStatus?.hasUnread
+            ? {
+                name: 'notifications_unread',
+                size: 28,
+                className: 'text-ddred-500',
+              }
+            : {
+                name: 'notifications',
+                size: 28,
+                className: 'text-gray-600',
+              }
+        }
         onClick={() => route(ROUTES.NOTIFICATIONS)}
       />
       <IconButton

@@ -5,6 +5,7 @@ import ProductSoldItem from '../components/my/ProductSoldItem'
 import { useSearchAuctions, useSearchMyBids } from '@/apis/auction'
 import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper'
 import { useAuth } from '@/contexts/AuthContext'
+import Placeholder from '@/components/placeholder/Placeholder'
 function MyProductListPage({ isSeller, isHammered, isPre }) {
   const params = {
     role: isSeller ? 'seller' : 'buyer',
@@ -13,7 +14,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
   }
   const { user } = useAuth()
   const {
-    data: products,
+    data: sales,
     fetchNextPage: fetchNextSellingPage,
     isPending: isSellPending,
     isFetching: isSellFetching,
@@ -29,41 +30,41 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
     isFetching: isBidsFetching,
   } = useSearchMyBids(params)
 
-  console.log(
-    'myBids',
-    myBids?.pages.map(page => page.auctionDetailProjection),
-  )
   return (
     <>
       {isSeller ? (
-        <InfiniteScrollWrapper
-          fetchNextPage={fetchNextSellingPage}
-          isPending={isSellPending}
-          isFetching={isSellFetching}
-        >
-          {products?.pages.map(page =>
-            page.auctionDetailProjection.map(product =>
-              isHammered ? (
-                <ProductSoldItem
-                  key={product.auctionId}
-                  product={product}
-                  isSeller
-                />
-              ) : isPre ? (
-                <ProductItemHorizontal
-                  key={product.auctionId}
-                  product={product}
-                />
-              ) : (
-                <ProductItemHorizontal
-                  key={product.auctionId}
-                  product={product}
-                />
+        sales && sales.pages[0].auctionDetailProjection.length > 0 ? (
+          <InfiniteScrollWrapper
+            fetchNextPage={fetchNextSellingPage}
+            isPending={isSellPending}
+            isFetching={isSellFetching}
+          >
+            {sales.pages.map(page =>
+              page.auctionDetailProjection.map(product =>
+                isHammered ? (
+                  <ProductSoldItem
+                    key={product.auctionId}
+                    product={product}
+                    isSeller
+                  />
+                ) : isPre ? (
+                  <ProductItemHorizontal
+                    key={product.auctionId}
+                    product={product}
+                  />
+                ) : (
+                  <ProductItemHorizontal
+                    key={product.auctionId}
+                    product={product}
+                  />
+                ),
               ),
-            ),
-          )}
-        </InfiniteScrollWrapper>
-      ) : (
+            )}
+          </InfiniteScrollWrapper>
+        ) : (
+          <Placeholder>상품이 없어요.</Placeholder>
+        )
+      ) : (myBids && myBids.pages[0].auctionDetailProjection.length) > 0 ? (
         <InfiniteScrollWrapper
           fetchNextPage={fetchNextBidsPage}
           isPending={isBidsPending}
@@ -79,6 +80,8 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
             ),
           )}
         </InfiniteScrollWrapper>
+      ) : (
+        <Placeholder>상품이 없어요.</Placeholder>
       )}
     </>
   )

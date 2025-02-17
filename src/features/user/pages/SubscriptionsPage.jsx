@@ -4,6 +4,8 @@ import ProfileImage from '../components/ProfileImage'
 import { useFollowingList } from '@/apis/member'
 import { useFollowingAuctions } from '@/apis/auction'
 import { useEffect, useState } from 'react'
+import Placeholder from '@/components/placeholder/Placeholder'
+import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
 
 function SubscriptionsPage() {
   usePageName('모아보기')
@@ -34,6 +36,9 @@ function SubscriptionsPage() {
     console.log(selectedFollowings)
   }, [selectedFollowings])
 
+  if (!followings || followings.followings.length === 0)
+    return <Placeholder>구독한 사용자가 없어요.</Placeholder>
+
   return (
     <div>
       <div className='flex overflow-x-scroll gap-1 p-2'>
@@ -45,7 +50,7 @@ function SubscriptionsPage() {
                 selectedFollowings.some(
                   user => user.memberId === profile.memberId,
                 )
-                  ? 'bg-gray-300'
+                  ? 'bg-gray-200'
                   : ''
               }
                 `}
@@ -62,10 +67,16 @@ function SubscriptionsPage() {
         ))}
       </div>
 
+      <hr className='border-gray-200' />
+
       <div>
-        {products?.map((product, index) => (
-          <ProductItemHorizontal key={index} product={product} />
-        ))}
+        {products && products.length > 0 ? (
+          products.map((product, index) => (
+            <ProductItemHorizontal key={index} product={product} />
+          ))
+        ) : (
+          <InlinePlaceholder>선택된 판매자의 경매가 없어요.</InlinePlaceholder>
+        )}
       </div>
     </div>
   )

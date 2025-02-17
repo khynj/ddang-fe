@@ -11,10 +11,12 @@ function SearchPage() {
 
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
-      <div className='flex items-center gap-2 p-3 font-bold text-gray-700'>
-        <MaterialIcon name='search_activity' size={24} />
-        <p>최근 검색어</p>
-      </div>
+      {searchHistory && searchHistory.length > 0 && (
+        <div className='flex items-center gap-2 p-3 font-bold text-gray-700'>
+          <MaterialIcon name='search_activity' size={24} />
+          <p>최근 검색어</p>
+        </div>
+      )}
       {searchHistory
         ?.filter(({ searchKey }) => searchKey)
         .sort((a, b) => b.memberSearchHistoryId - a.memberSearchHistoryId)
@@ -27,11 +29,11 @@ function SearchPage() {
           />
         ))}
       <div className='flex flex-col mt-4 gap-2 px-2'>
-        <Link
-          className='flex flex-col gap-2 p-2 text-gray-950'
-          to={`${ROUTES.PRODUCT_LIST}`}
-        >
-          <p className='font-bold mb-1'>전체조회</p>
+        <Link to={`${ROUTES.PRODUCT_LIST}`}>
+          <div className='flex flex-col gap-2 p-2 flex flex-row justify-between items-center mb-1 text-gray-600'>
+            <p className='font-bold'>모든 경매 보기</p>
+            <MaterialIcon name='chevron_right' className='' size={26} />
+          </div>
         </Link>
         {categories?.map((category, index) => (
           <div key={index} className='flex flex-col gap-2 p-2 text-gray-950'>

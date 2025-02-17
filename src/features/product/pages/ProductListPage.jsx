@@ -7,11 +7,10 @@ import { useSearchAuctions } from '@/apis/auction.js'
 import { useSearchParams } from 'react-router'
 import CategoryPickerSmall from '@/components/modals/CategoryPickerSmall.jsx'
 import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper.jsx'
+import Placeholder from '@/components/placeholder/Placeholder.jsx'
 
-function ProductListPage({ filters, isFavorite }) {
+function ProductListPage({ filters, isFavorite, sellerId }) {
   const [searchParams, setSearchParams] = useSearchParams()
-
-  // const [products, setProducts] = useState([])
 
   const param = useMemo(() => {
     const params = {}
@@ -20,8 +19,9 @@ function ProductListPage({ filters, isFavorite }) {
       params[key] = value
     })
     params.isFavorite = isFavorite
+    params.sellerId = sellerId
     return params
-  }, [searchParams, isFavorite])
+  }, [searchParams, isFavorite, sellerId])
 
   const {
     data: products,
@@ -39,12 +39,6 @@ function ProductListPage({ filters, isFavorite }) {
       { replace: true },
     )
   }, [searchParams, setSearchParams])
-
-  // useEffect(() => {
-  //   if (!newProducts) return
-  //   if (page == 1) setProducts(newProducts.auctionDetailProjection)
-  //   else setProducts(prev => [...prev, ...newProducts.auctionDetailProjection])
-  // }, [newProducts, page])
 
   return (
     <div className='flex flex-col h-full'>
@@ -85,17 +79,21 @@ function ProductListPage({ filters, isFavorite }) {
           </>
         )}
       </FilterBar>
-      <InfiniteScrollWrapper
-        fetchNextPage={fetchNextPage}
-        isPending={isPending}
-        isFetching={isFetching}
-      >
-        {products?.pages.map(product =>
-          product.auctionDetailProjection.map((product, i) => (
-            <ProductItemHorizontal key={i} product={product} />
-          )),
-        )}
-      </InfiniteScrollWrapper>
+      {products && products.pages.length > 0 ? (
+        <InfiniteScrollWrapper
+          fetchNextPage={fetchNextPage}
+          isPending={isPending}
+          isFetching={isFetching}
+        >
+          {products?.pages.map(product =>
+            product.auctionDetailProjection.map((product, i) => (
+              <ProductItemHorizontal key={i} product={product} />
+            )),
+          )}
+        </InfiniteScrollWrapper>
+      ) : (
+        <Placeholder>상품이 없어요. 🥲</Placeholder>
+      )}
     </div>
   )
 }

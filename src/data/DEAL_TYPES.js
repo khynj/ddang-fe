@@ -3,7 +3,7 @@ const DEAL_TYPES = [
     value: '직거래',
     isDirect: true,
     isPackage: false,
-    parcelFeeOption: undefined,
+    parcelFeeOption: null,
   },
   {
     value: '택배(선불)',

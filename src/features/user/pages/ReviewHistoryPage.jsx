@@ -3,6 +3,7 @@ import ReviewItem from '../components/ReviewItem'
 import { useMemberReviews } from '@/apis/member'
 import { useAuth } from '@/contexts/AuthContext'
 import { useMemo } from 'react'
+import Placeholder from '@/components/placeholder/Placeholder'
 
 function ReviewHistoryPage({ received }) {
   const { user } = useAuth()
@@ -29,9 +30,13 @@ function ReviewHistoryPage({ received }) {
 
   return (
     <>
-      {reviews?.map((review, i) => (
-        <ReviewItem key={i} review={review} received={!!received} />
-      ))}
+      {reviews && reviews.length > 0 ? (
+        reviews.map((review, i) => (
+          <ReviewItem key={i} review={review} received={!!received} />
+        ))
+      ) : (
+        <Placeholder>리뷰가 없어요.</Placeholder>
+      )}
     </>
   )
 }

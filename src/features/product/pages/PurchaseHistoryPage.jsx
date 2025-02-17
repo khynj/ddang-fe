@@ -1,6 +1,7 @@
 import { useSearchAuctionHistories } from '@/apis/auction'
 import usePageName from '../../../hooks/usePageName'
 import ProductHistoryItem from '../components/ProductHistoryItem'
+import Placeholder from '@/components/placeholder/Placeholder'
 // import purchase from '../data/purchase'
 
 function PurchaseHistoryPage() {
@@ -9,11 +10,15 @@ function PurchaseHistoryPage() {
   const { data: purchase } = useSearchAuctionHistories({ role: 'buyer' })
 
   return (
-    <div>
-      {purchase?.auctionDetailProjection.map((product, index) => (
-        <ProductHistoryItem key={index} product={product} />
-      ))}
-    </div>
+    <>
+      {purchase && purchase.auctionDetailProjection.length > 0 ? (
+        purchase.auctionDetailProjection.map((product, index) => (
+          <ProductHistoryItem key={index} product={product} />
+        ))
+      ) : (
+        <Placeholder>구매 내역이 없어요.</Placeholder>
+      )}
+    </>
   )
 }
 

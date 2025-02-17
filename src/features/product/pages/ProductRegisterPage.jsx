@@ -42,8 +42,11 @@ function ProductRegisterPage() {
   const [endTime, setEndTime] = useState(auction ? auction.endTime : '')
   const [content, setContent] = useState(auction?.content || '')
   const [tradeType, setTradeType] = useState(
-    auction?.tradeType || { value: '', isDirect: false },
+    auction
+      ? { ...auction.tradeType, parcelFeeOption: auction.tradeType.pay }
+      : { value: '', isDirect: false },
   )
+  console.log(tradeType)
   const [location, setLocation] = useState(auction?.location || null)
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
@@ -175,6 +178,7 @@ function ProductRegisterPage() {
   }
 
   const handleSubmit = () => {
+    console.log(tradeType)
     if (images.length === 0) {
       alert('이미지를 등록해주세요.')
       return false
@@ -329,7 +333,7 @@ function ProductRegisterPage() {
         </Modal>
       )}
       {isSuccessModalOpen && (
-        <Modal close={() => setIsSuccessModalOpen(false)}>
+        <Modal close={handleCommit}>
           <div className='flex flex-col items-center gap-1 text-ddblue-400'>
             <MaterialIcon name='check_circle' size={32} filled />
             <p className='font-bold'>경매 {actionName} 완료</p>
