@@ -26,13 +26,24 @@ export function getTradeType({ isDirect, isPackage, pay }) {
   return tradeType
 }
 
-export function getAuctionStatus({ startTime, endTime, hammeredTime }) {
+export function getAuctionStatus(auction) {
+  if (!auction) return -1
   const now = new Date().getTime()
-  const start = new Date(startTime).getTime()
-  const end = new Date(endTime).getTime()
+  const start = new Date(auction.startTime).getTime()
+  const end = new Date(auction.endTime).getTime()
 
   if (now < start) return 0
-  if (hammeredTime) return 2
+  if (auction.hammeredTime) return 2
   if (now >= end) return 2
   return 1
+}
+
+export function getAuctionNextTime(auction) {
+  if (!auction) return null
+  const now = new Date().getTime()
+  const start = new Date(auction.startTime).getTime()
+  const end = new Date(auction.endTime).getTime()
+  if (now < start) return auction.startTime
+  if (now < end) return auction.endTime
+  return null
 }

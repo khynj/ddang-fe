@@ -3,13 +3,13 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { wonitzie } from '@/utils/wonitize'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
-import { getAuctionTimeString } from '@/utils/date'
+import { useAuctionTimer } from '@/hooks/useAuctionTimer'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice || product.minimumBid)
   const didBid = product.myBidPrice > 0
   const isTop = didBid && product.currentBidPrice == product.myBidPrice
-  const time = getAuctionTimeString(product)
+  const time = useAuctionTimer(product, ['searchMyBids', 'relatedAuctions'])
   return (
     <Link
       to={`${ROUTES.PRODUCT_DETAIL}`.replace(':id', product.auctionId)}

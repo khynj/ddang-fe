@@ -7,7 +7,6 @@ import {
 import DefaultButton from '@/components/buttons/DefaultButton'
 import IconButton from '@/components/buttons/IconButton'
 import FavoriteButton from '@/components/icons/FavoriteButton'
-import StickyContainer from '@/components/StickyContainer'
 import ROUTES from '@/data/ROUTES'
 import LoadingPage from '@/pages/LoadingPage'
 import { formatPrice, getMinimumBidUnit } from '@/utils/price'
@@ -15,8 +14,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { getAuctionTimeString } from '@/utils/date'
 import { getAuctionStatus } from '@/utils/auction'
+import { useAuctionTimer } from '@/hooks/useAuctionTimer'
 
 function ProductDetailDrawer({ product, isMine, ref }) {
   const route = useNavigate()
@@ -29,6 +28,9 @@ function ProductDetailDrawer({ product, isMine, ref }) {
   const [minimumBidPrice, setMinimumBidPrice] = useState(0)
   const [minimumBidUnit, setMinimumBidUnit] = useState(0)
   const [bidPrice, setBidPrice] = useState(0)
+
+  const invalidateKeys = ['auctionDetails']
+  const remainingTime = useAuctionTimer(product?.auction, invalidateKeys)
 
   useEffect(() => {
     if (!product || !getMinimumBidUnit || !setMinimumBidPrice) return
@@ -45,7 +47,6 @@ function ProductDetailDrawer({ product, isMine, ref }) {
 
   const { auction, seller } = product
   const status = getAuctionStatus(auction)
-  const time = getAuctionTimeString(auction)
 
   const handleBidPrice = e => {
     const value = e.target.value.replace(/[^0-9]/g, '')
@@ -136,7 +137,7 @@ function ProductDetailDrawer({ product, isMine, ref }) {
       className='flex flex-col p-4 border-t border-gray-200 shrink-0'
     >
       <div className='flex justify-between items-center mb-1'>
-        <span className='text-sm'>{time}</span>
+        <span className='text-sm'>{remainingTime}</span>
         <div className='flex gap-4'>
           {status == 2 &&
             auction.myBidPrice == auction.currentBidPrice &&

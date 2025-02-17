@@ -4,14 +4,13 @@ import ProductImage from '../ProductImage'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
 import { formatPrice } from '@/utils/price'
-import { getAuctionStatus } from '@/utils/auction'
-import { getAuctionTimeString } from '@/utils/date'
+import { useAuctionTimer } from '@/hooks/useAuctionTimer'
 
 function ProductBiddingItem({ product }) {
   const price = formatPrice(product.currentBidPrice)
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
   const isTopBidder = product.myBidPrice === product.currentBidPrice
-  const time = getAuctionTimeString(product)
+  const time = useAuctionTimer(product, ['searchMyBids'])
   return (
     <Link
       className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200`}

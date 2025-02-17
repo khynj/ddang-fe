@@ -9,6 +9,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
   const params = {
     role: isSeller ? 'seller' : 'buyer',
     status: isHammered ? 'ended' : isPre ? 'upcoming' : 'ongoing',
+    isHammered,
   }
   const { user } = useAuth()
   const {

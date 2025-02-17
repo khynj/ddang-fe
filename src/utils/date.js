@@ -63,7 +63,10 @@ export function dday(date) {
   const diff = targetDate - now
 
   if (diff < 0) return false
+  formatTimeDiff(diff)
+}
 
+export function formatTimeDiff(diff) {
   const weeks = Math.floor(diff / (1000 * 60 * 60 * 24 * 7))
   const days = Math.floor(diff / (1000 * 60 * 60 * 24))
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
@@ -91,20 +94,7 @@ export function getAuctionTimeString(auction) {
 
   if (diff < 0) return '...'
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000)
-
-  let res = ''
-
-  if (days > 0) res += `${days}일 ${hours}시간`
-  res +=
-    hours === 0
-      ? minutes === 0
-        ? `${seconds}초`
-        : `${minutes}:${seconds}`
-      : `${hours}시간`
+  let res = formatTimeDiff(diff)
   if (status == 0) return `${res} 후 시작`
   return `${res} 남음`
 }

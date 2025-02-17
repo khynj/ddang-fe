@@ -4,11 +4,10 @@ import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/price'
-import { getAuctionStatus } from '@/utils/auction'
-import { getAuctionTimeString } from '@/utils/date'
+import { useAuctionTimer } from '@/hooks/useAuctionTimer'
 function HomeProductItem({ product }) {
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
-  const time = getAuctionTimeString(product)
+  const time = useAuctionTimer(product, ['searchAuctions'])
 
   return (
     <Link

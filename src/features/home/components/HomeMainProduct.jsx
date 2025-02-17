@@ -3,13 +3,12 @@ import { Link } from 'react-router'
 import { formatPrice } from '@/utils/price'
 import ROUTES from '@/data/ROUTES'
 import { useAuth } from '@/contexts/AuthContext'
-import { getAuctionStatus } from '@/utils/auction'
-import { getAuctionTimeString } from '@/utils/date'
+import { useAuctionTimer } from '@/hooks/useAuctionTimer'
 
 function HomeMainProduct({ product, index, size }) {
   const { user } = useAuth()
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
-  const time = getAuctionTimeString(product)
+  const time = useAuctionTimer(product, ['personalizedAuctions'])
   return (
     <Link
       to={ROUTES.PRODUCT_DETAIL.replace(':id', product.auctionId)}

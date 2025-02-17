@@ -4,13 +4,14 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/price'
-import { getAuctionTimeString } from '@/utils/date'
+import { useAuctionTimer } from '@/hooks/useAuctionTimer'
 
 function ProductItemHorizontal({ product }) {
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
 
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
-  const date = getAuctionTimeString(product)
+  const time = useAuctionTimer(product)
+  // const time = useAuctionTimer(product, ['searchAuctions'])
   return (
     <Link
       className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200 ${
@@ -51,7 +52,7 @@ function ProductItemHorizontal({ product }) {
         </div>
       </div>
       <div className='flex flex-col justify-between items-end col-span-2'>
-        <p className='text-sm text-gray-700 whitespace-nowrap'>{date}</p>
+        <p className='text-sm text-gray-700 whitespace-nowrap'>{time}</p>
 
         <div className='flex items-end text-gray-600 gap-2'>
           <div className='flex items-center gap-0.5'>

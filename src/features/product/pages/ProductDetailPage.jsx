@@ -10,7 +10,7 @@ import { formatPrice } from '@/utils/price.js'
 import { useAuctionDetails } from '@/apis/auction.js'
 import LoadingPage from '@/pages/LoadingPage.jsx'
 import { shortRelativeTime } from '@/utils/date'
-import { parseTradeType } from '@/utils/auction.js'
+import { getAuctionStatus, parseTradeType } from '@/utils/auction.js'
 import ProductDetailDrawer from '../components/ProductDetailDrawer.jsx'
 import { useAuth } from '@/contexts/AuthContext.jsx'
 import RelatedProductList from '../components/RelatedProductList.jsx'
@@ -23,11 +23,11 @@ function ProductDetailPage() {
   const { data: product, isPending } = useAuctionDetails(productId)
   const { user } = useAuth()
   usePageName(product ? product.auction.productName : '제품상세')
+  const status = getAuctionStatus(product?.auction)
   useEffect(() => {
     if (!product) return
-
-    setDrawerHeight(drawerRef.current.clientHeight)
-  }, [product])
+    if (drawerRef.current) setDrawerHeight(drawerRef.current.clientHeight)
+  }, [product, status])
 
   if (isPending) return <LoadingPage />
 
