@@ -14,7 +14,6 @@ function ProductListPage({ filters, isFavorite }) {
   // const [products, setProducts] = useState([])
 
   const param = useMemo(() => {
-    console.log(searchParams, isFavorite)
     const params = {}
     searchParams.forEach((value, key) => {
       if (!value) return
@@ -30,7 +29,6 @@ function ProductListPage({ filters, isFavorite }) {
     isPending,
     isFetching,
   } = useSearchAuctions(param)
-  console.log('products:', products)
 
   useEffect(() => {
     setSearchParams(

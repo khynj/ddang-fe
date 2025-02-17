@@ -13,7 +13,17 @@ function ExploreHeader() {
 
   const search = e => {
     e.preventDefault()
-    route(`${ROUTES.PRODUCT_LIST}?searchKey=${searchKey}`)
+    const params = { searchKey: searchKey }
+    searchParams.keys().forEach(key => {
+      if (key !== 'searchKey') params[key] = searchParams.get(key)
+    })
+    let url = `${ROUTES.PRODUCT_LIST}?`
+    Object.keys(params).forEach((key, i) => {
+      url += `${key}=${params[key]}${
+        i === Object.keys(params).length - 1 ? '' : '&'
+      }`
+    })
+    route(url)
     e.target[0].blur()
   }
 

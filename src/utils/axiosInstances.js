@@ -15,7 +15,7 @@ import axios from 'axios'
 // }
 
 const successHandler = response => {
-  console.log(response.config.url, response)
+  // console.log(response.config.url, response)
   // change times to local time(recursive)
   // changeToLocalTime(response)
 
