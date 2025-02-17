@@ -32,9 +32,6 @@ function ProductDetailDrawer({ product, isMine }) {
   const [bidPrice, setBidPrice] = useState(0)
 
   const endTimeDDay = useEndTimeDDay(product.auction.endTime)
-  if (!endTimeDDay) {
-    queryClient.invalidateQueries(['searchAuctions'])
-  }
 
   useEffect(() => {
     if (!product || !getMinimumBidUnit || !setMinimumBidPrice) return

@@ -3,18 +3,13 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { wonitzie } from '@/utils/wonitize'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
-import { useQueryClient } from '@tanstack/react-query'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice || product.minimumBid)
   const didBid = product.myBidPrice > 0
   const isTop = didBid && product.currentBidPrice == product.myBidPrice
-  const queryClient = useQueryClient()
   const endTimeDDay = useEndTimeDDay(product.endTime)
-  if (!endTimeDDay) {
-    queryClient.invalidateQueries(['searchAuctions'])
-  }
   return (
     <Link
       to={`${ROUTES.PRODUCT_DETAIL}`.replace(':id', product.auctionId)}

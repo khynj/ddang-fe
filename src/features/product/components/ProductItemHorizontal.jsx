@@ -5,19 +5,14 @@ import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/price'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
-import { useQueryClient } from '@tanstack/react-query'
 import { getAuctionStatus } from '@/utils/auction'
 import { relativeTime } from '@/utils/date'
 
 function ProductItemHorizontal({ product }) {
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
 
-  const queryClient = useQueryClient()
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
   const endTimeDDay = useEndTimeDDay(product.endTime)
-  if (!endTimeDDay) {
-    queryClient.invalidateQueries(['searchAuctions'])
-  }
   const status = getAuctionStatus(product)
   return (
     <Link

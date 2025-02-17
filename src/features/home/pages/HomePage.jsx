@@ -11,17 +11,12 @@ import {
   useSearchMyBids,
 } from '@/apis/auction'
 import { useFollowingList } from '@/apis/member'
+import HomeClosingProductList from '../components/HomeClosingProductList'
 
 function HomePage() {
   const { user } = useAuth()
 
   const { data: biddingProducts } = useSearchMyBids({ status: 'ongoing' })
-
-  const { data: closingProducts } = useSearchAuctions({
-    status: 'ongoing',
-    sortType: 'endTime',
-    size: 4,
-  })
 
   const { data: followings } = useFollowingList()
   const { data: subscribedProducts } = useFollowingAuctions(
@@ -53,21 +48,7 @@ function HomePage() {
               ))}
           </div>
         </section>
-
-        <section>
-          <HomeListHeader
-            title={`마감 임박`}
-            to={`${ROUTES.PRODUCT_LIST}?sortType=endTime`}
-            icon='local_fire_department'
-          ></HomeListHeader>
-          <div className='grid grid-cols-2 gap-4'>
-            {closingProducts?.pages[0].auctionDetailProjection
-              .slice(0, 4)
-              .map((product, i) => (
-                <HomeProductItem key={i} product={product} />
-              ))}
-          </div>
-        </section>
+        <HomeClosingProductList />
 
         <section>
           <HomeListHeader

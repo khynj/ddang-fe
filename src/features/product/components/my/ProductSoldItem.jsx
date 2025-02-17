@@ -59,17 +59,21 @@ function ProductSoldItem({ product, isSeller }) {
           <p className='font-bold text-gray-950'>{price}원 낙찰</p>
         </div>
         <div className='flex justify-end items-end row-span-2 col-span-5'>
-          <button
-            className='p-2 px-4 rounded-xl bg-ddred-400'
-            onClick={e => {
-              e.preventDefault()
-              openConfirmModal()
-            }}
-          >
-            <p className='text-white text-sm text-center'>
-              {isSeller ? '판매확정' : '구매확정'}
-            </p>
-          </button>
+          {product.myConfirm ? (
+            <p className='p-2 px-4'>상대방이 확정 전이에요.</p>
+          ) : (
+            <button
+              className='p-2 px-4 rounded-xl bg-ddred-400'
+              onClick={e => {
+                e.preventDefault()
+                openConfirmModal()
+              }}
+            >
+              <p className='text-white text-sm text-center'>
+                {isSeller ? '판매확정' : '구매확정'}
+              </p>
+            </button>
+          )}
         </div>
       </Link>
       {isConfirmModalOpen && (

@@ -4,18 +4,13 @@ import ProductImage from '../ProductImage'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
 import { formatPrice } from '@/utils/price'
-import { useQueryClient } from '@tanstack/react-query'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
 
 function ProductBiddingItem({ product }) {
   const price = formatPrice(product.currentBidPrice)
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
   const isTopBidder = product.myBidPrice === product.currentBidPrice
-  const queryClient = useQueryClient()
   const endTimeDDay = useEndTimeDDay(product.endTime)
-  if (!endTimeDDay) {
-    queryClient.invalidateQueries(['searchAuctions'])
-  }
   return (
     <Link
       className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200`}

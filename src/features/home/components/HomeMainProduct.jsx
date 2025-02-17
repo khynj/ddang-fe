@@ -3,17 +3,12 @@ import { Link } from 'react-router'
 import { formatPrice } from '@/utils/price'
 import ROUTES from '@/data/ROUTES'
 import { useAuth } from '@/contexts/AuthContext'
-import { useQueryClient } from '@tanstack/react-query'
 import useEndTimeDDay from '@/hooks/useEndTimeDDay'
 
 function HomeMainProduct({ product, index, size }) {
   const { user } = useAuth()
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
-  const queryClient = useQueryClient()
   const endTimeDDay = useEndTimeDDay(product.endTime)
-  if (!endTimeDDay) {
-    queryClient.invalidateQueries(['searchAuctions'])
-  }
   return (
     <Link
       to={ROUTES.PRODUCT_DETAIL.replace(':id', product.auctionId)}
