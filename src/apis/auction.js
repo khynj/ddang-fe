@@ -86,6 +86,7 @@ export function useDeleteAuctionSearchHistory() {
 
 export function useSearchAuctions(params) {
   const paramsWithDefault = { ...defaultParams, ...params }
+  console.log('search params:', paramsWithDefault)
   return useInfiniteQuery({
     queryKey: ['searchAuctions', paramsWithDefault],
     queryFn: ({ pageParam }) =>
@@ -104,7 +105,9 @@ export function useSearchMyBids(params) {
     queryKey: ['searchMyBids', params],
     queryFn: ({ pageParam }) =>
       axios_spring
-        .get('/auction/me/bids', { params: { ...params, page: pageParam } })
+        .get('/auction/me/bids', {
+          params: { ...defaultParams, ...params, page: pageParam },
+        })
         .then(res => res.data),
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       return lastPageParam + 1
@@ -123,6 +126,8 @@ export function useSearchAuctionHistories(params) {
 }
 
 export function useFollowingAuctions(memberIds, params) {
+  console.log('memberIds: ', memberIds)
+
   return useQueries({
     queries: memberIds.map(memberId => ({
       queryKey: ['searchAuctions', memberId, params],
@@ -130,9 +135,9 @@ export function useFollowingAuctions(memberIds, params) {
         axios_spring
           .get('/auction', {
             params: {
-              sellerId: memberId,
               ...defaultParams,
               ...params,
+              sellerId: memberId,
             },
           })
           .then(res => res.data),

@@ -10,13 +10,13 @@ import FavoriteButton from '@/components/icons/FavoriteButton'
 import StickyContainer from '@/components/StickyContainer'
 import ROUTES from '@/data/ROUTES'
 import LoadingPage from '@/pages/LoadingPage'
-import { getAuctionStatus } from '@/utils/auction'
 import { formatPrice, getMinimumBidUnit } from '@/utils/price'
 import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { getAuctionTimeString } from '@/utils/date'
+import { getAuctionStatus } from '@/utils/auction'
 
 function ProductDetailDrawer({ product, isMine }) {
   const route = useNavigate()
@@ -44,6 +44,7 @@ function ProductDetailDrawer({ product, isMine }) {
   if (!product) return <LoadingPage />
 
   const { auction, seller } = product
+  const status = getAuctionStatus(auction)
   const time = getAuctionTimeString(auction)
 
   const handleBidPrice = e => {
@@ -134,6 +135,17 @@ function ProductDetailDrawer({ product, isMine }) {
       <div className='flex justify-between items-center mb-1'>
         <span className='text-sm'>{time}</span>
         <div className='flex gap-4'>
+          {status == 2 && auction.myBidPrice == auction.currentBidPrice && (
+            <IconButton
+              icon={{
+                name: 'mark_chat_unread',
+                size: 28,
+                className: 'text-ddred-500',
+                filled: true,
+              }}
+              onClick={() => route(ROUTES.CHATROOM_LIST_PRIVATE)}
+            />
+          )}
           <IconButton
             icon={{
               name: 'forum',
@@ -155,7 +167,9 @@ function ProductDetailDrawer({ product, isMine }) {
       <p className='font-bold text-ddblue-400'>
         {status == 2
           ? auction.currentBidPrice > 0
-            ? `낙찰가 ${formatPrice(auction.currentBidPrice)}원`
+            ? auction.myBidPrice == auction.currentBidPrice
+              ? `${formatPrice(auction.currentBidPrice)}에 낙찰했어요!`
+              : `낙찰가 ${formatPrice(auction.currentBidPrice)}원`
             : '유찰된 경매입니다.'
           : `최소입찰가 ${formatPrice(minimumBidPrice)}원`}
       </p>
@@ -178,7 +192,6 @@ function ProductDetailDrawer({ product, isMine }) {
             )}
           </div>
         ) : null)}
-
       {!isMine && status == 1 && (
         <>
           <input

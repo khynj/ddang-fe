@@ -9,10 +9,10 @@ function ChatroomItem({ chatroom }) {
   return (
     <Link
       to={ROUTES.CHATROOM.replace(':id', chatroom.chattingRoomId)}
-      className='flex items-center grid grid-cols-6 p-4 gap-5 border-b border-gray-200'
+      className='flex items-center grid grid-cols-5 p-4 gap-5 border-b border-gray-200'
     >
-      <ProfileImage src={chatroom.productPhoto} size={52} />
-      <div className='col-span-4 flex flex-col shrink w-full justify-between'>
+      <ProfileImage src={chatroom.userPhoto} size={52} />
+      <div className='col-span-3 flex flex-col shrink w-full justify-between'>
         <div className='flex justify-between items-center'>
           <div className='font-bold'>{chatroom.nickname}</div>
           <div className='text-gray-500 text-sm'>{lastSetTime}</div>
@@ -21,13 +21,19 @@ function ChatroomItem({ chatroom }) {
           <span className='tracking-tight truncate'>
             {chatroom.lastMessage}
           </span>
-          <div className='bg-ddred-500 text-white rounded-full px-1.5 text-sm'>
-            {chatroom.messageLeft}
-          </div>
+          {!!chatroom.messageLeft && (
+            <div className='bg-ddred-500 text-white rounded-full px-1.5 text-sm'>
+              {chatroom.messageLeft}
+            </div>
+          )}
         </div>
       </div>
-      <div className='flex shrink-0 rounded-lg w-full h-full overflow-hidden'>
-        <img src={chatroom.photo} alt='' className='bg-gray-200 object-cover' />
+      <div className='col-span-1 flex shrink-0 rounded-lg aspect-square h-full overflow-hidden justify-end'>
+        <img
+          src={chatroom.productPhoto}
+          alt=''
+          className='bg-gray-200 object-cover'
+        />
       </div>
     </Link>
   )
