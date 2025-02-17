@@ -18,7 +18,7 @@ function LocationItem({ location }) {
           if (!confirm('정말 삭제하시겠습니까?')) return
           deleteLocation(location.memberLocationId, {
             onSuccess: () => {
-              queryClient.invalidateQueries('preferredLocations')
+              queryClient.invalidateQueries(['preferredLocations'])
             },
           })
         }}

@@ -15,7 +15,7 @@ function Profile({ userData }) {
   const onToggleFollow = () => {
     toggleFollow(userData.memberId, {
       onSuccess: () => {
-        queryClient.invalidateQueries('memberInfo')
+        queryClient.invalidateQueries(['memberInfo'])
       },
     })
   }

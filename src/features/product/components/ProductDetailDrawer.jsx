@@ -65,7 +65,7 @@ function ProductDetailDrawer({ product, isMine }) {
     toggleLike(auction.auctionId, {
       onSuccess: data => {
         console.log(data)
-        queryClient.invalidateQueries('auctionDetails')
+        queryClient.invalidateQueries(['auctionDetails'])
       },
     })
   }
@@ -90,7 +90,7 @@ function ProductDetailDrawer({ product, isMine }) {
       {
         onSuccess: () => {
           alert('입찰에 성공했습니다.')
-          queryClient.invalidateQueries('auctionDetails')
+          queryClient.invalidateQueries(['auctionDetails'])
         },
         onError: error => {
           alert(error.response.data.message)
@@ -110,7 +110,7 @@ function ProductDetailDrawer({ product, isMine }) {
     purchase(auction.auctionId, {
       onSuccess: () => {
         alert('즉시구매에 성공했습니다.')
-        queryClient.invalidateQueries('auctionDetails')
+        queryClient.invalidateQueries(['auctionDetails'])
       },
       onError: error => {
         alert(error.response.data.message)
