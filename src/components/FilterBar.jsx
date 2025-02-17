@@ -7,8 +7,8 @@ import { useMemo, useState } from 'react'
 const options = [
   { value: 'createdAt', name: '최신순' },
   // { value: 'endTime', name: '인기순' },
-  { value: 'endTime', name: '마감임박' },
-  { value: 'startTime', name: '시작임박' },
+  { value: 'endTime', name: '마감시간순' },
+  { value: 'startTime', name: '시작시간순' },
 ]
 function FilterBar({ children, keyName, searchParams, setSearchParams }) {
   const name = useMemo(

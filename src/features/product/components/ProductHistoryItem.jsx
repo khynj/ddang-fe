@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
-import { relativeTime } from '@/utils/date'
+import { shortRelativeTime } from '@/utils/date'
 import ProductImage from './ProductImage'
 import { formatPrice } from '@/utils/price'
 import ROUTES from '@/data/ROUTES'
@@ -15,9 +15,9 @@ function ProductHistoryItem({ product }) {
     : null
   const day =
     product.hammeredTime && product.hammeredTime < product.endTime
-      ? relativeTime(product.hammeredTime)
+      ? shortRelativeTime(product.hammeredTime)
       : product.endTime
-      ? relativeTime(product.endTime)
+      ? shortRelativeTime(product.endTime)
       : ''
 
   return (

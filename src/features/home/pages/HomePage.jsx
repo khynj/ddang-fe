@@ -1,30 +1,17 @@
 import HomeMainSlider from '../components/HomeMainSlider'
 import WelcomeBanner from '../../user/components/WelcomeBanner'
 import HomeListHeader from '../components/HomeListHeader'
-import HomeProductItem from '../components/HomeProductItem'
 import { useAuth } from '@/contexts/AuthContext'
 import ROUTES from '@/data/ROUTES'
 import ProductItemSmall from '@/features/product/components/ProductItemSmall'
-import {
-  useFollowingAuctions,
-  useSearchAuctions,
-  useSearchMyBids,
-} from '@/apis/auction'
-import { useFollowingList } from '@/apis/member'
+import { useSearchMyBids } from '@/apis/auction'
 import HomeClosingProductList from '../components/HomeClosingProductList'
+import HomeSubscribedProductList from '../components/HomeSubscribedProductList'
 
 function HomePage() {
   const { user } = useAuth()
 
   const { data: biddingProducts } = useSearchMyBids({ status: 'ongoing' })
-
-  const { data: followings } = useFollowingList()
-  const { data: subscribedProducts } = useFollowingAuctions(
-    followings
-      ? followings.followings.map(following => following.memberId)
-      : [],
-  )
-  console.log('sub', subscribedProducts)
 
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
@@ -48,20 +35,10 @@ function HomePage() {
               ))}
           </div>
         </section>
+
         <HomeClosingProductList />
 
-        <section>
-          <HomeListHeader
-            title={`모아보기`}
-            to={ROUTES.SUBSCRIPTIONS}
-            icon='bookmark'
-          ></HomeListHeader>
-          <div className='grid grid-cols-2 gap-4'>
-            {subscribedProducts?.slice(0, 4).map((product, i) => (
-              <HomeProductItem key={i} product={product} />
-            ))}
-          </div>
-        </section>
+        <HomeSubscribedProductList />
       </div>
     </div>
   )

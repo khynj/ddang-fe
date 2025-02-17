@@ -1,3 +1,4 @@
+import LoadingPage from '@/pages/LoadingPage'
 import PropTypes from 'prop-types'
 import { useEffect, useRef } from 'react'
 
@@ -6,6 +7,7 @@ function InfiniteScrollWrapper({
   fetchNextPage,
   parentProps,
   isPending,
+  isFetching,
 }) {
   const scrollRef = useRef()
 
@@ -13,11 +15,11 @@ function InfiniteScrollWrapper({
     if (!fetchNextPage) return
     const handleScroll = () => {
       if (
-        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 400 >=
+        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 800 >=
         scrollRef.current.scrollHeight
       ) {
         console.log('fetchNextPage')
-        if (isPending) return
+        if (isPending || isFetching) return
         fetchNextPage()
       }
     }
@@ -28,7 +30,7 @@ function InfiniteScrollWrapper({
     return () => {
       currentRef.removeEventListener('scroll', handleScroll)
     }
-  }, [fetchNextPage, isPending])
+  }, [fetchNextPage, isPending, isFetching])
 
   return (
     <div
@@ -47,6 +49,7 @@ InfiniteScrollWrapper.propTypes = {
   fetchNextPage: PropTypes.func,
   parentProps: PropTypes.object,
   isPending: PropTypes.bool,
+  isFetching: PropTypes.bool,
 }
 
 export default InfiniteScrollWrapper

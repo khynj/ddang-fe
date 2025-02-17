@@ -9,7 +9,7 @@ import ROUTES from '@/data/ROUTES.js'
 import { formatPrice } from '@/utils/price.js'
 import { useAuctionDetails } from '@/apis/auction.js'
 import LoadingPage from '@/pages/LoadingPage.jsx'
-import { relativeTime } from '@/utils/date'
+import { shortRelativeTime } from '@/utils/date'
 import { parseTradeType } from '@/utils/auction.js'
 import ProductDetailDrawer from '../components/ProductDetailDrawer.jsx'
 import { useAuth } from '@/contexts/AuthContext.jsx'
@@ -92,7 +92,7 @@ function ProductDetailPage() {
               </span>
             </Link>
             <span className='px-2 text-'>·</span>
-            <span>{relativeTime(auction.createdAt)}</span>
+            <span>{shortRelativeTime(auction.createdAt)}</span>
           </div>
           <p className='pt-2 text-black tracking-tight whitespace-pre-wrap'>
             {auction.content}

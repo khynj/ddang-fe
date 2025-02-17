@@ -4,10 +4,11 @@ import ProductImage from '../../product/components/ProductImage'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/price'
-import useEndTimeDDay from '@/hooks/useEndTimeDDay'
+import { getAuctionStatus } from '@/utils/auction'
+import { getAuctionTimeString } from '@/utils/date'
 function HomeProductItem({ product }) {
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
-  const endTimeDDay = useEndTimeDDay(product.endTime)
+  const time = getAuctionTimeString(product)
 
   return (
     <Link
@@ -33,9 +34,7 @@ function HomeProductItem({ product }) {
               <span className='text-sm tracking-tight'>{product.bidCount}</span>
             </div>
           </div>
-          <span className='text-gray-600 text-sm'>
-            {endTimeDDay ? `${endTimeDDay} 남음` : `경매 종료됨`}
-          </span>
+          <span className='text-gray-600 text-sm'>{time}</span>
         </div>
       </div>
     </Link>

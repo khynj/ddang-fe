@@ -3,12 +3,13 @@ import { Link } from 'react-router'
 import { formatPrice } from '@/utils/price'
 import ROUTES from '@/data/ROUTES'
 import { useAuth } from '@/contexts/AuthContext'
-import useEndTimeDDay from '@/hooks/useEndTimeDDay'
+import { getAuctionStatus } from '@/utils/auction'
+import { getAuctionTimeString } from '@/utils/date'
 
 function HomeMainProduct({ product, index, size }) {
   const { user } = useAuth()
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
-  const endTimeDDay = useEndTimeDDay(product.endTime)
+  const time = getAuctionTimeString(product)
   return (
     <Link
       to={ROUTES.PRODUCT_DETAIL.replace(':id', product.auctionId)}
@@ -27,7 +28,7 @@ function HomeMainProduct({ product, index, size }) {
       >
         <div className='flex justify-between text-sm text-gray-50'>
           <span>{user.nickname}님을 위한 상품</span>
-          <span>{endTimeDDay ? `${endTimeDDay} 남음` : `경매 종료됨`}</span>
+          <span>{time}</span>
         </div>
         <p className='text-lg font-bold text-gray-100 mt-4'>
           {product.productName}

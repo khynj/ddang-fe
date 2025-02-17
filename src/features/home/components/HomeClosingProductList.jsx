@@ -5,9 +5,11 @@ import ROUTES from '@/data/ROUTES'
 
 function HomeClosingProductList() {
   const { data: closingProducts } = useSearchAuctions({
+    status: 'ongoing',
     sortType: 'endTime',
-    size: 4,
+    size: 8,
   })
+  if (closingProducts) console.log(closingProducts.pages)
   return (
     <section>
       <HomeListHeader

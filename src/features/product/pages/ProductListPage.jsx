@@ -24,7 +24,12 @@ function ProductListPage({ filters, isFavorite }) {
     return params
   }, [searchParams, isFavorite])
 
-  const { data: products, fetchNextPage, isPending } = useSearchAuctions(param)
+  const {
+    data: products,
+    fetchNextPage,
+    isPending,
+    isFetching,
+  } = useSearchAuctions(param)
   console.log('products:', products)
 
   useEffect(() => {
@@ -85,6 +90,7 @@ function ProductListPage({ filters, isFavorite }) {
       <InfiniteScrollWrapper
         fetchNextPage={fetchNextPage}
         isPending={isPending}
+        isFetching={isFetching}
       >
         {products?.pages.map(product =>
           product.auctionDetailProjection.map((product, i) => (

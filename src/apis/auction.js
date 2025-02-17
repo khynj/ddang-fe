@@ -63,6 +63,7 @@ export function useAuctionDetails(auctionId) {
     queryKey: ['auctionDetails', auctionId],
     queryFn: () =>
       axios_spring.get(`/auction/${auctionId}`).then(res => res.data),
+    refetchInterval: 3000,
   })
 }
 
@@ -95,6 +96,7 @@ export function useSearchAuctions(params) {
       return lastPageParam + 1
     },
     initialPageParam: 1,
+    refetchInterval: 3000,
   })
 }
 export function useSearchMyBids(params) {
@@ -121,20 +123,6 @@ export function useSearchAuctionHistories(params) {
 }
 
 export function useFollowingAuctions(memberIds, params) {
-  const defaultParams = {
-    searchKey: '',
-    deliveryMethod: '',
-    status: '',
-    isFavorite: '',
-    categoryId: '',
-    sortType: 'createdAt',
-    sortOrder: 'asc',
-    page: 1,
-    size: 10,
-    isHammered: '',
-    role: '',
-    sellerId: '',
-  }
   return useQueries({
     queries: memberIds.map(memberId => ({
       queryKey: ['searchAuctions', memberId, params],

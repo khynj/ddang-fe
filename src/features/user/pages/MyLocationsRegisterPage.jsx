@@ -30,6 +30,7 @@ function MyLocationsRegisterPage() {
     data: searchLocation,
     fetchNextPage,
     isPending,
+    isFetching,
   } = useLocations(searchParams)
 
   const { mutate: registerLocation } = useAddPreferredLocation()
@@ -81,6 +82,7 @@ function MyLocationsRegisterPage() {
       <InfiniteScrollWrapper
         fetchNextPage={fetchNextPage}
         isPending={isPending}
+        isFetching={isFetching}
       >
         {searchLocation?.pages.map(page =>
           page.locations.map((location, index) => (

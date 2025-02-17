@@ -3,13 +3,14 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { wonitzie } from '@/utils/wonitize'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
-import useEndTimeDDay from '@/hooks/useEndTimeDDay'
+import { getAuctionStatus } from '@/utils/auction'
+import { getAuctionTimeString } from '@/utils/date'
 
 function ProductItemSmall({ product }) {
   const price = wonitzie(product.currentBidPrice || product.minimumBid)
   const didBid = product.myBidPrice > 0
   const isTop = didBid && product.currentBidPrice == product.myBidPrice
-  const endTimeDDay = useEndTimeDDay(product.endTime)
+  const time = getAuctionTimeString(product)
   return (
     <Link
       to={`${ROUTES.PRODUCT_DETAIL}`.replace(':id', product.auctionId)}
@@ -48,9 +49,7 @@ function ProductItemSmall({ product }) {
           <span className='font-bold text-gray-700 text-md'>{price}</span>
         </div>
       )}
-      <span className='text-sm text-gray-600 mt-0.5 w-fit'>
-        {endTimeDDay ? `${endTimeDDay} 남음` : `경매 종료됨`}
-      </span>
+      <span className='text-sm text-gray-600 mt-0.5 w-fit'>{time}</span>
     </Link>
   )
 }

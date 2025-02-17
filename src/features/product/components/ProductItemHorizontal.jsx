@@ -4,16 +4,13 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 import { formatPrice } from '@/utils/price'
-import useEndTimeDDay from '@/hooks/useEndTimeDDay'
-import { getAuctionStatus } from '@/utils/auction'
-import { relativeTime } from '@/utils/date'
+import { getAuctionTimeString } from '@/utils/date'
 
 function ProductItemHorizontal({ product }) {
   const price = formatPrice(product.currentBidPrice || product.minimumBid)
 
   const instantHammerPrice = formatPrice(product.instantHammerPrice)
-  const endTimeDDay = useEndTimeDDay(product.endTime)
-  const status = getAuctionStatus(product)
+  const date = getAuctionTimeString(product)
   return (
     <Link
       className={`grid grid-cols-8 p-4 gap-3 border-b border-gray-200 ${
@@ -54,13 +51,7 @@ function ProductItemHorizontal({ product }) {
         </div>
       </div>
       <div className='flex flex-col justify-between items-end col-span-2'>
-        <p className='text-sm text-gray-700 whitespace-nowrap'>
-          {status == 0
-            ? `시작 ${relativeTime(product.startTime)}`
-            : endTimeDDay
-            ? `${endTimeDDay} 남음`
-            : `경매 종료됨`}
-        </p>
+        <p className='text-sm text-gray-700 whitespace-nowrap'>{date}</p>
 
         <div className='flex items-end text-gray-600 gap-2'>
           <div className='flex items-center gap-0.5'>

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import ProductImage from '../ProductImage'
 import ROUTES from '@/data/ROUTES'
 import { Link, useNavigate } from 'react-router'
-import { relativeTime } from '@/utils/date'
+import { shortRelativeTime } from '@/utils/date'
 import { useState } from 'react'
 import Modal from '@/components/modals/Modal'
 import DefaultButton from '@/components/buttons/DefaultButton'
@@ -14,7 +14,7 @@ import { useQueryClient } from '@tanstack/react-query'
 function ProductSoldItem({ product, isSeller }) {
   const queryClient = useQueryClient()
   const price = formatPrice(product.currentBidPrice)
-  const endTime = relativeTime(product.endTime)
+  const endTime = shortRelativeTime(product.endTime)
 
   const route = useNavigate()
 

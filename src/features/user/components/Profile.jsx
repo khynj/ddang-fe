@@ -26,7 +26,7 @@ function Profile({ userData }) {
     <div className='p-6 bg-white'>
       {/* 프로필 이미지 및 이름 섹션 */}
       <div className='flex items-center'>
-        <ProfileImage src={userData.profileSrc} size={64} />
+        <ProfileImage src={userData.imageUrl} size={64} />
         <div className='flex flex-row justify-between items-center w-full ml-4'>
           <p className='text-base font-bold'>{userData.nickname}</p>
           {user.memberId === userData.memberId ? (

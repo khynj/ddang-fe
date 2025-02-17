@@ -15,6 +15,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
     data: products,
     fetchNextPage: fetchNextSellingPage,
     isPending: isSellPending,
+    isFetching: isSellFetching,
   } = useSearchAuctions({
     ...params,
     sellerId: user.memberId,
@@ -24,6 +25,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
     data: myBids,
     fetchNextPage: fetchNextBidsPage,
     isPending: isBidsPending,
+    isFetching: isBidsFetching,
   } = useSearchMyBids(params)
 
   console.log(
@@ -36,6 +38,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
         <InfiniteScrollWrapper
           fetchNextPage={fetchNextSellingPage}
           isPending={isSellPending}
+          isFetching={isSellFetching}
         >
           {products?.pages.map(page =>
             page.auctionDetailProjection.map(product =>
@@ -63,6 +66,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
         <InfiniteScrollWrapper
           fetchNextPage={fetchNextBidsPage}
           isPending={isBidsPending}
+          isFetching={isBidsFetching}
         >
           {myBids?.pages.map(page =>
             page.auctionDetailProjection.map(product =>

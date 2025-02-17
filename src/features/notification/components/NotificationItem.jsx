@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router'
 import MaterialIcon from '@/components/icons/MaterialIcon'
-import { relativeTime } from '@/utils/date'
+import { shortRelativeTime } from '@/utils/date'
 
 const icon = {
   HAMMER_FOR_SELLER: 'check',
@@ -12,7 +12,7 @@ const icon = {
 }
 
 function NotificationItem({ notification }) {
-  const sentAt = relativeTime(notification.sentAt)
+  const sentAt = shortRelativeTime(notification.sentAt)
   return (
     <Link
       to={notification.url}

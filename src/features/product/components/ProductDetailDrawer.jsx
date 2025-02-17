@@ -9,15 +9,14 @@ import IconButton from '@/components/buttons/IconButton'
 import FavoriteButton from '@/components/icons/FavoriteButton'
 import StickyContainer from '@/components/StickyContainer'
 import ROUTES from '@/data/ROUTES'
-import useEndTimeDDay from '@/hooks/useEndTimeDDay'
 import LoadingPage from '@/pages/LoadingPage'
 import { getAuctionStatus } from '@/utils/auction'
-import { relativeTime } from '@/utils/date'
 import { formatPrice, getMinimumBidUnit } from '@/utils/price'
 import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { getAuctionTimeString } from '@/utils/date'
 
 function ProductDetailDrawer({ product, isMine }) {
   const route = useNavigate()
@@ -30,8 +29,6 @@ function ProductDetailDrawer({ product, isMine }) {
   const [minimumBidPrice, setMinimumBidPrice] = useState(0)
   const [minimumBidUnit, setMinimumBidUnit] = useState(0)
   const [bidPrice, setBidPrice] = useState(0)
-
-  const endTimeDDay = useEndTimeDDay(product.auction.endTime)
 
   useEffect(() => {
     if (!product || !getMinimumBidUnit || !setMinimumBidPrice) return
@@ -47,7 +44,7 @@ function ProductDetailDrawer({ product, isMine }) {
   if (!product) return <LoadingPage />
 
   const { auction, seller } = product
-  const status = getAuctionStatus(auction)
+  const time = getAuctionTimeString(auction)
 
   const handleBidPrice = e => {
     const value = e.target.value.replace(/[^0-9]/g, '')
@@ -135,13 +132,7 @@ function ProductDetailDrawer({ product, isMine }) {
   return (
     <StickyContainer rounded>
       <div className='flex justify-between items-center mb-1'>
-        <span className='text-sm'>
-          {status == 0
-            ? `경매 시작 ${relativeTime(auction.startTime)}`
-            : status == 1
-            ? `마감까지 ${endTimeDDay} 남음`
-            : `경매 종료됨`}
-        </span>
+        <span className='text-sm'>{time}</span>
         <div className='flex gap-4'>
           <IconButton
             icon={{

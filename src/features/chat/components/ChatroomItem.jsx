@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import ProfileImage from '../../user/components/ProfileImage'
-import { relativeTime } from '@/utils/date'
+import { shortRelativeTime } from '@/utils/date'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 
 function ChatroomItem({ chatroom }) {
-  const lastSetTime = relativeTime(chatroom.lastSetTime)
+  const lastSetTime = shortRelativeTime(chatroom.lastSetTime)
   return (
     <Link
       to={ROUTES.CHATROOM.replace(':id', chatroom.chattingRoomId)}
