@@ -9,9 +9,11 @@ import DefaultButton from '@/components/buttons/DefaultButton'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import { formatPrice } from '@/utils/price'
 import { useConfirmPurchase } from '@/apis/auction'
+import { useQueryClient } from '@tanstack/react-query'
 
 function ProductSoldItem({ product, isSeller }) {
-  const price = formatPrice(product.myBidPrice)
+  const queryClient = useQueryClient()
+  const price = formatPrice(product.currentBidPrice)
   const endTime = relativeTime(product.endTime)
 
   const route = useNavigate()
@@ -29,6 +31,7 @@ function ProductSoldItem({ product, isSeller }) {
       onSuccess: () => {
         setIsConfirmModalOpen(false)
         setIsReviewConfirmModalOpen(true)
+        queryClient.invalidateQueries(['searchMyBids', 'searchAuctions'])
       },
     })
   }
@@ -60,7 +63,11 @@ function ProductSoldItem({ product, isSeller }) {
         </div>
         <div className='flex justify-end items-end row-span-2 col-span-5'>
           {product.myConfirm ? (
-            <p className='p-2 px-4'>상대방이 확정 전이에요.</p>
+            <p className='p-2 px-4 whitespace-nowrap text-sm text-gray-500'>
+              {product.opponentCofirm
+                ? '상대방이 확정 전이에요.'
+                : '거래가 확정되었어요.'}
+            </p>
           ) : (
             <button
               className='p-2 px-4 rounded-xl bg-ddred-400'
