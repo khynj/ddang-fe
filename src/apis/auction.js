@@ -63,6 +63,7 @@ export function useAuctionDetails(auctionId) {
     queryKey: ['auctionDetails', auctionId],
     queryFn: () =>
       axios_spring.get(`/auction/${auctionId}`).then(res => res.data),
+    refetchInterval: 1000,
   })
 }
 
