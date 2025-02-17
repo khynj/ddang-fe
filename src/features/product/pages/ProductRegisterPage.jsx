@@ -189,6 +189,10 @@ function ProductRegisterPage() {
 
   const { mutateAsync: recommendCategory } = useCategoryRecommendation()
 
+  const formatPrice = value => {
+    return value.toLocaleString('ko-KR')
+  }
+
   return (
     <div className='flex flex-col p-4'>
       <ImagePicker images={images} setImages={setImages} />
@@ -297,7 +301,16 @@ function ProductRegisterPage() {
                       </span>
                       <div></div>
                       <span className='text-end truncate col-span-4'>
-                        {typeof states[key].state === 'object'
+                        {key === 'minimumBid' || key === 'instantHammerPrice'
+                          ? `${formatPrice(states[key].state)}원`
+                          : key === 'startTime' || key === 'endTime'
+                          ? (() => {
+                              const date = new Date(states[key].state)
+                              return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ${
+                                date.getHours() < 12 ? '오전' : '오후'
+                              } ${date.getHours() % 12 || 12}시 ${String(date.getMinutes()).padStart(2, '0')}분`
+                            })()
+                          : typeof states[key].state === 'object'
                           ? states[key].state.value
                           : states[key].state}
                       </span>
