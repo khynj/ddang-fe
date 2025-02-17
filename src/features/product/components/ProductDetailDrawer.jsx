@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router'
 import { getAuctionTimeString } from '@/utils/date'
 import { getAuctionStatus } from '@/utils/auction'
 
-function ProductDetailDrawer({ product, isMine }) {
+function ProductDetailDrawer({ product, isMine, ref }) {
   const route = useNavigate()
   const queryClient = useQueryClient()
   const { mutate: toggleLike } = useToggleFavorite()
@@ -131,7 +131,10 @@ function ProductDetailDrawer({ product, isMine }) {
   }
 
   return (
-    <StickyContainer rounded>
+    <div
+      ref={ref}
+      className='flex flex-col p-4 border-t border-gray-200 shrink-0'
+    >
       <div className='flex justify-between items-center mb-1'>
         <span className='text-sm'>{time}</span>
         <div className='flex gap-4'>
@@ -228,13 +231,14 @@ function ProductDetailDrawer({ product, isMine }) {
           </div>
         </>
       )}
-    </StickyContainer>
+    </div>
   )
 }
 
 ProductDetailDrawer.propTypes = {
   product: PropTypes.object.isRequired,
   isMine: PropTypes.bool,
+  ref: PropTypes.object,
 }
 
 export default ProductDetailDrawer

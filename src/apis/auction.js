@@ -63,7 +63,6 @@ export function useAuctionDetails(auctionId) {
     queryKey: ['auctionDetails', auctionId],
     queryFn: () =>
       axios_spring.get(`/auction/${auctionId}`).then(res => res.data),
-    refetchInterval: 3000,
   })
 }
 
@@ -97,7 +96,6 @@ export function useSearchAuctions(params) {
       return lastPageParam + 1
     },
     initialPageParam: 1,
-    refetchInterval: 3000,
   })
 }
 export function useSearchMyBids(params) {

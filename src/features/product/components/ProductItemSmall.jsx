@@ -3,7 +3,6 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { wonitzie } from '@/utils/wonitize'
 import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
-import { getAuctionStatus } from '@/utils/auction'
 import { getAuctionTimeString } from '@/utils/date'
 
 function ProductItemSmall({ product }) {
