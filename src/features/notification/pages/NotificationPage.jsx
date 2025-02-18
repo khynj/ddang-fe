@@ -9,7 +9,7 @@ function NotificationPage() {
   return (
     <div>
       {notifications && notifications.notifications.length > 0 ? (
-        notifications.map((notification, index) => (
+        notifications.notifications.map((notification, index) => (
           <NotificationItem key={index} notification={notification} />
         ))
       ) : (
