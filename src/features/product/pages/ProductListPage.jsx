@@ -68,10 +68,9 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
               searchParams={searchParams}
               setSearchParams={setSearchParams}
               options={[
-                // { value: 'any', name: '경매상태' },
                 { value: 'ongoing', name: '경매중' },
                 { value: 'upcoming', name: '경매예정' },
-                { value: 'ended', name: '경매종료' }, // todo
+                // { value: 'ended', name: '경매종료' }, // todo
               ]}
               keyName={'status'}
               defaultName={'경매상태'}
