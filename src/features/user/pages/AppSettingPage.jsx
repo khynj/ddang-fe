@@ -14,7 +14,7 @@ function AppSettingPage() {
     navigator.clipboard.writeText(fcmToken)
   }
 
-  const { user, login, logout } = useAuth()
+  const { logout } = useAuth()
   const { mutate: requestLogout } = useSignout()
 
   const onLogout = () => {
@@ -24,14 +24,17 @@ function AppSettingPage() {
 
   return (
     <div className='flex flex-col bg-white'>
-      <main>
-        <MyPageMenu
+      <main className='p-4'>
+        {/* <MyPageMenu
           icon={{ name: 'lock', size: 24, color: 'gray-950' }}
           title='비밀번호 변경'
           to='/mypage/app-setting/change-password'
-        />
+        /> */}
 
-        <button onClick={onLogout} className='flex items-center gap-2 p-4 px-6'>
+        <button
+          onClick={onLogout}
+          className='flex w-full items-center gap-2 p-4 bg-gray-100 rounded-xl'
+        >
           <MaterialIcon name='logout' size={24} color='gray-950' />
           <span className=' font-bold text-base text-gray-800'>로그아웃</span>
         </button>
@@ -41,12 +44,12 @@ function AppSettingPage() {
             title='탈퇴하기'
           />
         </button> */}
-        <div className='flex flex-col p-4'>
+        {/* <div className='flex flex-col p-4'>
           <p className='whitespace-normal break-normal'>{fcmToken}</p>
           <button className='p-2 bg-gray-200 rounded-xl' onClick={copyToken}>
             copy token
           </button>
-        </div>
+        </div> */}
       </main>
       <Outlet />
     </div>

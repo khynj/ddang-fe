@@ -14,7 +14,7 @@ import { VALIDATIONS } from '@/utils/VALIDATIONS'
 
 function EditProfilePage() {
   usePageName('프로필 수정')
-  const { user } = useAuth()
+  const { user, setUser } = useAuth()
   const [nickname, setNickname] = useState(user?.nickname)
   const { data: userData } = useMemberInfo(user?.memberId)
   const [blob, setBlob] = useState(null)
@@ -41,6 +41,7 @@ function EditProfilePage() {
 
     updateNickname(nickname, {
       onSuccess: () => {
+        setUser({ ...user, nickname })
         alert('별명을 수정했어요.')
       },
       onError: error => {

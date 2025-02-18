@@ -5,7 +5,7 @@ import { AuthContext } from './AuthContext'
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
-  const login = userData => {
+  const setUserStorage = userData => {
     console.log('saving...', userData)
     setUser(userData)
     localStorage.setItem('user', JSON.stringify(userData))
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser: setUserStorage, logout }}>
       {children}
     </AuthContext.Provider>
   )
