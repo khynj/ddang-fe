@@ -11,6 +11,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
     role: isSeller ? 'seller' : 'buyer',
     status: isHammered ? 'ended' : isPre ? 'upcoming' : 'ongoing',
     isHammered,
+    sortType: isHammered ? 'hammeredTime' : 'endTime',
   }
   const { user } = useAuth()
   const {
@@ -21,6 +22,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
   } = useSearchAuctions({
     ...params,
     sellerId: user.memberId,
+    sortType: isPre ? 'startTime' : params.sortType,
   })
 
   const {
