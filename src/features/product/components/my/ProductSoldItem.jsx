@@ -25,23 +25,27 @@ function ProductSoldItem({ product, isSeller }) {
   const { mutate: confirmPurchase } = useConfirmPurchase()
 
   const openConfirmModal = () => setIsConfirmModalOpen(true)
-  const closeConfirmModal = () => setIsConfirmModalOpen(false)
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false)
+    queryClient.invalidateQueries(['searchMyBids', 'searchAuctions'])
+  }
   const onConfirmPurchase = () => {
     confirmPurchase(product.auctionId, {
       onSuccess: () => {
         setIsConfirmModalOpen(false)
         setIsReviewConfirmModalOpen(true)
-        queryClient.invalidateQueries(['searchMyBids', 'searchAuctions'])
       },
     })
   }
   const onConfirmReview = () => {
-    closeReviewConfirmModal()
     route(ROUTES.REVIEW_REGISTER.replace(':id', product.auctionId), {
       state: { revieweeRole: isSeller ? 'BUYER' : 'SELLER' },
     })
   }
-  const closeReviewConfirmModal = () => setIsReviewConfirmModalOpen(false)
+  const closeReviewConfirmModal = () => {
+    setIsReviewConfirmModalOpen(false)
+    queryClient.invalidateQueries(['searchMyBids', 'searchAuctions'])
+  }
 
   return (
     <>

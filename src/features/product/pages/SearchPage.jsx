@@ -30,7 +30,7 @@ function SearchPage() {
         ))}
       <div className='flex flex-col mt-4 gap-2 px-2'>
         <Link to={`${ROUTES.PRODUCT_LIST}`}>
-          <div className='flex flex-col gap-2 p-2 flex flex-row justify-between items-center mb-1 text-gray-600'>
+          <div className='flex flex-col gap-2 p-2 flex flex-row justify-between items-center mb-1 text-gray-800 bg-gray-100 rounded-lg'>
             <p className='font-bold'>모든 경매 보기</p>
             <MaterialIcon name='chevron_right' className='' size={26} />
           </div>
