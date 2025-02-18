@@ -28,14 +28,10 @@ messaging.onMessage(payload => {
 messaging.onBackgroundMessage(payload => {
   console.log('Received a bg message: ', payload)
 
-  // const title = payload.data.title
-  // const notification = {
-  //   body: 'Notification Body',
-  //   icon: '/icon.png',
-  // }
+  const title = payload.data.title
 
   // // Show notification when message received
-  // self.registration.showNotification(title, notification)
+  self.registration.showNotification(title)
 })
 
 console.log('Firebase messaging service worker loaded')
