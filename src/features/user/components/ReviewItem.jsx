@@ -33,7 +33,9 @@ const ReviewItem = ({ review, received }) => {
           </div>
         </div>
         <div className='flex flex-col shrink-0 gap-2.5 py-2'>
-          <p className='text-xs text-gray-900'>2024. 01. 29</p>
+          <p className='text-xs text-gray-900'>
+            {new Date(review.review.createdAt).toLocaleDateString()}
+          </p>
         </div>
       </div>
 

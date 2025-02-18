@@ -14,7 +14,7 @@ import { useQueryClient } from '@tanstack/react-query'
 function ProductSoldItem({ product, isSeller }) {
   const queryClient = useQueryClient()
   const price = formatPrice(product.currentBidPrice)
-  const endTime = shortRelativeTime(product.endTime)
+  const endTime = shortRelativeTime(product.hammeredTime)
 
   const route = useNavigate()
 
