@@ -44,7 +44,11 @@ function TextInput({
         onFocus={() => setHasFocused(true)}
       ></input>
       {icon && (
-        <MaterialIcon name={icon} className='text-gray-600 absolute right-3' />
+        <MaterialIcon
+          name={icon}
+          className='text-gray-400 absolute right-3 pointer-events-none
+'
+        />
       )}
     </div>
   )

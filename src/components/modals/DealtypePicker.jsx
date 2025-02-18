@@ -33,6 +33,7 @@ function DealTypePicker({ label, required, value, setValue, validate }) {
           <InputValue value={value.value} label={label} />
           <MaterialIcon name='chevron_right' className='text-gray-600' />
         </PickerWrapper>
+        <input type='hidden' className={`${error ? 'invalid' : ''}`} />
       </div>
       {isOpen && (
         <Modal close={() => onClose(value)}>

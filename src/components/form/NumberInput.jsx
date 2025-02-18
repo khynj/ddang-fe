@@ -30,6 +30,7 @@ function NumberInput({
   }
 
   useEffect(() => {
+    if (!value) return
     if (validate) {
       setError(validate(value))
     }

@@ -23,6 +23,7 @@ function DatePicker({
   }, [value])
 
   useEffect(() => {
+    if (!value) return
     if (validate) {
       setError(validate(value))
     }
@@ -39,7 +40,7 @@ function DatePicker({
   const handleClick = () => dateInput.current.showPicker()
 
   return (
-    <div className='flex flex-col gap-2 py-3'>
+    <div className='flex flex-col gap-2 py-3 '>
       {label && (
         <Label text={label} required={required}>
           {error && <InputError>{error}</InputError>}
@@ -54,7 +55,9 @@ function DatePicker({
         value={value}
         onChange={onChange}
         type='datetime-local'
-        className={`fixed bottom-0 opacity-0 pointer-events-none'`}
+        className={`fixed bottom-0 opacity-0 pointer-events-none ${
+          error ? 'invalid' : ''
+        }`}
       />
     </div>
   )

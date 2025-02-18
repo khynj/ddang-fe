@@ -83,6 +83,11 @@ label:has(~ textarea.invalid) {
   color: var(--color-ddred-500);
 }
 
+div:has(~ input.invalid) *,
+div:has(~ textarea.invalid) * {
+  color: var(--color-ddred-500);
+}
+
 input.invalid,
 textarea.invalid {
   border-color: var(--color-ddred-500);
@@ -96,7 +101,5 @@ textarea.invalid {
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
   -ms-overflow-style: none;
-  /* IE and Edge */
   scrollbar-width: none;
-  /* Firefox */
 }
