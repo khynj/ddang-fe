@@ -127,7 +127,7 @@ function ProductDetailDrawer({ product, isMine, ref }) {
         route(ROUTES.HOME)
       },
       onError: error => {
-        alert(error)
+        alert(error.response.data.message)
       },
     })
   }
@@ -141,7 +141,7 @@ function ProductDetailDrawer({ product, isMine, ref }) {
         <span className='text-sm'>{remainingTime}</span>
         <div className='flex gap-4'>
           {status == 2 &&
-            auction.myBidPrice == auction.currentBidPrice &&
+            (isMine || auction.myBidPrice == auction.currentBidPrice) &&
             auction.currentBidPrice > 0 && (
               <IconButton
                 icon={{

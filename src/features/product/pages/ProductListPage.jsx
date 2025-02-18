@@ -39,7 +39,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
       { replace: true },
     )
   }, [searchParams, setSearchParams])
-
+  console.log(products)
   return (
     <div className='flex flex-col h-full'>
       <FilterBar
@@ -79,7 +79,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
           </>
         )}
       </FilterBar>
-      {products && products.pages.length > 0 ? (
+      {products && products.pages[0].length > 0 ? (
         <InfiniteScrollWrapper
           fetchNextPage={fetchNextPage}
           isPending={isPending}
@@ -92,7 +92,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
           )}
         </InfiniteScrollWrapper>
       ) : (
-        <Placeholder>상품이 없어요. 🥲</Placeholder>
+        <Placeholder>상품이 없어요.</Placeholder>
       )}
     </div>
   )

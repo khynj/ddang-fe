@@ -57,9 +57,18 @@ function MyLocationsRegisterPage() {
 
   const onConfirm = e => {
     e.preventDefault()
-    registerLocation({ locationId: selectedLocationId, title: name })
-    setIsConfirmed(true)
-    close()
+    registerLocation(
+      { locationId: selectedLocationId, title: name },
+      {
+        onSuccess: () => {
+          setIsConfirmed(true)
+          close()
+        },
+        onError: error => {
+          alert(error.response.data.message)
+        },
+      },
+    )
   }
 
   return (

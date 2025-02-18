@@ -1,6 +1,6 @@
 import { useAuctionDetails } from '@/apis/auction'
 import usePageName from '@/hooks/usePageName'
-import { useLocation, useNavigate, useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import ProfileSmall from '../components/ProfileSmall'
 import StickyContainer from '@/components/StickyContainer'
 import DefaultButton from '@/components/buttons/DefaultButton'
@@ -34,7 +34,7 @@ function ReviewRegisterPage() {
       },
       {
         onSuccess: () => open(),
-        onError: error => alert('error message ' + error.response.data.message),
+        onError: error => alert(error.response.data.message),
       },
     )
     open()

@@ -11,7 +11,12 @@ function ChargePage() {
   const accountName = '카카오페이'
   const [amount, setAmount] = useState(0) // 숫자로 저장
   const balanceAfterTransaction = () =>
-    formatPrice(Number(amount) + Number(payInfo?.balance))
+    error
+      ? payInfo
+        ? formatPrice(payInfo.balance)
+        : 0
+      : formatPrice(Number(amount) + Number(payInfo?.balance))
+  const [error, setError] = useState('')
 
   const payDeposit = usePayDeposit()
   const { data: payInfo } = usePayInfo()
@@ -20,10 +25,18 @@ function ChargePage() {
     console.log('payInfo', payInfo)
   }, [payInfo])
 
-  const onChange = e => setAmount(Number(e.target.value).toString())
+  const onChange = e => {
+    // 숫자만 추출
+    const numericValue = e.target.value.replace(/[^0-9]/g, '')
+    const value = numericValue ? parseInt(numericValue) : 0
+    if (value > 10000000) setError('1000만원 이하만 가능해요.')
+    else setError('')
+    setAmount(value)
+  }
 
   const onSubmit = e => {
     e.preventDefault()
+    if (amount > 10000000) return alert('1000만원 이하만 가능해요.')
     if (amount <= 0) {
       alert('충전 금액을 확인해주세요.')
       return
@@ -58,12 +71,14 @@ function ChargePage() {
           </label>
           <input
             id='charge-amount'
-            type='number'
             inputMode='numeric' // 모바일에서 숫자 키보드 표시
-            value={amount}
+            value={formatPrice(amount)}
             onChange={onChange}
-            className='border-2 border-ddblue-400 rounded-lg px-4 py-2 text-black font-bold text-lg'
+            className={`border-2 rounded-lg px-4 py-2 text-black font-bold text-lg
+              ${error ? 'invalid' : ''}
+            `}
           />
+          {error && <p className='text-sm text-ddred-500'>{error}</p>}
         </div>
 
         {/* 계좌 및 잔액 정보 */}

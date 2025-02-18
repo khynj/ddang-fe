@@ -22,6 +22,8 @@ const messaging = firebase.messaging()
 
 messaging.onMessage(payload => {
   console.log('Received a message: ', payload)
+  const title = payload.data.title
+  self.registration.showNotification(title)
 })
 
 // Listen to bg messages
@@ -29,9 +31,14 @@ messaging.onBackgroundMessage(payload => {
   console.log('Received a bg message: ', payload)
 
   const title = payload.data.title
+  // const notification = {
+  //   body: 'Notification Body',
+  //   icon: '/icon.png',
+  // }
 
   // // Show notification when message received
   self.registration.showNotification(title)
+  // self.registration.showNotification(title, notification)
 })
 
 console.log('Firebase messaging service worker loaded')

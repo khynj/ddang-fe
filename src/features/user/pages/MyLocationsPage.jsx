@@ -1,6 +1,7 @@
 import { usePreferredLocations } from '@/apis/member'
 import usePageName from '../../../hooks/usePageName'
 import LocationItem from '../components/LocationItem'
+import Placeholder from '@/components/placeholder/Placeholder'
 // import myLocations from '../data/myLocations'
 
 function MyLocationsPage() {
@@ -9,13 +10,15 @@ function MyLocationsPage() {
   const { data: myLocations } = usePreferredLocations()
 
   return (
-    <div>
-      <main className='overflow-y-auto'>
-        {myLocations?.memberLocations.map(location => (
+    <>
+      {myLocations && myLocations.memberLocations.length > 0 ? (
+        myLocations.memberLocations.map(location => (
           <LocationItem key={location.memberLocationId} location={location} />
-        ))}
-      </main>
-    </div>
+        ))
+      ) : (
+        <Placeholder>저장된 장소가 없어요.</Placeholder>
+      )}
+    </>
   )
 }
 
