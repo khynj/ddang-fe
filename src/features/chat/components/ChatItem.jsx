@@ -44,8 +44,8 @@ function ChatItem({ chat }) {
                 : 'bg-gray-50 text-gray-950'
             }`}
           >
-            <span className='whitespace-pre-wrap break-all'>
-              {chat.content}
+            <span className='whitespace-pre-wrap break-all' onCopy={onCopy}>
+              {parseChatContent(chat.content)}
             </span>
           </p>
         </div>
@@ -57,6 +57,21 @@ function ChatItem({ chat }) {
       </div>
     </div>
   )
+}
+
+function onCopy(e) {
+  console.log('onCopy', e.target.innerText)
+  e.preventDefault()
+  const text = removeZeroSpaces(e.target.innerText)
+  navigator.clipboard.writeText(text)
+}
+
+function parseChatContent(content) {
+  return content.replace(/\//g, '/​')
+}
+
+function removeZeroSpaces(str) {
+  return str.replace(/\u200B/g, '')
 }
 
 ChatItem.propTypes = {

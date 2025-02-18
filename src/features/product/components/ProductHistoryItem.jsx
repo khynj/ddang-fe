@@ -23,9 +23,7 @@ function ProductHistoryItem({ product, role }) {
   const route = useNavigate()
   const onReview = e => {
     e.preventDefault()
-    route(ROUTES.REVIEW_REGISTER.replace(':id', product.auctionId), {
-      state: { revieweeRole: role == 'seller' ? 'BUYER' : 'SELLER' },
-    })
+    route(ROUTES.REVIEW_REGISTER.replace(':id', product.auctionId))
   }
 
   return (

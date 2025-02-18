@@ -18,7 +18,6 @@ function ReviewRegisterPage() {
   usePageName('리뷰 작성')
   const route = useNavigate()
   const { id: auctionId } = useParams()
-  const { revieweeRole } = useLocation().state
   const { mutate: writeReview } = useWriteReview()
   const { data: auction } = useAuctionDetails(auctionId)
 
@@ -30,8 +29,6 @@ function ReviewRegisterPage() {
     writeReview(
       {
         auctionId,
-        revieweeId: auction.seller.memberId,
-        revieweeRole,
         content,
         satisfyScore: score,
       },

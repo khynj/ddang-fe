@@ -20,7 +20,9 @@ function DebateItem({ chatroom }) {
       <div className='flex flex-col w-full justify-between'>
         <div className='flex justify-between items-center'>
           <div className='font-bold'>{chatroom.title}</div>
-          <div className='text-gray-500 text-sm'>{lastSetTime}</div>
+          <div className='text-gray-500 text-sm shrink-0 whitspace-nowrap'>
+            {lastSetTime}
+          </div>
         </div>
         <div className='flex justify-between items-center'>
           <div className='max-w-64 tracking-tight truncate'>

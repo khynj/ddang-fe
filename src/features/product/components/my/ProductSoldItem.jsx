@@ -38,9 +38,7 @@ function ProductSoldItem({ product, isSeller }) {
     })
   }
   const onConfirmReview = () => {
-    route(ROUTES.REVIEW_REGISTER.replace(':id', product.auctionId), {
-      state: { revieweeRole: isSeller ? 'BUYER' : 'SELLER' },
-    })
+    route(ROUTES.REVIEW_REGISTER.replace(':id', product.auctionId))
   }
   const closeReviewConfirmModal = () => {
     setIsReviewConfirmModalOpen(false)

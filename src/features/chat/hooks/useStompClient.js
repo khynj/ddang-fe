@@ -32,24 +32,29 @@ export function useStompClient(id, scrollRef) {
 
   useEffect(() => {
     const socket = new WebSocket(SOCKET_URL) // Use native WebSocket instead of SockJS
-    const stomp = Stomp.over(socket)
+    let stomp
+    socket.onopen = () => {
+      stomp = Stomp.over(socket)
+      stomp.connect({}, () => {
+        console.log('Connected to STOMP server')
 
-    stomp.connect({}, () => {
-      console.log('Connected to STOMP server')
+        // Subscribe to chat room messages
+        const subscription = stomp.subscribe(
+          `/sub/chat/room/${id}`,
+          message => {
+            console.log(message)
+            setMessages(prev => [...prev, JSON.parse(message.body)])
+          },
+        )
 
-      // Subscribe to chat room messages
-      const subscription = stomp.subscribe(`/sub/chat/room/${id}`, message => {
-        console.log(message)
-        setMessages(prev => [...prev, JSON.parse(message.body)])
+        setStompClient(stomp)
+
+        return () => {
+          subscription.unsubscribe() // Unsubscribe on cleanup
+          stomp.disconnect()
+        }
       })
-
-      setStompClient(stomp)
-
-      return () => {
-        subscription.unsubscribe() // Unsubscribe on cleanup
-        stomp.disconnect()
-      }
-    })
+    }
 
     return () => {
       stomp.disconnect()
