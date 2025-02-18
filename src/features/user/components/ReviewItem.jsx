@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 // import ProfileImage from './ProfileImage'
 import ProductImage from '../../product/components/ProductImage'
 import { formatPrice } from '@/utils/price'
+import { Link } from 'react-router'
+import ROUTES from '@/data/ROUTES'
 
 const ReviewItem = ({ review, received }) => {
   const hammeredPrice = formatPrice(review.auction.hammeredPrice)
@@ -14,11 +16,13 @@ const ReviewItem = ({ review, received }) => {
         <div className='flex flex-col gap-2'>
           {received && (
             <div className='flex items-center gap-2 px-1'>
-              {/* <ProfileImage src={review.review.profileImage} size={32} /> */}
               <p className='text-gray-700'>{review.review.nickname}</p>
             </div>
           )}
-          <div className='flex grid grid-cols-5 gap-2'>
+          <Link
+            to={ROUTES.PRODUCT_DETAIL.replace(':id', review.auction.auctionId)}
+            className='flex grid grid-cols-5 gap-2'
+          >
             <div className='col-span-1 py-1'>
               <ProductImage product={review.auction} small />
             </div>
@@ -30,7 +34,7 @@ const ReviewItem = ({ review, received }) => {
                 {hammeredPrice}원 {action}
               </p>
             </div>
-          </div>
+          </Link>
         </div>
         <div className='flex flex-col shrink-0 gap-2.5 py-2'>
           <p className='text-xs text-gray-900'>
