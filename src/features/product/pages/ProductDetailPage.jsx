@@ -38,7 +38,7 @@ function ProductDetailPage() {
     <>
       <div
         className={`flex flex-col gap-2 overflow-y-scroll`}
-        style={{ height: `calc(100vh - ${drawerHeight}px - 64px)` }}
+        style={{ height: `calc(100dvh - ${drawerHeight}px - 64px)` }}
       >
         <Slider>
           {auction.photos.map((photo, index) => (
