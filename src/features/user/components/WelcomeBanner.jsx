@@ -20,6 +20,7 @@ function WelcomeBanner() {
       location.state.welcome = false
     }
   }, [location.state])
+
   return (
     <>
       {welcome && (

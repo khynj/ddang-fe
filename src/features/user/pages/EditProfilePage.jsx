@@ -1,8 +1,7 @@
 import EditProfileImage from '../components/EditProfileImage'
 import usePageName from '@/hooks/usePageName'
 import TextInput from '@/components/form/TextInput'
-import StickyContainer from '../../../components/StickyContainer'
-import DefaultButton from '../../../components/buttons/DefaultButton'
+import DefaultButton from '@/components/buttons/DefaultButton'
 import { useAuth } from '@/contexts/AuthContext'
 import { useState } from 'react'
 import {
@@ -11,8 +10,6 @@ import {
   useUpdateNickname,
   useUpdateProfilePhoto,
 } from '@/apis/member'
-import { useNavigate } from 'react-router'
-import ROUTES from '@/data/ROUTES'
 import { VALIDATIONS } from '@/utils/VALIDATIONS'
 
 function EditProfilePage() {
@@ -25,8 +22,6 @@ function EditProfilePage() {
   const { mutate: updatePhotoMutation } = useUpdateProfilePhoto()
   const checkNickname = useCheckDuplicate({ email: '', nickname })
   const { mutate: updateNickname } = useUpdateNickname()
-
-  const route = useNavigate()
 
   const onSubmitPhoto = () => {
     const formData = new FormData()
@@ -71,7 +66,7 @@ function EditProfilePage() {
           setBlob={setBlob}
           size={120}
         />
-        <DefaultButton onClick={onSubmitPhoto}>수정 완료</DefaultButton>
+        <DefaultButton onClick={onSubmitPhoto}>사진 수정</DefaultButton>
 
         <hr className='py-2 border-0' />
 

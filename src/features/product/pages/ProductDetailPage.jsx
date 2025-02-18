@@ -43,15 +43,13 @@ function ProductDetailPage() {
         <Slider>
           {auction.photos.map((photo, index) => (
             <div
+              className='aspect-square w-full flex-shrink-0 snap-center bg-white brightness-96'
               key={index}
-              className='flex items-center justify-center shrink-0
-             w-full max-w-lg aspect-square snap-center
-             brightness-97 bg-white'
             >
               <img
                 src={photo}
                 alt={auction.productName}
-                className='object-cover'
+                className='aspect-square w-full object-contain'
               />
             </div>
           ))}

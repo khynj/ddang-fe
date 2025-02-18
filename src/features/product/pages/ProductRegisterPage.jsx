@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import usePageName from '@/hooks/usePageName'
 import TextInput from '@/components/form/TextInput'
 import TextArea from '@/components/form/TextArea'
@@ -18,6 +18,7 @@ import ROUTES from '@/data/ROUTES'
 import TitleInput from '@/components/form/TitleInput'
 import { useCategoryRecommendation } from '@/apis/ai'
 import { formatPrice } from '@/utils/price'
+import { parseTradeType } from '@/utils/auction'
 
 function ProductRegisterPage() {
   const { state } = useLocation()
@@ -33,7 +34,9 @@ function ProductRegisterPage() {
   const [categoryId, setCategory] = useState(
     auction?.category.categoryId || null,
   )
-  const [categoryName, setCategoryName] = useState('')
+  const [categoryName, setCategoryName] = useState(
+    auction?.category.categoryName || '',
+  )
   const [minimumBid, setMinimumBid] = useState(auction?.minimumBid || 0)
   const [instantHammerPrice, setInstantHammerNowPrice] = useState(
     auction?.instantHammerPrice || 0,
@@ -43,20 +46,26 @@ function ProductRegisterPage() {
   const [content, setContent] = useState(auction?.content || '')
   const [tradeType, setTradeType] = useState(
     auction
-      ? { ...auction.tradeType, parcelFeeOption: auction.tradeType.pay }
+      ? {
+          ...auction.tradeType,
+          value: parseTradeType(auction.tradeType),
+          parcelFeeOption: auction.tradeType.pay.toUpperCase(),
+        }
       : { value: '', isDirect: false },
   )
-  console.log(tradeType)
   const [location, setLocation] = useState(auction?.location || null)
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [registeredProductId, setRegisteredProductId] = useState(null)
+  const [categoryRecommendation, setCategoryRecommendation] = useState([])
 
   const { mutate: registerProduct } = useCreateAuction()
   const { mutate: updateProduct } = useUpdateAuction()
+  const { mutateAsync: recommendCategory } = useCategoryRecommendation()
 
   const route = useNavigate()
+
   const onConfirm = () => {
     setIsConfirmModalOpen(false)
     const form = new FormData()
@@ -84,7 +93,6 @@ function ProductRegisterPage() {
 
     const options = {
       onSuccess: data => {
-        console.log('auctionId: ', data.auctionId)
         setRegisteredProductId(data.auctionId)
         setIsSuccessModalOpen(true)
       },
@@ -164,8 +172,9 @@ function ProductRegisterPage() {
       VALIDATIONS.maxPrice(minimumBid, 10000000) ||
       VALIDATIONS.required(minimumBid),
     instantHammerPrice: instantHammerPrice =>
-      VALIDATIONS.minPrice(instantHammerPrice, minimumBid) ||
-      VALIDATIONS.maxPrice(minimumBid, 10000000),
+      (instantHammerPrice != 0 &&
+        VALIDATIONS.minPrice(instantHammerPrice, minimumBid)) ||
+      VALIDATIONS.maxPrice(instantHammerPrice, 10000000),
     startTime: startTime =>
       VALIDATIONS.required(startTime) ||
       VALIDATIONS.minDate(startTime, new Date()),
@@ -178,11 +187,11 @@ function ProductRegisterPage() {
   }
 
   const handleSubmit = () => {
-    console.log(tradeType)
     if (images.length === 0) {
       alert('이미지를 등록해주세요.')
       return false
     }
+
     const valid = Object.keys(validation).every(key => {
       const result = validation[key](states[key].state)
       if (result) {
@@ -200,9 +209,18 @@ function ProductRegisterPage() {
       replace: true,
     })
   }
-  const [categoryRecommendation, setCategoryRecommendation] = useState([])
 
-  const { mutateAsync: recommendCategory } = useCategoryRecommendation()
+  const onTitleChange = e => {
+    setTitle(e.target.value)
+    recommendCategory(
+      { title: e.target.value },
+      {
+        onSuccess: data => {
+          setCategoryRecommendation(data)
+        },
+      },
+    )
+  }
 
   return (
     <div className='flex flex-col p-4'>
@@ -213,18 +231,7 @@ function ProductRegisterPage() {
         required
         value={title}
         validate={validation.title}
-        onChange={e => {
-          console.log(e.target.value)
-          setTitle(e.target.value)
-          recommendCategory(
-            { title: e.target.value },
-            {
-              onSuccess: data => {
-                setCategoryRecommendation(data)
-              },
-            },
-          )
-        }}
+        onChange={onTitleChange}
       />
       <CategoryPicker
         label='카테고리'
@@ -251,12 +258,14 @@ function ProductRegisterPage() {
         value={minimumBid}
         setValue={setMinimumBid}
         validate={validation.minimumBid}
+        limit={v => v > 10000000 && '10000000원 이하로 입력해주세요.'}
       />
       <NumberInput
         label='즉시낙찰가'
         value={instantHammerPrice}
         setValue={setInstantHammerNowPrice}
         validate={validation.instantHammerPrice}
+        dependency={minimumBid}
       />
       <DatePicker
         label='개찰 시각'
@@ -271,6 +280,7 @@ function ProductRegisterPage() {
         value={endTime}
         setValue={setEndTime}
         validate={validation.endTime}
+        dependency={startTime}
       />
       <TextArea
         label='자세한 설명'
@@ -282,7 +292,7 @@ function ProductRegisterPage() {
       <DealTypePicker
         label='거래 유형'
         required
-        value={tradeType.value}
+        value={tradeType}
         setValue={setTradeType}
         validate={validation.tradeType}
       />

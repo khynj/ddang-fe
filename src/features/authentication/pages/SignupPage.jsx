@@ -47,8 +47,19 @@ function SignupPage() {
       (passwordConfirm !== password ? '비밀번호가 일치하지 않습니다.' : ''),
   }
 
+  const checkValidation = () => {
+    return (
+      !validation.nickname(nickname) &&
+      !validation.email(email) &&
+      !validation.name(name) &&
+      !validation.password(password) &&
+      !validation.passwordConfirm(passwordConfirm)
+    )
+  }
+
   const onSubmit = e => {
     e.preventDefault()
+    if (!checkValidation()) return alert('입력값을 확인해주세요.')
     if (password != passwordConfirm) {
       return alert('비밀번호가 일치하지 않습니다.')
     }

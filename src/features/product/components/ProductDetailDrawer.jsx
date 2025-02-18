@@ -39,7 +39,10 @@ function ProductDetailDrawer({ product, isMine, ref }) {
     let mimimumBidPrice = product.auction.currentBidPrice
       ? product.auction.currentBidPrice + bidUnit
       : product.auction.minimumBid
-    if (mimimumBidPrice > product.auction.instantHammerPrice)
+    if (
+      product.auction.instantHammerPrice > 0 &&
+      mimimumBidPrice > product.auction.instantHammerPrice
+    )
       mimimumBidPrice = product.auction.instantHammerPrice
     setMinimumBidPrice(mimimumBidPrice)
     setBidPrice(mimimumBidPrice)
@@ -219,12 +222,14 @@ function ProductDetailDrawer({ product, isMine, ref }) {
                 +{minimumBidUnit}
               </button>
             )}
-            <button
-              onClick={() => addPrice(minimumBidUnit * 10)}
-              className='bg-ddblue-500 text-white p-2 font-bold rounded-md'
-            >
-              +{minimumBidUnit * 10}
-            </button>
+            {minimumBidUnit * 10 >= 1 && (
+              <button
+                onClick={() => addPrice(minimumBidUnit * 10)}
+                className='bg-ddblue-500 text-white p-2 font-bold rounded-md'
+              >
+                +{minimumBidUnit * 10}
+              </button>
+            )}
           </div>
           <div className='flex gap-4 mt-2'>
             {auction.instantHammerPrice > 0 && (

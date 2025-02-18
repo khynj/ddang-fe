@@ -1,12 +1,19 @@
 import PropTypes from 'prop-types'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Label from './Label'
 import MaterialIcon from '../icons/MaterialIcon'
 import InputValue from './InputValue'
 import PickerWrapper from './PickerWrapper'
 import InputError from './InputError'
 
-function DatePicker({ label, required, value, setValue, validate }) {
+function DatePicker({
+  label,
+  required,
+  value,
+  setValue,
+  validate,
+  dependency,
+}) {
   const dateInput = useRef(null)
   const [error, setError] = useState('')
 
@@ -15,6 +22,12 @@ function DatePicker({ label, required, value, setValue, validate }) {
     return new Date(value).toLocaleString().replace(/:\d{2}\s/, ' ')
   }, [value])
 
+  useEffect(() => {
+    if (validate) {
+      setError(validate(value))
+    }
+  }, [dependency, value, validate])
+
   const onChange = e => {
     console.log(e.target.value)
     if (validate) {
@@ -22,6 +35,7 @@ function DatePicker({ label, required, value, setValue, validate }) {
     }
     setValue(e.target.value)
   }
+
   const handleClick = () => dateInput.current.showPicker()
 
   return (

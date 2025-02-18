@@ -22,16 +22,32 @@ function SocialSignupPage() {
 
   const validation = {
     nickname: nickname =>
-      VALIDATIONS.required(nickname) ||
-      (checkNickname.data?.nicknameExists ? '이미 존재하는 별명이에요.' : ''),
+      checkNickname.data?.nicknameExists
+        ? '이미 존재하는 별명이에요.'
+        : VALIDATIONS.nickname(nickname) ||
+          VALIDATIONS.required(nickname) ||
+          VALIDATIONS.maxLength(nickname, 20),
     email: email =>
       VALIDATIONS.required(email) ||
+      VALIDATIONS.maxLength(email, 40) ||
       VALIDATIONS.email(email) ||
       (checkEmail.data?.emailExists ? '이미 존재하는 이메일이에요.' : ''),
+    name: name =>
+      VALIDATIONS.required(name) ||
+      VALIDATIONS.maxLength(name, 30) ||
+      VALIDATIONS.name(name),
+  }
+  const checkValidation = () => {
+    return (
+      !validation.nickname(nickname) &&
+      !validation.email(email) &&
+      !validation.name(name)
+    )
   }
 
   const onSubmit = e => {
     e.preventDefault()
+    if (!checkValidation()) return alert('입력값을 확인해주세요.')
     signUp(
       { name, nickname, email },
       {
@@ -62,7 +78,13 @@ function SocialSignupPage() {
             setValue={setEmail}
             validate={validation.email}
           />
-          <TextInput label='이름' required value={name} setValue={setName} />
+          <TextInput
+            label='이름'
+            required
+            value={name}
+            setValue={setName}
+            validate={validation.name}
+          />
         </div>
         {error && (
           <div className='text-sm text-red-400'>

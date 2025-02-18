@@ -1,21 +1,39 @@
 import PropTypes from 'prop-types'
 import Label from './Label'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InputError from './InputError'
 import { formatPrice } from '@/utils/price'
 
-function NumberInput({ label, required, value, setValue, validate }) {
+function NumberInput({
+  label,
+  required,
+  value,
+  setValue,
+  validate,
+  dependency,
+  limit,
+}) {
   const [error, setError] = useState('')
   const onChange = e => {
-    // 숫자만 추출
     const numericValue = e.target.value.replace(/[^0-9]/g, '')
     const value = numericValue ? parseInt(numericValue) : 0
+
+    if (limit) {
+      const error = limit(value)
+      if (error) return setError(error)
+    }
 
     if (validate) {
       setError(validate(value))
     }
     setValue(value)
   }
+
+  useEffect(() => {
+    if (validate) {
+      setError(validate(value))
+    }
+  }, [dependency, validate, value])
 
   return (
     <div className='flex flex-col gap-2 py-3'>

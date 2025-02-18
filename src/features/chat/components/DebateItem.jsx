@@ -4,7 +4,9 @@ import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
 
 function DebateItem({ chatroom }) {
-  const lastSetTime = shortRelativeTime(chatroom.lastSetTime)
+  const lastSetTime = chatroom.lastSetTime
+    ? shortRelativeTime(chatroom.lastSetTime)
+    : ''
   return (
     <Link
       to={ROUTES.CHATROOM.replace(':id', chatroom.chattingRoomId)}
@@ -26,7 +28,7 @@ function DebateItem({ chatroom }) {
         </div>
         <div className='flex justify-between items-center'>
           <div className='max-w-64 tracking-tight truncate'>
-            {chatroom.lastMessage}
+            {chatroom.lastMessage || '새로운 채팅방이 생성되었어요.'}
           </div>
           <div className='bg-ddred-500 text-white rounded-full px-1.5 text-sm'>
             {chatroom.messgaesLeft}

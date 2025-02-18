@@ -30,7 +30,7 @@ function DealTypePicker({ label, required, value, setValue, validate }) {
           </Label>
         )}
         <PickerWrapper onClick={open}>
-          <InputValue value={value} label={label} />
+          <InputValue value={value.value} label={label} />
           <MaterialIcon name='chevron_right' className='text-gray-600' />
         </PickerWrapper>
       </div>

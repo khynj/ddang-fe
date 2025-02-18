@@ -2,7 +2,7 @@ import { formatPrice } from './price'
 
 const VALIDATIONS = {
   maxValue: (v, maximum) =>
-    v && v && v > maximum && `${maximum} 까지만 가능해요`,
+    v && v > maximum && `${maximum} 이하로 입력해주세요.`,
   minValue: (v, minimum) =>
     v && v < minimum && `${minimum} 이상으로 입력해주세요.`,
   maxDate: (v, maximum) =>
@@ -20,11 +20,9 @@ const VALIDATIONS = {
       timeStyle: 'short',
     })} 이후로 입력해주세요.`,
   maxPrice: (v, maximum) =>
-    v &&
     parseInt(v) > parseInt(maximum) &&
     `${formatPrice(maximum)}원 까지만 가능해요`,
   minPrice: (v, minimum) =>
-    v &&
     parseInt(v) < parseInt(minimum) &&
     `${formatPrice(minimum)}원 이상으로 입력해주세요.`,
   required: v => !v && '필수 입력사항이에요.',
