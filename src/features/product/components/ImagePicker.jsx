@@ -1,21 +1,19 @@
 import PropTypes from 'prop-types'
 import RegisteredImage from './RegisteredImage'
 import MaterialIcon from '@/components/icons/MaterialIcon'
-import { useEffect, useRef } from 'react'
+import { useRef, useState } from 'react'
 import { compressImage } from '@/utils/image'
+import InlineSpinner from '@/components/placeholder/InlineSpinner'
 
 function ImagePicker({ images, setImages }) {
   const inputRef = useRef(null)
+  const [loading, setLoading] = useState(false)
+
   const deleteImage = src => {
     const newImages = images.filter(image => image !== src)
     setImages(newImages)
   }
 
-  useEffect(() => {
-    if (images.length > 10) {
-      setImages(images.slice(0, 10))
-    }
-  }, [images, setImages])
   return (
     <div className='flex flex-row flex-wrap items-center gap-2 my-2'>
       {images.length < 10 && (
@@ -49,6 +47,8 @@ function ImagePicker({ images, setImages }) {
         />
       ))}
 
+      {loading && <InlineSpinner />}
+
       <input
         ref={inputRef}
         className='hidden'
@@ -56,14 +56,13 @@ function ImagePicker({ images, setImages }) {
         accept='image/*'
         multiple
         onChange={async e => {
+          setLoading(true)
           const files = e.target.files
           const newImages = await Promise.all(
             Array.from(files).map(file => compressImage(file)),
           )
-          console.log('e.target.files', e.target.files)
-          console.log('newImages', newImages)
-
-          setImages([...images, ...newImages])
+          setLoading(false)
+          setImages([...images, ...newImages].slice(0, 10))
         }}
       />
     </div>

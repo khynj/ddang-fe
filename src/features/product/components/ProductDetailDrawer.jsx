@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { getAuctionStatus } from '@/utils/auction'
 import { useAuctionTimer } from '@/hooks/useAuctionTimer'
+import Spinner from '@/components/placeholder/Spinner'
 
 function ProductDetailDrawer({ product, isMine, ref }) {
   const route = useNavigate()
@@ -47,8 +48,6 @@ function ProductDetailDrawer({ product, isMine, ref }) {
     setMinimumBidPrice(mimimumBidPrice)
     setBidPrice(mimimumBidPrice)
   }, [product, setMinimumBidUnit, setMinimumBidPrice])
-
-  if (!product) return <LoadingPage />
 
   const { auction, seller } = product
   const status = getAuctionStatus(auction)

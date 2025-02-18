@@ -4,6 +4,7 @@ import { useMemberReviews } from '@/apis/member'
 import { useAuth } from '@/contexts/AuthContext'
 import { useMemo } from 'react'
 import Placeholder from '@/components/placeholder/Placeholder'
+import Spinner from '@/components/placeholder/Spinner'
 
 function ReviewHistoryPage({ received }) {
   const { user } = useAuth()
@@ -27,10 +28,10 @@ function ReviewHistoryPage({ received }) {
     )
     return reviews
   }, [reviews_as_buyer, reviews_as_seller])
-
+  if (!reviews) return <Spinner />
   return (
     <>
-      {reviews && reviews.length > 0 ? (
+      {reviews.length > 0 ? (
         reviews.map((review, i) => (
           <ReviewItem key={i} review={review} received={!!received} />
         ))

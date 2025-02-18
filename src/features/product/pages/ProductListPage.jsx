@@ -8,6 +8,7 @@ import { useSearchParams } from 'react-router'
 import CategoryPickerSmall from '@/components/modals/CategoryPickerSmall.jsx'
 import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper.jsx'
 import Placeholder from '@/components/placeholder/Placeholder.jsx'
+import Spinner from '@/components/placeholder/Spinner.jsx'
 
 function ProductListPage({ filters, isFavorite, sellerId }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -39,7 +40,9 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
       { replace: true },
     )
   }, [searchParams, setSearchParams])
-  console.log(products)
+
+  if (!products) return <Spinner />
+
   return (
     <div className='flex flex-col h-full'>
       <FilterBar
@@ -69,7 +72,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
               options={[
                 { value: 'ongoing', name: '경매중' },
                 { value: 'upcoming', name: '경매예정' },
-                // { value: 'ended', name: '경매종료' }, // todo
+                // { value: 'ended', name: '경매종료' },
               ]}
               keyName={'status'}
               defaultName={'경매상태'}
@@ -77,13 +80,13 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
           </>
         )}
       </FilterBar>
-      {products && products.pages[0].auctionDetailProjection.length > 0 ? (
+      {products.pages[0].auctionDetailProjection.length > 0 ? (
         <InfiniteScrollWrapper
           fetchNextPage={fetchNextPage}
           isPending={isPending}
           isFetching={isFetching}
         >
-          {products?.pages.map(product =>
+          {products.pages.map(product =>
             product.auctionDetailProjection.map((product, i) => (
               <ProductItemHorizontal key={i} product={product} />
             )),
@@ -99,6 +102,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
 ProductListPage.propTypes = {
   filters: PropTypes.bool,
   isFavorite: PropTypes.bool,
+  sellerId: PropTypes.number,
 }
 
 export default ProductListPage

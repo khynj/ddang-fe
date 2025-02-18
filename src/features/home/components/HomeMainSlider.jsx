@@ -2,15 +2,18 @@ import Slider from '@/components/Slider'
 import HomeMainProduct from './HomeMainProduct'
 import { usePersonalizedAuctions } from '@/apis/auction'
 import NoHomeMainProduct from './NoHomeMainProduct'
+import Spinner from '@/components/placeholder/Spinner'
 
 function HomeMainSlider() {
-  const { data: products, isError, isLoading } = usePersonalizedAuctions()
+  const { data: products } = usePersonalizedAuctions()
+
+  if (!products) return <Spinner />
   return (
     <Slider>
-      {isError || isLoading || products?.length < 1 ? (
+      {products.length < 1 ? (
         <NoHomeMainProduct />
       ) : (
-        products?.map((product, index) => (
+        products.map((product, index) => (
           <HomeMainProduct
             key={index}
             index={index + 1}

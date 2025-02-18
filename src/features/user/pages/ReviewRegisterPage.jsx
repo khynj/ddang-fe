@@ -12,9 +12,9 @@ import Modal from '@/components/modals/Modal'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 import ROUTES from '@/data/ROUTES'
 import { useWriteReview } from '@/apis/member'
-import LoadingPage from '@/pages/LoadingPage'
 import { VALIDATIONS } from '@/utils/VALIDATIONS'
 import { scoreToText } from '@/utils/member'
+import Spinner from '@/components/placeholder/Spinner'
 
 function ReviewRegisterPage() {
   usePageName('리뷰 작성')
@@ -50,7 +50,7 @@ function ReviewRegisterPage() {
 
   const validation = v => VALIDATIONS.maxLength(v, 300)
 
-  if (!auction) return <LoadingPage />
+  if (!auction) return <Spinner />
 
   return (
     <div>

@@ -2,13 +2,16 @@ import { useNotifications } from '@/apis/notifications.js'
 import usePageName from '../../../hooks/usePageName.js'
 import NotificationItem from '../components/NotificationItem.jsx'
 import Placeholder from '@/components/placeholder/Placeholder.jsx'
+import Spinner from '@/components/placeholder/Spinner.jsx'
 
 function NotificationPage() {
   usePageName('알림')
   const { data: notifications } = useNotifications()
+  if (!notifications) return <Spinner />
+
   return (
     <div>
-      {notifications && notifications.notifications.length > 0 ? (
+      {notifications.notifications.length > 0 ? (
         notifications.notifications.map((notification, index) => (
           <NotificationItem key={index} notification={notification} />
         ))

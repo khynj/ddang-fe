@@ -11,6 +11,7 @@ import {
   useUpdateProfilePhoto,
 } from '@/apis/member'
 import { VALIDATIONS } from '@/utils/VALIDATIONS'
+import Spinner from '@/components/placeholder/Spinner'
 
 function EditProfilePage() {
   usePageName('프로필 수정')
@@ -50,7 +51,7 @@ function EditProfilePage() {
     })
   }
 
-  if (!userData) return null
+  if (!userData) return <Spinner />
 
   const validation = nickname =>
     nickname != user.nickname && checkNickname.data?.nicknameExists

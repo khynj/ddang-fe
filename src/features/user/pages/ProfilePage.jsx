@@ -9,6 +9,8 @@ import { useMemberInfo, useMemberReviews } from '@/apis/member'
 import LoadingPage from '@/pages/LoadingPage'
 import { useSearchAuctions } from '@/apis/auction'
 import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
+import Spinner from '@/components/placeholder/Spinner'
+import InlineSpinner from '@/components/placeholder/InlineSpinner'
 
 function ProfilePage() {
   usePageName('프로필')
@@ -23,12 +25,14 @@ function ProfilePage() {
     memberId: id,
     role: 'buyer',
   })
-  if (!userData) return <LoadingPage />
+  if (!userData) return <Spinner />
 
   return (
     <div>
       <Profile userData={userData} />
-      {products && (
+      {!products ? (
+        <InlineSpinner />
+      ) : (
         <ProfileSection
           title='판매 상품'
           to={ROUTES.PRODUCT_LIST_BY_USER.replace(':id', id)}

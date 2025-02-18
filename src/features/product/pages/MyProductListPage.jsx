@@ -6,6 +6,7 @@ import { useSearchAuctions, useSearchMyBids } from '@/apis/auction'
 import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper'
 import { useAuth } from '@/contexts/AuthContext'
 import Placeholder from '@/components/placeholder/Placeholder'
+import Spinner from '@/components/placeholder/Spinner'
 function MyProductListPage({ isSeller, isHammered, isPre }) {
   const params = {
     role: isSeller ? 'seller' : 'buyer',
@@ -35,7 +36,9 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
   return (
     <>
       {isSeller ? (
-        sales && sales.pages[0].auctionDetailProjection.length > 0 ? (
+        !sales ? (
+          <Spinner />
+        ) : sales.pages[0].auctionDetailProjection.length > 0 ? (
           <InfiniteScrollWrapper
             fetchNextPage={fetchNextSellingPage}
             isPending={isSellPending}
@@ -66,7 +69,13 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
         ) : (
           <Placeholder>상품이 없어요.</Placeholder>
         )
-      ) : (myBids && myBids.pages[0].auctionDetailProjection.length) > 0 ? (
+      ) : (
+          !myBids ? (
+            <Spinner />
+          ) : (
+            myBids.pages[0].auctionDetailProjection.length > 0
+          )
+        ) ? (
         <InfiniteScrollWrapper
           fetchNextPage={fetchNextBidsPage}
           isPending={isBidsPending}

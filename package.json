@@ -14,11 +14,13 @@
     "@tanstack/react-query": "^5.64.2",
     "@tanstack/react-query-devtools": "^5.66.0",
     "axios": "^1.7.9",
+    "browser-image-compression": "^2.0.2",
     "firebase": "^11.2.0",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.1.5",
+    "react-spinners": "^0.15.0",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
     "tailwindcss": "^4.0.0"

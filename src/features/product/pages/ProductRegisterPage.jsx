@@ -19,6 +19,7 @@ import TitleInput from '@/components/form/TitleInput'
 import { useCategoryRecommendation } from '@/apis/ai'
 import { formatPrice } from '@/utils/price'
 import { parseTradeType } from '@/utils/auction'
+import Spinner from '@/components/placeholder/Spinner'
 
 function ProductRegisterPage() {
   const { state } = useLocation()
@@ -60,8 +61,9 @@ function ProductRegisterPage() {
   const [registeredProductId, setRegisteredProductId] = useState(null)
   const [categoryRecommendation, setCategoryRecommendation] = useState([])
 
-  const { mutate: registerProduct } = useCreateAuction()
-  const { mutate: updateProduct } = useUpdateAuction()
+  const { mutate: registerProduct, isPending: pendingRegister } =
+    useCreateAuction()
+  const { mutate: updateProduct, isPending: pendingUpdate } = useUpdateAuction()
   const { mutateAsync: recommendCategory } = useCategoryRecommendation()
 
   const route = useNavigate()
@@ -224,6 +226,7 @@ function ProductRegisterPage() {
 
   return (
     <div className='flex flex-col p-4'>
+      {pendingRegister ? <Spinner /> : pendingUpdate && <Spinner />}
       <ImagePicker images={images} setImages={setImages} />
       <hr className='my-3 mb-2 border-gray-200' />
       <TitleInput

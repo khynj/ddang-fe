@@ -2,13 +2,15 @@ import usePageName from '@/hooks/usePageName.js'
 import { usePayHistory } from '@/apis/pay.js'
 import { formatPrice } from '@/utils/price'
 import Placeholder from '@/components/placeholder/Placeholder'
+import Spinner from '@/components/placeholder/Spinner'
 
 function PaymentHistoryPage() {
   usePageName('페이내역')
 
   const { data } = usePayHistory()
 
-  if (!data || data.histories.length === 0) {
+  if (!data) return <Spinner />
+  if (data.histories.length === 0) {
     return <Placeholder>결제 내역이 없어요.</Placeholder>
   }
 

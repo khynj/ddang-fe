@@ -35,7 +35,9 @@ function NotificationItem({ notification }) {
           <div>{notification.title}</div>
           <div>{sentAt}</div>
         </div>
-        <div className='text-gray-900 font-bold'>{notification.content}</div>
+        <div className='text-gray-900 font-bold whitespace-pre-wrap break-all'>
+          {notification.content}
+        </div>
       </div>
     </Link>
   )

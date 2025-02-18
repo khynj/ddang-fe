@@ -15,12 +15,13 @@ import ProductDetailDrawer from '../components/ProductDetailDrawer.jsx'
 import { useAuth } from '@/contexts/AuthContext.jsx'
 import RelatedProductList from '../components/RelatedProductList.jsx'
 import { useEffect, useRef, useState } from 'react'
+import Spinner from '@/components/placeholder/Spinner.jsx'
 
 function ProductDetailPage() {
   const productId = useParams().id
   const drawerRef = useRef()
   const [drawerHeight, setDrawerHeight] = useState(0)
-  const { data: product, isPending } = useAuctionDetails(productId)
+  const { data: product } = useAuctionDetails(productId)
   const { user } = useAuth()
   usePageName(product ? product.auction.productName : '제품상세')
   const status = getAuctionStatus(product?.auction)
@@ -29,7 +30,7 @@ function ProductDetailPage() {
     if (drawerRef.current) setDrawerHeight(drawerRef.current.clientHeight)
   }, [product, status])
 
-  if (isPending) return <LoadingPage />
+  if (!product) return <Spinner />
 
   const { auction, seller } = product
   const tradeType = parseTradeType(auction.tradeType)
@@ -37,7 +38,7 @@ function ProductDetailPage() {
   return (
     <>
       <div
-        className={`flex flex-col gap-2 overflow-y-scroll`}
+        className={`flex flex-col gap-2 overflow-y-scroll bg-white`}
         style={{ height: `calc(100dvh - ${drawerHeight}px - 64px)` }}
       >
         <Slider>

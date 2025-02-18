@@ -4,6 +4,7 @@ import { useAuctionSearchHistory, useCategory } from '@/apis/auction'
 import CategoryList from '../components/category/CategoryList'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
+import InlineSpinner from '@/components/placeholder/InlineSpinner'
 
 function SearchPage() {
   const { data: searchHistory } = useAuctionSearchHistory()
@@ -11,11 +12,15 @@ function SearchPage() {
 
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
-      {searchHistory && searchHistory.length > 0 && (
-        <div className='flex items-center gap-2 p-3 font-bold text-gray-700'>
-          <MaterialIcon name='search_activity' size={24} />
-          <p>최근 검색어</p>
-        </div>
+      {!searchHistory ? (
+        <InlineSpinner />
+      ) : (
+        searchHistory.length > 0 && (
+          <div className='flex items-center gap-2 p-3 font-bold text-gray-700'>
+            <MaterialIcon name='search_activity' size={24} />
+            <p>최근 검색어</p>
+          </div>
+        )
       )}
       {searchHistory
         ?.filter(({ searchKey }) => searchKey)

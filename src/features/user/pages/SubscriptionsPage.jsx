@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import Placeholder from '@/components/placeholder/Placeholder'
 import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
 import { useLocation } from 'react-router'
+import Spinner from '@/components/placeholder/Spinner'
+import InlineSpinner from '@/components/placeholder/InlineSpinner'
 
 function SubscriptionsPage() {
   usePageName('모아보기')
@@ -42,7 +44,8 @@ function SubscriptionsPage() {
     location.state = { selectedFollowings: followings.followings }
   }, [selectedFollowings, followings, location])
 
-  if (!followings || followings.followings.length === 0)
+  if (!followings) return <Spinner />
+  if (followings.followings.length === 0)
     return <Placeholder>구독한 사용자가 없어요.</Placeholder>
 
   return (
@@ -76,7 +79,9 @@ function SubscriptionsPage() {
       <hr className='border-gray-200' />
 
       <div>
-        {products && products.length > 0 ? (
+        {!products ? (
+          <InlineSpinner />
+        ) : products.length > 0 ? (
           products.map((product, index) => (
             <ProductItemHorizontal key={index} product={product} />
           ))

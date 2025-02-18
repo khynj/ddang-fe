@@ -6,7 +6,7 @@ import TrustScoreBar from './TrustScoreBar'
 import { useAuth } from '@/contexts/AuthContext'
 import { useToggleFollow } from '@/apis/member'
 import { useQueryClient } from '@tanstack/react-query'
-import LoadingPage from '@/pages/LoadingPage'
+import Spinner from '@/components/placeholder/Spinner'
 
 function Profile({ userData }) {
   const queryClient = useQueryClient()
@@ -20,7 +20,7 @@ function Profile({ userData }) {
     })
   }
 
-  if (!userData) return <LoadingPage />
+  if (!userData) return <Spinner />
 
   return (
     <div className='p-6 bg-white'>
