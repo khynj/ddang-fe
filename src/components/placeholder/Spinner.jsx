@@ -13,7 +13,7 @@ function Spinner({ loading = true }) {
         className='z-4 m-auto fixed inset-0 max-w-lg bg-white opacity-40'
         onClick={() => close()}
       ></div>
-      <BeatLoader color='#4d86f9' size={28} loading={loading} />
+      <BeatLoader color='#4d86f9' size={20} loading={loading} />
     </div>
   )
 }

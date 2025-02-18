@@ -4,13 +4,10 @@ import { useSearchMyBids } from '@/apis/auction'
 import ROUTES from '@/data/ROUTES'
 import ProductItemSmall from '@/features/product/components/ProductItemSmall'
 import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
-import InlineSpinner from '@/components/placeholder/InlineSpinner'
 
 function HomeBiddingProductList() {
   const { user } = useAuth()
   const { data: biddingProducts } = useSearchMyBids({ status: 'ongoing' })
-
-  if (!biddingProducts) return <InlineSpinner />
   return (
     <section>
       <HomeListHeader
@@ -18,7 +15,8 @@ function HomeBiddingProductList() {
         icon='person_raised_hand'
         to={ROUTES.MY_PRODUCTS}
       />
-      {biddingProducts.pages[0].auctionDetailProjection.length > 0 ? (
+      {biddingProducts &&
+      biddingProducts.pages[0].auctionDetailProjection.length > 0 ? (
         <div
           className='flex flex-row gap-2 pb-1
           overflow-x-scroll snap-x snap-madatory'
