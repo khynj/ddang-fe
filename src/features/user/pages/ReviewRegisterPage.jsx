@@ -24,7 +24,7 @@ function ReviewRegisterPage() {
   const { data: auction } = useAuctionDetails(auctionId)
 
   const [content, setContent] = useState('')
-  const [score, setScore] = useState(3)
+  const [score, setScore] = useState(2)
   const { isOpen, open, close } = useModal()
 
   const handleSubmit = () => {
@@ -61,7 +61,7 @@ function ReviewRegisterPage() {
             <p className='text-ddblue-400 font-bold text-[14px]'>신뢰도</p>
             <span className='text-sm font-bold'>{scoreToText(score + 1)}</span>
           </div>
-          <StepTrustBar setScore={setScore} />
+          <StepTrustBar setScore={setScore} score={score} />
         </div>
         <TextArea
           rows={12}

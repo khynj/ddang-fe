@@ -53,7 +53,6 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
               searchParams={searchParams}
               setSearchParams={setSearchParams}
               options={[
-                { value: 'any', name: '직거래/택배' },
                 { value: 'direct', name: '직거래' },
                 { value: 'package', name: '택배' },
               ]}
