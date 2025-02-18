@@ -41,8 +41,6 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
     )
   }, [searchParams, setSearchParams])
 
-  if (!products) return <Spinner />
-
   return (
     <div className='flex flex-col h-full'>
       <FilterBar
@@ -80,7 +78,9 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
           </>
         )}
       </FilterBar>
-      {products.pages[0].auctionDetailProjection.length > 0 ? (
+      {!products ? (
+        <Spinner />
+      ) : products.pages[0].auctionDetailProjection.length > 0 ? (
         <InfiniteScrollWrapper
           fetchNextPage={fetchNextPage}
           isPending={isPending}
