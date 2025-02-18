@@ -79,7 +79,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
           </>
         )}
       </FilterBar>
-      {products && products.pages[0].length > 0 ? (
+      {products && products.pages[0].auctionDetailProjection.length > 0 ? (
         <InfiniteScrollWrapper
           fetchNextPage={fetchNextPage}
           isPending={isPending}
