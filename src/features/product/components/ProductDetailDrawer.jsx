@@ -36,9 +36,11 @@ function ProductDetailDrawer({ product, isMine, ref }) {
     if (!product || !setMinimumBidPrice) return
     const bidUnit = getMinimumBidUnit(product.auction.minimumBid)
     setMinimumBidUnit(bidUnit)
-    const mimimumBidPrice = product.auction.currentBidPrice
+    let mimimumBidPrice = product.auction.currentBidPrice
       ? product.auction.currentBidPrice + bidUnit
       : product.auction.minimumBid
+    if (mimimumBidPrice > product.auction.instantHammerPrice)
+      mimimumBidPrice = product.auction.instantHammerPrice
     setMinimumBidPrice(mimimumBidPrice)
     setBidPrice(mimimumBidPrice)
   }, [product, setMinimumBidUnit, setMinimumBidPrice])
@@ -206,6 +208,7 @@ function ProductDetailDrawer({ product, isMine, ref }) {
             value={formatPrice(bidPrice)}
             onChange={handleBidPrice}
             className='flex grow border-b-2 w-full font-bold text-end text-2xl'
+            inputMode='numeric'
           />
           <div className='flex gap-2 leading-none text-sm py-4'>
             {minimumBidUnit >= 1 && (
