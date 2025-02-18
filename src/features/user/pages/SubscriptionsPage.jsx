@@ -6,10 +6,15 @@ import { useFollowingAuctions } from '@/apis/auction'
 import { useEffect, useState } from 'react'
 import Placeholder from '@/components/placeholder/Placeholder'
 import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
+import { useLocation } from 'react-router'
 
 function SubscriptionsPage() {
   usePageName('모아보기')
-  const [selectedFollowings, setSelectedFollowings] = useState([])
+  const location = useLocation()
+  console.log(location.state)
+  const [selectedFollowings, setSelectedFollowings] = useState(
+    location.state ? location.state.selectedFollowings : [],
+  )
   const { data: followings } = useFollowingList()
   const { data: products } = useFollowingAuctions(
     selectedFollowings.map(following => following.memberId),
@@ -33,8 +38,9 @@ function SubscriptionsPage() {
   }, [followings])
 
   useEffect(() => {
-    console.log(selectedFollowings)
-  }, [selectedFollowings])
+    if (!location || !followings) return
+    location.state = { selectedFollowings: followings.followings }
+  }, [selectedFollowings, followings, location])
 
   if (!followings || followings.followings.length === 0)
     return <Placeholder>구독한 사용자가 없어요.</Placeholder>

@@ -10,7 +10,6 @@ function HomeClosingProductList() {
     sortType: 'endTime',
     size: 8,
   })
-  if (closingProducts) console.log(closingProducts.pages)
   return (
     <section>
       <HomeListHeader

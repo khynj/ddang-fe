@@ -21,10 +21,6 @@ function ChargePage() {
   const payDeposit = usePayDeposit()
   const { data: payInfo } = usePayInfo()
 
-  useEffect(() => {
-    console.log('payInfo', payInfo)
-  }, [payInfo])
-
   const onChange = e => {
     // 숫자만 추출
     const numericValue = e.target.value.replace(/[^0-9]/g, '')
@@ -51,9 +47,8 @@ function ChargePage() {
             ? data?.next_redirect_mobile_url
             : data?.next_redirect_pc_url
         },
-        onError: err => {
-          console.log('결제 mutation err', err)
-          alert('결제 중 오류가 발생했습니다.')
+        onError: error => {
+          alert(error.response.data.message)
         },
       },
     )
