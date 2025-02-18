@@ -4,6 +4,7 @@ import ProductImage from '../../product/components/ProductImage'
 import { formatPrice } from '@/utils/price'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
+import { scoreToText } from '@/utils/member'
 
 const ReviewItem = ({ review, received }) => {
   const hammeredPrice = formatPrice(review.auction.hammeredPrice)
@@ -49,23 +50,6 @@ const ReviewItem = ({ review, received }) => {
       <p className='text-sm text-gray-800 '>{review.review.content}</p>
     </div>
   )
-}
-
-function scoreToText(score) {
-  switch (score) {
-    case 1:
-      return '매우의심'
-    case 2:
-      return '의심'
-    case 3:
-      return '보통'
-    case 4:
-      return '신뢰'
-    case 5:
-      return '완전신뢰'
-    default:
-      return ''
-  }
 }
 
 ReviewItem.propTypes = {

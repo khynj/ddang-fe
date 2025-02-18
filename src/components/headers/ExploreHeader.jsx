@@ -32,6 +32,14 @@ function ExploreHeader() {
   }, [searchParams])
 
   const { data: notificationStatus } = useUnreadNotificationStatus()
+
+  // 30자 이하
+  const onChange = e => {
+    console.log(e.target.value.length)
+    if (e.target.value.length > 30) return
+    setSearchKey(e.target.value)
+  }
+
   return (
     <header
       className={`
@@ -42,9 +50,9 @@ function ExploreHeader() {
         <input
           className={`px-3 h-full w-full rounded-xl text-sm border border-gray-400 font-bold text-gray-950`}
           type='text'
-          placeholder='제목으로 검색하세요'
+          placeholder='제품을 검색하세요'
           value={searchKey}
-          onChange={e => setSearchKey(e.target.value)}
+          onChange={onChange}
         />
       </form>
       <IconButton

@@ -13,6 +13,8 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import ROUTES from '@/data/ROUTES'
 import { useWriteReview } from '@/apis/member'
 import LoadingPage from '@/pages/LoadingPage'
+import { VALIDATIONS } from '@/utils/VALIDATIONS'
+import { scoreToText } from '@/utils/member'
 
 function ReviewRegisterPage() {
   usePageName('리뷰 작성')
@@ -26,6 +28,7 @@ function ReviewRegisterPage() {
   const { isOpen, open, close } = useModal()
 
   const handleSubmit = () => {
+    if (content.length > 300) return alert('300자 이내로 작성해주세요.')
     writeReview(
       {
         auctionId,
@@ -45,6 +48,8 @@ function ReviewRegisterPage() {
     route(ROUTES.HOME)
   }
 
+  const validation = v => VALIDATIONS.maxLength(v, 300)
+
   if (!auction) return <LoadingPage />
 
   return (
@@ -54,11 +59,17 @@ function ReviewRegisterPage() {
         <div>
           <div className='flex items-center justify-between'>
             <p className='text-ddblue-400 font-bold text-[14px]'>신뢰도</p>
-            <span className='text-sm font-bold'>보통</span>
+            <span className='text-sm font-bold'>{scoreToText(score + 1)}</span>
           </div>
           <StepTrustBar setScore={setScore} />
         </div>
-        <TextArea rows={12} value={content} setValue={setContent} />
+        <TextArea
+          rows={12}
+          value={content}
+          setValue={setContent}
+          validate={validation}
+          label={`리뷰내용 ${content.length}/300`}
+        />
       </div>
       <StickyContainer plain>
         <DefaultButton onClick={handleSubmit}>등록</DefaultButton>
@@ -72,10 +83,10 @@ function ReviewRegisterPage() {
               className='text-ddblue-400'
               size={32}
             />
-            <p className='text-lg font-bold text-ddblue-400'>리뷰 작성 완료</p>
+            <p className='text-lg font-bold text-ddblue-400'>완료</p>
           </div>
           <div className='p-2'>
-            <p>고마워요!</p>
+            <p>소중한 리뷰를 저장했어요.</p>
           </div>
           <DefaultButton onClick={handleClose}>확인</DefaultButton>
         </Modal>

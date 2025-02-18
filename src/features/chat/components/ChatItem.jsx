@@ -33,7 +33,9 @@ function ChatItem({ chat }) {
           ))}
         <div className={`flex flex-col ${isMe ? 'items-end' : ''}`}>
           {!isMe && (
-            <div className='font-bold text-gray-800'>{chat.nickname}</div>
+            <div className='font-bold text-gray-800 text-sm'>
+              {chat.nickname}
+            </div>
           )}
           <p
             className={`max-w-2xs rounded-xl p-2 px-3  ${

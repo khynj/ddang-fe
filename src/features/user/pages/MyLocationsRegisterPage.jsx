@@ -10,6 +10,7 @@ import TextInput from '@/components/form/TextInput'
 import { useLocations } from '@/apis/location'
 import { useAddPreferredLocation } from '@/apis/member'
 import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper'
+import { VALIDATIONS } from '@/utils/VALIDATIONS'
 
 function MyLocationsRegisterPage() {
   usePageName('내 장소')
@@ -46,6 +47,7 @@ function MyLocationsRegisterPage() {
   // }, [searchKey])
 
   const handleSearch = e => {
+    if (e.target.value.length > 30) return
     setSearchKey(e.target.value)
   }
 
@@ -57,6 +59,8 @@ function MyLocationsRegisterPage() {
 
   const onConfirm = e => {
     e.preventDefault()
+    const error = VALIDATIONS.nickname(name) || VALIDATIONS.maxLength(name, 20)
+    if (error) return alert(error)
     registerLocation(
       { locationId: selectedLocationId, title: name },
       {

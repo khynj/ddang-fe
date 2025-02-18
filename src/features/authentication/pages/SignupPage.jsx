@@ -26,13 +26,22 @@ function SignupPage() {
 
   const validation = {
     nickname: nickname =>
-      VALIDATIONS.required(nickname) ||
-      (checkNickname.data?.nicknameExists ? '이미 존재하는 별명이에요.' : ''),
+      checkNickname.data?.nicknameExists
+        ? '이미 존재하는 별명이에요.'
+        : VALIDATIONS.nickname(nickname) ||
+          VALIDATIONS.required(nickname) ||
+          VALIDATIONS.maxLength(nickname, 20),
     email: email =>
       VALIDATIONS.required(email) ||
+      VALIDATIONS.maxLength(email, 40) ||
       VALIDATIONS.email(email) ||
       (checkEmail.data?.emailExists ? '이미 존재하는 이메일이에요.' : ''),
-    password: password => VALIDATIONS.required(password),
+    name: name =>
+      VALIDATIONS.required(name) ||
+      VALIDATIONS.maxLength(name, 30) ||
+      VALIDATIONS.name(name),
+    password: password =>
+      VALIDATIONS.required(password) || VALIDATIONS.password(password),
     passwordConfirm: passwordConfirm =>
       VALIDATIONS.required(passwordConfirm) ||
       (passwordConfirm !== password ? '비밀번호가 일치하지 않습니다.' : ''),
@@ -79,7 +88,13 @@ function SignupPage() {
             setValue={setEmail}
             validate={validation.email}
           />
-          <TextInput label='이름' required value={name} setValue={setName} />
+          <TextInput
+            label='이름'
+            required
+            value={name}
+            setValue={setName}
+            validate={validation.name}
+          />
         </div>
         <div>
           <TextInput
