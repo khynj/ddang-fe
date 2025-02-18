@@ -75,7 +75,7 @@ function DealLocationPicker({ label, required, value, setValue, validate }) {
             searchLocation?.pages.map(page =>
               page.locations.map((location, i) => (
                 <div
-                  className='w-full'
+                  className='w-full px-2'
                   key={i}
                   onClick={() => onClose(location.locationName)}
                 >
@@ -108,6 +108,7 @@ function DealLocationPicker({ label, required, value, setValue, validate }) {
               ))}
             </div>
           )}
+          <hr className='border-0 pt-1' />
           <DefaultButton type={'gray'} onClick={() => onClose(value)}>
             닫기
           </DefaultButton>
