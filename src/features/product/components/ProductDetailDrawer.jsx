@@ -33,7 +33,7 @@ function ProductDetailDrawer({ product, isMine, ref }) {
   const remainingTime = useAuctionTimer(product?.auction, invalidateKeys)
 
   useEffect(() => {
-    if (!product || !getMinimumBidUnit || !setMinimumBidPrice) return
+    if (!product || !setMinimumBidPrice) return
     const bidUnit = getMinimumBidUnit(product.auction.minimumBid)
     setMinimumBidUnit(bidUnit)
     const mimimumBidPrice = product.auction.currentBidPrice
@@ -208,12 +208,14 @@ function ProductDetailDrawer({ product, isMine, ref }) {
             className='flex grow border-b-2 w-full font-bold text-end text-2xl'
           />
           <div className='flex gap-2 leading-none text-sm py-4'>
-            <button
-              onClick={() => addPrice(minimumBidUnit)}
-              className='bg-ddblue-400 text-white p-2 font-bold rounded-md'
-            >
-              +{minimumBidUnit}
-            </button>
+            {minimumBidUnit >= 1 && (
+              <button
+                onClick={() => addPrice(minimumBidUnit)}
+                className='bg-ddblue-400 text-white p-2 font-bold rounded-md'
+              >
+                +{minimumBidUnit}
+              </button>
+            )}
             <button
               onClick={() => addPrice(minimumBidUnit * 10)}
               className='bg-ddblue-500 text-white p-2 font-bold rounded-md'

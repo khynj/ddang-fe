@@ -3,9 +3,8 @@ export function formatPrice(price) {
 }
 
 export function getMinimumBidUnit(price) {
-  if (price < 10000) return 100
-  if (price < 100000) return 1000
-  if (price < 1000000) return 10000
-  if (price < 10000000) return 100000
-  return 1000000
+  // 1%를 10의 n승으로 표현
+  const n = Math.floor(Math.log10(price / 100))
+  console.log(n)
+  return 10 ** n
 }

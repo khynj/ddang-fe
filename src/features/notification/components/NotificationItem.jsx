@@ -9,6 +9,9 @@ const icon = {
   NEW_BID: 'gavel',
   FAILED_AUCTION: 'close',
   OUTBID: 'close',
+  AUCTION_REVIEW: 'person',
+  AUCTION_OPEN: 'gavel',
+  CHATTING: 'chat_bubble',
 }
 
 function NotificationItem({ notification }) {
