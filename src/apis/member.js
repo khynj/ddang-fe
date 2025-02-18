@@ -46,6 +46,14 @@ export function useUpdateProfilePhoto() {
   })
 }
 
+// 닉네임 변경 /member/nickname
+export function useUpdateNickname() {
+  return useMutation({
+    mutationFn: nickname =>
+      axios_spring.put('/member/nickname', { nickname }).then(res => res.data),
+  })
+}
+
 // 이메일 및 닉네임 중복 조회
 export function useCheckDuplicate({ email, nickname }) {
   return useQuery({

@@ -31,6 +31,7 @@ function NumberInput({ label, required, value, setValue, validate }) {
         className={`flex border-1 border-gray-300 rounded-md p-3 ${
           error ? 'invalid' : ''
         }`}
+        inputMode='numeric'
       />
     </div>
   )

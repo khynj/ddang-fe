@@ -29,8 +29,8 @@ function ChargePage() {
     // 숫자만 추출
     const numericValue = e.target.value.replace(/[^0-9]/g, '')
     const value = numericValue ? parseInt(numericValue) : 0
-    if (value > 10000000) setError('1000만원 이하만 가능해요.')
-    else setError('')
+    if (value > 10000000) return setError('1000만원 이하만 가능해요.')
+    setError('')
     setAmount(value)
   }
 
