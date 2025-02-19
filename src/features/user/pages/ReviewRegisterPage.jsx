@@ -25,7 +25,7 @@ function ReviewRegisterPage() {
 
   const [content, setContent] = useState('')
   const [score, setScore] = useState(3)
-  const { isOpen, open, close } = useModal()
+  const { isOpen, open } = useModal()
 
   const handleSubmit = () => {
     if (content.length > 300) return alert('300자 이내로 작성해주세요.')
@@ -44,7 +44,6 @@ function ReviewRegisterPage() {
   }
 
   const handleClose = () => {
-    close()
     route(ROUTES.HOME, { replace: true })
   }
 
@@ -81,7 +80,7 @@ function ReviewRegisterPage() {
         </DefaultButton>
       </StickyContainer>
       {isOpen && (
-        <Modal close={close}>
+        <Modal close={handleClose}>
           <div className='flex flex-col items-center gap-1'>
             <MaterialIcon
               name='check_circle'
