@@ -9,8 +9,6 @@ function ImagePicker({ images, setImages, imageLinks, setImageLinks }) {
   const inputRef = useRef(null)
   const [loading, setLoading] = useState(false)
 
-  console.log(imageLinks)
-
   const deleteImage = src => {
     const newImages = images.filter(image => image !== src)
     setImages(newImages)
@@ -40,7 +38,7 @@ function ImagePicker({ images, setImages, imageLinks, setImageLinks }) {
       else alert(error)
     }
     setLoading(false)
-    setImages([...images, ...newImages].slice(0, 10))
+    setImages([...images, ...newImages].slice(0, 10 - imageLinks.length))
   }
 
   return (
