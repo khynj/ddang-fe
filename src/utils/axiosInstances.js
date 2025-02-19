@@ -18,13 +18,13 @@ const successHandler = response => {
   console.log(response.config.url, response)
   // change times to local time(recursive)
   // changeToLocalTime(response)
-
   return response
 }
 
 const errorHandler = error => {
   console.log('error', error)
   if (error.status == 401 && error.config.url !== '/auth/login') {
+    localStorage.removeItem('user')
     window.location.href = '/welcome'
   }
   return Promise.reject(error)

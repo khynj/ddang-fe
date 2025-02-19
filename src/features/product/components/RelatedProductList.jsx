@@ -16,7 +16,7 @@ function RelatedProductList({ product }) {
       overflow-x-scroll snap-x snap-madatory'
           >
             {products.map((product, i) => (
-              <ProductItemSmall product={product} key={i} />
+              <ProductItemSmall product={product} key={i} replace />
             ))}
           </div>
         </div>

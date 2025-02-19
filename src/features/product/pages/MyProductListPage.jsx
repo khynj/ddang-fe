@@ -7,6 +7,7 @@ import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper'
 import { useAuth } from '@/contexts/AuthContext'
 import Placeholder from '@/components/placeholder/Placeholder'
 import Spinner from '@/components/placeholder/Spinner'
+import InlineSpinner from '@/components/placeholder/InlineSpinner'
 function MyProductListPage({ isSeller, isHammered, isPre }) {
   const params = {
     role: isSeller ? 'seller' : 'buyer',
@@ -65,6 +66,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
                 ),
               ),
             )}
+            {isSellPending && <InlineSpinner />}
           </InfiniteScrollWrapper>
         ) : (
           <Placeholder>상품이 없어요.</Placeholder>
@@ -90,6 +92,7 @@ function MyProductListPage({ isSeller, isHammered, isPre }) {
               ),
             ),
           )}
+          {isBidsFetching && <InlineSpinner />}
         </InfiniteScrollWrapper>
       ) : (
         <Placeholder>상품이 없어요.</Placeholder>

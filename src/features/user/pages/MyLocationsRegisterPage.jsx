@@ -85,7 +85,7 @@ function MyLocationsRegisterPage() {
           value={searchKey}
           setValue={setSearchKey}
           icon='search'
-          limit={v => VALIDATIONS.maxLength(v, 30)}
+          limit={v => VALIDATIONS.maxLength(v, 20)}
           label='동이름'
         />
       </div>

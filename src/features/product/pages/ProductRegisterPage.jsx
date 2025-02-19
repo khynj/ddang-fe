@@ -213,10 +213,10 @@ function ProductRegisterPage() {
     })
   }
 
-  const onTitleChange = e => {
-    setTitle(e.target.value)
+  const onTitleChange = value => {
+    setTitle(value)
     recommendCategory(
-      { title: e.target.value },
+      { title: value },
       {
         onSuccess: data => {
           setCategoryRecommendation(data)
@@ -241,6 +241,7 @@ function ProductRegisterPage() {
         value={title}
         validate={validation.title}
         onChange={onTitleChange}
+        limit={v => VALIDATIONS.maxLength(v, 20)}
       />
       <CategoryPicker
         label='카테고리'
@@ -260,6 +261,7 @@ function ProductRegisterPage() {
         value={productName}
         setValue={setProductName}
         validate={validation.productName}
+        limit={v => VALIDATIONS.maxLength(v, 30)}
       />
       <NumberInput
         label='최소입찰가'
@@ -267,7 +269,7 @@ function ProductRegisterPage() {
         value={minimumBid}
         setValue={setMinimumBid}
         validate={validation.minimumBid}
-        limit={v => v > 10000000 && '10000000원 이하로 입력해주세요.'}
+        limit={v => VALIDATIONS.maxPrice(v, 10000000)}
       />
       <NumberInput
         label='즉시낙찰가'
@@ -275,6 +277,7 @@ function ProductRegisterPage() {
         setValue={setInstantHammerNowPrice}
         validate={validation.instantHammerPrice}
         dependency={minimumBid}
+        limit={v => VALIDATIONS.maxPrice(v, 10000000)}
       />
       <DatePicker
         label='개찰 시각'
@@ -297,6 +300,7 @@ function ProductRegisterPage() {
         value={content}
         setValue={setContent}
         validate={validation.content}
+        limit={v => VALIDATIONS.maxLength(v, 500)}
       />
       <DealTypePicker
         label='거래 유형'

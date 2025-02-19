@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 function Label({ text, required, children }) {
   return (
-    <label className='font-bold text-gray-800 text-sm'>
+    <label className='font-bold text-gray-800 text-sm text-left px-1'>
       {text}
       {required && '*'} {children}
     </label>

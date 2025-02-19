@@ -79,6 +79,7 @@ div.input-wrapper:has(~ input.invalid) {
 }
 
 label:has(~ input.invalid),
+label:has(~ div.invalid),
 label:has(~ textarea.invalid) {
   color: var(--color-ddred-500);
 }

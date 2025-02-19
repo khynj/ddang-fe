@@ -24,7 +24,9 @@ function TextInput({
       const error = limit(val)
       if (error) return setError(error)
     }
-    setError('')
+
+    if (validate) setError(validate(value))
+    else setError('')
     setValue(val)
   }
 
@@ -40,23 +42,29 @@ function TextInput({
           <InputError>{error}</InputError>
         </Label>
       )}
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        className={`flex border-1 border-gray-300 rounded-md p-3 ${
+      <div
+        className={`relative flex items-center w-full ${
           error ? 'invalid' : ''
         }`}
-        placeholder={placeholder}
-        onFocus={() => setHasFocused(true)}
-      ></input>
-      {icon && (
-        <MaterialIcon
-          name={icon}
-          className='text-gray-400 absolute right-3 pointer-events-none
-'
+      >
+        <input
+          type={type}
+          value={value}
+          onChange={onChange}
+          className={`flex border-1 border-gray-300 rounded-md p-3 w-full ${
+            error ? 'invalid' : ''
+          }`}
+          placeholder={placeholder}
+          onFocus={() => setHasFocused(true)}
         />
-      )}
+        {icon && (
+          <MaterialIcon
+            name={icon}
+            className='text-gray-400 absolute right-3 z-2 pointer-events-none
+'
+          />
+        )}
+      </div>
     </div>
   )
 }

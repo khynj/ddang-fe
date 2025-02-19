@@ -13,6 +13,7 @@ import FavoriteButton from '../icons/FavoriteButton'
 import DefaultButton from '../buttons/DefaultButton'
 import { usePreferredLocations } from '@/apis/member'
 import { useLocations } from '@/apis/location'
+import { VALIDATIONS } from '@/utils/VALIDATIONS'
 
 function DealLocationPicker({ label, required, value, setValue, validate }) {
   const { isOpen, open, close } = useModal(value)
@@ -66,9 +67,11 @@ function DealLocationPicker({ label, required, value, setValue, validate }) {
           <div className='w-full'>
             <TextInput
               icon={'search'}
-              placeholder={'지번으로 검색'}
+              label='지번'
+              placeholder={'동이름으로 검색'}
               value={searchKey}
               setValue={setSearchKey}
+              limit={v => VALIDATIONS.maxLength(v, 20)}
             />
           </div>
           {searchKey ? (

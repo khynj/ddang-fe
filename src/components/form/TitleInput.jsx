@@ -13,6 +13,7 @@ function TitleInput({
   icon,
   placeholder,
   onChange,
+  limit,
 }) {
   const [hasFocused, setHasFocused] = useState(false)
   const [error, setError] = useState('')
@@ -22,6 +23,16 @@ function TitleInput({
       setError(validate(value))
     }
   }, [value, validate, hasFocused])
+
+  const onChangeHandler = e => {
+    const val = e.target.value
+    if (limit) {
+      const error = limit(val)
+      if (error) return setError(error)
+    }
+    setError('')
+    onChange(val)
+  }
   return (
     <div className='flex flex-col gap-2 py-3 relative justify-center'>
       {label && (
@@ -32,8 +43,8 @@ function TitleInput({
       <input
         type={type}
         value={value}
-        onChange={onChange}
-        onBlur={onChange}
+        onChange={onChangeHandler}
+        onBlur={onChangeHandler}
         className={`flex border-1 border-gray-300 rounded-md p-3 ${
           error ? 'invalid' : ''
         }`}
@@ -56,6 +67,7 @@ TitleInput.propTypes = {
   icon: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
+  limit: PropTypes.func,
 }
 
 export default TitleInput

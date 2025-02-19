@@ -5,7 +5,7 @@ import ROUTES from '@/data/ROUTES'
 import { Link } from 'react-router'
 import { useAuctionTimer } from '@/hooks/useAuctionTimer'
 
-function ProductItemSmall({ product }) {
+function ProductItemSmall({ product, replace }) {
   const price = wonitzie(product.currentBidPrice || product.minimumBid)
   const didBid = product.myBidPrice > 0
   const isTop = didBid && product.currentBidPrice == product.myBidPrice
@@ -13,6 +13,7 @@ function ProductItemSmall({ product }) {
   return (
     <Link
       to={`${ROUTES.PRODUCT_DETAIL}`.replace(':id', product.auctionId)}
+      replace={replace}
       className='flex flex-col flex-shrink-0 snap-center whitespace-nowrap text-sm'
       style={{
         width: 'calc(33% - var(--spacing))',
@@ -55,6 +56,7 @@ function ProductItemSmall({ product }) {
 
 ProductItemSmall.propTypes = {
   product: PropTypes.object.isRequired,
+  replace: PropTypes.bool,
 }
 
 export default ProductItemSmall

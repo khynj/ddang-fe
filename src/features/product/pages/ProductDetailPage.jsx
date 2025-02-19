@@ -8,14 +8,13 @@ import { Link, useParams } from 'react-router'
 import ROUTES from '@/data/ROUTES.js'
 import { formatPrice } from '@/utils/price.js'
 import { useAuctionDetails } from '@/apis/auction.js'
-import LoadingPage from '@/pages/LoadingPage.jsx'
-import { shortRelativeTime } from '@/utils/date'
 import { getAuctionStatus, parseTradeType } from '@/utils/auction.js'
 import ProductDetailDrawer from '../components/ProductDetailDrawer.jsx'
 import { useAuth } from '@/contexts/AuthContext.jsx'
 import RelatedProductList from '../components/RelatedProductList.jsx'
 import { useEffect, useRef, useState } from 'react'
 import Spinner from '@/components/placeholder/Spinner.jsx'
+import { StopWatch } from '@/features/product/components/StopWatch.jsx'
 
 function ProductDetailPage() {
   const productId = useParams().id
@@ -103,9 +102,12 @@ function ProductDetailPage() {
                 </span>
               </Link>
               <span className='px-2 text-'>·</span>
-              <span>{shortRelativeTime(auction.createdAt)}</span>
+              <StopWatch initTime={auction.createdAt} />
             </div>
-            <p className='pt-2 text-black tracking-tight whitespace-pre-wrap'>
+            <p
+              className='pt-2 text-black tracking-tight whitespace-pre-wrap break-all
+'
+            >
               {auction.content}
             </p>
           </div>

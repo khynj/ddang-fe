@@ -48,6 +48,7 @@ import LandingPage from './features/authentication/pages/LandingPage'
 import TestPage from './pages/TestPage'
 import UserProductListPage from './features/product/components/UserProductListPage'
 import GuestGuard from './features/authentication/components/GuestGuard'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   const route = useNavigate()
@@ -271,6 +272,7 @@ function App() {
           </Route>
         </Routes>
       </div>
+      <ScrollToTop />
     </AuthProvider>
   )
 }

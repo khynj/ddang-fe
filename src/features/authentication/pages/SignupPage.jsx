@@ -47,6 +47,13 @@ function SignupPage() {
       (passwordConfirm !== password ? '비밀번호가 일치하지 않습니다.' : ''),
   }
 
+  const limits = {
+    nickname: nickname => VALIDATIONS.maxLength(nickname, 10),
+    email: email => VALIDATIONS.maxLength(email, 40),
+    name: name => VALIDATIONS.maxLength(name, 30),
+    password: password => VALIDATIONS.maxLength(password, 16),
+  }
+
   const checkValidation = () => {
     return (
       !validation.nickname(nickname) &&
@@ -90,6 +97,7 @@ function SignupPage() {
             value={nickname}
             setValue={setNickname}
             validate={validation.nickname}
+            limit={limits.nickname}
           />
           <TextInput
             label='이메일'
@@ -98,6 +106,7 @@ function SignupPage() {
             value={email}
             setValue={setEmail}
             validate={validation.email}
+            limit={limits.email}
           />
           <TextInput
             label='이름'
@@ -105,6 +114,7 @@ function SignupPage() {
             value={name}
             setValue={setName}
             validate={validation.name}
+            limit={limits.name}
           />
         </div>
         <div>
@@ -115,6 +125,7 @@ function SignupPage() {
             value={password}
             setValue={setPassword}
             validate={validation.password}
+            limit={limits.password}
           />
           <TextInput
             label='비밀번호 확인'
@@ -123,6 +134,7 @@ function SignupPage() {
             value={passwordConfirm}
             setValue={setPasswordConfirm}
             validate={validation.passwordConfirm}
+            limit={limits.password}
           />
           {error && (
             <div className='text-sm text-red-400'>

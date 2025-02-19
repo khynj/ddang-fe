@@ -38,6 +38,7 @@ function LoginPage() {
           value={email}
           setValue={setEmail}
           validate={e => VALIDATIONS.required(e) || VALIDATIONS.email(e)}
+          limit={v => VALIDATIONS.maxLength(v, 40)}
         />
         <TextInput
           label='비밀번호'
@@ -46,6 +47,7 @@ function LoginPage() {
           value={password}
           setValue={setPassword}
           validate={VALIDATIONS.required}
+          limit={v => VALIDATIONS.maxLength(v, 16)}
         />
         {error && (
           <div className='text-red-500 text-sm'>
