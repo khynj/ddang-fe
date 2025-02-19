@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types'
-import { shortRelativeTime } from '@/utils/date'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
+import ChatroomTime from './ChatroomTime'
 
 function DebateItem({ chatroom }) {
-  const lastSetTime = chatroom.lastSetTime
-    ? shortRelativeTime(chatroom.lastSetTime)
-    : ''
   return (
     <Link
       to={ROUTES.CHATROOM.replace(':id', chatroom.chattingRoomId)}
@@ -23,7 +20,7 @@ function DebateItem({ chatroom }) {
         <div className='flex justify-between items-center'>
           <div className='font-bold'>{chatroom.title}</div>
           <div className='text-gray-500 text-sm shrink-0 whitspace-nowrap'>
-            {lastSetTime}
+            <ChatroomTime time={chatroom.lastSetTime} />
           </div>
         </div>
         <div className='flex justify-between items-center'>

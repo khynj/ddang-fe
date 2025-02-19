@@ -6,6 +6,7 @@ function ChatroomTime({ time }) {
   const [tick, setTick] = useState(0)
   const timeString = useMemo(() => {
     tick
+    if (!time) return ''
     return shortRelativeTime(time)
   }, [time, tick])
 
