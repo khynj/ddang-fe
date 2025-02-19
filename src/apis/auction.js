@@ -100,6 +100,7 @@ export function useSearchAuctions(params) {
   })
 }
 export function useSearchMyBids(params) {
+  console.log('my params', params)
   return useInfiniteQuery({
     queryKey: ['searchMyBids', params],
     queryFn: ({ pageParam }) =>
@@ -109,7 +110,7 @@ export function useSearchMyBids(params) {
         })
         .then(res => res.data),
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      return lastPageParam + 1
+      return lastPage.pageInfo.hasNext ? lastPageParam + 1 : null
     },
     initialPageParam: 1,
   })

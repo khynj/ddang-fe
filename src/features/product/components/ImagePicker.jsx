@@ -20,6 +20,22 @@ function ImagePicker({ images, setImages, imageLinks, setImageLinks }) {
     setImageLinks(newImageLinks)
   }
 
+  const onImageChange = async e => {
+    setLoading(true)
+    const files = e.target.files
+    console.log(files)
+    let newImages = await Promise.all(
+      Array.from(files).map(file => compressImage(file)),
+    )
+    newImages = newImages.filter(image => {
+      console.log(image)
+      if (!image) alert('지원하지 않는 파일 형식이에요.')
+      return !!image
+    })
+    setLoading(false)
+    setImages([...images, ...newImages].slice(0, 10))
+  }
+
   return (
     <div className='flex flex-row flex-wrap items-center gap-2 my-2'>
       {images.length + imageLinks.length < 10 && (
@@ -70,15 +86,7 @@ function ImagePicker({ images, setImages, imageLinks, setImageLinks }) {
         type='file'
         accept='image/gif, image/jpeg, image/png'
         multiple
-        onChange={async e => {
-          setLoading(true)
-          const files = e.target.files
-          const newImages = await Promise.all(
-            Array.from(files).map(file => compressImage(file)),
-          )
-          setLoading(false)
-          setImages([...images, ...newImages].slice(0, 10))
-        }}
+        onChange={onImageChange}
       />
     </div>
   )

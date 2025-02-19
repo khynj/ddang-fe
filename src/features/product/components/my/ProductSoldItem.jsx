@@ -59,7 +59,7 @@ function ProductSoldItem({ product, isSeller }) {
             <p className='font-bold text-gray-900 tracking-tight truncate'>
               {product.title}
             </p>
-            <p className='text-sm text-gray-700 shrink-0'>{endTime}</p>
+            <p className='text-sm text-gray-700 shrink-0'>{endTime} 낙찰됨</p>
           </div>
           <p className='font-bold text-gray-950'>{price}원 낙찰</p>
         </div>

@@ -1,15 +1,20 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from '@/components/icons/MaterialIcon'
+import noImage from '@/assets/images/no-image.png'
 
 function RegisteredImage({ src, deleteFunc, isLink = false }) {
+  let source
+  try {
+    source = isLink ? src : URL.createObjectURL(src)
+  } catch (e) {
+    console.log(e)
+    source = noImage
+  }
+
   return (
     <div className='relative w-[18%] flex items-center justify-center '>
       <div className='flex items-center justify-center w-full aspect-square overflow-hidden rounded-lg bg-gray-100'>
-        <img
-          src={isLink ? src : URL.createObjectURL(src)}
-          alt='preview'
-          className='object-cover'
-        />
+        <img src={source} alt='preview' className='object-cover' />
       </div>
       <button
         onClick={deleteFunc}

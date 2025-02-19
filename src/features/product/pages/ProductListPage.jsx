@@ -14,17 +14,20 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const param = useMemo(() => {
-    const params = {}
+    const newParams = {}
     searchParams.forEach((value, key) => {
       if (!value) return
-      params[key] = value
+      newParams[key] = value
     })
-    params.isFavorite = isFavorite
-    params.sellerId = sellerId
-    if (params.sortType === 'createdAt') {
-      params.sortOrder = 'desc'
+    newParams.isFavorite = isFavorite
+    newParams.sellerId = sellerId
+    if (
+      newParams.sortType == 'createdAt' ||
+      newParams.sortType == 'hammeredTime'
+    ) {
+      newParams.sortOrder = 'desc'
     }
-    return params
+    return newParams
   }, [searchParams, isFavorite, sellerId])
 
   const {
