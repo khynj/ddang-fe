@@ -75,7 +75,7 @@ function ChargeResultPage() {
       <StickyContainer>
         <DefaultButton
           type='gray'
-          onClick={() => route(ROUTES.MYPAGE)}
+          onClick={() => route(ROUTES.MYPAGE, { replace: true })}
           className='w-full'
         >
           돌아가기

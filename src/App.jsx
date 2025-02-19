@@ -47,6 +47,7 @@ import SocialSignupPage from './features/authentication/pages/SocialSignupPage'
 import LandingPage from './features/authentication/pages/LandingPage'
 import TestPage from './pages/TestPage'
 import UserProductListPage from './features/product/components/UserProductListPage'
+import GuestGuard from './features/authentication/components/GuestGuard'
 
 function App() {
   const route = useNavigate()
@@ -61,12 +62,17 @@ function App() {
       >
         <Routes>
           <Route path='/test' element={<TestPage />} />
-          <Route path='/' element={<DefaultLayout back />}>
-            <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
-            <Route path={ROUTES.SOCIAL_SIGNUP} element={<SocialSignupPage />} />
-            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path='/' element={<GuestGuard />}>
+            <Route path='' element={<DefaultLayout back />}>
+              <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+              <Route
+                path={ROUTES.SOCIAL_SIGNUP}
+                element={<SocialSignupPage />}
+              />
+              <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+            </Route>
+            <Route path={ROUTES.WELCOME} element={<WelcomePage />} />
           </Route>
-          <Route path={ROUTES.WELCOME} element={<WelcomePage />} />
           <Route path='/' element={<DefaultLayout />}>
             <Route path={ROUTES.LANDING} element={<LandingPage />} />
           </Route>

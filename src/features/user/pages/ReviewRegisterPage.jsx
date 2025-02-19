@@ -45,7 +45,7 @@ function ReviewRegisterPage() {
 
   const handleClose = () => {
     close()
-    route(ROUTES.HOME)
+    route(ROUTES.HOME, { replace: true })
   }
 
   const validation = v => VALIDATIONS.maxLength(v, 300)
