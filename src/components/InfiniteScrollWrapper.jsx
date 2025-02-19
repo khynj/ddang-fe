@@ -17,7 +17,6 @@ function InfiniteScrollWrapper({
         scrollRef.current.scrollTop + scrollRef.current.clientHeight + 800 >=
         scrollRef.current.scrollHeight
       ) {
-        console.log('fetchNextPage')
         if (isPending || isFetching) return
         fetchNextPage()
       }

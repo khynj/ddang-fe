@@ -86,7 +86,6 @@ export function useDeleteAuctionSearchHistory() {
 
 export function useSearchAuctions(params) {
   const paramsWithDefault = { ...defaultParams, ...params }
-  console.log('search params:', paramsWithDefault)
   return useInfiniteQuery({
     queryKey: ['searchAuctions', paramsWithDefault],
     queryFn: ({ pageParam }) =>
@@ -94,7 +93,7 @@ export function useSearchAuctions(params) {
         .get('/auction', { params: { ...paramsWithDefault, page: pageParam } })
         .then(res => res.data),
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      return lastPageParam + 1
+      return lastPage.pageInfo.hasNext ? lastPageParam + 1 : null
     },
     initialPageParam: 1,
   })

@@ -36,6 +36,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
     fetchNextPage,
     isPending,
     isFetching,
+    isLoading,
   } = useSearchAuctions(param)
 
   useEffect(() => {
@@ -85,7 +86,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
           </>
         )}
       </FilterBar>
-      {isPending ? (
+      {isLoading ? (
         <Spinner />
       ) : products.pages[0].auctionDetailProjection.length > 0 ? (
         <InfiniteScrollWrapper
