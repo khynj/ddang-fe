@@ -240,7 +240,7 @@ function App() {
               <Route path={ROUTES.NOTICES} element={<NoticesPage />} />
               <Route
                 path={ROUTES.USER_REVIEW_HISTORY}
-                element={<ReviewHistoryPage />}
+                element={<ReviewHistoryPage received />}
               />
               <Route
                 path={ROUTES.REVIEW_HISTORY}

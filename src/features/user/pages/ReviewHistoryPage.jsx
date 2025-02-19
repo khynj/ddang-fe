@@ -4,11 +4,13 @@ import { useMemberReviews } from '@/apis/member'
 import { useAuth } from '@/contexts/AuthContext'
 import Placeholder from '@/components/placeholder/Placeholder'
 import Spinner from '@/components/placeholder/Spinner'
+import { useParams } from 'react-router'
 
 function ReviewHistoryPage({ received }) {
   const { user } = useAuth()
+  const params = useParams()
   const { data: reviews } = useMemberReviews({
-    memberId: user.memberId,
+    memberId: params.id ? params.id : user.memberId,
     type: received ? 'received' : 'given',
   })
 
