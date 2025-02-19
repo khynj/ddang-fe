@@ -3,13 +3,19 @@ import Label from './Label'
 import { useState } from 'react'
 import InputError from './InputError'
 
-function TextArea({ label, required, value, setValue, validate, rows }) {
+function TextArea({ label, required, value, setValue, validate, rows, limit }) {
   const [error, setError] = useState('')
   const onChange = e => {
-    if (validate) {
-      setError(validate(e.target.value))
+    const val = e.target.value
+
+    if (limit) {
+      const error = limit(val)
+      if (error) return setError(error)
     }
-    setValue(e.target.value)
+    if (validate) {
+      setError(validate(val))
+    }
+    setValue(val)
   }
   return (
     <div className='flex flex-col gap-1 py-3'>

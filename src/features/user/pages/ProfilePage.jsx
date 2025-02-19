@@ -6,25 +6,39 @@ import ROUTES from '@/data/ROUTES'
 import ProductItemHorizontalSmall from '@/features/product/components/ProductItemHorizontalSmall'
 import ReviewItem from '../components/ReviewItem'
 import { useMemberInfo, useMemberReviews } from '@/apis/member'
-import LoadingPage from '@/pages/LoadingPage'
 import { useSearchAuctions } from '@/apis/auction'
 import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
 import Spinner from '@/components/placeholder/Spinner'
 import InlineSpinner from '@/components/placeholder/InlineSpinner'
+import { useMemo } from 'react'
 
 function ProfilePage() {
   usePageName('프로필')
   const { id } = useParams()
   const { data: userData } = useMemberInfo(id)
   const { data: products } = useSearchAuctions({ sellerId: id })
-  const { data: reviews_seller } = useMemberReviews({
-    memberId: id,
-    role: 'seller',
-  })
-  const { data: reviews_buyer } = useMemberReviews({
+  const { data: sellReviews, isPending: pendingSellReviews } = useMemberReviews(
+    {
+      memberId: id,
+      role: 'seller',
+    },
+  )
+  const { data: buyReviews, isPending: pendingBuyReviews } = useMemberReviews({
     memberId: id,
     role: 'buyer',
   })
+
+  const reviews = useMemo(() => {
+    const newReviews = []
+    if (sellReviews) {
+      newReviews.push(...sellReviews)
+    }
+    if (buyReviews) {
+      newReviews.push(...buyReviews)
+    }
+    return newReviews
+  }, [sellReviews, buyReviews])
+
   if (!userData) return <Spinner />
 
   return (
@@ -46,10 +60,10 @@ function ProfilePage() {
       )}
       {
         <ProfileSection title='리뷰' to={`${ROUTES.REVIEW_HISTORY}/${id}`}>
-          {(reviews_buyer && reviews_seller && reviews_buyer?.length) ||
-          reviews_seller?.length ? (
-            [...reviews_buyer, ...reviews_seller]
-              .slice(0, 6)
+          {(pendingBuyReviews || pendingSellReviews) && <InlineSpinner />}
+          {reviews.length > 0 ? (
+            reviews
+              .slice(0, 3)
               .map((review, i) => (
                 <ReviewItem key={i} review={review} received />
               ))

@@ -20,7 +20,7 @@ function ReviewRegisterPage() {
   usePageName('리뷰 작성')
   const route = useNavigate()
   const { id: auctionId } = useParams()
-  const { mutate: writeReview } = useWriteReview()
+  const { mutate: writeReview, isPending } = useWriteReview()
   const { data: auction } = useAuctionDetails(auctionId)
 
   const [content, setContent] = useState('')
@@ -69,10 +69,16 @@ function ReviewRegisterPage() {
           setValue={setContent}
           validate={validation}
           label={`리뷰내용 ${content.length}/300`}
+          limit={validation}
         />
       </div>
       <StickyContainer plain>
-        <DefaultButton onClick={handleSubmit}>등록</DefaultButton>
+        <DefaultButton
+          type={isPending ? 'disabled' : ''}
+          onClick={handleSubmit}
+        >
+          등록
+        </DefaultButton>
       </StickyContainer>
       {isOpen && (
         <Modal close={close}>

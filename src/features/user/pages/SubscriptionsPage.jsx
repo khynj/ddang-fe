@@ -13,12 +13,11 @@ import InlineSpinner from '@/components/placeholder/InlineSpinner'
 function SubscriptionsPage() {
   usePageName('모아보기')
   const location = useLocation()
-  console.log(location.state)
   const [selectedFollowings, setSelectedFollowings] = useState(
     location.state ? location.state.selectedFollowings : [],
   )
   const { data: followings } = useFollowingList()
-  const { data: products } = useFollowingAuctions(
+  const { data: products, isPending: isPendingProduct } = useFollowingAuctions(
     selectedFollowings.map(following => following.memberId),
   )
 
@@ -79,7 +78,7 @@ function SubscriptionsPage() {
       <hr className='border-gray-200' />
 
       <div>
-        {!products ? (
+        {isPendingProduct ? (
           <InlineSpinner />
         ) : products.length > 0 ? (
           products.map((product, index) => (
