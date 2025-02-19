@@ -41,8 +41,9 @@ function ProfilePage() {
       )}
       {
         <ProfileSection title='리뷰' to={`${ROUTES.REVIEW_HISTORY}/${id}`}>
-          {(pendingBuyReviews || pendingSellReviews) && <InlineSpinner />}
-          {reviews.length > 0 ? (
+          {isPending ? (
+            <InlineSpinner />
+          ) : reviews.length > 0 ? (
             reviews
               .slice(0, 3)
               .map((review, i) => (

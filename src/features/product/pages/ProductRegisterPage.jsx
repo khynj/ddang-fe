@@ -195,7 +195,7 @@ function ProductRegisterPage() {
   }
 
   const handleSubmit = () => {
-    if (images.length === 0) {
+    if (images.length + prevImages.length === 0) {
       alert('이미지를 등록해주세요.')
       return false
     }
