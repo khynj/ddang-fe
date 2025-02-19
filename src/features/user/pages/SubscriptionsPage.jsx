@@ -16,7 +16,7 @@ function SubscriptionsPage() {
   const [selectedFollowings, setSelectedFollowings] = useState(
     location.state ? location.state.selectedFollowings : [],
   )
-  const { data: followings } = useFollowingList()
+  const { data: followings, isPending: isPendingFollowing } = useFollowingList()
   const { data: products, isPending: isPendingProduct } = useFollowingAuctions(
     selectedFollowings.map(following => following.memberId),
   )
@@ -78,7 +78,7 @@ function SubscriptionsPage() {
       <hr className='border-gray-200' />
 
       <div>
-        {isPendingProduct ? (
+        {isPendingProduct || isPendingFollowing ? (
           <InlineSpinner />
         ) : products.length > 0 ? (
           products.map((product, index) => (

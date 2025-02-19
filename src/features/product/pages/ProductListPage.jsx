@@ -9,6 +9,7 @@ import CategoryPickerSmall from '@/components/modals/CategoryPickerSmall.jsx'
 import InfiniteScrollWrapper from '@/components/InfiniteScrollWrapper.jsx'
 import Placeholder from '@/components/placeholder/Placeholder.jsx'
 import Spinner from '@/components/placeholder/Spinner.jsx'
+import InlineSpinner from '@/components/placeholder/InlineSpinner.jsx'
 
 function ProductListPage({ filters, isFavorite, sellerId }) {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -84,7 +85,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
           </>
         )}
       </FilterBar>
-      {!products ? (
+      {isPending ? (
         <Spinner />
       ) : products.pages[0].auctionDetailProjection.length > 0 ? (
         <InfiniteScrollWrapper
@@ -97,6 +98,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
               <ProductItemHorizontal key={i} product={product} />
             )),
           )}
+          {isPending && <InlineSpinner />}
         </InfiniteScrollWrapper>
       ) : (
         <Placeholder>상품이 없어요.</Placeholder>

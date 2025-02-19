@@ -56,6 +56,7 @@ function TextInput({
           }`}
           placeholder={placeholder}
           onFocus={() => setHasFocused(true)}
+          autoComplete='off'
         />
         {icon && (
           <MaterialIcon

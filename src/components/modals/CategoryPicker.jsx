@@ -24,6 +24,7 @@ function CategoryPicker({
   const { isOpen, open, close } = useModal('')
   const [error, setError] = useState('')
   const [parentId, setParentId] = useState(0)
+  const [parentName, setParentName] = useState('')
   const { data: categories } = useCategory(parentId)
 
   useEffect(() => {
@@ -69,6 +70,7 @@ function CategoryPicker({
           <InputValue value={categoryName} label={label} />
           <MaterialIcon name='chevron_right' className='text-gray-600' />
         </PickerWrapper>
+        <input type='hidden' className={`${error ? 'invalid' : ''}`} />
       </div>
       {isOpen && (
         <Modal close={() => onClose(value)}>
@@ -80,9 +82,9 @@ function CategoryPicker({
               onClick={() => {
                 if (category.categoryId <= 99) {
                   setParentId(category.categoryId)
-                  setCategoryName(category.name)
+                  setParentName(category.name)
                 } else {
-                  setCategoryName(categoryName + ' > ' + category.name)
+                  setCategoryName(parentName + ' > ' + category.name)
                   onClose(category.categoryId)
                 }
               }}
