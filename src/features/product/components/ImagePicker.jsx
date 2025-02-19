@@ -5,18 +5,24 @@ import { useRef, useState } from 'react'
 import { compressImage } from '@/utils/image'
 import InlineSpinner from '@/components/placeholder/InlineSpinner'
 
-function ImagePicker({ images, setImages }) {
+function ImagePicker({ images, setImages, imageLinks, setImageLinks }) {
   const inputRef = useRef(null)
   const [loading, setLoading] = useState(false)
+
+  console.log(imageLinks)
 
   const deleteImage = src => {
     const newImages = images.filter(image => image !== src)
     setImages(newImages)
   }
+  const deleteImageLink = link => {
+    const newImageLinks = imageLinks.filter(currentLink => currentLink !== link)
+    setImageLinks(newImageLinks)
+  }
 
   return (
     <div className='flex flex-row flex-wrap items-center gap-2 my-2'>
-      {images.length < 10 && (
+      {images.length + imageLinks.length < 10 && (
         <div
           onClick={() => inputRef.current.click()}
           className='w-[18%] aspect-square p-2
@@ -31,18 +37,27 @@ function ImagePicker({ images, setImages }) {
           />
           <span
             className={`text-xs whitespace-nowrap ${
-              images.length == 10 ? 'text-ddred-500' : 'text-gray-600'
+              images.length + imageLinks.length == 10
+                ? 'text-ddred-500'
+                : 'text-gray-600'
             }`}
           >
-            {images.length}/ 10
+            {images.length + imageLinks.length}/ 10
           </span>
         </div>
       )}
+      {imageLinks.map((src, index) => (
+        <RegisteredImage
+          key={index}
+          src={src}
+          isLink
+          deleteFunc={() => deleteImageLink(src)}
+        />
+      ))}
       {images.map((src, index) => (
         <RegisteredImage
           key={index}
           src={src}
-          alt='preview'
           deleteFunc={() => deleteImage(src)}
         />
       ))}
@@ -53,7 +68,7 @@ function ImagePicker({ images, setImages }) {
         ref={inputRef}
         className='hidden'
         type='file'
-        accept='image/*'
+        accept='image/gif, image/jpeg, image/png'
         multiple
         onChange={async e => {
           setLoading(true)
@@ -72,6 +87,8 @@ function ImagePicker({ images, setImages }) {
 ImagePicker.propTypes = {
   images: PropTypes.array,
   setImages: PropTypes.func,
+  imageLinks: PropTypes.array,
+  setImageLinks: PropTypes.func,
 }
 
 export default ImagePicker

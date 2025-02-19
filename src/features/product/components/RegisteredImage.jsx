@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import MaterialIcon from '@/components/icons/MaterialIcon'
 
-function RegisteredImage({ src, deleteFunc }) {
+function RegisteredImage({ src, deleteFunc, isLink = false }) {
   return (
     <div className='relative w-[18%] flex items-center justify-center '>
       <div className='flex items-center justify-center w-full aspect-square overflow-hidden rounded-lg bg-gray-100'>
         <img
-          src={URL.createObjectURL(src)}
+          src={isLink ? src : URL.createObjectURL(src)}
           alt='preview'
           className='object-cover'
         />
@@ -25,6 +25,7 @@ function RegisteredImage({ src, deleteFunc }) {
 RegisteredImage.propTypes = {
   src: PropTypes.string,
   deleteFunc: PropTypes.func,
+  isLink: PropTypes.bool,
 }
 
 export default RegisteredImage

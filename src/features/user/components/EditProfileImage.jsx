@@ -3,7 +3,7 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 import { useRef, useState } from 'react'
 import profileImage from '@/assets/images/characters/profileImage.png'
 
-function EditProfileImage({ src, setBlob, size }) {
+function EditProfileImage({ src, setBlob, size, setIsChanged }) {
   const inputRef = useRef(null)
   const [imageUrl, setImageUrl] = useState(src)
 
@@ -26,11 +26,11 @@ function EditProfileImage({ src, setBlob, size }) {
         <div
           className='absolute bottom-0 left-0 w-full flex justify-center items-center'
           style={{
-            height: '25%',
-            backgroundColor: 'rgba(209, 213, 219, 0.5)',
+            height: '30%',
+            backgroundColor: 'rgba(209, 213, 219, 0.7)',
           }}
         >
-          <MaterialIcon name='edit' filled />
+          <MaterialIcon name='edit' filled className='text-ddblue-500' />
         </div>
       </div>
       <input
@@ -42,6 +42,7 @@ function EditProfileImage({ src, setBlob, size }) {
           const files = e.target.files
           setBlob(files[0])
           setImageUrl(URL.createObjectURL(files[0]))
+          setIsChanged(true)
         }}
       />
     </button>
@@ -52,6 +53,7 @@ EditProfileImage.propTypes = {
   size: PropTypes.number.isRequired,
   src: PropTypes.string,
   setBlob: PropTypes.func,
+  setIsChanged: PropTypes.func,
 }
 
 export default EditProfileImage

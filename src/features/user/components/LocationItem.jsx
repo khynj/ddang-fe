@@ -15,7 +15,7 @@ function LocationItem({ location }) {
       </div>
       <button
         onClick={() => {
-          if (!confirm('정말 삭제하시겠습니까?')) return
+          if (!confirm('정말 삭제하시겠어요?')) return
           deleteLocation(location.memberLocationId, {
             onSuccess: () => {
               queryClient.invalidateQueries(['preferredLocations'])

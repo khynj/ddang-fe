@@ -9,7 +9,7 @@ function blobToFile(blob, fileName, mimeType) {
 
 export async function compressImage(file) {
   const options = {
-    maxSizeMB: 1, // 허용하는 최대 사이즈 지정
+    maxSizeMB: 0.9, // 허용하는 최대 사이즈 지정
     maxWidthOrHeight: 1920, // 허용하는 최대 width, height 값 지정
     useWebWorker: true, // webworker 사용 여부
   }

@@ -110,7 +110,7 @@ function ProductDetailDrawer({ product, isMine, ref }) {
       return
     purchase(auction.auctionId, {
       onSuccess: () => {
-        alert('즉시구매에 성공했습니다.')
+        alert('즉시구매했어요.')
         queryClient.invalidateQueries(['auctionDetails'])
       },
       onError: error => {
@@ -124,10 +124,10 @@ function ProductDetailDrawer({ product, isMine, ref }) {
   }
 
   const onDelete = () => {
-    if (!confirm('정말 삭제하시겠습니까?')) return
+    if (!confirm('정말 삭제하시겠어요?')) return
     requestDelete(auction.auctionId, {
       onSuccess: () => {
-        alert('삭제되었습니다.')
+        alert('삭제했어요.')
         route(ROUTES.HOME)
       },
       onError: error => {
@@ -149,9 +149,9 @@ function ProductDetailDrawer({ product, isMine, ref }) {
             auction.currentBidPrice > 0 && (
               <IconButton
                 icon={{
-                  name: 'mark_chat_unread',
+                  name: '3p',
                   size: 28,
-                  className: 'text-ddred-500',
+                  className: 'text-ddblue-400',
                   filled: true,
                 }}
                 onClick={() => route(ROUTES.CHATROOM_LIST_PRIVATE)}

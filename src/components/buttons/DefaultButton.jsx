@@ -8,10 +8,13 @@ function DefaultButton({ children, onClick, type, submit }) {
           ? 'text-gray-700 bg-gray-100'
           : type === 'red'
           ? 'text-white bg-ddred-500'
+          : type == 'disabled'
+          ? 'text-gray-500 bg-gray-100'
           : 'text-white bg-ddblue-400'
       }`}
       onClick={onClick}
       type={submit ? 'submit' : 'button'}
+      disabled={type == 'disabled'}
     >
       {children}
     </button>

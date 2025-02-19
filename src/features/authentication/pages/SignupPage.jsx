@@ -30,7 +30,7 @@ function SignupPage() {
         ? '이미 존재하는 별명이에요.'
         : VALIDATIONS.required(nickname) ||
           VALIDATIONS.nickname(nickname) ||
-          VALIDATIONS.maxLength(nickname, 20),
+          VALIDATIONS.maxLength(nickname, 10),
     email: email =>
       VALIDATIONS.required(email) ||
       VALIDATIONS.maxLength(email, 40) ||

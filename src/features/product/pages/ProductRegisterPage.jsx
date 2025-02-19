@@ -30,6 +30,7 @@ function ProductRegisterPage() {
   usePageName(`경매${actionName}`)
 
   const [images, setImages] = useState([])
+  const [imagesLinks, setImageLinks] = useState(auction?.photos || [])
   const [title, setTitle] = useState(auction?.title || '')
   const [productName, setProductName] = useState(auction?.productName || '')
   const [categoryId, setCategory] = useState(
@@ -227,7 +228,12 @@ function ProductRegisterPage() {
   return (
     <div className='flex flex-col p-4'>
       {pendingRegister ? <Spinner /> : pendingUpdate && <Spinner />}
-      <ImagePicker images={images} setImages={setImages} />
+      <ImagePicker
+        images={images}
+        setImages={setImages}
+        imageLinks={imagesLinks}
+        setImageLinks={setImageLinks}
+      />
       <hr className='my-3 mb-2 border-gray-200' />
       <TitleInput
         label='제목'

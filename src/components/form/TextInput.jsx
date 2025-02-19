@@ -13,12 +13,20 @@ function TextInput({
   setValue,
   icon,
   placeholder,
+  limit,
 }) {
   const [hasFocused, setHasFocused] = useState(false)
   const [error, setError] = useState('')
 
   const onChange = e => {
-    setValue(e.target.value)
+    const val = e.target.value
+    console.log(val)
+    console.log(val.length)
+    if (limit) {
+      const error = limit(val)
+      if (error) return setError(error)
+    }
+    setValue(val)
   }
 
   useEffect(() => {
