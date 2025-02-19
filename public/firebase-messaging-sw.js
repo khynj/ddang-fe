@@ -37,7 +37,9 @@ messaging.onBackgroundMessage(payload => {
   // }
 
   // // Show notification when message received
-  self.registration.showNotification(title, {})
+  self.registration.showNotification(title, {
+    body: payload.data.content,
+  })
   // self.registration.showNotification(title, notification)
 })
 

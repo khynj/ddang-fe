@@ -53,6 +53,13 @@ function ProductDetailDrawer({ product, isMine, ref }) {
 
   const handleBidPrice = e => {
     const value = e.target.value.replace(/[^0-9]/g, '')
+    const maxValue =
+      auction.instantHammerPrice > 0 ? auction.instantHammerPrice : 10000000
+    if (value > maxValue) {
+      alert(`입찰가는 ${formatPrice(maxValue)}원을 넘을 수 없습니다.`)
+      setBidPrice(maxValue)
+      return
+    }
     setBidPrice(parseInt(value) || 0)
   }
 
