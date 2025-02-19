@@ -10,34 +10,15 @@ import { useSearchAuctions } from '@/apis/auction'
 import InlinePlaceholder from '@/components/placeholder/InlinePlaceholder'
 import Spinner from '@/components/placeholder/Spinner'
 import InlineSpinner from '@/components/placeholder/InlineSpinner'
-import { useMemo } from 'react'
 
 function ProfilePage() {
   usePageName('프로필')
   const { id } = useParams()
   const { data: userData } = useMemberInfo(id)
   const { data: products } = useSearchAuctions({ sellerId: id })
-  const { data: sellReviews, isPending: pendingSellReviews } = useMemberReviews(
-    {
-      memberId: id,
-      role: 'seller',
-    },
-  )
-  const { data: buyReviews, isPending: pendingBuyReviews } = useMemberReviews({
+  const { data: reviews, isPending } = useMemberReviews({
     memberId: id,
-    role: 'buyer',
   })
-
-  const reviews = useMemo(() => {
-    const newReviews = []
-    if (sellReviews) {
-      newReviews.push(...sellReviews)
-    }
-    if (buyReviews) {
-      newReviews.push(...buyReviews)
-    }
-    return newReviews
-  }, [sellReviews, buyReviews])
 
   if (!userData) return <Spinner />
 

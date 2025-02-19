@@ -30,7 +30,7 @@ function ProductRegisterPage() {
   usePageName(`경매${actionName}`)
 
   const [images, setImages] = useState([])
-  const [imagesLinks, setImageLinks] = useState(auction?.photos || [])
+  const [prevImages, setPrevImages] = useState(auction?.photos || [])
   const [title, setTitle] = useState(auction?.title || '')
   const [productName, setProductName] = useState(auction?.productName || '')
   const [categoryId, setCategory] = useState(
@@ -88,6 +88,11 @@ function ProductRegisterPage() {
     form.append(
       'product',
       new Blob([JSON.stringify(product)], { type: 'application/json' }),
+    )
+
+    form.append(
+      'prevImages',
+      new Blob([JSON.stringify({ prevImages })], { type: 'application/json' }),
     )
 
     images.forEach(image => {
@@ -231,8 +236,8 @@ function ProductRegisterPage() {
       <ImagePicker
         images={images}
         setImages={setImages}
-        imageLinks={imagesLinks}
-        setImageLinks={setImageLinks}
+        imageLinks={prevImages}
+        setImageLinks={setPrevImages}
       />
       <hr className='my-3 mb-2 border-gray-200' />
       <TitleInput
