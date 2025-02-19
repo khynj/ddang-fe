@@ -6,6 +6,7 @@ export function useChatRooms(type = 'GROUP') {
     queryKey: ['chatRooms', type],
     queryFn: () =>
       axios_spring.get('/chatting', { params: { type } }).then(res => res.data),
+    refetchInterval: 1000,
   })
 }
 

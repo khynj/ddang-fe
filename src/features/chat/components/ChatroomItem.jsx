@@ -3,11 +3,9 @@ import ProfileImage from '../../user/components/ProfileImage'
 import { shortRelativeTime } from '@/utils/date'
 import { Link } from 'react-router'
 import ROUTES from '@/data/ROUTES'
+import ChatroomTime from './ChatroomTime'
 
 function ChatroomItem({ chatroom }) {
-  const lastSetTime = chatroom.lastSetTime
-    ? shortRelativeTime(chatroom.lastSetTime)
-    : ''
   return (
     <Link
       to={ROUTES.CHATROOM.replace(':id', chatroom.chattingRoomId)}
@@ -17,7 +15,7 @@ function ChatroomItem({ chatroom }) {
       <div className='col-span-3 flex flex-col shrink w-full justify-between'>
         <div className='flex justify-between items-center'>
           <div className='font-bold truncate'>{chatroom.title}</div>
-          <div className='text-gray-500 text-sm shrink-0'>{lastSetTime}</div>
+          <ChatroomTime time={chatroom.lastSetTime} />
         </div>
         <div className='flex shrink justify-between items-center gap-2'>
           <span className='tracking-tight truncate'>
