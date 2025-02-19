@@ -28,8 +28,8 @@ function SignupPage() {
     nickname: nickname =>
       checkNickname.data?.nicknameExists
         ? '이미 존재하는 별명이에요.'
-        : VALIDATIONS.nickname(nickname) ||
-          VALIDATIONS.required(nickname) ||
+        : VALIDATIONS.required(nickname) ||
+          VALIDATIONS.nickname(nickname) ||
           VALIDATIONS.maxLength(nickname, 20),
     email: email =>
       VALIDATIONS.required(email) ||
