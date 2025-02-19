@@ -25,6 +25,7 @@ function EditProfilePage() {
   const { mutate: updateNickname } = useUpdateNickname()
 
   const onSubmitPhoto = () => {
+    if (!blob) return alert('새로운 사진을 선택해주세요.')
     const formData = new FormData()
     formData.append('photo', blob)
     updatePhotoMutation(formData, {
@@ -56,8 +57,8 @@ function EditProfilePage() {
   const validation = nickname =>
     nickname != user.nickname && checkNickname.data?.nicknameExists
       ? '이미 존재하는 별명이에요.'
-      : VALIDATIONS.nickname(nickname) ||
-        VALIDATIONS.required(nickname) ||
+      : VALIDATIONS.required(nickname) ||
+        VALIDATIONS.nickname(nickname) ||
         VALIDATIONS.maxLength(nickname, 20)
 
   return (

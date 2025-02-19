@@ -21,6 +21,9 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
     })
     params.isFavorite = isFavorite
     params.sellerId = sellerId
+    if (params.sortType === 'createdAt') {
+      params.sortOrder = 'desc'
+    }
     return params
   }, [searchParams, isFavorite, sellerId])
 
