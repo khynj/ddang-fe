@@ -13,7 +13,9 @@ function SearchPage() {
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
       {!searchHistory ? (
-        <InlineSpinner />
+        <div className='flex items-center gap-2 p-3 font-bold text-gray-700'>
+          <InlineSpinner />
+        </div>
       ) : (
         searchHistory.length > 0 && (
           <div className='flex items-center gap-2 p-3 font-bold text-gray-700'>

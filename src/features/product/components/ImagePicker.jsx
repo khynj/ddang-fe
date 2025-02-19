@@ -23,15 +23,21 @@ function ImagePicker({ images, setImages, imageLinks, setImageLinks }) {
   const onImageChange = async e => {
     setLoading(true)
     const files = e.target.files
-    console.log(files)
     let newImages = await Promise.all(
       Array.from(files).map(file => compressImage(file)),
     )
+    let error = ''
     newImages = newImages.filter(image => {
-      console.log(image)
-      if (!image) alert('지원하지 않는 파일 형식이에요.')
+      if (!image) {
+        error = '지원하지 않는 형식의 파일을 제외합니다.'
+        return false
+      }
       return !!image
     })
+    if (error) {
+      if (newImages.length === 0) alert('지원하지 않는 파일 형식이에요.')
+      else alert(error)
+    }
     setLoading(false)
     setImages([...images, ...newImages].slice(0, 10))
   }
