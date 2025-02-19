@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import Navbar from '../components/navbar/Navbar'
 
-function DefaultLayout({ back, feature }) {
+function DefaultLayout({ back, feature, popup }) {
   const [title, setTitle] = useState('...')
   return (
     <>
@@ -13,7 +13,7 @@ function DefaultLayout({ back, feature }) {
         <Outlet context={{ setTitle }} />
         {back || <div className='py-8'></div>}
       </div>
-      {back || <Navbar />}
+      {back || popup || <Navbar />}
     </>
   )
 }

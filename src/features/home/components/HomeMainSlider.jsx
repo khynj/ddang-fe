@@ -5,9 +5,9 @@ import NoHomeMainProduct from './NoHomeMainProduct'
 import Spinner from '@/components/placeholder/Spinner'
 
 function HomeMainSlider() {
-  const { data: products } = usePersonalizedAuctions()
+  const { data: products, isPending } = usePersonalizedAuctions()
 
-  if (!products) return <Spinner />
+  if (isPending) return <Spinner />
   return (
     <Slider>
       {products.length < 1 ? (

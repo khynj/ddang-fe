@@ -19,7 +19,7 @@ function SignupPage() {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
 
-  const { error, mutate: signUp } = useSignUp()
+  const { error, mutate: signUp, isPending } = useSignUp()
   const { mutate: requestLogin } = useLogin()
   const checkNickname = useCheckDuplicate({ email: '', nickname })
   const checkEmail = useCheckDuplicate({ nickname: '', email })
@@ -70,7 +70,7 @@ function SignupPage() {
     if (password != passwordConfirm) {
       return alert('비밀번호가 일치하지 않습니다.')
     }
-    e.preventDefault()
+
     signUp(
       { name, nickname, email, password },
       {
@@ -144,7 +144,11 @@ function SignupPage() {
         </div>
       </div>
       <StickyContainer>
-        <DefaultButton submit onClick={onSubmit}>
+        <DefaultButton
+          submit
+          onClick={onSubmit}
+          type={isPending ? 'disabled' : ''}
+        >
           회원가입
         </DefaultButton>
       </StickyContainer>

@@ -82,11 +82,13 @@ function App() {
               <Route path={ROUTES.MYPAGE} element={<MyPage />} />
               <Route path='*' element={<NotFoundPage />} />
             </Route>
-            <Route path='/' element={<DefaultLayout back />}>
+            <Route path='/' element={<DefaultLayout popup />}>
               <Route
                 path={ROUTES.CHARGE_SUCCESS}
                 element={<ChargeResultPage />}
               />
+            </Route>
+            <Route path='/' element={<DefaultLayout back />}>
               <Route path={ROUTES.CHATROOM} element={<ChatroomPage />} />
               <Route
                 path={ROUTES.PRODUCT_REGISTER}
