@@ -92,7 +92,9 @@ function ProductRegisterPage() {
 
     form.append(
       'prevImages',
-      new Blob([JSON.stringify({ prevImages })], { type: 'application/json' }),
+      new Blob([JSON.stringify({ prev: prevImages })], {
+        type: 'application/json',
+      }),
     )
 
     images.forEach(image => {
