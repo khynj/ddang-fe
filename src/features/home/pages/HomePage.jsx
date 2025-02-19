@@ -8,7 +8,7 @@ function HomePage() {
   return (
     <div className='flex flex-col h-full overflow-y-scroll'>
       <WelcomeBanner />
-      <HomeMainSlider />
+      {/* <HomeMainSlider /> */}
       <div className='flex flex-col gap-4 px-3'>
         <HomeBiddingProductList />
         <HomeClosingProductList />

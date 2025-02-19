@@ -3,11 +3,8 @@ import MaterialIcon from '@/components/icons/MaterialIcon'
 
 function RegisteredImage({ src, deleteFunc }) {
   return (
-    <div
-      className='relative flex items-center w-[18%] aspect-square justify-center
-      overflow-hidden rounded-lg bg-gray-100'
-    >
-      <div className='aspect-square'>
+    <div className='relative w-[18%] flex items-center justify-center '>
+      <div className='flex items-center justify-center w-full aspect-square overflow-hidden rounded-lg bg-gray-100'>
         <img
           src={URL.createObjectURL(src)}
           alt='preview'
