@@ -43,9 +43,11 @@ function ChargePage() {
       {
         onSuccess: data => {
           const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-          window.location = isMobile
-            ? data?.next_redirect_mobile_url
-            : data?.next_redirect_pc_url
+          window.location.replace(
+            isMobile
+              ? data.next_redirect_mobile_url
+              : data.next_redirect_pc_url,
+          )
         },
         onError: error => {
           alert(error.response.data.message)

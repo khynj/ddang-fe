@@ -37,6 +37,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
     isPending,
     isFetching,
     isLoading,
+    isFetchingNextPage,
   } = useSearchAuctions(param)
 
   useEffect(() => {
@@ -99,7 +100,7 @@ function ProductListPage({ filters, isFavorite, sellerId }) {
               <ProductItemHorizontal key={i} product={product} />
             )),
           )}
-          {isPending && <InlineSpinner />}
+          {isFetchingNextPage && <InlineSpinner />}
         </InfiniteScrollWrapper>
       ) : (
         <Placeholder>상품이 없어요.</Placeholder>

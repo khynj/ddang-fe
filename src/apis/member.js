@@ -93,12 +93,12 @@ export function useToggleFollow() {
 }
 
 // 리뷰 조회
-export function useMemberReviews({ memberId, type = 'received', role }) {
+export function useMemberReviews({ memberId, type = 'received' }) {
   return useQuery({
-    queryKey: ['memberReviews', memberId, type, role],
+    queryKey: ['memberReviews', memberId, type],
     queryFn: () =>
       axios_spring
-        .get(`/member/${memberId}/review`, { params: { type, role } })
+        .get(`/member/${memberId}/review`, { params: { type } })
         .then(res => res.data),
     enabled: !!memberId,
   })

@@ -148,6 +148,7 @@ export function useFollowingAuctions(memberIds, params) {
           return [...acc, ...result.data.auctionDetailProjection]
         }, []),
         pending: results.some(result => result.isPending),
+        loading: results.some(result => result.isLoading),
       }
     },
     queryKey: ['followingAuctions'],

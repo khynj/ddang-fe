@@ -161,7 +161,15 @@ function ProductDetailDrawer({ product, isMine, ref }) {
                   className: 'text-ddblue-400',
                   filled: true,
                 }}
-                onClick={() => route(ROUTES.CHATROOM_LIST_PRIVATE)}
+                onClick={() =>
+                  route(
+                    ROUTES.CHATROOM.replace(
+                      ':id',
+                      auction.privateChattingRoomId,
+                    ),
+                    { replace: true },
+                  )
+                }
               />
             )}
           <IconButton
@@ -172,7 +180,10 @@ function ProductDetailDrawer({ product, isMine, ref }) {
               filled: true,
             }}
             onClick={() =>
-              route(ROUTES.CHATROOM.replace(':id', auction.chattingRoomId))
+              route(
+                ROUTES.CHATROOM.replace(':id', auction.groupChattingRoomId),
+                { replace: true },
+              )
             }
           />
           <FavoriteButton

@@ -14,7 +14,7 @@ function InfiniteScrollWrapper({
     if (!fetchNextPage) return
     const handleScroll = () => {
       if (
-        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 800 >=
+        scrollRef.current.scrollTop + scrollRef.current.clientHeight + 1600 >=
         scrollRef.current.scrollHeight
       ) {
         if (isPending || isFetching) return

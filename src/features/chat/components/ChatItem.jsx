@@ -69,7 +69,39 @@ function onCopy(e) {
 }
 
 function parseChatContent(content) {
-  return content.replace(/\//g, '/​')
+  return content
+    .replace(/\//g, '/​')
+    .replace(/!/g, '!​')
+    .replace(/\./g, '.​')
+    .replace(/,/g, ',​')
+    .replace(/:/g, ':​')
+    .replace(/;/g, ';​')
+    .replace(/</g, '<​')
+    .replace(/>/g, '>​')
+    .replace(/\?/g, '?​')
+    .replace(/@/g, '@​')
+    .replace(/#/g, '#​')
+    .replace(/\$/g, '$​')
+    .replace(/%/g, '%​')
+    .replace(/&/g, '&​')
+    .replace(/\(/g, '(​')
+    .replace(/\)/g, ')​')
+    .replace(/=/g, '=​')
+    .replace(/\+/g, '+​')
+    .replace(/-/g, '-​')
+    .replace(/_/g, '_​')
+    .replace(/\[/g, '[​')
+    .replace(/\]/g, ']​')
+    .replace(/{/g, '{​')
+    .replace(/}/g, '}​')
+    .replace(/\|/g, '|​')
+    .replace(/\\/g, '\\​')
+    .replace(/`/g, '`​')
+    .replace(/~/g, '~​')
+    .replace(/"/g, '"​')
+    .replace(/'/g, "'​")
+    .replace(/\^/g, '^​')
+    .replace(/\\/g, '\\​')
 }
 
 function removeZeroSpaces(str) {
