@@ -8,7 +8,6 @@ import DefaultButton from '@/components/buttons/DefaultButton'
 import IconButton from '@/components/buttons/IconButton'
 import FavoriteButton from '@/components/icons/FavoriteButton'
 import ROUTES from '@/data/ROUTES'
-import LoadingPage from '@/pages/LoadingPage'
 import { formatPrice, getMinimumBidUnit } from '@/utils/price'
 import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
@@ -16,7 +15,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { getAuctionStatus } from '@/utils/auction'
 import { useAuctionTimer } from '@/hooks/useAuctionTimer'
-import Spinner from '@/components/placeholder/Spinner'
 
 function ProductDetailDrawer({ product, isMine, ref }) {
   const route = useNavigate()
@@ -37,16 +35,17 @@ function ProductDetailDrawer({ product, isMine, ref }) {
     if (!product || !setMinimumBidPrice) return
     const bidUnit = getMinimumBidUnit(product.auction.minimumBid)
     setMinimumBidUnit(bidUnit)
-    let mimimumBidPrice = product.auction.currentBidPrice
+    let newMinBidPrice = product.auction.currentBidPrice
       ? product.auction.currentBidPrice + bidUnit
       : product.auction.minimumBid
     if (
       product.auction.instantHammerPrice > 0 &&
-      mimimumBidPrice > product.auction.instantHammerPrice
+      newMinBidPrice > product.auction.instantHammerPrice
     )
-      mimimumBidPrice = product.auction.instantHammerPrice
-    setMinimumBidPrice(mimimumBidPrice)
-    setBidPrice(mimimumBidPrice)
+      newMinBidPrice = product.auction.instantHammerPrice
+
+    setMinimumBidPrice(newMinBidPrice)
+    setBidPrice(newMinBidPrice)
   }, [product, setMinimumBidUnit, setMinimumBidPrice])
 
   const { auction, seller } = product
@@ -89,12 +88,16 @@ function ProductDetailDrawer({ product, isMine, ref }) {
       },
       {
         onSuccess: () => {
-          alert('입찰에 성공했습니다.')
+          alert(`😊 입찰에 성공했어요.`)
           queryClient.invalidateQueries(['auctionDetails'])
         },
         onError: error => {
           queryClient.invalidateQueries(['auctionDetails'])
-          alert(error.response.data.message)
+          alert(
+            error.response.status == 500
+              ? '입찰에 실패했어요.'
+              : error.response.data.message,
+          )
         },
       },
     )
@@ -110,11 +113,15 @@ function ProductDetailDrawer({ product, isMine, ref }) {
       return
     purchase(auction.auctionId, {
       onSuccess: () => {
-        alert('즉시구매했어요.')
+        alert(`😁 ${formatPrice(auction.instantHammerPrice)}원에 낙찰했어요.`)
         queryClient.invalidateQueries(['auctionDetails'])
       },
       onError: error => {
-        alert(error.response.data.message)
+        alert(
+          error.response.status == 500
+            ? '즉시구매를 실패했어요.'
+            : error.response.data.message,
+        )
       },
     })
   }

@@ -36,30 +36,20 @@ function MyLocationsRegisterPage() {
 
   const { mutate: registerLocation } = useAddPreferredLocation()
 
-  // useEffect(() => {
-  //   if (!searchLocation) return
-  //   if (page == 1) setSearchedLocations([...searchLocation.locations])
-  //   else setSearchedLocations(prev => [...prev, ...searchLocation.locations])
-  // }, [setSearchedLocations, searchLocation])
-
-  // useEffect(() => {
-  //   setPage(1)
-  // }, [searchKey])
-
-  const handleSearch = e => {
-    if (e.target.value.length > 30) return
-    setSearchKey(e.target.value)
-  }
-
   const handleClick = location => {
     setSelectedLocationId(location.id)
     setSelectedLocationName(location.locationName)
     open()
   }
 
+  const validateLocationNickname = name =>
+    VALIDATIONS.required(name) ||
+    VALIDATIONS.nickname(name) ||
+    VALIDATIONS.maxLength(name, 20)
+
   const onConfirm = e => {
     e.preventDefault()
-    const error = VALIDATIONS.nickname(name) || VALIDATIONS.maxLength(name, 20)
+    const error = validateLocationNickname(name)
     if (error) return alert(error)
     registerLocation(
       { locationId: selectedLocationId, title: name },
@@ -78,7 +68,7 @@ function MyLocationsRegisterPage() {
   return (
     <div className='flex flex-col h-full'>
       <div className='w-full max-w-md bg-white p-4'>
-        <div className='relative'>
+        {/* <div className='relative'>
           <input
             type='text'
             placeholder='지역을 입력하세요'
@@ -89,7 +79,15 @@ function MyLocationsRegisterPage() {
           <div className='absolute inset-y-0 right-3 flex items-center pointer-events-none gray-600'>
             <MaterialIcon name='search' size={18} className='text-gray-600' />
           </div>
-        </div>
+        </div> */}
+        <TextInput
+          placeholder='지역을 입력하세요'
+          value={searchKey}
+          setValue={setSearchKey}
+          icon='search'
+          limit={v => VALIDATIONS.maxLength(v, 30)}
+          label='동이름'
+        />
       </div>
 
       <InfiniteScrollWrapper
@@ -126,7 +124,14 @@ function MyLocationsRegisterPage() {
               <p className='font-bold text-ddblue-400'>내 장소 등록</p>
             </div>
             <p className='font-bold text-sm'>{selectedLocationName}</p>
-            <TextInput required value={name} setValue={setName} />
+            <TextInput
+              required
+              value={name}
+              setValue={setName}
+              validate={validateLocationNickname}
+              limit={v => VALIDATIONS.maxLength(v, 20)}
+              label='장소 별명'
+            />
             <div className='flex gap-4'>
               <DefaultButton type='gray' onClick={close}>
                 닫기

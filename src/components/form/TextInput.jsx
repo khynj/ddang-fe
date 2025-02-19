@@ -20,12 +20,11 @@ function TextInput({
 
   const onChange = e => {
     const val = e.target.value
-    console.log(val)
-    console.log(val.length)
     if (limit) {
       const error = limit(val)
       if (error) return setError(error)
     }
+    setError('')
     setValue(val)
   }
 

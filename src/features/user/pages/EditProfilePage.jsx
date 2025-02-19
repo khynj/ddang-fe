@@ -40,6 +40,7 @@ function EditProfilePage() {
     updatePhotoMutation(formData, {
       onSuccess: () => {
         alert('프로필 사진을 수정했어요.')
+        setIsPhotoChanged(false)
       },
       onError: error => {
         console.log(error.data.message)
@@ -56,6 +57,7 @@ function EditProfilePage() {
       onSuccess: () => {
         setUser({ ...user, nickname })
         alert('별명을 수정했어요.')
+        setIsNicknameChanged(false)
       },
       onError: error => {
         console.log(error.data.message)

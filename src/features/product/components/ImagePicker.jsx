@@ -21,8 +21,9 @@ function ImagePicker({ images, setImages, imageLinks, setImageLinks }) {
   }
 
   const onImageChange = async e => {
-    setLoading(true)
     const files = e.target.files
+    if (files.length == 0) return
+    setLoading(true)
     let newImages = await Promise.all(
       Array.from(files).map(file => compressImage(file)),
     )
