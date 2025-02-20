@@ -104,7 +104,7 @@ function App() {
               />
               <Route
                 path={ROUTES.PRODUCT_DETAIL}
-                element={<ProductDetailPage />}
+                element={<ProductDetailPage key={new Date()} />}
               />
               <Route
                 path={ROUTES.NOTIFICATIONS}
