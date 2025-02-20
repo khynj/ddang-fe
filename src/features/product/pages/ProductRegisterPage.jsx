@@ -187,9 +187,12 @@ function ProductRegisterPage() {
       VALIDATIONS.maxPrice(instantHammerPrice, 10000000),
     startTime: startTime =>
       VALIDATIONS.required(startTime) ||
-      VALIDATIONS.minDate(startTime, new Date()),
+      VALIDATIONS.minDate(startTime, new Date()) ||
+      VALIDATIONS.maxDate(startTime, new Date('2100-12-31')),
     endTime: endTime =>
-      VALIDATIONS.required(endTime) || VALIDATIONS.minDate(endTime, startTime),
+      VALIDATIONS.required(endTime) ||
+      VALIDATIONS.minDate(endTime, startTime) ||
+      VALIDATIONS.maxDate(startTime, new Date('2100-12-31')),
     content: content =>
       VALIDATIONS.maxLength(content, 500) || VALIDATIONS.required(content),
     tradeType: tradeType => VALIDATIONS.required(tradeType.value),
