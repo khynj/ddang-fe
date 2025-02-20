@@ -192,7 +192,7 @@ function ProductRegisterPage() {
     endTime: endTime =>
       VALIDATIONS.required(endTime) ||
       VALIDATIONS.minDate(endTime, startTime) ||
-      VALIDATIONS.maxDate(startTime, new Date('2100-12-31')),
+      VALIDATIONS.maxDate(endTime, new Date('2100-12-31')),
     content: content =>
       VALIDATIONS.maxLength(content, 500) || VALIDATIONS.required(content),
     tradeType: tradeType => VALIDATIONS.required(tradeType.value),
