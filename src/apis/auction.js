@@ -60,7 +60,7 @@ export function useToggleFavorite() {
 
 export function useAuctionDetails(auctionId) {
   return useQuery({
-    queryKey: ['auctionDetails'],
+    queryKey: ['auctionDetails', auctionId],
     queryFn: () =>
       axios_spring.get(`/auction/${auctionId}`).then(res => res.data),
     refetchInterval: 1000,
