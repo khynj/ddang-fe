@@ -14,8 +14,13 @@ function TextArea({ label, required, value, setValue, validate, rows, limit }) {
     }
     if (validate) {
       setError(validate(val))
-    }
+    } else setError('')
     setValue(val)
+  }
+
+  const onBlur = () => {
+    if (validate) setError(validate(value))
+    else setError('')
   }
   return (
     <div className='flex flex-col gap-1 py-3'>
@@ -31,6 +36,7 @@ function TextArea({ label, required, value, setValue, validate, rows, limit }) {
         className={`flex border-1 border-gray-300 rounded-md p-1.5 ${
           error && 'invalid'
         }`}
+        onBlur={onBlur}
       />
     </div>
   )

@@ -39,6 +39,11 @@ function DatePicker({
 
   const handleClick = () => dateInput.current.showPicker()
 
+  const onBlur = () => {
+    if (validate) setError(validate(value))
+    else setError('')
+  }
+
   return (
     <div className='flex flex-col gap-2 py-3 '>
       {label && (
@@ -58,6 +63,7 @@ function DatePicker({
         className={`fixed bottom-0 opacity-0 pointer-events-none ${
           error ? 'invalid' : ''
         }`}
+        onBlur={onBlur}
       />
     </div>
   )

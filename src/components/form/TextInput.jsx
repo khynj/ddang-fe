@@ -35,6 +35,12 @@ function TextInput({
       setError(validate(value))
     }
   }, [value, validate, hasFocused])
+
+  const onBlur = () => {
+    if (validate) setError(validate(value))
+    else setError('')
+  }
+
   return (
     <div className='flex flex-col gap-2 py-3 relative justify-center'>
       {label && (
@@ -57,12 +63,13 @@ function TextInput({
           placeholder={placeholder}
           onFocus={() => setHasFocused(true)}
           autoComplete='off'
+          onBlur={onBlur}
         />
         {icon && (
           <MaterialIcon
             name={icon}
-            className='text-gray-400 absolute right-3 z-2 pointer-events-none
-'
+            size={20}
+            className='text-gray-400 absolute right-3 z-2 pointer-events-none'
           />
         )}
       </div>

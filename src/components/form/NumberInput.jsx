@@ -36,6 +36,11 @@ function NumberInput({
     }
   }, [dependency, validate, value])
 
+  const onBlur = () => {
+    if (validate) setError(validate(value))
+    else setError('')
+  }
+
   return (
     <div className='flex flex-col gap-2 py-3'>
       {label && (
@@ -51,6 +56,7 @@ function NumberInput({
           error ? 'invalid' : ''
         }`}
         inputMode='numeric'
+        onBlur={onBlur}
       />
     </div>
   )

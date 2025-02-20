@@ -161,7 +161,7 @@ function ProductDetailDrawer({ product, isMine, ref }) {
           {status == 2 &&
             (isMine || auction.myBidPrice == auction.currentBidPrice) &&
             auction.currentBidPrice > 0 && (
-              <IconButton
+              <DefaultButton
                 icon={{
                   name: '3p',
                   size: 28,
@@ -177,7 +177,9 @@ function ProductDetailDrawer({ product, isMine, ref }) {
                     { replace: true },
                   )
                 }
-              />
+              >
+                채팅하기
+              </DefaultButton>
             )}
           <IconButton
             icon={{

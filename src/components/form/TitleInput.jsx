@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import Label from './Label'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import InputError from './InputError'
 import MaterialIcon from '../icons/MaterialIcon'
 
@@ -15,14 +15,7 @@ function TitleInput({
   onChange,
   limit,
 }) {
-  const [hasFocused, setHasFocused] = useState(false)
   const [error, setError] = useState('')
-
-  useEffect(() => {
-    if (validate && hasFocused) {
-      setError(validate(value))
-    }
-  }, [value, validate, hasFocused])
 
   const onChangeHandler = e => {
     const val = e.target.value
@@ -30,9 +23,11 @@ function TitleInput({
       const error = limit(val)
       if (error) return setError(error)
     }
-    setError('')
+    if (validate) setError(validate(value))
+    else setError('')
     onChange(val)
   }
+
   return (
     <div className='flex flex-col gap-2 py-3 relative justify-center'>
       {label && (
@@ -49,7 +44,6 @@ function TitleInput({
           error ? 'invalid' : ''
         }`}
         placeholder={placeholder}
-        onFocus={() => setHasFocused(true)}
       ></input>
       {icon && (
         <MaterialIcon name={icon} className='text-gray-600 absolute right-3' />
