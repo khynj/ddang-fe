@@ -5,10 +5,8 @@ import { useAuth } from '@/contexts/AuthContext'
 import Placeholder from '@/components/placeholder/Placeholder'
 import Spinner from '@/components/placeholder/Spinner'
 import { useParams } from 'react-router'
-import usePageName from '@/hooks/usePageName'
 
 function ReviewHistoryPage({ received }) {
-  usePageName('리뷰내역')
   const { user } = useAuth()
   const params = useParams()
   const { data: reviews } = useMemberReviews({
