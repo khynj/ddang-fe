@@ -19,6 +19,7 @@ function ChatroomPage() {
     e.preventDefault()
     if (content.trim() === '') return
     sendMessage(content)
+    setError('')
     setContent('')
   }
 
